@@ -11,6 +11,7 @@ import Search from '../components/Search/Search';
 import Button from '../components/Button/Button';
 import Header from '../components/Header/Header';
 import {PostInterface} from '../interfaces';
+import Spinner from '../components/Spinner/Spinner';
 
 
 interface HomeProps {
@@ -29,7 +30,7 @@ const Home: NextPage<HomeProps> = ({posts}) => {
         const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
         setPage(prevState => prevState + 1)
         setInfinite(prevState => [...prevState, ...posts])
-        setHasMore((page + 1) < response.data.totalPages)
+        setHasMore((page + 1 ) < response.data.totalPages)
         return posts
     }
     return (
@@ -73,7 +74,7 @@ const Home: NextPage<HomeProps> = ({posts}) => {
                         hasMore={hasMore}
                         initialLoad={false}
                         threshold={100}
-                        loader={<div key={0}>Loading ...</div>}
+                        loader={<div key={0}><Spinner /></div>}
                     >
                         <ul className={classes.items}>
                             {infinite.map((post: PostInterface) => {

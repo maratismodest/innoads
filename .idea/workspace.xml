@@ -5,6 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09b01233-c394-4afa-9b78-f7e5a3bacd7f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/agreement.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/delete.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/no-username.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/no-image.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/search.tsx" afterDir="false" />
@@ -44,7 +48,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="16.13.2" />
     <property name="javascript.nodejs.core.library.typings.version" value="16.11.32" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -55,6 +59,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\marat\Documents\Github\innoads-frontend\public" />
       <recent name="C:\Users\marat\Documents\Github\innoads-frontend" />
       <recent name="C:\Users\marat\Documents\Github\innoads-frontend\styles" />
       <recent name="C:\Users\marat\Documents\Github\innoads-frontend\components" />
@@ -75,6 +80,7 @@
       <workItem from="1651394114205" duration="3410000" />
       <workItem from="1651397581951" duration="96000" />
       <workItem from="1651397837690" duration="6373000" />
+      <workItem from="1651410662253" duration="3825000" />
     </task>
     <servers />
   </component>

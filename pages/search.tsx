@@ -1,44 +1,45 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
-import classes from "../styles/Index.module.scss";
 import InfiniteScroll from 'react-infinite-scroller';
-import _ from "lodash";
+import {orderBy} from "lodash";
 import {useRouter} from "next/router";
 import axios from "axios";
-import {GetStaticProps, NextPage} from "next/types";
+import type {NextPage, GetStaticProps} from 'next'
 import {PostInterface} from "../interfaces";
 import useDebounce from "../hooks/useDebounce";
 import {MainLayout} from "../components/MainLayout/MainLayout";
 import SelectInno from "../components/Select/Select";
 import {options} from "../assets/options";
-import {Input} from "../components/Input/Input";
 import Item from "../components/Item/Item";
+import classes from "../styles/Index.module.scss";
+import {Input} from "../components/Input/Input";
+import Spinner from "../components/Spinner/Spinner";
 
-interface SearchProps {
+interface SearchPageProps {
     posts: PostInterface[]
 }
 
-
-const Posts: NextPage<SearchProps> = ({posts: ServerPosts}) => {
+const SearchPage: NextPage<SearchPageProps> = ({posts}) => {
     const router = useRouter();
-    const [posts, setPosts] = useState(ServerPosts);
-    const [category, setCategory] = useState(1);
-    const [input, setInput] = useState<string>("");
-    const debouncedValue = useDebounce<string>(input, 500)
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
+    const [infinite, setInfinite] = useState(posts)
+    const [input, setInput] = useState("");
+    const [category, setCategory] = useState(1);
+    const debouncedValue = useDebounce<string>(input, 500)
 
     const loadFunc = useCallback(async (currentPage: number = page) => {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&category=${category}&text=${input}`)
-        const posts = _.orderBy(response.data.content, ['createdAt'], ['desc'])
-        setPage(currentPage + 1)
-        setPosts(prevState => currentPage === 0 ? posts : [...prevState, ...posts])
+        console.log("currentPage", currentPage)
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&category=${category}&text=${debouncedValue}`)
+        const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+        setPage(prevState => prevState + 1)
+        setInfinite(prevState => currentPage === 0 ? posts : [...prevState, ...posts])
         setHasMore((currentPage + 1) < response.data.totalPages)
-        return posts
-    }, [category, input, page])
+    }, [page, category, debouncedValue])
+
 
     useEffect(() => {
-        loadFunc(0).then((res) => setPosts(res))
-    }, [debouncedValue, loadFunc])
+        loadFunc(0)
+    }, [debouncedValue, category])
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInput(event.target.value)
@@ -51,13 +52,6 @@ const Posts: NextPage<SearchProps> = ({posts: ServerPosts}) => {
         }
 
     }, [router.query]);
-
-
-    useEffect(() => {
-        loadFunc(0).then((res) => {
-            setPosts(res);
-        })
-    }, [category, loadFunc]);
 
     return (
         <MainLayout title="Доска объявлений города Иннополис">
@@ -90,12 +84,12 @@ const Posts: NextPage<SearchProps> = ({posts: ServerPosts}) => {
                     hasMore={hasMore}
                     initialLoad={false}
                     threshold={100}
-                    loader={<div key={0}>Loading ...</div>}
+                    loader={<div key={0}><Spinner/></div>}
                 >
                     <ul className={classes.items}>
-                        {posts.map((post: PostInterface) => {
+                        {infinite.map((post: PostInterface) => {
                             return (
-                                <Item post={post} key={post.id}/>
+                                <Item post={post} key={post.slug}/>
                             );
                         })}
                     </ul>
@@ -105,11 +99,9 @@ const Posts: NextPage<SearchProps> = ({posts: ServerPosts}) => {
     );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-    // const res = await serverSideTranslations(context.locale, ["translate"]);
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post`)
-    const posts = _.orderBy(response.data.content, ['createdAt'], ['desc']);
-
+export const getStaticProps: GetStaticProps = async (context) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?category=1`)
+    const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
     if (!posts) {
         return {
             notFound: true,
@@ -118,11 +110,10 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
         props: {
-            posts,
-            // ...(await serverSideTranslations(locale, ["translate"])),
-        }, // will be passed to the page component as props
+            posts
+        },
         revalidate: 10,
     };
 }
 
-export default Posts
+export default SearchPage
