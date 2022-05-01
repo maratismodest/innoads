@@ -21,14 +21,14 @@ const Home: NextPage<HomeProps> = ({posts}) => {
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
 
-    const [infinite, setInfinite] = useState<PostInterface[]>(posts)
+    const [infinite, setInfinite] = useState(posts)
     const [input, setInput] = useState("");
 
     const loadFunc = async () => {
-        const response = await axios.get(`${process.env.API_URL}/post?page=${page + 1}`)
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${page + 1}`)
         const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
         setPage(prevState => prevState + 1)
-        setInfinite((prevState: PostInterface[]) => [...prevState, ...posts])
+        setInfinite(prevState => [...prevState, ...posts])
         setHasMore((page + 1) < response.data.totalPages)
         return posts
     }

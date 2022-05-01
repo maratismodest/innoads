@@ -18,9 +18,9 @@ interface SearchProps {
 }
 
 
-const Posts: NextPage<SearchProps> = ({posts}) => {
+const Posts: NextPage<SearchProps> = ({posts: ServerPosts}) => {
     const router = useRouter();
-    const [infinite, setInfinite] = useState(posts);
+    const [posts, setPosts] = useState(ServerPosts);
     const [category, setCategory] = useState(1);
     const [input, setInput] = useState<string>("");
     const debouncedValue = useDebounce<string>(input, 500)
@@ -31,13 +31,13 @@ const Posts: NextPage<SearchProps> = ({posts}) => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&category=${category}&text=${input}`)
         const posts = _.orderBy(response.data.content, ['createdAt'], ['desc'])
         setPage(currentPage + 1)
-        setInfinite(prevState => currentPage === 0 ? posts : [...prevState, ...posts])
+        setPosts(prevState => currentPage === 0 ? posts : [...prevState, ...posts])
         setHasMore((currentPage + 1) < response.data.totalPages)
         return posts
     }, [category, input, page])
 
     useEffect(() => {
-        loadFunc(0).then((res) => setInfinite(res))
+        loadFunc(0).then((res) => setPosts(res))
     }, [debouncedValue, loadFunc])
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +55,7 @@ const Posts: NextPage<SearchProps> = ({posts}) => {
 
     useEffect(() => {
         loadFunc(0).then((res) => {
-            setInfinite(res);
+            setPosts(res);
         })
     }, [category, loadFunc]);
 
@@ -93,7 +93,7 @@ const Posts: NextPage<SearchProps> = ({posts}) => {
                     loader={<div key={0}>Loading ...</div>}
                 >
                     <ul className={classes.items}>
-                        {infinite.map((post: PostInterface) => {
+                        {posts.map((post: PostInterface) => {
                             return (
                                 <Item post={post} key={post.id}/>
                             );
