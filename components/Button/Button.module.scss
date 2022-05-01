@@ -1,0 +1,15 @@
+@import "variables";
+
+.button {
+  background: $blue;
+  border-radius: 8px;
+  padding: 8px 32px;
+  width: fit-content;
+  cursor: pointer;
+  border: 1px solid $blue;
+  transition: all .3s;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 24px;
+}

@@ -1,0 +1,36 @@
+.items {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr 1fr
+  }
+}
+
+.title {
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 32px;
+}
+
+.search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  background: #F9F8F9;
+  border-radius: 16px;
+}
+
+.searchBlock {
+  width: 100%;
+  marginRight: 16;
+}
+
+.magicWrap {
+  height: 100vh;
+  overflow-y: hidden;
+}

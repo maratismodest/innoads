@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="09b01233-c394-4afa-9b78-f7e5a3bacd7f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/options.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Button/Button.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Button/Button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Header/Header.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Header/Header.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Icon/Icon.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Icon/Icon.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Input/Input.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Input/Input.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Item/Item.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Item/Item.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/MainLayout/MainLayout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Search/Input.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Search/Search.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Search/Search.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Select/Select.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Spinner/Spinner.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Spinner/Spinner.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/constants/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/context/AuthContext.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/convertTextToHtml.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/getUserPosts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/handleImageUpload.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/handleTelegramResponse.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/media.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/moveImage.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/onImageClick.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hooks/isMobile.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hooks/useDebounce.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interfaces/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/add.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/edit.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/post/[slug].tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/profile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/search.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/super.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Index.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/Item.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/styles/classes.module.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/variables.scss" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="28YWgisxwCQr2p6LQMyzCHcLaAH" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="javascript.nodejs.core.library.configured.version" value="16.13.2" />
+    <property name="javascript.nodejs.core.library.typings.version" value="16.11.32" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2021.3.1\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\marat\Documents\Github\innoads-frontend" />
+      <recent name="C:\Users\marat\Documents\Github\innoads-frontend\styles" />
+      <recent name="C:\Users\marat\Documents\Github\innoads-frontend\components" />
+      <recent name="C:\Users\marat\Documents\Github\innoads-frontend\pages" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\marat\Documents\Github\innoads-frontend\components\MainLayout" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="09b01233-c394-4afa-9b78-f7e5a3bacd7f" name="Changes" comment="" />
+      <created>1651394112958</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1651394112958</updated>
+      <workItem from="1651394114205" duration="3410000" />
+      <workItem from="1651397581951" duration="96000" />
+      <workItem from="1651397837690" duration="3634000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

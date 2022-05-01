@@ -1,0 +1,95 @@
+@import "variables";
+
+html, body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  margin: 0 auto;
+  margin-top: 66px;
+  padding: 1rem;
+  max-width: 1100px;
+  position: relative;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 0;
+  margin: 0;
+}
+
+.custom-img {
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
+}
+
+.unset-img {
+  width: 100%;
+  position: relative;
+  transition: transform .2s; /* Animation */
+}
+
+.unset-img :hover {
+  transition: transform .2s; /* Animation */
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.unset-img > div {
+  position: unset !important;
+  aspect-ratio: 1 / 1;
+}
+
+a {
+  text-decoration: none;
+  color: $black;
+
+}
+
+.error {
+  color: red;
+}
+
+/*html,*/
+/*body {*/
+/*  padding: 0;*/
+/*  margin: 0;*/
+/*  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,*/
+/*    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;*/
+/*}*/
+
+/*a {*/
+/*  color: inherit;*/
+/*  text-decoration: none;*/
+/*}*/
+
+/** {*/
+/*  box-sizing: border-box;*/
+/*}*/
