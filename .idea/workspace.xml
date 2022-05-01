@@ -5,46 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09b01233-c394-4afa-9b78-f7e5a3bacd7f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/options.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Button/Button.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Button/Button.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Header/Header.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Header/Header.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Icon/Icon.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Icon/Icon.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Input/Input.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Input/Input.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Item/Item.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Item/Item.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/MainLayout/MainLayout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Search/Input.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Search/Search.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Search/Search.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Select/Select.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Spinner/Spinner.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/Spinner/Spinner.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/constants/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/context/AuthContext.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/functions/convertTextToHtml.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/functions/getUserPosts.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/functions/handleImageUpload.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/functions/handleTelegramResponse.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/functions/media.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/functions/moveImage.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/functions/onImageClick.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hooks/isMobile.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hooks/useDebounce.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/interfaces/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/add.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/edit.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/post/[slug].tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/profile.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/search.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/super.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Index.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/Item.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/classes.module.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/sitemap.xml.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/edit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/edit.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/super.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/super.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +20,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -103,7 +78,7 @@
       <updated>1651394112958</updated>
       <workItem from="1651394114205" duration="3410000" />
       <workItem from="1651397581951" duration="96000" />
-      <workItem from="1651397837690" duration="3634000" />
+      <workItem from="1651397837690" duration="5989000" />
     </task>
     <servers />
   </component>

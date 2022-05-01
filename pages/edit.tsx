@@ -1,24 +1,23 @@
 import React, {useEffect, useState} from "react";
-import {MainLayout} from "components/MainLayout";
-import {storage} from "firebaseConfig";
 import {useRouter} from "next/router";
-import Input from "components/Input/Input";
 import Image from "next/image";
-import Button from "components/Button/Button";
-import SelectInno from "components/Select/Select";
-// import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import Icon from "components/Icon/Icon";
 import {isDesktop} from "react-device-detect";
 import cn from "classnames";
 import axios from "axios";
 import {Controller, useForm} from "react-hook-form";
-import {options} from 'assets/options'
-import addClasses from "styles/classes.module.scss";
+import addClasses from "../styles/classes.module.scss";
 import {useAuth} from "../context/AuthContext";
-import {MoveImage, moveImage} from "functions/moveImage";
-import {onImageClick} from "functions/onImageClick";
 import {PostInterface} from "../interfaces";
 import handleImageUpload from "../functions/handleImageUpload";
+import {MainLayout} from "../components/MainLayout/MainLayout";
+import {storage} from "../firebaseConfig";
+import {options} from "../assets/options";
+import Input from "../components/Input/Input";
+import {onImageClick} from "../functions/onImageClick";
+import {MoveImage, moveImage} from "../functions/moveImage";
+import Icon from "../components/Icon/Icon";
+import Button from "../components/Button/Button";
+import SelectInno from "../components/Select/Select";
 
 export default function Edit() {
     const router = useRouter();

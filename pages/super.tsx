@@ -1,26 +1,25 @@
 import React, {useState} from "react";
-import {MainLayout} from "components/MainLayout";
-import {storage} from "firebaseConfig";
 import {useRouter} from "next/router";
-import Input from "components/Input/Input";
 import Image from "next/image";
-import Button from "components/Button/Button";
-import SelectInno from "components/Select/Select";
 // @ts-ignore
 import slug from "slug";
-import Icon from "components/Icon/Icon";
 import {isDesktop} from "react-device-detect";
 import cn from "classnames";
-import classes from "styles/classes.module.scss";
+import classes from "../styles/classes.module.scss";
 import axios from "axios";
 import {Controller, useForm} from "react-hook-form";
-import {options} from 'assets/options'
-import {MoveImage, moveImage} from "functions/moveImage";
-import {media} from "functions/media";
-import {onImageClick} from "functions/onImageClick";
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
 import handleImageUpload from "../functions/handleImageUpload";
+import {storage} from "../firebaseConfig";
+import {MainLayout} from "../components/MainLayout/MainLayout";
+import {options} from "../assets/options";
+import {Input} from "../components/Input/Input";
+import {onImageClick} from "../functions/onImageClick";
+import Icon from "../components/Icon/Icon";
+import {MoveImage, moveImage} from "../functions/moveImage";
+import Button from "../components/Button/Button";
+import SelectInno from "../components/Select/Select";
 
 export default function Super() {
     const router = useRouter()
