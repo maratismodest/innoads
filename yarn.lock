@@ -3400,7 +3400,7 @@ natural-compare@^1.4.0:
 
 next-pwa@^5.5.2:
   version "5.5.2"
-  resolved "https://registry.npmjs.org/next-pwa/-/next-pwa-5.5.2.tgz"
+  resolved "https://registry.yarnpkg.com/next-pwa/-/next-pwa-5.5.2.tgz#a592c49195001a8b5d21e0e8cf1190f4da2dc28d"
   integrity sha512-NOZxIS/4Qa4lsPG99CNh3ZA1vfVJ3vpZjBvfouXOfWn0K9CLjBRZwGkJAcWsMWngSGoTN1hUkg97Pe+9xESzWQ==
   dependencies:
     babel-loader "^8.2.4"
