@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09b01233-c394-4afa-9b78-f7e5a3bacd7f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/sitemap.xml.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/sw.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/sw.js.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/workbox-74d02f44.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/workbox-74d02f44.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/sitemap.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/sitemap.xml.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/sitemap.xml.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/sw.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/sw.js.map" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +76,7 @@
       <workItem from="1651394114205" duration="3410000" />
       <workItem from="1651397581951" duration="96000" />
       <workItem from="1651397837690" duration="6373000" />
-      <workItem from="1651410662253" duration="5257000" />
+      <workItem from="1651410662253" duration="5769000" />
     </task>
     <servers />
   </component>

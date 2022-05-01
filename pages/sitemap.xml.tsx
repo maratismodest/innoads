@@ -1,5 +1,5 @@
 import axios from 'axios'
-import * as fs from 'fs'
+import fs from 'fs'
 import {GetServerSideProps} from "next"
 import {PostInterface} from '../interfaces'
 
@@ -10,7 +10,7 @@ const Sitemap = () => {
 export const getServerSideProps: GetServerSideProps = async ({res}) => {
     const BASE_URL = 'https://innoads.ru'
 
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?size=1000`)
+    const response = await axios.get(`https://innoads-backend-two.herokuapp.com/post?size=1000`)
 
     const posts: PostInterface[] = response.data.content
 
