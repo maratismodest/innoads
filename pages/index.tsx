@@ -18,6 +18,10 @@ interface HomeProps {
     posts: PostInterface[]
 }
 
+const seoTitle = 'Доска объявлений города Иннополис';
+const seoDescription = 'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи.'
+const seoImage = '/icons/icon-192x192.png'
+
 const Home: NextPage<HomeProps> = ({posts}) => {
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
@@ -30,15 +34,16 @@ const Home: NextPage<HomeProps> = ({posts}) => {
         const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
         setPage(prevState => prevState + 1)
         setInfinite(prevState => [...prevState, ...posts])
-        setHasMore((page + 1 ) < response.data.totalPages)
+        setHasMore((page + 1) < response.data.totalPages)
         return posts
     }
+
     return (
         <>
             <Head>
                 <title>Доска объявлений города Иннополис</title>
                 <meta name="description"
-                      content="Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи."/>
+                      content={seoTitle}/>
                 <link rel="icon" href="/favicon.ico"/>
                 <link rel="manifest" href="/manifest.json"/>
                 <meta name="keywords" content="innoads Иннополис"/>
@@ -46,6 +51,11 @@ const Home: NextPage<HomeProps> = ({posts}) => {
                 <meta name="image" content='/icons/icon-192x192.png'/>
                 <meta name="language" content="ru"/>
                 <meta charSet="utf-8"/>
+                <meta property="og:title" content={seoTitle}/>
+                <meta property="og:description" content={seoDescription}/>
+                <meta property="og:type" content="website"/>
+                <meta property="og:url" content="https://innoads.ru/"/>
+                <meta property="og:image" content={seoImage}/>
             </Head>
             <Header/>
             <main>
@@ -74,7 +84,7 @@ const Home: NextPage<HomeProps> = ({posts}) => {
                         hasMore={hasMore}
                         initialLoad={false}
                         threshold={100}
-                        loader={<div key={0}><Spinner /></div>}
+                        loader={<div key={0}><Spinner/></div>}
                     >
                         <ul className={classes.items}>
                             {infinite.map((post: PostInterface) => {
