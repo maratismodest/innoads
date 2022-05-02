@@ -1,6 +1,5 @@
-Sitemap: https://innoads.ru/sitemap.xml
-
 User-agent: *
 Allow: /*
 
-Disallow: /api/*
+Sitemap: http://innoads.ru/api/my-sitemap
+Sitemap: https://innoads.ru/sitemap.xml

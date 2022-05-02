@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next build && next export"
   },
   "dependencies": {
     "axios": "^0.27.2",
@@ -27,7 +28,8 @@
     "react-telegram-login": "^1.1.2",
     "react-yandex-metrika": "^2.6.0",
     "sass": "^1.43.4",
-    "slug": "^5.3.0"
+    "slug": "^5.3.0",
+    "sitemap": "^7.0.0"
   },
   "devDependencies": {
     "@sergeymyssak/nextjs-sitemap": "^2.0.3",
