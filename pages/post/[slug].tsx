@@ -40,9 +40,7 @@ export default function Post({post: serverPost}: PostProps) {
     return (
         <>
             <Head>
-                <title>
-                    {seoTitle}
-                </title>
+                <title>{seoTitle}</title>
                 <meta name="description" content={seoDescription}/>
                 <link rel="icon" href="/favicon.ico"/>
                 <link rel="manifest" href="/manifest.json"/>
@@ -51,6 +49,11 @@ export default function Post({post: serverPost}: PostProps) {
                 <meta name="image" content={seoImage}/>
                 <meta name="language" content="ru"/>
                 <meta charSet="utf-8"/>
+                <meta property="og:title" content={title}/>
+                <meta property="og:description" content={seoDescription}/>
+                <meta property="og:type" content="website"/>
+                <meta property="og:url" content="https://innoads.ru/"/>
+                <meta property="og:image" content={seoImage}/>
             </Head>
             <Header/>
             <main>
