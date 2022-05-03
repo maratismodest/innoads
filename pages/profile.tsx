@@ -36,8 +36,7 @@ export default function Profile() {
                     <h2>Авторизация</h2>
                     <TelegramLoginButton
                         dataOnauth={(e: any) => handleTelegramResponse(e, login)}
-                        botName="InnoAdsProfileBot"
-                        language="ru"
+                        botName="InnoAdsPostBot"
                     />
                 </div>
             </MainLayout>
