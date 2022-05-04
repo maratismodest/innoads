@@ -39,7 +39,7 @@ const SearchPage: NextPage<SearchPageProps> = ({posts}) => {
 
     useEffect(() => {
         loadFunc(0)
-    }, [debouncedValue, category])
+    }, [debouncedValue, category, loadFunc])
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInput(event.target.value)

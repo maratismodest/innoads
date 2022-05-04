@@ -16,7 +16,7 @@ const getDynamicPaths = async () => {
 
 }
 
-export default async (req: any, res: any) => {
+const Sitemap = async (req: any, res: any) => {
     // An array with your links
     const posts: PostInterface[] = await getDynamicPaths()
 
@@ -37,3 +37,5 @@ export default async (req: any, res: any) => {
 
     res.end(xmlString);
 };
+
+export default Sitemap
