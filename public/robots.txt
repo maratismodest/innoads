@@ -1,8 +1,4 @@
 User-agent: *
-Allow: /*
+Allow: /
 
 Sitemap: https://innoads.ru/api/my-sitemap
-
-User-agent: Yandex
-Disallow:
-Clean-param: utm
