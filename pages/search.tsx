@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import {orderBy} from "lodash";
 import {useRouter} from "next/router";
 import axios from "axios";
-import type {NextPage, GetStaticProps} from 'next'
+import type {GetStaticProps, NextPage} from 'next'
 import {PostInterface} from "../interfaces";
 import useDebounce from "../hooks/useDebounce";
 import {MainLayout} from "../components/MainLayout/MainLayout";

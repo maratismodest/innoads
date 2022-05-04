@@ -11,6 +11,7 @@ import {Controller, useForm} from "react-hook-form";
 import {useAuth} from "../context/AuthContext";
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
+
 import handleImageUpload from "../functions/handleImageUpload";
 import {routes} from "../constants";
 import Spinner from "../components/Spinner/Spinner";

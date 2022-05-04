@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import type {NextPage, GetStaticProps} from 'next'
+import type {GetStaticProps, NextPage} from 'next'
 import Head from 'next/head'
 import Link from 'next/link';
 import axios from "axios";

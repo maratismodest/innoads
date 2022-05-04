@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import Image from "next/image";
-import Link from "next/link";
 import {useAuth} from "../context/AuthContext";
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
