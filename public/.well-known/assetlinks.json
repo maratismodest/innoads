@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "ru.chamala.innoads",
+      "sha256_cert_fingerprints":
+      ["09:AE:4F:42:40:A0:87:22:55:28:A4:16:A3:72:3E:50:73:60:0B:80:60:BC:58:52:96:C0:32:6E:47:9D:E5:9D"]
+    }
+  }
+]
