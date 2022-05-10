@@ -41,6 +41,7 @@ const Home: NextPage<HomeProps> = ({posts}) => {
     return (
         <>
             <Head>
+<link rel="canonical" href="https://innoads.ru" />
                 <title>Доска объявлений города Иннополис</title>
                 <meta name="description"
                       content={seoTitle}/>
