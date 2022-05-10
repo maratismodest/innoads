@@ -12,6 +12,7 @@ import Button from '../components/Button/Button';
 import Header from '../components/Header/Header';
 import {PostInterface} from '../interfaces';
 import Spinner from '../components/Spinner/Spinner';
+import generateRSSFeed from '../functions/generateRSSFeed'
 
 
 interface HomeProps {
@@ -101,11 +102,15 @@ const Home: NextPage<HomeProps> = ({posts}) => {
 export const getStaticProps: GetStaticProps = async (context) => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post`)
     const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+
+
     if (!posts) {
         return {
             notFound: true,
         };
     }
+
+    generateRSSFeed(posts);
 
     return {
         props: {
@@ -116,3 +121,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 export default Home
+

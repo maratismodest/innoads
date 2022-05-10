@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09b01233-c394-4afa-9b78-f7e5a3bacd7f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/public/robots.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/generateRSSFeed.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/rss.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/sw.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/sw.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +87,7 @@
       <workItem from="1651576735075" duration="901000" />
       <workItem from="1651577805166" duration="997000" />
       <workItem from="1651646783695" duration="44000" />
+      <workItem from="1652204724120" duration="1557000" />
     </task>
     <servers />
   </component>
