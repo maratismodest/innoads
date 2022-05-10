@@ -33,14 +33,9 @@ export const MainLayout: React.FC<Props> = ({
                 <title>
                     InnoAds {category} {title} {price}
                 </title>
-                <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
-                <link rel="manifest" href="/manifest.json"/>
-                <meta name="keywords" content="innoads Иннополис"/>
-                <meta name="robots"/>
+                <meta name="keywords" content="innoads Иннополис доска объявлений"/>
                 <meta name="description" content={description}/>
                 <meta name="image" content={image}/>
-                <meta name="language" content="ru"/>
-                <meta charSet="utf-8"/>
                 <meta property="og:title" content={title}/>
                 <meta property="og:description" content={description}/>
                 <meta property="og:type" content="website"/>

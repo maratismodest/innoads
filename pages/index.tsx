@@ -12,6 +12,7 @@ import Button from '../components/Button/Button';
 import Header from '../components/Header/Header';
 import {PostInterface} from '../interfaces';
 import Spinner from '../components/Spinner/Spinner';
+import generateRSSFeed from '../functions/generateRSSFeed'
 
 
 interface HomeProps {
@@ -41,16 +42,12 @@ const Home: NextPage<HomeProps> = ({posts}) => {
     return (
         <>
             <Head>
+                <link rel="canonical" href="https://innoads.ru"/>
                 <title>Доска объявлений города Иннополис</title>
                 <meta name="description"
                       content={seoTitle}/>
-                <link rel="icon" href="/favicon.ico"/>
-                <link rel="manifest" href="/manifest.json"/>
-                <meta name="keywords" content="innoads Иннополис"/>
-                <meta name="robots"/>
+                <meta name="keywords" content="innoads Иннополис доска объявлений"/>
                 <meta name="image" content='/icons/icon-192x192.png'/>
-                <meta name="language" content="ru"/>
-                <meta charSet="utf-8"/>
                 <meta property="og:title" content={seoTitle}/>
                 <meta property="og:description" content={seoDescription}/>
                 <meta property="og:type" content="website"/>
@@ -105,11 +102,15 @@ const Home: NextPage<HomeProps> = ({posts}) => {
 export const getStaticProps: GetStaticProps = async (context) => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post`)
     const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+
+
     if (!posts) {
         return {
             notFound: true,
         };
     }
+
+    generateRSSFeed(posts);
 
     return {
         props: {
@@ -120,3 +121,4 @@ export const getStaticProps: GetStaticProps = async (context) => {
 }
 
 export default Home
+
