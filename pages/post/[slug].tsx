@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useMemo} from "react";
 import type {GetServerSideProps} from "next";
 import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
@@ -12,7 +12,6 @@ import Button from "../../components/Button/Button";
 import {options} from "../../assets/options";
 import Head from "next/head";
 import Header from "../../components/Header/Header";
-
 
 interface PostProps {
     post: PostInterface
@@ -31,24 +30,22 @@ export default function Post({post: serverPost}: PostProps) {
         price,
         createdAt,
         telegram,
+        slug
     } = post;
 
     const category = _.find(options, {value: categoryId}) || options[0]
     const seoTitle = `InnoAds ${category.label} ${title} ${price.toString()}`
     const seoDescription = body
     const seoImage = preview
+    const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [slug])
     return (
         <>
             <Head>
                 <title>{seoTitle}</title>
+                <link rel="canonical" href={slug}/>
                 <meta name="description" content={seoDescription}/>
-                <link rel="icon" href="/favicon.ico"/>
-                <link rel="manifest" href="/manifest.json"/>
-                <meta name="keywords" content="innoads Иннополис"/>
-                <meta name="robots"/>
+                <meta name="keywords" content="innoads Иннополис доска объявлений"/>
                 <meta name="image" content={seoImage}/>
-                <meta name="language" content="ru"/>
-                <meta charSet="utf-8"/>
                 <meta property="og:title" content={title}/>
                 <meta property="og:description" content={seoDescription}/>
                 <meta property="og:type" content="website"/>
