@@ -31,6 +31,7 @@ export default function Post({post: serverPost}: PostProps) {
         price,
         createdAt,
         telegram,
+slug
     } = post;
 
     const category = _.find(options, {value: categoryId}) || options[0]
@@ -40,6 +41,7 @@ export default function Post({post: serverPost}: PostProps) {
     return (
         <>
             <Head>
+<link rel="canonical" href=`https://innoads.ru/post/${slug}` />
                 <title>{seoTitle}</title>
                 <meta name="description" content={seoDescription}/>
                 <link rel="icon" href="/favicon.ico"/>
