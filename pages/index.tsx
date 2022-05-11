@@ -1,7 +1,8 @@
 import {useState} from 'react';
-import type {NextPage, GetStaticProps} from 'next'
+import type {GetStaticProps, NextPage} from 'next'
 import Head from 'next/head'
 import Link from 'next/link';
+import dynamic from 'next/dynamic'
 import axios from "axios";
 import {orderBy} from "lodash";
 import InfiniteScroll from 'react-infinite-scroller';
@@ -12,22 +13,36 @@ import Button from '../components/Button/Button';
 import Header from '../components/Header/Header';
 import {PostInterface} from '../interfaces';
 import Spinner from '../components/Spinner/Spinner';
-
+// import Premium from '../components/Premium/Premium';
+const Premium = dynamic(() => import('../components/Premium/Premium'),{ ssr: false })
 
 interface HomeProps {
     posts: PostInterface[]
+    premium: PostInterface[]
+}
+
+const getPremium = async () => {
+    try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?category=5`)
+        const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+        return posts as PostInterface[]
+    } catch (e) {
+        console.log(e)
+        return []
+    }
 }
 
 const seoTitle = 'Доска объявлений города Иннополис';
 const seoDescription = 'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи.'
 const seoImage = '/icons/icon-192x192.png'
 
-const Home: NextPage<HomeProps> = ({posts}) => {
+const Home: NextPage<HomeProps> = ({posts, premium}) => {
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
 
     const [infinite, setInfinite] = useState(posts)
     const [input, setInput] = useState("");
+
 
     const loadFunc = async () => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${page + 1}`)
@@ -72,6 +87,8 @@ const Home: NextPage<HomeProps> = ({posts}) => {
                         </a>
                     </Link>
                 </form>
+                {premium.length > 0 && <Premium premium={premium}/>}
+
                 <h1 className={classes.title}>Последние объявления</h1>
                 <div className={classes.magicWrapper}>
                     <InfiniteScroll
@@ -101,9 +118,10 @@ const Home: NextPage<HomeProps> = ({posts}) => {
 export const getStaticProps: GetStaticProps = async (context) => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post`)
     const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+    const getPremium = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?category=5`)
+    const premium = orderBy(getPremium.data.content, ['createdAt'], ['desc'])
 
-
-    if (!posts) {
+    if (!posts || !premium) {
         return {
             notFound: true,
         };
@@ -111,7 +129,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     return {
         props: {
-            posts
+            posts,
+            premium
         },
         revalidate: 10,
     };
