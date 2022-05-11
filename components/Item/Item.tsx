@@ -9,10 +9,11 @@ import axios from "axios";
 interface ItemInterface {
     post: PostInterface,
     edit?: boolean
+    margin?: number
 }
 
 
-export const Item = ({post, edit}: ItemInterface) => {
+export const Item = ({post, edit, margin}: ItemInterface) => {
 
     const [state, setState] = useState(true)
     const deletePost = async (id: number) => {
@@ -32,7 +33,7 @@ export const Item = ({post, edit}: ItemInterface) => {
         return null
     }
     return (
-        <li key={post.slug} className={classes.item}>
+        <li key={post.slug} className={classes.item} style={{marginRight: margin}}>
             {edit && (
                 <div className={classes.edit}>
                     <Button onClick={() => deletePost(post.id)}>X</Button>

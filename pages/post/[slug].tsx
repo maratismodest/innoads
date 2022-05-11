@@ -2,7 +2,6 @@ import React, {useState, useMemo} from "react";
 import type {GetServerSideProps} from "next";
 import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
-import "pure-react-carousel/dist/react-carousel.es.css";
 import moment from "moment";
 import axios from "axios";
 import _ from "lodash";

@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09b01233-c394-4afa-9b78-f7e5a3bacd7f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/components/Premium/Premium.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/api/rss.xml.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/rss.xml.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/options.ts" beforeDir="false" afterPath="$PROJECT_DIR$/assets/options.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Item/Item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Item/Item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/post/[slug].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/post/[slug].tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/sw.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/sw.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Home.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Home.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Item.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Item.module.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,9 +48,9 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="javascript.nodejs.core.library.configured.version" value="16.13.2" />
-    <property name="javascript.nodejs.core.library.typings.version" value="16.11.33" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="javascript.nodejs.core.library.configured.version" value="16.15.0" />
+    <property name="javascript.nodejs.core.library.typings.version" value="16.11.34" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/components" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -55,11 +61,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/components" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="C:\Users\marat\Documents\Github\innoads-frontend\public" />
       <recent name="C:\Users\marat\Documents\Github\innoads-frontend" />
       <recent name="C:\Users\marat\Documents\Github\innoads-frontend\styles" />
-      <recent name="C:\Users\marat\Documents\Github\innoads-frontend\components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/draft" />
@@ -87,6 +93,8 @@
       <workItem from="1652207071895" duration="2790000" />
       <workItem from="1652210564093" duration="4000" />
       <workItem from="1652240045080" duration="2382000" />
+      <workItem from="1652283506386" duration="314000" />
+      <workItem from="1652283928388" duration="8580000" />
     </task>
     <servers />
   </component>
