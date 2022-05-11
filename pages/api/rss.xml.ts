@@ -1,4 +1,5 @@
 import {PostInterface} from "../../interfaces";
+
 const {Feed} = require('feed')
 const moment = require('moment')
 
@@ -8,7 +9,7 @@ const {Readable} = require("stream");
 
 const getDynamicPaths = async () => {
     try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?size=1000`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?size=100`)
         const posts: PostInterface[] = res.data.content
         return posts
     } catch (e) {
@@ -20,30 +21,23 @@ const getDynamicPaths = async () => {
 
 const baseUrl = 'https://innoads.ru';
 const author = {
-    name: 'Ashlee Boyer',
-    email: 'hello@ashleemboyer.com',
-    link: 'https://twitter.com/ashleemboyer',
+    name: 'Marat Faizer',
+    email: 'maratismodest@gmail.com',
+    link: 'https://t.me/maratfaizer',
 };
-
-
 
 
 export default async (req: any, res: any) => {
     // An array with your links
     const posts: PostInterface[] = await getDynamicPaths()
 
-    const links = posts.map((post) => {
-        return {url: `/post/${post.slug}`, changefreq: "daily", priority: 0.3}
-    });
-
     // Construct a new Feed object
     const feed = new Feed({
-        title: 'Articles by Ashlee M Boyer',
-        description:
-            "You can find me talking about issues surrounding Disability, Accessibility, and Mental Health on Twitter, or you can find me regularly live-knitting or live-coding on Twitch. I'm @AshleeMBoyer on all the platforms I use.",
+        title: 'Доска объявлений города Иннополиса',
+        description: 'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи',
         id: baseUrl,
         link: baseUrl,
-        language: 'en',
+        language: 'ru',
         feedLinks: {
             rss2: `${baseUrl}/rss.xml`,
         },
@@ -56,10 +50,12 @@ export default async (req: any, res: any) => {
             body,
             slug,
             title,
-            createdAt
+            createdAt,
+            preview
             // meta: { date, description, title },
         } = post;
         const url = `${baseUrl}/post/${slug}`;
+        console.log('preview', preview.toString())
 
         feed.addItem({
             title,
@@ -69,6 +65,8 @@ export default async (req: any, res: any) => {
             content: body,
             author: [author],
             date: moment(createdAt).toDate(),
+            image: preview.split('&')[0]
+            // image: 'https://resheto.net/images/mater/pozitivnye_kartinki_2.jpg'
             // date: new Date(date),
         });
     });
