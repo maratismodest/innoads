@@ -14,7 +14,7 @@ import Header from '../components/Header/Header';
 import {PostInterface} from '../interfaces';
 import Spinner from '../components/Spinner/Spinner';
 // import Premium from '../components/Premium/Premium';
-const Premium = dynamic(() => import('../components/Premium/Premium'),{ ssr: false })
+const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
 
 interface HomeProps {
     posts: PostInterface[]
@@ -57,9 +57,9 @@ const Home: NextPage<HomeProps> = ({posts, premium}) => {
         <>
             <Head>
                 <link rel="canonical" href="https://innoads.ru"/>
-                <title>Доска объявлений города Иннополис</title>
+                <title>{seoTitle}</title>
                 <meta name="description"
-                      content={seoTitle}/>
+                      content={seoDescription}/>
                 <meta name="keywords" content="innoads Иннополис доска объявлений"/>
                 <meta name="image" content='/icons/icon-192x192.png'/>
                 <meta property="og:title" content={seoTitle}/>

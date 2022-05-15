@@ -37,14 +37,15 @@ export default function Post({post: serverPost}: PostProps) {
     const seoTitle = `InnoAds ${category.label} ${title} ${price.toString()}`
     const seoDescription = body
     const seoImage = preview
+    const seoKeywords = useMemo(() => `innoads Иннополис доска объявлений ${category}`, [category])
     const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [slug])
     return (
         <>
             <Head>
                 <title>{seoTitle}</title>
-                <link rel="canonical" href={slug}/>
+                <link rel="canonical" href={canonical}/>
                 <meta name="description" content={seoDescription}/>
-                <meta name="keywords" content="innoads Иннополис доска объявлений"/>
+                <meta name="keywords" content={seoKeywords}/>
                 <meta name="image" content={seoImage}/>
                 <meta property="og:title" content={title}/>
                 <meta property="og:description" content={seoDescription}/>
