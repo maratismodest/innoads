@@ -9,5 +9,7 @@ export interface PostInterface {
     slug: string;
     categoryId: number;
     telegram: string;
-    createdAt: string
+    createdAt: string;
+    updatedAt: string;
+    vector?: any;
 }

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import type {GetStaticProps, NextPage} from 'next'
 import Head from 'next/head'
 import Link from 'next/link';
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import axios from "axios";
 import {orderBy} from "lodash";
 import InfiniteScroll from 'react-infinite-scroller';
@@ -13,8 +13,9 @@ import Button from '../components/Button/Button';
 import Header from '../components/Header/Header';
 import {PostInterface} from '../interfaces';
 import Spinner from '../components/Spinner/Spinner';
+import Premium from "../components/Premium/Premium";
 
-const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
+// const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
 
 interface HomeProps {
     posts: PostInterface[]
