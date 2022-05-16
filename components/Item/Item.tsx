@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import Link from "next/link";
 import Image from "next/image";
-import classes from "./Item.module.scss";
 import {PostInterface} from "../../interfaces";
 import Button from "../Button/Button";
 import axios from "axios";
+import {isMobile, isTablet, isDesktop} from "react-device-detect";
+import classes from "./Item.module.scss";
 
 interface ItemInterface {
     post: PostInterface,
@@ -14,6 +15,18 @@ interface ItemInterface {
 
 
 export const Item = ({post, edit, margin}: ItemInterface) => {
+
+    const size = useMemo(() => {
+        if (isMobile) {
+            return '50vw'
+        }
+        if (isTablet) {
+            return '33vw'
+        }
+        if (isDesktop) {
+            return '25vw'
+        }
+    }, [isMobile, isTablet, isDesktop])
 
     const [state, setState] = useState(true)
     const deletePost = async (id: number) => {
@@ -49,7 +62,7 @@ export const Item = ({post, edit, margin}: ItemInterface) => {
                             objectFit="cover"
                             placeholder="blur"
                             blurDataURL="/no-image.jpeg"
-
+                            sizes={size}
                         />
                     </div>
                     <h2>
