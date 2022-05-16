@@ -18,14 +18,13 @@ const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: fal
 
 interface HomeProps {
     posts: PostInterface[]
-    premium: PostInterface[]
 }
 
 const seoTitle = 'Доска объявлений города Иннополис';
 const seoDescription = 'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи.'
 const seoImage = '/icons/icon-192x192.png'
 
-const Home: NextPage<HomeProps> = ({posts, premium}) => {
+const Home: NextPage<HomeProps> = ({posts}) => {
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
 
@@ -76,7 +75,7 @@ const Home: NextPage<HomeProps> = ({posts, premium}) => {
                         </a>
                     </Link>
                 </form>
-                <Premium premium={premium}/>
+                <Premium/>
 
                 <h1 className={classes.title}>Последние объявления</h1>
                 <div className={classes.magicWrapper}>
