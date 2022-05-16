@@ -8,6 +8,7 @@ export default function Document() {
                 <meta name="robots"/>
                 <link rel="icon" href="/favicon.ico"/>
                 <link rel="manifest" href="/manifest.json"/>
+                <meta property="fb:pages" content="103265652394743" />
             </Head>
             <body>
             <Main/>
