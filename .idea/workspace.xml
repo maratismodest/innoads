@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="09b01233-c394-4afa-9b78-f7e5a3bacd7f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/map.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/post/[slug].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/post/[slug].tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +89,8 @@
       <workItem from="1652283506386" duration="314000" />
       <workItem from="1652283928388" duration="9069000" />
       <workItem from="1652559888349" duration="511000" />
-      <workItem from="1652626661030" duration="255000" />
+      <workItem from="1652626661030" duration="631000" />
+      <workItem from="1652676637000" duration="2435000" />
     </task>
     <servers />
   </component>
