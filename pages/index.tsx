@@ -13,9 +13,8 @@ import Button from '../components/Button/Button';
 import Header from '../components/Header/Header';
 import {PostInterface} from '../interfaces';
 import Spinner from '../components/Spinner/Spinner';
-import Premium from "../components/Premium/Premium";
-
-// const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
+import dynamic from "next/dynamic";
+const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
 
 interface HomeProps {
     posts: PostInterface[]
