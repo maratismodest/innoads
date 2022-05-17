@@ -94,7 +94,7 @@ export default function Add() {
             if (resizedImage) {
                 const formData = new FormData();
                 formData.append("image", resizedImage);
-                const res = await axios.post('http://80.78.253.184:8080', formData, {
+                const res = await axios.post('https://innoads-backend.herokuapp.com', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
