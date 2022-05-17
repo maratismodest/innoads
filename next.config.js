@@ -10,7 +10,7 @@ const nextConfig = {
         NEXT_PUBLIC_PICTURE_URL_PATH: process.env.NEXT_PUBLIC_PICTURE_URL_PATH
     },
     images: {
-        domains: ["firebasestorage.googleapis.com"]
+        domains: ["firebasestorage.googleapis.com", "gitarist.shop"]
     },
     pwa: {
         dest: 'public',
