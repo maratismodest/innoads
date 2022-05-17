@@ -46,16 +46,16 @@ export default function Add() {
         }
     }, [user])
 
-    if (!user || !user.username) {
-        return (
-            <MainLayout title={"Добавить объявление"}>
-                <div className={classes.center}>
-                    <Spinner/>
-                    <Button id='hidden' onClick={redirect}>Hidden</Button>
-                </div>
-            </MainLayout>
-        )
-    }
+    // if (!user || !user.username) {
+    //     return (
+    //         <MainLayout title={"Добавить объявление"}>
+    //             <div className={classes.center}>
+    //                 <Spinner/>
+    //                 <Button id='hidden' onClick={redirect}>Hidden</Button>
+    //             </div>
+    //         </MainLayout>
+    //     )
+    // }
 
     const onSubmit = async (data: any) => {
         if (images.length === 0) {
@@ -94,7 +94,7 @@ export default function Add() {
             if (resizedImage) {
                 const formData = new FormData();
                 formData.append("image", resizedImage);
-                const res = await axios.post('https://innoads-backend.herokuapp.com', formData, {
+                const res = await axios.post('https://innoads-fileserver.herokuapp.com', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
