@@ -14,7 +14,7 @@ import Header from '../components/Header/Header';
 import {PostInterface} from '../interfaces';
 import Spinner from '../components/Spinner/Spinner';
 import dynamic from "next/dynamic";
-const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
+// const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
 
 interface HomeProps {
     posts: PostInterface[]
@@ -75,8 +75,8 @@ const Home: NextPage<HomeProps> = ({posts}) => {
                         </a>
                     </Link>
                 </form>
-                <Premium/>
-
+                {/*<Premium/>*/}
+                <p style={{textAlign: 'right'}}>* 311 объявлений на сайте</p>
                 <h1 className={classes.title}>Последние объявления</h1>
                 <div className={classes.magicWrapper}>
                     <InfiniteScroll

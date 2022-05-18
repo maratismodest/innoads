@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from "react";
+import React, {useState, useMemo, useContext, useCallback} from "react";
 import type {GetServerSideProps} from "next";
 import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
@@ -12,6 +12,7 @@ import Button from "../../components/Button/Button";
 import {options} from "../../assets/options";
 import Head from "next/head";
 import Header from "../../components/Header/Header";
+import {useAuth} from "../../context/AuthContext";
 
 interface PostProps {
     post: PostInterface
@@ -21,6 +22,7 @@ interface PostProps {
 export default function Post({post: serverPost}: PostProps) {
     const [post] = useState<PostInterface>(serverPost);
     const [images] = useState<string[]>(() => post.images.split("||"));
+    const {user} = useAuth();
 
     const {
         title,
@@ -30,6 +32,7 @@ export default function Post({post: serverPost}: PostProps) {
         price,
         createdAt,
         telegram,
+        tgId,
         slug
     } = post;
 
@@ -39,6 +42,17 @@ export default function Post({post: serverPost}: PostProps) {
     const seoImage = preview
     const seoKeywords = useMemo(() => `innoads Иннополис доска объявлений ${category}`, [category])
     const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [slug])
+
+    const handleRefresh = useCallback(async () => {
+        try {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, {...post, createdAt: new Date()})
+            alert('Объявление поднято в поиске!')
+            return
+        } catch (e) {
+            alert('Что-то пошло не так!')
+            console.log(e)
+        }
+    }, [])
     return (
         <>
             <Head>
@@ -89,11 +103,13 @@ export default function Post({post: serverPost}: PostProps) {
                         {title} - {price}
                         {isNaN(price) ? null : "р"}
                     </h1>
+                    {/*<Button onClick={handleRefresh}>Поднять объявление</Button>*/}
                     <hr/>
                     <p style={{whiteSpace: 'pre-wrap'}}>{body}</p>
                     <p>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
 
                     <div style={{marginTop: 40}}>
+                        {user && (user.id === tgId) && <Button onClick={handleRefresh}>Поднять объявление</Button>}
                         <Link href={`https://t.me/${telegram}`}>
                             <a>
                                 <Button>
