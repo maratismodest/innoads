@@ -108,8 +108,12 @@ export default function Post({post: serverPost}: PostProps) {
                     <p style={{whiteSpace: 'pre-wrap'}}>{body}</p>
                     <p>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
 
+                    {user && (user.id === tgId) &&
+                        <div style={{marginTop: 40}}>
+                            <Button onClick={handleRefresh}>Поднять объявление</Button>
+                        </div>
+                    }
                     <div style={{marginTop: 40}}>
-                        {user && (user.id === tgId) && <Button onClick={handleRefresh}>Поднять объявление</Button>}
                         <Link href={`https://t.me/${telegram}`}>
                             <a>
                                 <Button>
