@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import type {GetStaticProps, NextPage} from 'next'
 import Head from 'next/head'
 import Link from 'next/link';
@@ -6,30 +6,33 @@ import Link from 'next/link';
 import axios from "axios";
 import {orderBy} from "lodash";
 import InfiniteScroll from 'react-infinite-scroller';
-import classes from './../styles/Home.module.scss'
+import {PostInterface} from '../interfaces';
 import Item from '../components/Item/Item';
 import Search from '../components/Search/Search';
 import Button from '../components/Button/Button';
 import Header from '../components/Header/Header';
-import {PostInterface} from '../interfaces';
 import Spinner from '../components/Spinner/Spinner';
+import classes from './../styles/Home.module.scss'
 import dynamic from "next/dynamic";
+
 // const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
 
 interface HomeProps {
     posts: PostInterface[]
+    totalPages: number
 }
 
 const seoTitle = 'Доска объявлений города Иннополис';
 const seoDescription = 'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи.'
 const seoImage = '/icons/icon-192x192.png'
 
-const Home: NextPage<HomeProps> = ({posts}) => {
+const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
 
     const [infinite, setInfinite] = useState(posts)
     const [input, setInput] = useState("");
+    const count = useMemo(()=> totalPages * 12,[totalPages])
 
 
     const loadFunc = async () => {
@@ -76,7 +79,7 @@ const Home: NextPage<HomeProps> = ({posts}) => {
                     </Link>
                 </form>
                 {/*<Premium/>*/}
-                <p style={{textAlign: 'right'}}>* 311 объявлений на сайте</p>
+                <p style={{textAlign: 'right'}}>* {count} объявлений на сайте</p>
                 <h1 className={classes.title}>Последние объявления</h1>
                 <div className={classes.magicWrapper}>
                     <InfiniteScroll
@@ -115,7 +118,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
     return {
         props: {
-            posts
+            posts,
+            totalPages: response.data.totalPages,
         },
         revalidate: 10,
     };
