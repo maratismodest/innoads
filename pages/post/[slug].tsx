@@ -45,6 +45,7 @@ export default function Post({post: serverPost}: PostProps) {
 
     const handleRefresh = useCallback(async () => {
         try {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post})
             await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, {...post, createdAt: new Date()})
             alert('Объявление поднято в поиске!')
             return
@@ -52,7 +53,8 @@ export default function Post({post: serverPost}: PostProps) {
             alert('Что-то пошло не так!')
             console.log(e)
         }
-    }, [])
+    }, [post])
+
     return (
         <>
             <Head>
@@ -107,7 +109,6 @@ export default function Post({post: serverPost}: PostProps) {
                     <hr/>
                     <p style={{whiteSpace: 'pre-wrap'}}>{body}</p>
                     <p>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
-
                     {user && (user.id === tgId) &&
                         <div style={{marginTop: 40}}>
                             <Button onClick={handleRefresh}>Поднять объявление</Button>
