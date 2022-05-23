@@ -46,16 +46,16 @@ export default function Add() {
         }
     }, [user])
 
-    // if (!user || !user.username) {
-    //     return (
-    //         <MainLayout title={"Добавить объявление"}>
-    //             <div className={classes.center}>
-    //                 <Spinner/>
-    //                 <Button id='hidden' onClick={redirect}>Hidden</Button>
-    //             </div>
-    //         </MainLayout>
-    //     )
-    // }
+    if (!user || !user.username) {
+        return (
+            <MainLayout title={"Добавить объявление"}>
+                <div className={classes.center}>
+                    <Spinner/>
+                    <Button id='hidden' onClick={redirect}>Hidden</Button>
+                </div>
+            </MainLayout>
+        )
+    }
 
     const onSubmit = async (data: any) => {
         if (images.length === 0) {
