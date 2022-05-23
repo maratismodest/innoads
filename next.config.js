@@ -12,7 +12,7 @@ const nextConfig = {
         NEXT_PUBLIC_FILE_SERVER: process.env.NEXT_PUBLIC_FILE_SERVER
     },
     images: {
-        domains: ["firebasestorage.googleapis.com", "gitarist.shop"]
+        domains: ["firebasestorage.googleapis.com", "gitarist.shop", "chamala.tatar"]
     },
     pwa: {
         dest: 'public',
