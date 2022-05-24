@@ -1,4 +1,5 @@
 @import "variables";
+
 .item {
   //border: 1px solid black;
   box-shadow: 0px 32px 64px rgba(17, 17, 17, 0.08);
@@ -70,6 +71,13 @@
 .edit {
   position: absolute;
   z-index: 1;
+  top: 0;
   right: 0;
-  top:0;
+}
+
+.delete {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: 0;
 }
