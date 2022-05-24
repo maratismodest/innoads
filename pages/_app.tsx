@@ -1,7 +1,7 @@
-import Head from 'next/head'
 import type {AppProps} from 'next/app'
-import {AuthProvider} from '../context/AuthContext'
+import Head from 'next/head'
 import {YMInitializer} from "react-yandex-metrika";
+import {AuthProvider} from '../context/AuthContext'
 import '../styles/globals.scss'
 
 function MyApp({Component, pageProps}: AppProps) {

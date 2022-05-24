@@ -1,19 +1,17 @@
-import React, {useMemo, useState} from 'react';
+import axios from "axios";
+import {orderBy} from "lodash";
 import type {GetStaticProps, NextPage} from 'next'
 import Head from 'next/head'
 import Link from 'next/link';
-// import dynamic from 'next/dynamic'
-import axios from "axios";
-import {orderBy} from "lodash";
+import React, {useMemo, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import {PostInterface} from '../interfaces';
+import Button from "../components/Button/Button";
+import Header from "../components/Header/Header";
 import Item from '../components/Item/Item';
 import Search from '../components/Search/Search';
-import Button from '../components/Button/Button';
-import Header from '../components/Header/Header';
 import Spinner from '../components/Spinner/Spinner';
+import {PostInterface} from '../interfaces';
 import classes from './../styles/Home.module.scss'
-import dynamic from "next/dynamic";
 
 // const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
 

@@ -1,28 +1,27 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
-import {useRouter} from "next/router";
-import Image from "next/image";
-// @ts-ignore
-import slug from "slug";
-import {isDesktop} from "react-device-detect";
-import cn from "classnames";
-import classes from "../styles/classes.module.scss";
 import axios from "axios";
+import cn from "classnames";
+import Image from "next/image";
+import {useRouter} from "next/router";
+import React, {useCallback, useEffect, useRef, useState} from "react";
+import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
-import {useAuth} from "../context/AuthContext";
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
-import handleImageUpload from "../functions/handleImageUpload";
-import {routes} from "../constants";
-import Spinner from "../components/Spinner/Spinner";
-import {MainLayout} from "../components/MainLayout/MainLayout";
-import Button from "../components/Button/Button";
-import {storage} from "../firebaseConfig";
-import Input from "../components/Input/Input";
+// @ts-ignore
+import slug from "slug";
 import {options} from "../assets/options";
-import SelectInno from "../components/Select/Select";
-import {onImageClick} from "../functions/onImageClick";
+import Button from "../components/Button/Button";
 import Icon from "../components/Icon/Icon";
+import Input from "../components/Input/Input";
+import {MainLayout} from "../components/MainLayout/MainLayout";
+import SelectInno from "../components/Select/Select";
+import Spinner from "../components/Spinner/Spinner";
+import {routes} from "../constants";
+import {useAuth} from "../context/AuthContext";
+import handleImageUpload from "../functions/handleImageUpload";
 import {MoveImage, moveImage} from "../functions/moveImage";
+import {onImageClick} from "../functions/onImageClick";
+import classes from "../styles/classes.module.scss";
 
 export default function Add() {
     const router = useRouter()

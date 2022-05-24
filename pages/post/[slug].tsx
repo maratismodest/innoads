@@ -1,18 +1,18 @@
-import React, {useState, useMemo, useContext, useCallback} from "react";
+import axios from "axios";
+import _ from "lodash";
+import moment from "moment";
 import type {GetServerSideProps} from "next";
+import Head from "next/head";
 import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import moment from "moment";
-import axios from "axios";
-import _ from "lodash";
-import classes from "../../styles/Item.module.scss";
-import {PostInterface} from "../../interfaces";
-import Button from "../../components/Button/Button";
+import React, {useCallback, useMemo, useState} from "react";
 import {options} from "../../assets/options";
-import Head from "next/head";
+import Button from "../../components/Button/Button";
 import Header from "../../components/Header/Header";
 import {useAuth} from "../../context/AuthContext";
+import {PostInterface} from "../../interfaces";
+import classes from "../../styles/Item.module.scss";
 
 interface PostProps {
     post: PostInterface

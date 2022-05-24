@@ -1,18 +1,18 @@
+import axios from "axios";
+import {orderBy} from "lodash";
+import type {GetStaticProps, NextPage} from 'next'
+import {useRouter} from "next/router";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import InfiniteScroll from 'react-infinite-scroller';
-import {orderBy} from "lodash";
-import {useRouter} from "next/router";
-import axios from "axios";
-import type {NextPage, GetStaticProps} from 'next'
-import {PostInterface} from "../interfaces";
-import useDebounce from "../hooks/useDebounce";
+import {options} from "../assets/options";
+import {Input} from "../components/Input/Input";
+import Item from "../components/Item/Item";
 import {MainLayout} from "../components/MainLayout/MainLayout";
 import SelectInno from "../components/Select/Select";
-import {options} from "../assets/options";
-import Item from "../components/Item/Item";
-import classes from "../styles/Index.module.scss";
-import {Input} from "../components/Input/Input";
 import Spinner from "../components/Spinner/Spinner";
+import useDebounce from "../hooks/useDebounce";
+import {PostInterface} from "../interfaces";
+import classes from "../styles/Index.module.scss";
 
 interface SearchPageProps {
     posts: PostInterface[]

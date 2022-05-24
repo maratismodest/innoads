@@ -5,7 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09b01233-c394-4afa-9b78-f7e5a3bacd7f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pages/add.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/add.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Button/Button.module.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Button/Button.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/components/Button/Button.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Icon/Icon.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/components/Icon/Icon.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Icon/Icon.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Icon/Icon.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Input/Input.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/components/Input/Input.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Input/Input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Input/Input.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Search/Search.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/components/Search/Search.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Spinner/Spinner.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/components/Spinner/Spinner.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/sw.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/sw.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/Item.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Item.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/classes.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/classes.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/globals.scss" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/variables.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +61,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.TypeScript" />
     <property name="ts.external.directory.path" value="C:\Users\marat\Documents\Github\innoads-frontend\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -104,6 +118,7 @@
       <workItem from="1653227519453" duration="1586000" />
       <workItem from="1653229575834" duration="901000" />
       <workItem from="1653341124017" duration="2437000" />
+      <workItem from="1653393341579" duration="1186000" />
     </task>
     <servers />
   </component>
@@ -123,5 +138,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -1,22 +1,19 @@
-import React, {useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import Image from "next/image";
-import Link from "next/link";
-import {useAuth} from "../context/AuthContext";
+import React, {useEffect, useState} from "react";
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
-import {PostInterface} from "../interfaces";
-import Item from "../components/Item/Item";
-import {routes, titles} from "../constants";
-import classes from "../styles/Index.module.scss";
-import mainClasses from '../styles/classes.module.scss'
-import {getUserPosts} from "../functions/getUserPosts";
-import {MainLayout} from "../components/MainLayout/MainLayout";
-import {handleTelegramResponse} from "../functions/handleTelegramResponse";
 import Button from "../components/Button/Button";
+import Item from "../components/Item/Item";
+import {MainLayout} from "../components/MainLayout/MainLayout";
+import {routes, titles} from "../constants";
+import {useAuth} from "../context/AuthContext";
+import {getUserPosts} from "../functions/getUserPosts";
+import {handleTelegramResponse} from "../functions/handleTelegramResponse";
+import {PostInterface} from "../interfaces";
+import mainClasses from '../styles/classes.module.scss'
+import classes from "../styles/Index.module.scss";
 
 export default function Profile() {
-    const router = useRouter();
     const [posts, setPosts] = useState<PostInterface[]>([])
     const {user, login} = useAuth();
 
