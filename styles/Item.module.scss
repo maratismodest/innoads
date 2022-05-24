@@ -1,3 +1,4 @@
+@import "variables";
 .item {
   margin: 0 auto;
   max-width: 400px;
@@ -11,10 +12,10 @@
   height: 48px;
   cursor: pointer;
   border-radius: 2px;
-  background: #15b012;
-  border: 1px solid #15b012;
+  background: $green;
+  border: 1px solid $green;
   transition: all .3s;
-  color: white;
+  color: $white;
   padding: 0 16px;
 
   &:disabled {

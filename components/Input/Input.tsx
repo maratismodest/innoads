@@ -1,5 +1,5 @@
 import React from "react";
-import classes from './Input.module.css'
+import classes from './Input.module.scss'
 
 export const Input = ({children, name, required, register, ...props}: any) => {
     if (register) {
