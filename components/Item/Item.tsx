@@ -1,10 +1,11 @@
-import React, {useMemo, useState} from "react";
-import Link from "next/link";
+import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
+import {useRouter} from "next/router";
+import React, {useMemo, useState} from "react";
+import {isDesktop, isMobile, isTablet} from "react-device-detect";
 import {PostInterface} from "../../interfaces";
 import Button from "../Button/Button";
-import axios from "axios";
-import {isMobile, isTablet, isDesktop} from "react-device-detect";
 import classes from "./Item.module.scss";
 
 interface ItemInterface {
@@ -15,7 +16,7 @@ interface ItemInterface {
 
 
 export const Item = ({post, edit, margin}: ItemInterface) => {
-
+    const router = useRouter()
     const size = useMemo(() => {
         if (isMobile) {
             return '50vw'
@@ -30,8 +31,6 @@ export const Item = ({post, edit, margin}: ItemInterface) => {
 
     const [state, setState] = useState(true)
     const deletePost = async (id: number) => {
-        console.log(id)
-
         const answer = confirm('Удалить объявление?')
 
         if (answer) {
@@ -42,15 +41,26 @@ export const Item = ({post, edit, margin}: ItemInterface) => {
         }
         return console.log("Вы решили не удалять объявление!")
     }
+
+    const editPost = async (id: number) => {
+        return router.push(`/edit/${post.slug}`)
+    }
+
     if (!state) {
         return null
     }
     return (
         <li key={post.slug} className={classes.item} style={{marginRight: margin}}>
             {edit && (
-                <div className={classes.edit}>
-                    <Button onClick={() => deletePost(post.id)}>X</Button>
-                </div>
+                <>
+                    <div className={classes.delete}>
+                        <Button onClick={() => deletePost(post.id)}>X</Button>
+                    </div>
+                    <div className={classes.edit}>
+                        <Button onClick={() => editPost(post.id)}>Редактировать</Button>
+                    </div>
+                </>
+
             )}
             <Link href={`/post/${post.slug}`}>
                 <a>
