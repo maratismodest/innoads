@@ -111,7 +111,7 @@ export default function Edit({post: serverPost}: PostProps) {
             const resizedImage = await handleImageUpload(initialImage);
             if (resizedImage) {
                 const formData = new FormData();
-                formData.append("image", resizedImage);
+                formData.append("image", resizedImage, resizedImage.name);
                 const res = await axios.post('https://chamala.tatar/upload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
