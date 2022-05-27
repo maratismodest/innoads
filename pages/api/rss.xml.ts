@@ -39,7 +39,7 @@ export default async (req: any, res: any) => {
         link: baseUrl,
         language: 'ru',
         feedLinks: {
-            rss2: `${baseUrl}/rss.xml`,
+            rss2: `${baseUrl}/api/rss.xml`,
         },
         author,
     });
