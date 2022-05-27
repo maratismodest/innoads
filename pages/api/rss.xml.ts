@@ -7,7 +7,7 @@ const {SitemapStream, streamToPromise} = require("sitemap");
 const axios = require('axios');
 const {Readable} = require("stream");
 
-const getDynamicPaths = async () => {
+export const getDynamicPaths = async () => {
     try {
         const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?size=100`)
         const posts: PostInterface[] = res.data.content
