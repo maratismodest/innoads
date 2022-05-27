@@ -1,9 +1,8 @@
+const moment = require('moment')
 import {PostInterface} from "../../interfaces";
 import {getDynamicPaths} from "./rss.xml";
 
-// @ts-ignore
 const TR = require('turbo-rss');
-
 
 export default async (req: any, res: any) => {
     const posts: PostInterface[] = await getDynamicPaths()
@@ -46,10 +45,12 @@ export default async (req: any, res: any) => {
     posts.forEach((post) => {
         feed.item(
             {
-                link: 'https://innoads.ru/post/' + post.slug,
+                title: post.title,
                 image_url: post.preview,
-                text: post.title,
-                content: post.body
+                url: 'https://innoads.ru/post/' + post.slug,
+                author: 'https://t.me/' + post.telegram,
+                date: moment(post.createdAt).toDate(),
+                content: post.body,
             }
         )
     })
