@@ -8,8 +8,9 @@
       <change afterPath="$PROJECT_DIR$/pages/super.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/add.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/add.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/rss-turbo.xml.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/rss-turbo.xml.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/rss.xml.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/rss.xml.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/edit/[slug].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/edit/[slug].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/sw.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/sw.js.map" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

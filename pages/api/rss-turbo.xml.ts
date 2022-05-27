@@ -1,5 +1,5 @@
 import {PostInterface} from "../../interfaces";
-import {getDynamicPaths} from "./rss.xml";
+import { getDynamicPaths } from "./rss.xml";
 
 // @ts-ignore
 const TR = require('turbo-rss');
