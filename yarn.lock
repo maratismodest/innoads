@@ -3932,6 +3932,13 @@ tsutils@^3.21.0:
   dependencies:
     tslib "^1.8.1"
 
+turbo-rss@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/turbo-rss/-/turbo-rss-2.0.1.tgz#fa1091b421c6f0fd148b1c78d5338a2aadcf19c4"
+  integrity sha512-C4ELcyaCkr5fzkVR4UYmd2gJEJNzx3WkbfKkJMMeiYZuxqaa3YjUELDwg1jyjWcQMA/a7BvBv28rIrv4P9fU3A==
+  dependencies:
+    xml "1.0.1"
+
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.4.0.tgz#07b8203bfa7056c0657050e3ccd2c37730bab8f1"
@@ -4251,6 +4258,11 @@ xml-js@^1.6.11:
   integrity sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==
   dependencies:
     sax "^1.2.4"
+
+xml@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
+  integrity sha1-eLpyAgApxbyHuKgaPPzXS0ovweU=
 
 yallist@^4.0.0:
   version "4.0.0"
