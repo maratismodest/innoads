@@ -26,7 +26,7 @@ export default async (req: any, res: any) => {
         url: 'https://innoads.ru',
         author: 'InnoAds',
         date: new Date().toString(),
-        content: '<p>hello</p>',
+        content: 'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи',
         goals: [{
             type: "yandex",
             id: "turbo-goal-id",
