@@ -7,13 +7,6 @@ const TR = require('turbo-rss');
 export default async (req: any, res: any) => {
     const posts: PostInterface[] = await getDynamicPaths()
 
-    // const related = posts.map((post) => ({
-    //     link: 'https://innoads.ru/post/' + post.slug,
-    //     image_url: post.preview,
-    //     text: post.title,
-    //     content: post.body
-    // }))
-
     const feed = new TR({
         title: 'Доска объявлений города Иннополиса',
         description: 'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи',
@@ -55,7 +48,7 @@ export default async (req: any, res: any) => {
         )
     })
 
-    var xml = feed.xml();
+    const xml = feed.xml();
 
     res.writeHead(200, {
         "Content-Type": "application/xml",
