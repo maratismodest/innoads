@@ -43,6 +43,7 @@
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "C:\\Users\\marat\\Documents\\GitHub\\innoads-frontend\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -104,6 +105,7 @@
       <workItem from="1653565809709" duration="95000" />
       <workItem from="1653640522068" duration="215000" />
       <workItem from="1653685198673" duration="59000" />
+      <workItem from="1653687084370" duration="30000" />
     </task>
     <servers />
   </component>
