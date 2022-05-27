@@ -21,6 +21,7 @@ import {MoveImage, moveImage} from "../../functions/moveImage";
 import {onImageClick} from "../../functions/onImageClick";
 import {PostInterface} from "../../interfaces";
 import classes from "../../styles/classes.module.scss";
+import { SECRET } from "../add";
 
 interface PostProps {
     post: PostInterface
@@ -114,7 +115,8 @@ export default function Edit({post: serverPost}: PostProps) {
                 formData.append("image", resizedImage, resizedImage.name);
                 const res = await axios.post('https://chamala.tatar/upload', formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        'Secret': SECRET
                     }
                 })
                 setImages((prevState: string[]) => [...prevState, res.data.link]);

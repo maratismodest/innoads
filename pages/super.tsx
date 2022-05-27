@@ -2,7 +2,7 @@ import axios from "axios";
 import cn from "classnames";
 import Image from "next/image";
 import {useRouter} from "next/router";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useCallback, useRef, useState} from "react";
 import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
 // @ts-ignore
@@ -15,7 +15,6 @@ import Icon from "../components/Icon/Icon";
 import Input from "../components/Input/Input";
 import {MainLayout} from "../components/MainLayout/MainLayout";
 import SelectInno from "../components/Select/Select";
-import Spinner from "../components/Spinner/Spinner";
 import {routes} from "../constants";
 import {useAuth} from "../context/AuthContext";
 import handleImageUpload from "../functions/handleImageUpload";
@@ -40,23 +39,6 @@ export default function Add() {
         router.push(routes.profile)
     }, [router, inputEl.current])
 
-    useEffect(() => {
-        const res = document.getElementById('hidden')
-        if (res && (!user || !user.username)) {
-            res.click()
-        }
-    }, [user])
-
-    if (!user || !user.username) {
-        return (
-            <MainLayout title={"Добавить объявление"}>
-                <div className={classes.center}>
-                    <Spinner/>
-                    <Button id='hidden' onClick={redirect}>Hidden</Button>
-                </div>
-            </MainLayout>
-        )
-    }
 
     const onSubmit = async (data: any) => {
         if (images.length === 0) {
