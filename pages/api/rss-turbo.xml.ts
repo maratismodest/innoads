@@ -1,5 +1,5 @@
 import {PostInterface} from "../../interfaces";
-import { getDynamicPaths } from "./rss.xml";
+import {getDynamicPaths} from "./rss.xml";
 
 // @ts-ignore
 const TR = require('turbo-rss');
@@ -8,12 +8,12 @@ const TR = require('turbo-rss');
 export default async (req: any, res: any) => {
     const posts: PostInterface[] = await getDynamicPaths()
 
-    const related = posts.map((post) => ({
-        link: 'https://innoads.ru/post/' + post.slug,
-        image_url: post.preview,
-        text: post.title,
-        content: post.body
-    }))
+    // const related = posts.map((post) => ({
+    //     link: 'https://innoads.ru/post/' + post.slug,
+    //     image_url: post.preview,
+    //     text: post.title,
+    //     content: post.body
+    // }))
 
     const feed = new TR({
         title: 'Доска объявлений города Иннополиса',
@@ -41,8 +41,18 @@ export default async (req: any, res: any) => {
             link: 'https://innoads.ru/add',
             text: 'Подать объявление'
         }],
-        related
-    });
+    })
+
+    posts.forEach((post) => {
+        feed.item(
+            {
+                link: 'https://innoads.ru/post/' + post.slug,
+                image_url: post.preview,
+                text: post.title,
+                content: post.body
+            }
+        )
+    })
 
     var xml = feed.xml();
 
