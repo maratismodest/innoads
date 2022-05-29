@@ -1,23 +1,8 @@
 import {PostInterface} from "../../interfaces";
+import {getDynamicPaths} from "../../functions/some";
 
 const {Feed} = require('feed')
 const moment = require('moment')
-
-const {SitemapStream, streamToPromise} = require("sitemap");
-const axios = require('axios');
-const {Readable} = require("stream");
-
-export const getDynamicPaths = async () => {
-    try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?size=1000`)
-        const posts: PostInterface[] = res.data.content
-        return posts
-    } catch (e) {
-        console.log(e)
-        return []
-    }
-
-}
 
 const baseUrl = 'https://innoads.ru';
 const author = {
@@ -29,7 +14,7 @@ const author = {
 
 export default async (req: any, res: any) => {
     // An array with your links
-    const posts: PostInterface[] = await getDynamicPaths()
+    const posts: PostInterface[] = await getDynamicPaths(100)
 
     // Construct a new Feed object
     const feed = new Feed({
@@ -66,24 +51,13 @@ export default async (req: any, res: any) => {
             author: [author],
             date: moment(createdAt).toDate(),
             image: preview.split('&')[0]
-            // image: 'https://resheto.net/images/mater/pozitivnye_kartinki_2.jpg'
-            // date: new Date(date),
         });
     });
-
-    // Create a stream to write to
-    // const stream = new SitemapStream({hostname: `https://${req.headers.host}`});
-    // const stream = feed.rss2();
-
-    // rss2()
 
     res.writeHead(200, {
         "Content-Type": "application/xml",
     });
 
-    // const xmlString = await streamToPromise(
-    //     Readable.from(links).pipe(feed.rss2())
-    // ).then((data: any) => data.toString());
 
     res.end(feed.rss2());
 };
