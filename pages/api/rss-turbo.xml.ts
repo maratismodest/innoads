@@ -1,11 +1,12 @@
+import {getDynamicPaths} from "../../functions/some";
+
 const moment = require('moment')
 import {PostInterface} from "../../interfaces";
-import {getDynamicPaths} from "./rss.xml";
 
 const TR = require('turbo-rss');
 
 export default async (req: any, res: any) => {
-    const posts: PostInterface[] = await getDynamicPaths()
+    const posts: PostInterface[] = await getDynamicPaths(100)
 
     const feed = new TR({
         title: 'Доска объявлений города Иннополиса',

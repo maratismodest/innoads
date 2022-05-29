@@ -1,24 +1,13 @@
 import {PostInterface} from "../../interfaces";
+import {getDynamicPaths} from "../../functions/some";
 
 const {SitemapStream, streamToPromise} = require("sitemap");
-const axios = require('axios');
 const {Readable} = require("stream");
 
-const getDynamicPaths = async () => {
-    try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?size=1000`)
-        const posts: PostInterface[] = res.data.content
-        return posts
-    } catch (e) {
-        console.log(e)
-        return []
-    }
-
-}
 
 export default async (req: any, res: any) => {
     // An array with your links
-    const posts: PostInterface[] = await getDynamicPaths()
+    const posts: PostInterface[] = await getDynamicPaths(1000)
 
     const links = posts.map((post) => {
         return {url: `/post/${post.slug}`, changefreq: "daily", priority: 0.3}
