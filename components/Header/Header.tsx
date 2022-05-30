@@ -19,7 +19,7 @@ const Header = () => {
         <nav data-testid='nav' className={classes.header}>
             <div className={classes.headerMain}>
                 <Link href={routes.main}>
-                    <a className={classes.headerHeader}>
+                    <a className={classes.headerHeader} title='На главную'>
                         <span className={classes.headerTitle}>INNOADS</span>
                         {!isMobile && (
                             <>
@@ -31,7 +31,7 @@ const Header = () => {
                 </Link>
                 <div>
                     <Link href={routes.profile}>
-                        <a className={classes.headerUser}>
+                        <a className={classes.headerUser} title='Профиль'>
                             {user && 'Профиль'}
                             {!user && isMobile && 'Вход'}
                             {!user && !isMobile && 'Вход | Регистрация'}
@@ -39,7 +39,7 @@ const Header = () => {
                     </Link>
 
                     <Link href={routes.add}>
-                        <a>
+                        <a title='Подать объявление'>
                             <button className={classes.headerButton}>{!isMobile ? 'Добавить объявление' : '+'}
                             </button>
                         </a>

@@ -73,12 +73,13 @@ export const Item = ({post, edit, margin}: ItemInterface) => {
                             placeholder="blur"
                             blurDataURL="/no-image.jpeg"
                             sizes={size}
+                            title={post.title}
                         />
                     </div>
-                    <h2>
+                    <p>
                         {post.price} {isNaN(post.price) ? null : "Р"}
-                    </h2>
-                    <p>{post.title}</p>
+                    </p>
+                    <h2>{post.title}</h2>
                 </a>
             </Link>
         </li>

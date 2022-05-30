@@ -68,6 +68,9 @@ export default function Post({post: serverPost}: PostProps) {
                 <meta property="og:type" content="website"/>
                 <meta property="og:url" content="https://innoads.ru/"/>
                 <meta property="og:image" content={seoImage}/>
+                <meta name="author" content={`https://t.me/${telegram}`}/>
+                <meta name="publisher" content="InnoAds"/>
+                <link rel="image_src" href={images[0]} />
             </Head>
             <Header/>
             <main>
@@ -87,6 +90,7 @@ export default function Post({post: serverPost}: PostProps) {
                                                 src={image}
                                                 alt="image"
                                                 className={classes.image}
+                                                title={title}
                                             />
                                         </Slide>
                                     );

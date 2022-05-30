@@ -13,7 +13,7 @@
   margin-bottom: 8px;
   position: relative;
 
-  h2 {
+  p {
     font-weight: bold;
     font-size: 18px;
     line-height: 28px;
@@ -22,7 +22,7 @@
     margin: 8px 16px;
   }
 
-  p {
+  h2 {
     font-weight: normal;
     font-size: 15px;
     line-height: 24px;
@@ -37,12 +37,12 @@
   }
 
   @media (max-width: 1024px) {
-    h2 {
+    p {
       font-size: 18px;
       line-height: 22px;
       margin: 4px 12px;
     }
-    p {
+    h2 {
       margin: 0 12px 12px 12px;
     }
   }
