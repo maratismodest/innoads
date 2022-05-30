@@ -56,6 +56,8 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
                 <meta property="og:type" content="website"/>
                 <meta property="og:url" content="https://innoads.ru/"/>
                 <meta property="og:image" content={seoImage}/>
+                <meta name="author" content="InnoAds" />
+                <meta name="publisher" content="InnoAds" />
             </Head>
             <Header/>
             <main>
