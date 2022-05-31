@@ -22,6 +22,7 @@ import {onImageClick} from "../../functions/onImageClick";
 import {PostInterface} from "../../interfaces";
 import classes from "../../styles/classes.module.scss";
 import {SECRET} from "../add";
+import {handleDeleteImage} from "../../functions/handleDeleteImage";
 
 interface PostProps {
     post: PostInterface
@@ -132,23 +133,9 @@ export default function Edit({post: serverPost}: PostProps) {
     };
 
     const deleteImage = async (current: string) => {
-        try {
-
-            const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
-                headers: {
-                    secret: SECRET
-                },
-                data: {
-                    source: {link: current}
-                }
-            });
-            console.log(res)
-        } catch (e) {
-            console.log(e)
-        }
-
         const res = images.filter(image => image !== current)
-        return setImages(res);
+        setImages(res);
+        return await handleDeleteImage(current)
     };
 
     return (

@@ -18,6 +18,7 @@ import handleImageUpload from "../functions/handleImageUpload";
 import {MoveImage, moveImage} from "../functions/moveImage";
 import {onImageClick} from "../functions/onImageClick";
 import classes from "../styles/classes.module.scss";
+import {handleDeleteImage} from "../functions/handleDeleteImage";
 
 export const SECRET = 'secret'
 
@@ -91,23 +92,9 @@ export default function Add() {
     };
 
     const deleteImage = async (current: string) => {
-        try {
-
-            const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
-                headers: {
-                    secret: SECRET
-                },
-                data: {
-                    source: {link: current}
-                }
-            });
-            console.log(res)
-        } catch (e) {
-            console.log(e)
-        }
-
         const res = images.filter(image => image !== current)
-        return setImages(res);
+        setImages(res);
+        return await handleDeleteImage(current)
     };
 
     return (
