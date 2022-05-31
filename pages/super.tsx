@@ -7,7 +7,7 @@ import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
 // @ts-ignore
 import slug from "slug";
-import {options} from "../assets/options";
+import {OptionProps, options} from "../assets/options";
 import Button from "../components/Button/Button";
 import Icon from "../components/Icon/Icon";
 import Input from "../components/Input/Input";
@@ -19,8 +19,9 @@ import {MoveImage, moveImage} from "../functions/moveImage";
 import {onImageClick} from "../functions/onImageClick";
 import classes from "../styles/classes.module.scss";
 import {handleDeleteImage} from "../functions/handleDeleteImage";
-
-export const SECRET = 'secret'
+import {NO_IMAGE} from "../constants";
+import {handlePostImage} from "../functions/handlePostImage";
+import {HTMLInputEvent} from "../interfaces";
 
 export default function Add() {
     const router = useRouter()
@@ -61,34 +62,39 @@ export default function Add() {
         return router.push("/profile");
     }
 
-    async function getCompressedImagesLinks(imagesFromInput: any) {
+    const getCompressedImagesLinks = async (imagesFromInput: any) => {
         for (let i = 0; i < imagesFromInput.length; i++) {
             const initialImage = imagesFromInput[i];
             const resizedImage = await handleImageUpload(initialImage);
             if (resizedImage) {
                 const formData = new FormData();
                 formData.append("image", resizedImage, `${Date.now()}.jpg`);
-                const res = await axios.post('https://chamala.tatar/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Secret': SECRET
-                    }
-                })
-                setImages((prevState: string[]) => [...prevState, res.data.link]);
+                const link = await handlePostImage(formData)
+                const {status, value} = link
+                if (status === 'ok') {
+                    setImages((prevState: string[]) => [...prevState, value]);
+                    setError("");
+                }
+                if (status === 'error') {
+                    setError(value);
+                }
             }
         }
-        setError("");
     }
 
-    const imageHandler = async (e: any) => {
-        const imagesFromInput = e.target.files;
-        const length = imagesFromInput.length + images.length;
-        if (length > 4) {
-            return setError("Не больше 4 фотографий!");
+    const imageHandler = async (e: HTMLInputEvent) => {
+        if (e.target.files) {
+            const imagesFromInput = e.target.files;
+            const length = imagesFromInput.length + images.length;
+            if (length > 4) {
+                return setError("Не больше 4 фотографий!");
+            }
+            setLoading(true)
+            await getCompressedImagesLinks(imagesFromInput);
+            setLoading(false)
         }
-        setLoading(true)
-        await getCompressedImagesLinks(imagesFromInput);
-        setLoading(false)
+        return
+
     };
 
     const deleteImage = async (current: string) => {
@@ -156,7 +162,7 @@ export default function Add() {
                         >
                             <Image
                                 alt="image"
-                                src={"/no-image.jpeg"}
+                                src={NO_IMAGE}
                                 objectFit="cover"
                                 layout="fill"
                             />
@@ -193,7 +199,7 @@ export default function Add() {
                                     objectFit="cover"
                                     layout={"fill"}
                                     placeholder="blur"
-                                    blurDataURL="/no-image.jpeg"
+                                    blurDataURL={NO_IMAGE}
                                 />
                                 <Icon
                                     style={{position: "absolute", top: "40%", left: 0}}
