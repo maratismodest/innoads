@@ -6,7 +6,7 @@ import {PostInterface} from "../../interfaces";
 const TR = require('turbo-rss');
 
 export default async (req: any, res: any) => {
-    const posts: PostInterface[] = await getDynamicPaths(100)
+    const posts: PostInterface[] = await getDynamicPaths(1000)
 
     const feed = new TR({
         title: 'Доска объявлений города Иннополиса',
