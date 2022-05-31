@@ -14,15 +14,15 @@ import Input from "../../components/Input/Input";
 import {MainLayout} from "../../components/MainLayout/MainLayout";
 import SelectInno from "../../components/Select/Select";
 import Spinner from "../../components/Spinner/Spinner";
-import {routes} from "../../constants";
+import {NO_IMAGE, routes} from "../../constants";
 import {useAuth} from "../../context/AuthContext";
 import handleImageUpload from "../../functions/handleImageUpload";
 import {MoveImage, moveImage} from "../../functions/moveImage";
 import {onImageClick} from "../../functions/onImageClick";
-import {PostInterface} from "../../interfaces";
+import {HTMLInputEvent, PostInterface} from "../../interfaces";
 import classes from "../../styles/classes.module.scss";
-import {SECRET} from "../add";
 import {handleDeleteImage} from "../../functions/handleDeleteImage";
+import {handlePostImage} from "../../functions/handlePostImage";
 
 interface PostProps {
     post: PostInterface
@@ -102,34 +102,39 @@ export default function Edit({post: serverPost}: PostProps) {
         return router.push("/profile");
     }
 
-    async function getCompressedImagesLinks(imagesFromInput: any) {
+    const getCompressedImagesLinks = async (imagesFromInput: any) => {
         for (let i = 0; i < imagesFromInput.length; i++) {
             const initialImage = imagesFromInput[i];
             const resizedImage = await handleImageUpload(initialImage);
             if (resizedImage) {
                 const formData = new FormData();
-                formData.append("image", resizedImage, resizedImage.name);
-                const res = await axios.post('https://chamala.tatar/upload', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Secret': SECRET
-                    }
-                })
-                setImages((prevState: string[]) => [...prevState, res.data.link]);
+                formData.append("image", resizedImage, `${Date.now()}.jpg`);
+                const link = await handlePostImage(formData)
+                const {status, value} = link
+                if (status === 'ok') {
+                    setImages((prevState: string[]) => [...prevState, value]);
+                    setError("");
+                }
+                if (status === 'error') {
+                    setError(value);
+                }
             }
         }
-        setError("");
     }
 
-    const imageHandler = async (e: any) => {
-        const imagesFromInput = e.target.files;
-        const length = imagesFromInput.length + images.length;
-        if (length > 4) {
-            return setError("Не больше 4 фотографий!");
+    const imageHandler = async (e: HTMLInputEvent) => {
+        if (e.target.files) {
+            const imagesFromInput = e.target.files;
+            const length = imagesFromInput.length + images.length;
+            if (length > 4) {
+                return setError("Не больше 4 фотографий!");
+            }
+            setLoading(true)
+            await getCompressedImagesLinks(imagesFromInput);
+            setLoading(false)
         }
-        setLoading(true)
-        await getCompressedImagesLinks(imagesFromInput);
-        setLoading(false)
+        return
+
     };
 
     const deleteImage = async (current: string) => {
@@ -200,7 +205,7 @@ export default function Edit({post: serverPost}: PostProps) {
                         >
                             <Image
                                 alt="image"
-                                src={"/no-image.jpeg"}
+                                src={NO_IMAGE}
                                 objectFit="cover"
                                 layout="fill"
                             />
@@ -238,7 +243,7 @@ export default function Edit({post: serverPost}: PostProps) {
                                     objectFit="cover"
                                     layout={"fill"}
                                     placeholder="blur"
-                                    blurDataURL="/no-image.jpeg"
+                                    blurDataURL={NO_IMAGE}
                                 />
                                 <Icon
                                     style={{position: "absolute", top: "40%", left: 0}}

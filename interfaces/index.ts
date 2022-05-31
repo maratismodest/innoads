@@ -13,3 +13,7 @@ export interface PostInterface {
     updatedAt: string;
     vector?: any;
 }
+
+export interface HTMLInputEvent extends Event {
+    target: HTMLInputElement & EventTarget;
+}

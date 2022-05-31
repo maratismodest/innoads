@@ -8,3 +8,5 @@ export const routes = {
 export const titles = {
     profile: "Личный кабинет",
 }
+
+export const NO_IMAGE = '/images/no-image.jpeg'

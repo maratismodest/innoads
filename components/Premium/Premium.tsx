@@ -44,7 +44,7 @@ const Premium = () => {
                     {premium.map((item, index) => {
                         return (
                             <Slide index={index} key={item.id} tabIndex={index}>
-                                <Item post={item} margin={5}/>
+                                <Item post={item}/>
                             </Slide>
                         )
                     })}

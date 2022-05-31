@@ -2,8 +2,9 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import React, {useMemo, useState} from "react";
+import React, {useMemo, useState, useCallback} from "react";
 import {isDesktop, isMobile, isTablet} from "react-device-detect";
+import {NO_IMAGE} from "../../constants";
 import {PostInterface} from "../../interfaces";
 import Button from "../Button/Button";
 import classes from "./Item.module.scss";
@@ -11,11 +12,9 @@ import classes from "./Item.module.scss";
 interface ItemInterface {
     post: PostInterface,
     edit?: boolean
-    margin?: number
 }
 
-
-export const Item = ({post, edit, margin}: ItemInterface) => {
+export const Item = ({post, edit}: ItemInterface) => {
     const router = useRouter()
     const size = useMemo(() => {
         if (isMobile) {
@@ -27,37 +26,32 @@ export const Item = ({post, edit, margin}: ItemInterface) => {
         if (isDesktop) {
             return '25vw'
         }
-    }, [isMobile, isTablet, isDesktop])
-
+    }, [])
     const [state, setState] = useState(true)
-    const deletePost = async (id: number) => {
-        const answer = confirm('Удалить объявление?')
 
+    const deletePost = useCallback(async (id: number) => {
+        const answer = confirm('Удалить объявление?')
         if (answer) {
             await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`)
             alert('Объявление удалено!')
             setState(false)
-            return console.log(post)
         }
-        return console.log("Вы решили не удалять объявление!")
-    }
+    }, [])
 
-    const editPost = async (id: number) => {
-        return router.push(`/edit/${post.slug}`)
-    }
+    const editPost = () => router.push(`/edit/${post.slug}`)
 
     if (!state) {
         return null
     }
     return (
-        <li key={post.slug} className={classes.item} style={{marginRight: margin}}>
+        <li key={post.slug} className={classes.item}>
             {edit && (
                 <>
                     <div className={classes.delete}>
                         <Button onClick={() => deletePost(post.id)}>X</Button>
                     </div>
                     <div className={classes.edit}>
-                        <Button onClick={() => editPost(post.id)}>Редактировать</Button>
+                        <Button onClick={editPost}>Редактировать</Button>
                     </div>
                 </>
 
@@ -67,11 +61,11 @@ export const Item = ({post, edit, margin}: ItemInterface) => {
                     <div className={classes.imageWrapper}>
                         <Image
                             alt="image"
-                            src={post.preview || "/no-image.jpeg"}
+                            src={post.preview || NO_IMAGE}
                             layout="fill"
                             objectFit="cover"
                             placeholder="blur"
-                            blurDataURL="/no-image.jpeg"
+                            blurDataURL={NO_IMAGE}
                             sizes={size}
                             title={post.title}
                         />
