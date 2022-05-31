@@ -29,15 +29,15 @@ export default function Add() {
     const router = useRouter()
     const [images, setImages] = useState<string[]>([]);
     const [error, setError] = useState("");
-    const {control, register, handleSubmit, watch, formState: {errors}} = useForm();
+    const {control, register, handleSubmit, formState: {errors}} = useForm();
     const {user} = useAuth();
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
     const inputEl = useRef();
 
-    const redirect = useCallback(() => {
-        router.push(routes.profile)
+    const redirect = useCallback(async () => {
+        await router.push(routes.profile)
     }, [router, inputEl.current])
 
     useEffect(() => {
@@ -118,7 +118,22 @@ export default function Add() {
         setLoading(false)
     };
 
-    const deleteImage = (current: string) => {
+    const deleteImage = async (current: string) => {
+        try {
+
+            const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
+                headers: {
+                    Secret: SECRET
+                },
+                data: {
+                    source: {link: current}
+                }
+            });
+            console.log(res)
+        } catch (e) {
+            console.log(e)
+        }
+
         const res = images.filter(image => image !== current)
         setImages(res);
     };
@@ -239,8 +254,8 @@ export default function Add() {
                                 </Icon>
                                 <Icon
                                     style={{position: "absolute", top: 0, right: 0}}
-                                    onClick={() => {
-                                        deleteImage(image);
+                                    onClick={async () => {
+                                        await deleteImage(image);
                                     }}
                                 >
                                     X

@@ -21,7 +21,7 @@ import {MoveImage, moveImage} from "../../functions/moveImage";
 import {onImageClick} from "../../functions/onImageClick";
 import {PostInterface} from "../../interfaces";
 import classes from "../../styles/classes.module.scss";
-import { SECRET } from "../add";
+import {SECRET} from "../add";
 
 interface PostProps {
     post: PostInterface
@@ -31,13 +31,8 @@ export default function Edit({post: serverPost}: PostProps) {
     const {
         title,
         body,
-        preview,
         categoryId,
         price,
-        createdAt,
-        telegram,
-        tgId,
-        slug,
     } = serverPost;
     const router = useRouter()
     const [images, setImages] = useState<string[]>(() => serverPost.images.split('||'));
@@ -48,7 +43,7 @@ export default function Edit({post: serverPost}: PostProps) {
         price,
         body
     };
-    const {control, register, handleSubmit, watch, formState: {errors}} = useForm({defaultValues});
+    const {control, register, handleSubmit, formState: {errors}} = useForm({defaultValues});
     const {user} = useAuth();
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
@@ -56,8 +51,8 @@ export default function Edit({post: serverPost}: PostProps) {
 
     const inputEl = useRef();
 
-    const redirect = useCallback(() => {
-        router.push(routes.profile)
+    const redirect = useCallback(async () => {
+        await router.push(routes.profile)
     }, [router, inputEl.current])
 
     useEffect(() => {
@@ -136,7 +131,22 @@ export default function Edit({post: serverPost}: PostProps) {
         setLoading(false)
     };
 
-    const deleteImage = (current: string) => {
+    const deleteImage = async (current: string) => {
+        try {
+
+            const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
+                headers: {
+                    Secret: SECRET
+                },
+                data: {
+                    source: {link: current}
+                }
+            });
+            console.log(res)
+        } catch (e) {
+            console.log(e)
+        }
+
         const res = images.filter(image => image !== current)
         setImages(res);
     };
@@ -261,8 +271,8 @@ export default function Edit({post: serverPost}: PostProps) {
                                 </Icon>
                                 <Icon
                                     style={{position: "absolute", top: 0, right: 0}}
-                                    onClick={() => {
-                                        deleteImage(image);
+                                    onClick={async () => {
+                                        await deleteImage(image);
                                     }}
                                 >
                                     X
@@ -300,8 +310,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         };
     }
     const snapshot = query.data;
-    const data = snapshot
     return {
-        props: {post: data, slug: snapshot.slug},
+        props: {post: snapshot, slug: snapshot.slug},
     };
 }

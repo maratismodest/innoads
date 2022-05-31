@@ -144,8 +144,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         };
     }
     const snapshot = query.data;
-    const data = snapshot
     return {
-        props: {post: data, slug: snapshot.slug},
+        props: {post: snapshot, slug: snapshot.slug},
     };
 }
