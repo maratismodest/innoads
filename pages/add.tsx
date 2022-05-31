@@ -123,7 +123,7 @@ export default function Add() {
 
             const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
                 headers: {
-                    Secret: SECRET
+                    secret: SECRET
                 },
                 data: {
                     source: {link: current}
@@ -135,7 +135,7 @@ export default function Add() {
         }
 
         const res = images.filter(image => image !== current)
-        setImages(res);
+        return setImages(res);
     };
 
     return (
