@@ -33,7 +33,7 @@ export const MainLayout: React.FC<Props> = ({
                 <title>
                     InnoAds {category} {title} {price}
                 </title>
-                <meta name="keywords" content="innoads Иннополис доска объявлений"/>
+                <meta name="keywords" content="innoads, Иннополис, доска объявлений"/>
                 <meta name="description" content={description}/>
                 <meta name="image" content={image}/>
                 <meta property="og:title" content={title}/>
