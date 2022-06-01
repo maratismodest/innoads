@@ -59,7 +59,7 @@ export const Item = ({post, edit}: ItemInterface) => {
 
             )}
             <Link href={`/post/${slug}`}>
-                <a>
+                <a title={title}>
                     <div className={classes.imageWrapper}>
                         <Image
                             alt={title}

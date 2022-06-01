@@ -37,8 +37,8 @@ export default function Post({post: serverPost}: PostProps) {
     } = post;
 
     const category = _.find(options, {value: categoryId}) || options[0]
-    const seoTitle = useMemo(() => `InnoAds ${category.label} ${title} ${price.toString()}`, [post])
-    const seoDescription = body
+    const seoTitle = useMemo(() => `${category.label} ${title.slice(0, 50)} ${price.toString()}`, [post])
+    const seoDescription = body.slice(0, 320)
     const seoImage = preview
     const seoKeywords = useMemo(() => `innoads, Иннополис, доска объявлений, ${category.label}`, [category])
     const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [slug])
