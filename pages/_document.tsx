@@ -8,6 +8,8 @@ export default function Document() {
                 <meta name="robots"/>
                 <link rel="icon" href="/favicon.ico"/>
                 <link rel="manifest" href="/manifest.json"/>
+                <meta property="og:type" content="website"/>
+                <meta name="publisher" content="InnoAds"/>
             </Head>
             <body>
             <Main/>

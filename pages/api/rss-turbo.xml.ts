@@ -1,6 +1,5 @@
-import {getDynamicPaths} from "../../functions/some";
-
 const moment = require('moment')
+import { getDynamicPaths } from "../../functions/getDynamicPaths";
 import {PostInterface} from "../../interfaces";
 
 const TR = require('turbo-rss');

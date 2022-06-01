@@ -1,6 +1,11 @@
 import axios from "axios"
 
-export const handlePostImage = async (formData: FormData) => {
+interface PostImageProps {
+    status: 'ok' | 'error'
+    value: string
+}
+
+export const handlePostImage = async (formData: FormData): Promise<PostImageProps> => {
     try {
         const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/upload`, formData, {
             headers: {

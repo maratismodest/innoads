@@ -1,5 +1,5 @@
+import { getDynamicPaths } from "../../functions/getDynamicPaths";
 import {PostInterface} from "../../interfaces";
-import {getDynamicPaths} from "../../functions/some";
 
 const {SitemapStream, streamToPromise} = require("sitemap");
 const {Readable} = require("stream");

@@ -1,5 +1,5 @@
+import { getDynamicPaths } from "../../functions/getDynamicPaths";
 import {PostInterface} from "../../interfaces";
-import {getDynamicPaths} from "../../functions/some";
 
 const {Feed} = require('feed')
 const moment = require('moment')
@@ -40,7 +40,6 @@ export default async (req: any, res: any) => {
             // meta: { date, description, title },
         } = post;
         const url = `${baseUrl}/post/${slug}`;
-        console.log('preview', preview.toString())
 
         feed.addItem({
             title,

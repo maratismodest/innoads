@@ -14,7 +14,7 @@ import Input from "../../components/Input/Input";
 import {MainLayout} from "../../components/MainLayout/MainLayout";
 import SelectInno from "../../components/Select/Select";
 import Spinner from "../../components/Spinner/Spinner";
-import {NO_IMAGE, routes} from "../../constants";
+import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE, routes, titles} from "../../constants";
 import {useAuth} from "../../context/AuthContext";
 import handleImageUpload from "../../functions/handleImageUpload";
 import {MoveImage, moveImage} from "../../functions/moveImage";
@@ -34,6 +34,9 @@ export default function Edit({post: serverPost}: PostProps) {
         body,
         categoryId,
         price,
+        telegram,
+        tgId,
+        id
     } = serverPost;
     const router = useRouter()
     const [images, setImages] = useState<string[]>(() => serverPost.images.split('||'));
@@ -88,10 +91,10 @@ export default function Edit({post: serverPost}: PostProps) {
             price: Number(price),
             preview: images[0],
             images: images.join('||'),
-            telegram: serverPost.telegram,
-            tgId: serverPost.tgId,
+            telegram,
+            tgId,
             categoryId: categoryValue,
-            id: serverPost.id
+            id,
         }
 
         setSending(true)
@@ -144,7 +147,7 @@ export default function Edit({post: serverPost}: PostProps) {
     };
 
     return (
-        <MainLayout title={"Редактировать объявление"}>
+        <MainLayout title={titles.edit}>
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className={classes.form}
@@ -217,10 +220,11 @@ export default function Edit({post: serverPost}: PostProps) {
                         onChange={imageHandler}
                         hidden
                         multiple
-                        accept=".jpg, .jpeg, .png"
+                        accept={ACCEPTED_IMAGE_FORMAT}
                     />
                 </div>
-                Предварительный просмотр
+
+                <h4>Предварительный просмотр</h4>
                 <ul
                     className={cn({
                         [classes.images]: isDesktop,
@@ -228,7 +232,6 @@ export default function Edit({post: serverPost}: PostProps) {
                     })}
                 >
                     {images.map((image: string, index: number) => {
-
                         return (
                             <li
                                 key={image}
@@ -246,7 +249,7 @@ export default function Edit({post: serverPost}: PostProps) {
                                     blurDataURL={NO_IMAGE}
                                 />
                                 <Icon
-                                    style={{position: "absolute", top: "40%", left: 0}}
+                                    className={classes.leftArrow}
                                     onClick={(e: MouseEvent) => {
                                         moveImage(e, images, index, MoveImage.left, setImages);
                                     }}
@@ -254,7 +257,7 @@ export default function Edit({post: serverPost}: PostProps) {
                                     &larr;
                                 </Icon>
                                 <Icon
-                                    style={{position: "absolute", top: "40%", right: 0}}
+                                    className={classes.rightArrow}
                                     onClick={(e: MouseEvent) => {
                                         moveImage(e, images, index, MoveImage.right, setImages);
                                     }}
@@ -262,12 +265,12 @@ export default function Edit({post: serverPost}: PostProps) {
                                     &rarr;
                                 </Icon>
                                 <Icon
-                                    style={{position: "absolute", top: 0, right: 0}}
+                                    className={classes.deleteIcon}
                                     onClick={async () => {
                                         await deleteImage(image);
                                     }}
                                 >
-                                    X
+                                    &times;
                                 </Icon>
                             </li>
                         );
@@ -279,13 +282,12 @@ export default function Edit({post: serverPost}: PostProps) {
                                 [classes.imageMobile]: !isDesktop,
                             })}
                         >
-                            <div className={classes.loadingImage}>
-                                <p>Загружаем изображение</p>
-                            </div>
+                            <p className={classes.loadingImage}>
+                                Загружаем изображение
+                            </p>
                         </li>
                     )}
                 </ul>
-
                 {error}
                 <Button type="submit" disabled={sending}>Сохранить изменения</Button>
             </form>

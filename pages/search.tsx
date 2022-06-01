@@ -28,7 +28,6 @@ const SearchPage: NextPage<SearchPageProps> = ({posts}) => {
     const debouncedValue = useDebounce<string>(input, 500)
 
     const loadFunc = useCallback(async (currentPage: number = page) => {
-        console.log("currentPage", currentPage)
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&category=${category}&text=${debouncedValue}`)
         const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
         setPage(prevState => prevState + 1)

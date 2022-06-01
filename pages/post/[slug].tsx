@@ -37,7 +37,7 @@ export default function Post({post: serverPost}: PostProps) {
     } = post;
 
     const category = _.find(options, {value: categoryId}) || options[0]
-    const seoTitle = `InnoAds ${category.label} ${title} ${price.toString()}`
+    const seoTitle = useMemo(() => `InnoAds ${category.label} ${title} ${price.toString()}`, [post])
     const seoDescription = body
     const seoImage = preview
     const seoKeywords = useMemo(() => `innoads, Иннополис, доска объявлений, ${category.label}`, [category])
@@ -65,12 +65,10 @@ export default function Post({post: serverPost}: PostProps) {
                 <meta name="image" content={seoImage}/>
                 <meta property="og:title" content={title}/>
                 <meta property="og:description" content={seoDescription}/>
-                <meta property="og:type" content="website"/>
-                <meta property="og:url" content="https://innoads.ru/"/>
+                <meta property="og:url" content={process.env.NEXT_PUBLIC_NODE_ENV}/>
                 <meta property="og:image" content={seoImage}/>
                 <meta name="author" content={`https://t.me/${telegram}`}/>
-                <meta name="publisher" content="InnoAds"/>
-                <link rel="image_src" href={images[0]} />
+                <link rel="image_src" href={preview}/>
             </Head>
             <Header/>
             <main>
