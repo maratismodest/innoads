@@ -40,7 +40,7 @@ export default function Post({post: serverPost}: PostProps) {
     const seoTitle = `InnoAds ${category.label} ${title} ${price.toString()}`
     const seoDescription = body
     const seoImage = preview
-    const seoKeywords = useMemo(() => `innoads Иннополис доска объявлений ${category}`, [category])
+    const seoKeywords = useMemo(() => `innoads, Иннополис, доска объявлений, ${category.label}`, [category])
     const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [slug])
 
     const handleRefresh = useCallback(async () => {

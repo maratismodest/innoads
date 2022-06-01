@@ -49,7 +49,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
                 <title>{seoTitle}</title>
                 <meta name="description"
                       content={seoDescription}/>
-                <meta name="keywords" content="innoads Иннополис доска объявлений"/>
+                <meta name="keywords" content="innoads, Иннополис, доска объявлений"/>
                 <meta name="image" content='/icons/icon-192x192.png'/>
                 <meta property="og:title" content={seoTitle}/>
                 <meta property="og:description" content={seoDescription}/>
