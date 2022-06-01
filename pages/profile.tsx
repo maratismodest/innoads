@@ -21,7 +21,7 @@ export default function Profile() {
         if (user) {
             localStorage.setItem('username', user.username)
             localStorage.setItem('id', user.id)
-            getUserPosts(user.id).then((res) => setPosts(res.content))
+            getUserPosts(user.id).then((res) => setPosts(res))
         }
     }, [user])
 
@@ -45,7 +45,8 @@ export default function Profile() {
             <MainLayout title={titles.profile}>
                 <div className={mainClasses.center}>
                     <h2>Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления!</h2>
-                    <p>Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова</p>
+                    <p>Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас
+                        снова</p>
                     <div className="unset-img">
                         <Image
                             src="https://firebasestorage.googleapis.com/v0/b/classified-b8322.appspot.com/o/Screenshot_1.png?alt=media&token=94cc89c7-fcbc-426e-bd67-3d2dec911203"

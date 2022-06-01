@@ -6,7 +6,7 @@ const options = {
     useWebWorker: true
 }
 
-async function handleImageUpload(imageFile: any) {
+const handleImageUpload = async (imageFile: any) => {
     try {
         return await imageCompression(imageFile, options);
     } catch (error) {

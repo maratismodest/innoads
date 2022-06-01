@@ -6,10 +6,10 @@
   margin-right: 10px;
   margin-bottom: 10px;
   aspect-ratio: 1/1;
+  cursor: pointer;
 
   &:hover {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-
   }
 }
 
@@ -18,10 +18,10 @@
   width: 48%;
   margin-bottom: 10px;
   aspect-ratio: 1/1;
+  cursor: pointer;
 
   &:hover {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-
   }
 }
 
@@ -64,4 +64,28 @@
   text-align: center;
   border: 1px solid $grey;
   border-radius: 4px;
+}
+
+.textArea {
+  border-radius: 4px;
+  margin-bottom: 8px;
+  padding: 16px;
+}
+
+.leftArrow {
+  position: absolute;
+  top: 40%;
+  left: 0;
+}
+
+.rightArrow {
+  position: absolute;
+  top: 40%;
+  right: 0;
+}
+
+.deleteIcon {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

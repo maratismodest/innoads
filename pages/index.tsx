@@ -3,15 +3,17 @@ import {orderBy} from "lodash";
 import type {GetStaticProps, NextPage} from 'next'
 import Head from 'next/head'
 import Link from 'next/link';
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useState, useCallback} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import Button from "../components/Button/Button";
 import Header from "../components/Header/Header";
 import Item from '../components/Item/Item';
 import Search from '../components/Search/Search';
 import Spinner from '../components/Spinner/Spinner';
+import {SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from "../constants";
 import {PostInterface} from '../interfaces';
 import classes from './../styles/Home.module.scss'
+
 
 // const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
 
@@ -20,44 +22,37 @@ interface HomeProps {
     totalPages: number
 }
 
-const seoTitle = 'Доска объявлений города Иннополис';
-const seoDescription = 'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи.'
-const seoImage = '/icons/icon-192x192.png'
-
 const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
 
     const [infinite, setInfinite] = useState(posts)
     const [input, setInput] = useState("");
-    const count = useMemo(()=> totalPages * 12,[totalPages])
+    const count = useMemo(() => totalPages * 12, [totalPages])
 
-
-    const loadFunc = async () => {
+    const loadFunc = useCallback(async () => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${page + 1}`)
         const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
         setPage((prevState: number) => prevState + 1)
         setInfinite((prevState: PostInterface[]) => [...prevState, ...posts])
         setHasMore((page + 1) < response.data.totalPages)
         return posts
-    }
+    }, [page])
 
     return (
         <>
             <Head>
-                <link rel="canonical" href="https://innoads.ru"/>
-                <title>{seoTitle}</title>
+                <link rel="canonical" href={process.env.NEXT_PUBLIC_NODE_ENV}/>
+                <title>{SEO_TITLE}</title>
                 <meta name="description"
-                      content={seoDescription}/>
+                      content={SEO_DESCRIPTION}/>
                 <meta name="keywords" content="innoads, Иннополис, доска объявлений"/>
                 <meta name="image" content='/icons/icon-192x192.png'/>
-                <meta property="og:title" content={seoTitle}/>
-                <meta property="og:description" content={seoDescription}/>
-                <meta property="og:type" content="website"/>
-                <meta property="og:url" content="https://innoads.ru/"/>
-                <meta property="og:image" content={seoImage}/>
-                <meta name="author" content="InnoAds" />
-                <meta name="publisher" content="InnoAds" />
+                <meta property="og:title" content={SEO_TITLE}/>
+                <meta property="og:description" content={SEO_DESCRIPTION}/>
+                <meta property="og:url" content={process.env.NEXT_PUBLIC_NODE_ENV}/>
+                <meta property="og:image" content={SEO_IMAGE}/>
+                <meta name="author" content="InnoAds"/>
             </Head>
             <Header/>
             <main>

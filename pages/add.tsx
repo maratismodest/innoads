@@ -16,20 +16,20 @@ import Input from "../components/Input/Input";
 import {MainLayout} from "../components/MainLayout/MainLayout";
 import SelectInno from "../components/Select/Select";
 import Spinner from "../components/Spinner/Spinner";
-import {NO_IMAGE, routes} from "../constants";
+import {ACCEPTED_IMAGE_FORMAT, ErrorProps, InputType, NO_IMAGE, routes, titles} from "../constants";
 import {useAuth} from "../context/AuthContext";
 import handleImageUpload from "../functions/handleImageUpload";
 import {MoveImage, moveImage} from "../functions/moveImage";
 import {onImageClick} from "../functions/onImageClick";
 import classes from "../styles/classes.module.scss";
 import {handleDeleteImage} from "../functions/handleDeleteImage";
-import { HTMLInputEvent } from "../interfaces";
-import { handlePostImage } from "../functions/handlePostImage";
+import {HTMLInputEvent} from "../interfaces";
+import {handlePostImage} from "../functions/handlePostImage";
 
 export default function Add() {
     const router = useRouter()
     const [images, setImages] = useState<string[]>([]);
-    const [error, setError] = useState("");
+    const [error, setError] = useState<string>("");
     const {control, register, handleSubmit, formState: {errors}} = useForm();
     const {user} = useAuth();
     const [loading, setLoading] = useState(false)
@@ -130,8 +130,10 @@ export default function Add() {
         return await handleDeleteImage(current)
     };
 
+    const Error = ({name}: ErrorProps) => errors[name] && <span>Поле обязательно для заполнения</span>
+
     return (
-        <MainLayout title={"Добавить объявление"}>
+        <MainLayout title={titles.add}>
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className={classes.form}
@@ -142,11 +144,9 @@ export default function Add() {
                     rules={{required: true}}
                     render={({field}: any) => <SelectInno
                         {...field}
-                        options={options}
-                        // defaultValue={options[0]}
-                    />}
+                        options={options}/>}
                 />
-                {errors.category && <span>Поле обязательно для заполнения</span>}
+                <Error name={'category'}/>
                 <div style={{marginBottom: 10}}></div>
                 <Input
                     type="number"
@@ -155,7 +155,7 @@ export default function Add() {
                     required={true}
                     name="price"
                 />
-                {errors.price && <span>Поле обязательно для заполнения</span>}
+                <Error name={'price'}/>
                 <Input
                     type="text"
                     placeholder="Заголовок"
@@ -163,19 +163,15 @@ export default function Add() {
                     required={true}
                     name="title"
                 />
-                {errors.title && <span>Поле обязательно для заполнения</span>}
+                <Error name={'title'}/>
                 <textarea
-                    style={{
-                        borderRadius: 4,
-                        marginBottom: 10,
-                        padding: 15,
-                    }}
                     rows={5}
                     cols={5}
                     placeholder={"Описание"}
                     {...register("body", {required: true})}
+                    className={classes.textArea}
                 />
-                {errors.body && <span>Поле обязательно для заполнения</span>}
+                <Error name={'body'}/>
                 <div>
                     <div>
                         <h4>Добавить фото</h4>
@@ -185,7 +181,6 @@ export default function Add() {
                                 [classes.imageMobile]: !isDesktop,
                             })}
                             onClick={onImageClick}
-                            style={{cursor: "pointer"}}
                         >
                             <Image
                                 alt="image"
@@ -201,10 +196,10 @@ export default function Add() {
                         onChange={imageHandler}
                         hidden
                         multiple
-                        accept=".jpg, .jpeg, .png"
+                        accept={ACCEPTED_IMAGE_FORMAT}
                     />
                 </div>
-                Предварительный просмотр
+                <h4>Предварительный просмотр</h4>
                 <ul
                     className={cn({
                         [classes.images]: isDesktop,
@@ -229,7 +224,7 @@ export default function Add() {
                                     blurDataURL={NO_IMAGE}
                                 />
                                 <Icon
-                                    style={{position: "absolute", top: "40%", left: 0}}
+                                    className={classes.leftArrow}
                                     onClick={(e: MouseEvent) => {
                                         moveImage(e, images, index, MoveImage.left, setImages);
                                     }}
@@ -237,7 +232,7 @@ export default function Add() {
                                     &larr;
                                 </Icon>
                                 <Icon
-                                    style={{position: "absolute", top: "40%", right: 0}}
+                                    className={classes.rightArrow}
                                     onClick={(e: MouseEvent) => {
                                         moveImage(e, images, index, MoveImage.right, setImages);
                                     }}
@@ -245,12 +240,12 @@ export default function Add() {
                                     &rarr;
                                 </Icon>
                                 <Icon
-                                    style={{position: "absolute", top: 0, right: 0}}
+                                    className={classes.deleteIcon}
                                     onClick={async () => {
                                         await deleteImage(image);
                                     }}
                                 >
-                                    X
+                                    &times;
                                 </Icon>
                             </li>
                         );
@@ -262,13 +257,12 @@ export default function Add() {
                                 [classes.imageMobile]: !isDesktop,
                             })}
                         >
-                            <div className={classes.loadingImage}>
-                                <p>Загружаем изображение</p>
-                            </div>
+                            <p className={classes.loadingImage}>
+                                Загружаем изображение
+                            </p>
                         </li>
                     )}
                 </ul>
-
                 {error}
                 <Button type="submit" disabled={sending}>Создать объявление</Button>
             </form>

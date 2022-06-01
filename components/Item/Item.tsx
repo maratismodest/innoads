@@ -43,12 +43,14 @@ export const Item = ({post, edit}: ItemInterface) => {
     if (!state) {
         return null
     }
+
+    const {id, slug, title, preview, price} = post
     return (
-        <li key={post.slug} className={classes.item}>
+        <li key={slug} className={classes.item}>
             {edit && (
                 <>
                     <div className={classes.delete}>
-                        <Button onClick={() => deletePost(post.id)}>X</Button>
+                        <Button onClick={() => deletePost(id)}>X</Button>
                     </div>
                     <div className={classes.edit}>
                         <Button onClick={editPost}>Редактировать</Button>
@@ -56,24 +58,24 @@ export const Item = ({post, edit}: ItemInterface) => {
                 </>
 
             )}
-            <Link href={`/post/${post.slug}`}>
+            <Link href={`/post/${slug}`}>
                 <a>
                     <div className={classes.imageWrapper}>
                         <Image
-                            alt="image"
-                            src={post.preview || NO_IMAGE}
+                            alt={title}
+                            src={preview || NO_IMAGE}
                             layout="fill"
                             objectFit="cover"
                             placeholder="blur"
                             blurDataURL={NO_IMAGE}
                             sizes={size}
-                            title={post.title}
+                            title={title}
                         />
                     </div>
                     <p>
-                        {post.price} {isNaN(post.price) ? null : "Р"}
+                        {price} {isNaN(post.price) ? null : "Р"}
                     </p>
-                    <h2>{post.title}</h2>
+                    <h2>{title}</h2>
                 </a>
             </Link>
         </li>
