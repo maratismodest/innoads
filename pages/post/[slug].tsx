@@ -116,9 +116,9 @@ export default function Post({post: serverPost}: PostProps) {
                             <Button onClick={handleRefresh}>Поднять объявление</Button>
                         </div>
                     }
-                    <div style={{marginTop: 40}}>
+                    <div style={{marginTop: 40}} itemScope itemType="https://schema.org/Person">
                         <Link href={`https://t.me/${telegram}`}>
-                            <a>
+                            <a itemProp="url">
                                 <Button>
                                     Написать автору
                                 </Button>
