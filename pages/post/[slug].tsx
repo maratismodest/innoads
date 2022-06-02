@@ -109,7 +109,7 @@ export default function Post({post: serverPost}: PostProps) {
                     </h1>
                     {/*<Button onClick={handleRefresh}>Поднять объявление</Button>*/}
                     <hr/>
-                    <p style={{whiteSpace: 'pre-wrap'}}>{body}</p>
+                    <p style={{whiteSpace: 'pre-wrap', overflow: 'hidden'}}>{body}</p>
                     <p>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
                     {user && (user.id === tgId) &&
                         <div style={{marginTop: 40}}>
