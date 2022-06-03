@@ -8,7 +8,7 @@ function MyApp({Component, pageProps}: AppProps) {
         <>
             <AuthProvider>
                 <Component {...pageProps} />
-                <YMInitializer accounts={[88487475]} options={{webvisor: true, defer: true}} version="2"/>
+                <YMInitializer accounts={[88487475]} options={{webvisor: true}} version="2"/>
             </AuthProvider>
         </>
 
