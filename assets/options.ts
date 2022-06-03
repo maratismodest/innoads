@@ -1,4 +1,4 @@
-type Label = "Продам" | "Куплю" | "Услуги" | "Вакансии" | "Недвижимость"
+type Label = "Продам" | "Одежда" | "Услуги" | "Недвижимость" | "Куплю" | "Вакансии"
 
 export interface OptionProps {
     value: number;
@@ -10,5 +10,6 @@ export const options: OptionProps [] = [
     {value: 2, label: "Куплю"},
     {value: 3, label: "Услуги"},
     {value: 4, label: "Вакансии"},
-    {value: 5, label: "Недвижимость"}
+    {value: 5, label: "Недвижимость"},
+    {value: 6, label: "Одежда"}
 ];
