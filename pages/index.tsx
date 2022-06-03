@@ -1,6 +1,7 @@
 import axios from "axios";
 import {orderBy} from "lodash";
 import type {GetStaticProps, NextPage} from 'next'
+import dynamic from "next/dynamic";
 import Head from 'next/head'
 import Link from 'next/link';
 import React, {useMemo, useState, useCallback} from 'react';
@@ -15,7 +16,7 @@ import {PostInterface} from '../interfaces';
 import classes from './../styles/Home.module.scss'
 
 
-// const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
+const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
 
 interface HomeProps {
     posts: PostInterface[]
@@ -73,7 +74,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
                         </a>
                     </Link>
                 </form>
-                {/*<Premium/>*/}
+                <Premium/>
                 <p style={{textAlign: 'right'}}>* {count} объявлений на сайте</p>
                 <h1 className={classes.title}>Последние объявления</h1>
                 <div className={classes.magicWrapper}>
