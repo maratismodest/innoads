@@ -63,7 +63,7 @@ export default function Post({post: serverPost}: PostProps) {
                 <meta name="image" content={seoImage}/>
                 <meta property="og:title" content={title}/>
                 <meta property="og:description" content={seoDescription}/>
-                <meta property="og:url" content={`${process.env.NEXT_PUBLIC_NODE_ENV}/post/slug`}/>
+                <meta property="og:url" content={`${process.env.NEXT_PUBLIC_NODE_ENV}/post/${slug}`}/>
                 <meta property="og:image" content={seoImage}/>
                 <meta name="author" content={`https://t.me/${telegram}`}/>
                 <link rel="image_src" href={preview}/>
