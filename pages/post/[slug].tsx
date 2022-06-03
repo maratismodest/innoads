@@ -1,5 +1,4 @@
 import axios from "axios";
-import _ from "lodash";
 import moment from "moment";
 import type {GetServerSideProps} from "next";
 import Head from "next/head";
@@ -16,7 +15,6 @@ import classes from "../../styles/Item.module.scss";
 
 interface PostProps {
     post: PostInterface
-    slug?: string
 }
 
 export default function Post({post: serverPost}: PostProps) {
@@ -36,12 +34,12 @@ export default function Post({post: serverPost}: PostProps) {
         slug
     } = post;
 
-    const category = _.find(options, {value: categoryId}) || options[0]
-    const seoTitle = useMemo(() => `${category.label} ${title.slice(0, 50)} ${price.toString()}`, [post])
-    const seoDescription = body.slice(0, 320)
-    const seoImage = preview
-    const seoKeywords = useMemo(() => `innoads, Иннополис, доска объявлений, ${category.label}`, [category])
-    const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [slug])
+    const category = useMemo(() => options.find(option => option.value === categoryId) || options[0], [])
+    const seoTitle = useMemo(() => `${category.label} ${title.slice(0, 50)} ${price.toString()}`, [])
+    const seoDescription = useMemo(() => body.slice(0, 320), [])
+    const seoImage = useMemo(() => preview, [])
+    const seoKeywords = useMemo(() => `innoads, Иннополис, доска объявлений, ${category.label}`, [])
+    const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [])
 
     const handleRefresh = useCallback(async () => {
         try {
@@ -53,7 +51,7 @@ export default function Post({post: serverPost}: PostProps) {
             alert('Что-то пошло не так!')
             console.log(e)
         }
-    }, [post])
+    }, [])
 
     return (
         <>
@@ -65,15 +63,15 @@ export default function Post({post: serverPost}: PostProps) {
                 <meta name="image" content={seoImage}/>
                 <meta property="og:title" content={title}/>
                 <meta property="og:description" content={seoDescription}/>
-                <meta property="og:url" content={process.env.NEXT_PUBLIC_NODE_ENV}/>
+                <meta property="og:url" content={`${process.env.NEXT_PUBLIC_NODE_ENV}/post/slug`}/>
                 <meta property="og:image" content={seoImage}/>
                 <meta name="author" content={`https://t.me/${telegram}`}/>
                 <link rel="image_src" href={preview}/>
             </Head>
             <Header/>
             <main>
-                <div className={classes.item}>
-                    <div style={{position: "relative"}}>
+                <div className={classes.item} itemScope itemType="https://schema.org/Offer">
+                    <div className={classes.carousel}>
                         <CarouselProvider
                             naturalSlideWidth={100}
                             naturalSlideHeight={100}
@@ -89,6 +87,7 @@ export default function Post({post: serverPost}: PostProps) {
                                                 alt="image"
                                                 className={classes.image}
                                                 title={title}
+                                                itemProp='image'
                                             />
                                         </Slide>
                                     );
@@ -102,23 +101,23 @@ export default function Post({post: serverPost}: PostProps) {
                             </ButtonNext>
                         </CarouselProvider>
                     </div>
-
-                    <h1>
-                        {title} - {price}
-                        {isNaN(price) ? null : "р"}
+                    <p className={classes.category}>Категория: <span itemProp="category">{category.label}</span></p>
+                    <h1 itemProp='name'>
+                        {title}
                     </h1>
+                    <p itemProp="price" className={classes.price}>{price} {isNaN(price) ? null : "р"}</p>
                     {/*<Button onClick={handleRefresh}>Поднять объявление</Button>*/}
                     <hr/>
-                    <p style={{whiteSpace: 'pre-wrap', overflow: 'hidden'}}>{body}</p>
+                    <p itemProp='description' className={classes.description}>{body}</p>
                     <p>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
                     {user && (user.id === tgId) &&
-                        <div style={{marginTop: 40}}>
+                        <div className={classes.mt40}>
                             <Button onClick={handleRefresh}>Поднять объявление</Button>
                         </div>
                     }
-                    <div style={{marginTop: 40}} itemScope itemType="https://schema.org/Person">
+                    <div className={classes.mt40}>
                         <Link href={`https://t.me/${telegram}`}>
-                            <a itemProp="url">
+                            <a itemProp="seller">
                                 <Button>
                                     Написать автору
                                 </Button>
@@ -143,6 +142,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
     const snapshot = query.data;
     return {
-        props: {post: snapshot, slug: snapshot.slug},
+        props: {post: snapshot},
     };
 }

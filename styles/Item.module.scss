@@ -1,4 +1,5 @@
 @import "variables";
+
 .item {
   margin: 0 auto;
   max-width: 400px;
@@ -37,4 +38,27 @@
 
 .slider {
   height: 300px;
+}
+
+.category {
+  font-size: 1em;
+}
+
+.price {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.carousel {
+  position: relative;
+}
+
+.description {
+  white-space: pre-wrap;
+  overflow: hidden;
+}
+
+.mt40 {
+  margin-top: 40px;
 }
