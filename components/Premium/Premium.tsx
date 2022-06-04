@@ -91,7 +91,7 @@ const Premium = () => {
 
     return (
         <div>
-            <h2 className={classes.title}>Недвижимость</h2>
+            <h2 className={classes.title}>Премиум объявления</h2>
             <CarouselProvider
                 naturalSlideWidth={200}
                 naturalSlideHeight={270}
