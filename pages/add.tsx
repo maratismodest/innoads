@@ -16,13 +16,13 @@ import Input from "../components/Input/Input";
 import {MainLayout} from "../components/MainLayout/MainLayout";
 import SelectInno from "../components/Select/Select";
 import Spinner from "../components/Spinner/Spinner";
-import {ACCEPTED_IMAGE_FORMAT, ErrorProps, InputType, NO_IMAGE, routes, titles} from "../constants";
+import {ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, routes, titles} from "../constants";
 import {useAuth} from "../context/AuthContext";
 import handleImageUpload from "../functions/handleImageUpload";
 import {MoveImage, moveImage} from "../functions/moveImage";
 import {onImageClick} from "../functions/onImageClick";
 import classes from "../styles/classes.module.scss";
-import {handleDeleteImage} from "../functions/handleDeleteImage";
+import {handleDeleteImage, requestConfig} from "../functions/handleDeleteImage";
 import {HTMLInputEvent} from "../interfaces";
 import {handlePostImage} from "../functions/handlePostImage";
 
@@ -80,9 +80,9 @@ export default function Add() {
         }
 
         setSending(true)
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData)
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, requestConfig)
         alert("Пожалуйста, подождите немного: передача объявления в канал InnoAds занимает до 10 секунд!")
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData)
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, requestConfig)
         alert("Ваше объявление отправлено в канал InnoAds, а скоро появится на сайте!")
         setSending(false)
 

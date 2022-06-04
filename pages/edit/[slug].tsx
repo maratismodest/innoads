@@ -21,7 +21,7 @@ import {MoveImage, moveImage} from "../../functions/moveImage";
 import {onImageClick} from "../../functions/onImageClick";
 import {HTMLInputEvent, PostInterface} from "../../interfaces";
 import classes from "../../styles/classes.module.scss";
-import {handleDeleteImage} from "../../functions/handleDeleteImage";
+import {handleDeleteImage, requestConfig} from "../../functions/handleDeleteImage";
 import {handlePostImage} from "../../functions/handlePostImage";
 
 interface PostProps {
@@ -98,7 +98,7 @@ export default function Edit({post: serverPost}: PostProps) {
         }
 
         setSending(true)
-        await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData)
+        await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, requestConfig)
         alert("Ваше объявление отправлено в канал InnoAds, а скоро появится на сайте!")
         setSending(false)
 
