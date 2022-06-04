@@ -8,6 +8,7 @@ import {NO_IMAGE} from "../../constants";
 import {PostInterface} from "../../interfaces";
 import Button from "../Button/Button";
 import classes from "./Item.module.scss";
+import {requestConfig} from "../../functions/handleDeleteImage";
 
 interface ItemInterface {
     post: PostInterface,
@@ -32,7 +33,7 @@ export const Item = ({post, edit}: ItemInterface) => {
     const deletePost = useCallback(async (id: number) => {
         const answer = confirm('Удалить объявление?')
         if (answer) {
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`)
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`, requestConfig)
             alert('Объявление удалено!')
             setState(false)
         }
