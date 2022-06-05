@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React, {useMemo} from 'react';
 import {isMobile} from 'react-device-detect';
 import {CarouselProvider, Slide, Slider} from 'pure-react-carousel';
-import {PostInterface} from '../../interfaces';
 import Item from '../Item/Item';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import classes from './../../styles/Home.module.scss'
@@ -65,8 +64,8 @@ const posts = [
     }
 ]
 const Premium = () => {
-    const [premium, setPremium] = useState<PostInterface[]>(posts)
-
+    // const [premium, setPremium] = useState<PostInterface[]>(posts)
+    const premium = useMemo(() => posts, [])
     // useEffect(() => {
     //     getPremiums().then((res) => setPremium(res))
     // }, [])
