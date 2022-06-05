@@ -1,6 +1,6 @@
 import axios from "axios";
 import {orderBy} from "lodash";
-import type {GetStaticProps, NextPage} from 'next'
+import type {NextPage} from 'next'
 import {useRouter} from "next/router";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import InfiniteScroll from 'react-infinite-scroller';
@@ -14,24 +14,21 @@ import useDebounce from "../hooks/useDebounce";
 import {PostInterface} from "../interfaces";
 import classes from "../styles/Index.module.scss";
 
-interface SearchPageProps {
-    posts: PostInterface[]
-}
-
-const SearchPage: NextPage<SearchPageProps> = ({posts}) => {
+const SearchPage: NextPage = () => {
     const router = useRouter();
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
-    const [infinite, setInfinite] = useState(posts)
+    const [infinite, setInfinite] = useState([])
     const [input, setInput] = useState("");
-    const [category, setCategory] = useState(1);
+    const [category, setCategory] = useState(Number(router.query['category']) || 1);
     const debouncedValue = useDebounce<string>(input, 500)
 
     const loadFunc = useCallback(async (currentPage: number = page) => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&category=${category}&text=${debouncedValue}`)
-        const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+        const posts: PostInterface[] = orderBy(response.data.content, ['createdAt'], ['desc'])
         setPage(prevState => prevState + 1)
-        setInfinite(prevState => currentPage === 0 ? posts : [...prevState, ...posts])
+        // @ts-ignore
+        setInfinite((prevState: PostInterface[]) => currentPage === 0 ? posts : [...prevState, ...posts])
         setHasMore((currentPage + 1) < response.data.totalPages)
     }, [page, category, debouncedValue])
 
@@ -60,10 +57,11 @@ const SearchPage: NextPage<SearchPageProps> = ({posts}) => {
                 options={options}
                 name="category"
                 required={true}
-                defaultValue={options[0]}
+                // defaultValue={options[0]}
                 onChange={(event: any) => {
                     setCategory(event.value);
                 }}
+                value={options.find(x => x.value === category)}
             />
             <Input
                 type="text"
@@ -98,21 +96,21 @@ const SearchPage: NextPage<SearchPageProps> = ({posts}) => {
     );
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?category=1`)
-    const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
-    if (!posts) {
-        return {
-            notFound: true,
-        };
-    }
-
-    return {
-        props: {
-            posts
-        },
-        revalidate: 10,
-    };
-}
+// export const getStaticProps: GetStaticProps = async (context) => {
+//     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?category=1`)
+//     const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+//     if (!posts) {
+//         return {
+//             notFound: true,
+//         };
+//     }
+//
+//     return {
+//         props: {
+//             posts
+//         },
+//         revalidate: 10,
+//     };
+// }
 
 export default SearchPage

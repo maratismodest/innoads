@@ -4,7 +4,7 @@ import type {GetStaticProps, NextPage} from 'next'
 import dynamic from "next/dynamic";
 import Head from 'next/head'
 import Link from 'next/link';
-import React, {useMemo, useState, useCallback} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import Button from "../components/Button/Button";
 import Header from "../components/Header/Header";
@@ -14,9 +14,10 @@ import Spinner from '../components/Spinner/Spinner';
 import {SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from "../constants";
 import {PostInterface} from '../interfaces';
 import classes from './../styles/Home.module.scss'
+import Categories from "../components/Categories/Categories";
 
 
-const Premium = dynamic(() => import('../components/Premium/Premium'), {ssr: false})
+// const Categories = dynamic(() => import('../components/Categories/Categories'), {ssr: false})
 
 interface HomeProps {
     posts: PostInterface[]
@@ -74,7 +75,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
                         </a>
                     </Link>
                 </form>
-                <Premium/>
+                <Categories/>
                 <p style={{textAlign: 'right'}}>* {count} объявлений на сайте</p>
                 <h1 className={classes.title}>Последние объявления</h1>
                 <div className={classes.magicWrapper}>

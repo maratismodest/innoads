@@ -38,3 +38,17 @@
 .premium {
   position: relative;
 }
+
+.category {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: rgb(59 73 223 / 3%);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 3%) inset;
+  //width: 100px;
+  margin: 0 8px 0 0;
+  padding: 8px 5px 8px 5px;
+  border-radius: 4px;
+}
