@@ -80,13 +80,18 @@ export default function Add() {
         }
 
         setSending(true)
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, requestConfig)
-        alert("Пожалуйста, подождите немного: передача объявления в канал InnoAds занимает до 10 секунд!")
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, requestConfig)
-        alert("Ваше объявление отправлено в канал InnoAds, а скоро появится на сайте!")
-        setSending(false)
+        try {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, requestConfig)
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, requestConfig)
+            alert("Ваше объявление создано!")
+            setSending(false)
+            return router.push("/profile");
+        } catch (e) {
+            console.log(e)
+            setSending(false)
+            return alert("Что-то пошло не так... Попробуйте отправить еще раз")
+        }
 
-        return router.push("/profile");
     }
 
     const getCompressedImagesLinks = async (imagesFromInput: any) => {
@@ -133,139 +138,146 @@ export default function Add() {
     const Error = ({name}: ErrorProps) => errors[name] && <span>Поле обязательно для заполнения</span>
 
     return (
-        <MainLayout title={titles.add}>
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className={classes.form}
-            >
-                <Controller
-                    name="category"
-                    control={control}
-                    rules={{required: true}}
-                    render={({field}: any) => <SelectInno
-                        {...field}
-                        options={options}/>}
-                />
-                <Error name={'category'}/>
-                <div style={{marginBottom: 10}}></div>
-                <Input
-                    type="number"
-                    placeholder="Цена"
-                    register={register}
-                    required={true}
-                    name="price"
-                />
-                <Error name={'price'}/>
-                <Input
-                    type="text"
-                    placeholder="Заголовок"
-                    register={register}
-                    required={true}
-                    name="title"
-                />
-                <Error name={'title'}/>
-                <textarea
-                    rows={5}
-                    cols={5}
-                    placeholder={"Описание"}
-                    {...register("body", {required: true})}
-                    className={classes.textArea}
-                />
-                <Error name={'body'}/>
-                <div>
-                    <div>
-                        <h4>Добавить фото</h4>
-                        <div
-                            className={cn({
-                                [classes.image]: isDesktop,
-                                [classes.imageMobile]: !isDesktop,
-                            })}
-                            onClick={onImageClick}
-                        >
-                            <Image
-                                alt="image"
-                                src={NO_IMAGE}
-                                objectFit="cover"
-                                layout="fill"
-                            />
-                        </div>
-                    </div>
-                    <Input
-                        id="upload"
-                        type="file"
-                        onChange={imageHandler}
-                        hidden
-                        multiple
-                        accept={ACCEPTED_IMAGE_FORMAT}
-                    />
-                </div>
-                <h4>Предварительный просмотр</h4>
-                <ul
-                    className={cn({
-                        [classes.images]: isDesktop,
-                        [classes.imagesMobile]: !isDesktop,
-                    })}
+        <>
+            {!sending &&
+                <div className={classes.sending}>
+                    <Spinner/>
+                </div>}
+            <MainLayout title={titles.add}>
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className={classes.form}
                 >
-                    {images.map((image: string, index: number) => {
-                        return (
+                    <Controller
+                        name="category"
+                        control={control}
+                        rules={{required: true}}
+                        render={({field}: any) => <SelectInno
+                            {...field}
+                            options={options}/>}
+                    />
+                    <Error name={'category'}/>
+                    <div style={{marginBottom: 10}}></div>
+                    <Input
+                        type="number"
+                        placeholder="Цена"
+                        register={register}
+                        required={true}
+                        name="price"
+                    />
+                    <Error name={'price'}/>
+                    <Input
+                        type="text"
+                        placeholder="Заголовок"
+                        register={register}
+                        required={true}
+                        name="title"
+                    />
+                    <Error name={'title'}/>
+                    <textarea
+                        rows={5}
+                        cols={5}
+                        placeholder={"Описание"}
+                        {...register("body", {required: true})}
+                        className={classes.textArea}
+                    />
+                    <Error name={'body'}/>
+                    <div>
+                        <div>
+                            <h4>Добавить фото</h4>
+                            <div
+                                className={cn({
+                                    [classes.image]: isDesktop,
+                                    [classes.imageMobile]: !isDesktop,
+                                })}
+                                onClick={onImageClick}
+                            >
+                                <Image
+                                    alt="image"
+                                    src={NO_IMAGE}
+                                    objectFit="cover"
+                                    layout="fill"
+                                />
+                            </div>
+                        </div>
+                        <Input
+                            id="upload"
+                            type="file"
+                            onChange={imageHandler}
+                            hidden
+                            multiple
+                            accept={ACCEPTED_IMAGE_FORMAT}
+                        />
+                    </div>
+                    <h4>Предварительный просмотр</h4>
+                    <ul
+                        className={cn({
+                            [classes.images]: isDesktop,
+                            [classes.imagesMobile]: !isDesktop,
+                        })}
+                    >
+                        {images.map((image: string, index: number) => {
+                            return (
+                                <li
+                                    key={image}
+                                    className={cn({
+                                        [classes.image]: isDesktop,
+                                        [classes.imageMobile]: !isDesktop,
+                                    })}
+                                >
+                                    <Image
+                                        alt={image}
+                                        src={image}
+                                        objectFit="cover"
+                                        layout={"fill"}
+                                        placeholder="blur"
+                                        blurDataURL={NO_IMAGE}
+                                    />
+                                    <Icon
+                                        className={classes.leftArrow}
+                                        onClick={(e: MouseEvent) => {
+                                            moveImage(e, images, index, MoveImage.left, setImages);
+                                        }}
+                                    >
+                                        &larr;
+                                    </Icon>
+                                    <Icon
+                                        className={classes.rightArrow}
+                                        onClick={(e: MouseEvent) => {
+                                            moveImage(e, images, index, MoveImage.right, setImages);
+                                        }}
+                                    >
+                                        &rarr;
+                                    </Icon>
+                                    <Icon
+                                        className={classes.deleteIcon}
+                                        onClick={async () => {
+                                            await deleteImage(image);
+                                        }}
+                                    >
+                                        &times;
+                                    </Icon>
+                                </li>
+                            );
+                        })}
+                        {loading && (
                             <li
-                                key={image}
                                 className={cn({
                                     [classes.image]: isDesktop,
                                     [classes.imageMobile]: !isDesktop,
                                 })}
                             >
-                                <Image
-                                    alt={image}
-                                    src={image}
-                                    objectFit="cover"
-                                    layout={"fill"}
-                                    placeholder="blur"
-                                    blurDataURL={NO_IMAGE}
-                                />
-                                <Icon
-                                    className={classes.leftArrow}
-                                    onClick={(e: MouseEvent) => {
-                                        moveImage(e, images, index, MoveImage.left, setImages);
-                                    }}
-                                >
-                                    &larr;
-                                </Icon>
-                                <Icon
-                                    className={classes.rightArrow}
-                                    onClick={(e: MouseEvent) => {
-                                        moveImage(e, images, index, MoveImage.right, setImages);
-                                    }}
-                                >
-                                    &rarr;
-                                </Icon>
-                                <Icon
-                                    className={classes.deleteIcon}
-                                    onClick={async () => {
-                                        await deleteImage(image);
-                                    }}
-                                >
-                                    &times;
-                                </Icon>
+                                <p className={classes.loadingImage}>
+                                    Загружаем изображение
+                                </p>
                             </li>
-                        );
-                    })}
-                    {loading && (
-                        <li
-                            className={cn({
-                                [classes.image]: isDesktop,
-                                [classes.imageMobile]: !isDesktop,
-                            })}
-                        >
-                            <p className={classes.loadingImage}>
-                                Загружаем изображение
-                            </p>
-                        </li>
-                    )}
-                </ul>
-                {error}
-                <Button type="submit" disabled={sending}>Создать объявление</Button>
-            </form>
-        </MainLayout>
+                        )}
+                    </ul>
+                    {error}
+                    <Button type="submit" disabled={sending || loading}>Создать объявление</Button>
+                </form>
+            </MainLayout>
+        </>
+
     );
 }

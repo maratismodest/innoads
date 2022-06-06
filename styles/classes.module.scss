@@ -89,3 +89,17 @@
   top: 0;
   right: 0;
 }
+
+.sending {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5000;
+  background: grey;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
