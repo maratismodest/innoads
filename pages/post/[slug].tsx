@@ -5,20 +5,33 @@ import Head from "next/head";
 import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import React, {useCallback, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {options} from "../../assets/options";
 import Button from "../../components/Button/Button";
 import Header from "../../components/Header/Header";
 import {useAuth} from "../../context/AuthContext";
 import {PostInterface} from "../../interfaces";
 import classes from "../../styles/Item.module.scss";
+import Item from "../../components/Item/Item";
 
 interface PostProps {
     post: PostInterface
 }
 
+// const getRelatedPosts = async (post: PostInterface): Promise<PostInterface[]> => {
+//     try {
+//         const query = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?category=${post.categoryId}&size=`)
+//         return query.data.content
+//     } catch (e) {
+//         console.log(e)
+//         return []
+//     }
+// }
+
+
 export default function Post({post: serverPost}: PostProps) {
     const [post] = useState<PostInterface>(serverPost);
+    // const [related, setRelated] = useState<PostInterface[]>([])
     const [images] = useState<string[]>(() => post.images.split("||"));
     const {user} = useAuth();
 
@@ -52,6 +65,10 @@ export default function Post({post: serverPost}: PostProps) {
             console.log(e)
         }
     }, [])
+
+    // useEffect(() => {
+    //     getRelatedPosts(post).then((res) => setRelated(res))
+    // }, [])
 
     return (
         <>
@@ -126,6 +143,13 @@ export default function Post({post: serverPost}: PostProps) {
                     </div>
 
                 </div>
+                {/*<div className={classes.related}>*/}
+                {/*    <h3>Похожие объявления</h3>*/}
+                {/*    <ul className={classes.items}>*/}
+                {/*        {related.map((x) => <Item key={x.title} post={x}/>)}*/}
+                {/*    </ul>*/}
+                {/*</div>*/}
+
             </main>
         </>
 

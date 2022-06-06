@@ -45,10 +45,22 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  background: rgb(59 73 223 / 3%);
-  box-shadow: 0 0 0 1px rgb(0 0 0 / 3%) inset;
   //width: 100px;
   margin: 0 8px 0 0;
   padding: 8px 5px 8px 5px;
-  border-radius: 4px;
+  border-radius: 8px;
+}
+
+.img {
+  padding: 12px;
+  background: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: 0px 1px 0px 0px rgb(0 0 0 / 25%);
+  transition: transform .1s;
+  &:hover {
+    transition: transform .2s;
+    transform: scale(1.05);
+  }
 }
