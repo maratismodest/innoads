@@ -139,7 +139,7 @@ export default function Add() {
 
     return (
         <>
-            {!sending &&
+            {sending &&
                 <div className={classes.sending}>
                     <Spinner/>
                 </div>}
