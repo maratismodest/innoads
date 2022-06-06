@@ -1,4 +1,4 @@
-type Label = "Продам" | "Одежда" | "Услуги" | "Недвижимость" | "Куплю" | "Вакансии" | "Недвижим.."
+type Label = "Продам" | "Одежда" | "Услуги" | "Недвижимость" | "Куплю" | "Вакансии" | "Недвижим.." | "Даром"
 
 export interface OptionProps {
     value: number;
@@ -11,7 +11,8 @@ export const options: OptionProps [] = [
     {value: 3, label: "Услуги"},
     // {value: 4, label: "Вакансии"},
     {value: 5, label: "Недвижимость"},
-    {value: 6, label: "Одежда"}
+    {value: 6, label: "Одежда"},
+    {value: 7, label: "Даром"}
 ];
 
 interface CategoryProps extends OptionProps {
@@ -23,5 +24,6 @@ export const categories: CategoryProps [] = [
     {value: 2, label: "Куплю", image: '/images/buy.png'},
     {value: 3, label: "Услуги", image: '/images/services.png'},
     {value: 5, label: "Недвижим..", image: '/images/estate.png'},
-    {value: 6, label: "Одежда", image: '/images/clothes.png'}
+    {value: 6, label: "Одежда", image: '/images/clothes.png'},
+    {value: 7, label: "Даром", image: '/images/free.png'}
 ];
