@@ -14,10 +14,10 @@ import Spinner from '../components/Spinner/Spinner';
 import {SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from "../constants";
 import {PostInterface} from '../interfaces';
 import classes from './../styles/Home.module.scss'
-import Categories from "../components/Categories/Categories";
+// import Categories from "../components/Categories/Categories";
 
 
-// const Categories = dynamic(() => import('../components/Categories/Categories'), {ssr: false})
+const Categories = dynamic(() => import('../components/Categories/Categories'), {ssr: true})
 
 interface HomeProps {
     posts: PostInterface[]
