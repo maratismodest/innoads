@@ -2,39 +2,42 @@ import {CarouselProvider, Slide, Slider} from 'pure-react-carousel';
 import {isMobile} from "react-device-detect";
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import classes from './../../styles/Home.module.scss'
-import {options} from "../../assets/options";
+import {categories} from "../../assets/options";
 import {useEffect, useState} from "react";
 import Link from "next/link";
-
 
 const Categories = () => {
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
     if (!mounted) return null;
     return (
-        <div style={{margin: '8px 0'}}>
+        <div style={{margin: '8px 0', backgroundColor: '#F9F8F9', borderRadius: 16}}>
             {/*<h2 className={classes.title}>Премиум объявления</h2>*/}
             <CarouselProvider
-                naturalSlideWidth={120}
-                naturalSlideHeight={100}
-                totalSlides={options.length}
+                naturalSlideWidth={100}
+                naturalSlideHeight={isMobile ? 75 : 50}
+                totalSlides={categories.length}
                 // visibleSlides={options.length}
-                visibleSlides={isMobile ? 3 : options.length}
+                visibleSlides={isMobile ? 3 : categories.length}
                 isPlaying={true}
                 interval={5000}
                 infinite={true}
-                hasMasterSpinner={options.length === 0}
+                hasMasterSpinner={categories.length === 0}
             >
                 <Slider>
-                    {options.map((item, index) => {
+                    {categories.map((item, index) => {
                         return (
                             <Slide key={index} index={index} tabIndex={index}>
                                 <Link href={{pathname: "/search", query: {category: item.value}}}>
                                     <a className={classes.category}>
-                                        <img
-                                            src="https://epsilon.mb-themes.com/oc-content/themes/epsilon/images/small_cat/1.png"
-                                            alt=""/>
-                                        <h4>{item.label}</h4>
+                                        <div className={classes.img}>
+                                            <img
+                                                src={item.image}
+                                                alt={item.label}
+                                                width={32}
+                                            />
+                                        </div>
+                                        <h5>{item.label}</h5>
                                     </a>
                                 </Link>
 
