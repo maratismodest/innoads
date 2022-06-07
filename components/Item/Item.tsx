@@ -9,11 +9,14 @@ import {PostInterface} from "../../interfaces";
 import Button from "../Button/Button";
 import classes from "./Item.module.scss";
 import {requestConfig} from "../../functions/handleDeleteImage";
+import cn from 'classnames'
 
 interface ItemInterface {
     post: PostInterface,
     edit?: boolean
 }
+
+const promoted = [917, 1039, 800, 1031]
 
 export const Item = ({post, edit}: ItemInterface) => {
     const router = useRouter()
@@ -47,7 +50,9 @@ export const Item = ({post, edit}: ItemInterface) => {
 
     const {id, slug, title, preview, price} = post
     return (
-        <li key={slug} className={classes.item}>
+        <li key={slug} className={cn(classes.item, {
+            [classes.promoted]: promoted.includes(id)
+        })}>
             {edit && (
                 <>
                     <div className={classes.delete}>
