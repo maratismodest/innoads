@@ -5,14 +5,14 @@ import Head from "next/head";
 import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import React, {useCallback, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import {options} from "../../assets/options";
 import Button from "../../components/Button/Button";
 import Header from "../../components/Header/Header";
 import {useAuth} from "../../context/AuthContext";
 import {PostInterface} from "../../interfaces";
 import classes from "../../styles/Item.module.scss";
-import Item from "../../components/Item/Item";
+import {requestConfig} from "../../functions/handleDeleteImage";
 
 interface PostProps {
     post: PostInterface
@@ -56,15 +56,15 @@ export default function Post({post: serverPost}: PostProps) {
 
     const handleRefresh = useCallback(async () => {
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post})
-            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, {...post, createdAt: new Date()})
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post}, requestConfig)
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, {...post, createdAt: new Date()}, requestConfig)
             alert('Объявление поднято в поиске!')
             return
         } catch (e) {
             alert('Что-то пошло не так!')
             console.log(e)
         }
-    }, [])
+    }, [post])
 
     // useEffect(() => {
     //     getRelatedPosts(post).then((res) => setRelated(res))
