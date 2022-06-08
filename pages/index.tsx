@@ -33,7 +33,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
     const count = useMemo(() => totalPages * 12, [totalPages])
 
     const loadFunc = useCallback(async () => {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${page + 1}`)
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${page + 1}&size=10`)
         const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
         setPage((prevState: number) => prevState + 1)
         setInfinite((prevState: PostInterface[]) => [...prevState, ...posts])
@@ -104,7 +104,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post`)
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?size=10`)
     const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
 
     if (!posts) {
