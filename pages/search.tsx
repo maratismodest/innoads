@@ -12,6 +12,7 @@ import SelectInno from "../components/Select/Select";
 import Spinner from "../components/Spinner/Spinner";
 import useDebounce from "../hooks/useDebounce";
 import {PostInterface} from "../interfaces";
+import {isMobile} from "react-device-detect";
 import classes from '../styles/classes.module.scss'
 
 const SearchPage: NextPage = () => {
@@ -24,7 +25,7 @@ const SearchPage: NextPage = () => {
     const debouncedValue = useDebounce<string>(input, 500)
 
     const loadFunc = useCallback(async (currentPage: number = page) => {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&category=${category}&text=${debouncedValue}&size=10`)
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&category=${category}&text=${debouncedValue}&size=${isMobile ? 8 : 15}`)
         const posts: PostInterface[] = orderBy(response.data.content, ['createdAt'], ['desc'])
         setPage(prevState => prevState + 1)
         // @ts-ignore
