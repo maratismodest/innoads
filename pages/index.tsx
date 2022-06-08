@@ -67,7 +67,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
                         required={true}
                         input={input}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value)}
-                        style={{marginRight: 16}}
+                        style={{marginRight: 16, marginBottom: 0}}
                     />
                     <Link href={{pathname: "/search", query: {keyword: input}}}>
                         <a>
@@ -76,8 +76,10 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
                     </Link>
                 </form>
                 <Categories/>
-                <p style={{textAlign: 'right'}}>* {count} объявлений на сайте</p>
-                <h1 className={classes.title}>Последние объявления</h1>
+                <div style={{display: 'flex', justifyContent:'space-between', alignItems: 'baseline'}}>
+                    <h1 className={classes.title} style={{display: 'inline'}}>Последние объявления</h1>
+                    <span style={{textAlign: 'right'}}>* {count} объявлений на сайте</span>
+                </div>
                 <div className={classes.magicWrapper}>
                     <InfiniteScroll
                         pageStart={page}

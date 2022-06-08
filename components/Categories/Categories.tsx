@@ -15,7 +15,7 @@ const Categories = () => {
             {/*<h2 className={classes.title}>Премиум объявления</h2>*/}
             <CarouselProvider
                 naturalSlideWidth={100}
-                naturalSlideHeight={isMobile ? 75 : 50}
+                naturalSlideHeight={isMobile ? 80 : 55}
                 totalSlides={categories.length}
                 // visibleSlides={options.length}
                 visibleSlides={isMobile ? 3 : categories.length}
