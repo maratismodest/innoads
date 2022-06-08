@@ -73,13 +73,23 @@
   z-index: 1;
   top: 0;
   right: 0;
+  padding: 8px 24px;
 }
 
 .delete {
+  left: 0;
+  top: 0;
   position: absolute;
   z-index: 1;
-  left: 0;
+  padding: 8px 24px;
+}
+
+.promote {
+  position: absolute;
+  z-index: 1;
+  right: 0;
   bottom: 0;
+  padding: 8px 24px;
 }
 
 .promoted {

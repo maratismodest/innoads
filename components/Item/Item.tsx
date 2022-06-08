@@ -28,7 +28,7 @@ export const Item = ({post, edit}: ItemInterface) => {
             return '33vw'
         }
         if (isDesktop) {
-            return '25vw'
+            return '20vw'
         }
     }, [])
     const [state, setState] = useState(true)
@@ -42,7 +42,33 @@ export const Item = ({post, edit}: ItemInterface) => {
         }
     }, [])
 
-    const editPost = () => router.push(`/edit/${post.slug}`)
+    const handleRefresh = useCallback(async () => {
+        const answer = confirm('Опубликовать повторно объявление?')
+        if (answer) {
+            try {
+                await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post}, requestConfig)
+                await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
+                    ...post,
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                }, requestConfig)
+                alert('Объявление поднято в поиске!')
+                return
+            } catch (e) {
+                alert('Что-то пошло не так!')
+                console.log(e)
+            }
+        }
+        return
+
+    }, [post])
+
+    const editPost = useCallback(() => {
+        const answer = confirm('Редактировать объявление?')
+        if (answer) {
+            router.push(`/edit/${post.slug}`)
+        }
+    }, [post])
 
     if (!state) {
         return null
@@ -51,16 +77,14 @@ export const Item = ({post, edit}: ItemInterface) => {
     const {id, slug, title, preview, price} = post
     return (
         <li key={slug} className={cn(classes.item, {
-            [classes.promoted]: promoted.includes(id)
+            [classes.promoted]: promoted.includes(id) && !edit
         })}>
             {edit && (
                 <>
-                    <div className={classes.delete}>
-                        <Button onClick={() => deletePost(id)}>X</Button>
-                    </div>
-                    <div className={classes.edit}>
-                        <Button onClick={editPost}>Редактировать</Button>
-                    </div>
+                    <Button title='Удалить' className={classes.delete} onClick={() => deletePost(id)}>&#10008;</Button>
+                    <Button title='Редактировать' className={classes.edit} onClick={editPost}>&#10000;</Button>
+                    <Button title='Опубликовать повторно' className={classes.promote}
+                            onClick={handleRefresh}>&#8679;</Button>
                 </>
 
             )}

@@ -1,10 +1,11 @@
 import React from "react";
+import cn from 'classnames';
 import classes from './Button.module.scss'
 
 
-export const Button = ({children, disabled, ...props}: any) => {
+export const Button = ({children, disabled, className, ...props}: any) => {
     return (
-        <button className={classes.button} disable={disabled} {...props} >
+        <button className={cn(classes.button, className)} disable={disabled} {...props} >
             {children}
         </button>
     )

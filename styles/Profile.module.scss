@@ -1,0 +1,11 @@
+.description {
+  //display: flex;
+
+  & > li {
+    padding: 4px;
+
+    & > button {
+      padding: 4px 16px;
+    }
+  }
+}

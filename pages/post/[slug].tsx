@@ -54,21 +54,21 @@ export default function Post({post: serverPost}: PostProps) {
     const seoKeywords = useMemo(() => `innoads, Иннополис, доска объявлений, ${category.label}`, [])
     const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [])
 
-    const handleRefresh = useCallback(async () => {
-        try {
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post}, requestConfig)
-            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
-                ...post,
-                createdAt: new Date(),
-                updatedAt: new Date()
-            }, requestConfig)
-            alert('Объявление поднято в поиске!')
-            return
-        } catch (e) {
-            alert('Что-то пошло не так!')
-            console.log(e)
-        }
-    }, [post])
+    // const handleRefresh = useCallback(async () => {
+    //     try {
+    //         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post}, requestConfig)
+    //         await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
+    //             ...post,
+    //             createdAt: new Date(),
+    //             updatedAt: new Date()
+    //         }, requestConfig)
+    //         alert('Объявление поднято в поиске!')
+    //         return
+    //     } catch (e) {
+    //         alert('Что-то пошло не так!')
+    //         console.log(e)
+    //     }
+    // }, [post])
 
     // useEffect(() => {
     //     getRelatedPosts(post).then((res) => setRelated(res))
@@ -132,11 +132,11 @@ export default function Post({post: serverPost}: PostProps) {
                     <hr/>
                     <p itemProp='description' className={item.description}>{body}</p>
                     <p>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
-                    {user && (user.id === tgId) &&
-                        <div className={item.mt40}>
-                            <Button onClick={handleRefresh}>Поднять объявление</Button>
-                        </div>
-                    }
+                    {/*{user && (user.id === tgId) &&*/}
+                    {/*    <div className={item.mt40}>*/}
+                    {/*        <Button onClick={handleRefresh}>Поднять объявление</Button>*/}
+                    {/*    </div>*/}
+                    {/*}*/}
                     <div className={item.mt40}>
                         <Link href={`https://t.me/${telegram}`}>
                             <a itemProp="seller">
