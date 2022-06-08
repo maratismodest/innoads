@@ -57,7 +57,11 @@ export default function Post({post: serverPost}: PostProps) {
     const handleRefresh = useCallback(async () => {
         try {
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post}, requestConfig)
-            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, {...post, createdAt: new Date()}, requestConfig)
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
+                ...post,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            }, requestConfig)
             alert('Объявление поднято в поиске!')
             return
         } catch (e) {
