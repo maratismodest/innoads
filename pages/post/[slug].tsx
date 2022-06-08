@@ -11,7 +11,7 @@ import Button from "../../components/Button/Button";
 import Header from "../../components/Header/Header";
 import {useAuth} from "../../context/AuthContext";
 import {PostInterface} from "../../interfaces";
-import classes from "../../styles/Item.module.scss";
+import item from "../../styles/Item.module.scss";
 import {requestConfig} from "../../functions/handleDeleteImage";
 
 interface PostProps {
@@ -87,12 +87,13 @@ export default function Post({post: serverPost}: PostProps) {
             </Head>
             <Header/>
             <main>
-                <div className={classes.item} itemScope itemType="https://schema.org/Offer">
-                    <div className={classes.carousel}>
+                <div className={item.item} itemScope itemType="https://schema.org/Offer">
+                    <div className={item.carousel}>
                         <CarouselProvider
                             naturalSlideWidth={100}
                             naturalSlideHeight={100}
                             totalSlides={images.length}
+                            isPlaying={true}
                         >
                             <Slider>
                                 {images.map((image: string, index: number) => {
@@ -102,7 +103,7 @@ export default function Post({post: serverPost}: PostProps) {
                                                 hasMasterSpinner={true}
                                                 src={image}
                                                 alt="image"
-                                                className={classes.image}
+                                                className={item.image}
                                                 title={title}
                                                 itemProp='image'
                                             />
@@ -110,29 +111,29 @@ export default function Post({post: serverPost}: PostProps) {
                                     );
                                 })}
                             </Slider>
-                            <ButtonBack className={classes.button} style={{left: 0}}>
+                            <ButtonBack className={item.button} style={{left: 0}}>
                                 &larr;
                             </ButtonBack>
-                            <ButtonNext className={classes.button} style={{right: 0}}>
+                            <ButtonNext className={item.button} style={{right: 0}}>
                                 &rarr;
                             </ButtonNext>
                         </CarouselProvider>
                     </div>
-                    <p className={classes.category}>Категория: <span itemProp="category">{category.label}</span></p>
+                    <p className={item.category}>Категория: <span itemProp="category">{category.label}</span></p>
                     <h1 itemProp='name'>
                         {title}
                     </h1>
-                    <p itemProp="price" className={classes.price}>{price} {isNaN(price) ? null : "р"}</p>
+                    <p itemProp="price" className={item.price}>{price} {isNaN(price) ? null : "р"}</p>
                     {/*<Button onClick={handleRefresh}>Поднять объявление</Button>*/}
                     <hr/>
-                    <p itemProp='description' className={classes.description}>{body}</p>
+                    <p itemProp='description' className={item.description}>{body}</p>
                     <p>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
                     {user && (user.id === tgId) &&
-                        <div className={classes.mt40}>
+                        <div className={item.mt40}>
                             <Button onClick={handleRefresh}>Поднять объявление</Button>
                         </div>
                     }
-                    <div className={classes.mt40}>
+                    <div className={item.mt40}>
                         <Link href={`https://t.me/${telegram}`}>
                             <a itemProp="seller">
                                 <Button>

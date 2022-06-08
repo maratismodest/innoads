@@ -3,17 +3,7 @@
 .related {
   margin-top: 16px;
 }
-.items {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 10px;
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr 1fr 1fr
-  }
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr 1fr
-  }
-}
+
 .item {
   margin: 0 auto;
   max-width: 400px;
@@ -43,12 +33,6 @@
 .image {
   object-fit: cover;
 }
-
-//.items {
-//  display: grid;
-//  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-//  grid-gap: 10px;
-//}
 
 .slider {
   height: 300px;

@@ -13,9 +13,8 @@ import Search from '../components/Search/Search';
 import Spinner from '../components/Spinner/Spinner';
 import {SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from "../constants";
 import {PostInterface} from '../interfaces';
-import classes from './../styles/Home.module.scss'
-// import Categories from "../components/Categories/Categories";
-
+import home from './../styles/Home.module.scss'
+import classes from './../styles/classes.module.scss'
 
 const Categories = dynamic(() => import('../components/Categories/Categories'), {ssr: true})
 
@@ -30,7 +29,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
 
     const [infinite, setInfinite] = useState(posts)
     const [input, setInput] = useState("");
-    const count = useMemo(() => totalPages * 12, [totalPages])
+    const count = useMemo(() => totalPages * 10, [totalPages])
 
     const loadFunc = useCallback(async () => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${page + 1}&size=10`)
@@ -58,7 +57,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
             </Head>
             <Header/>
             <main>
-                <form className={classes.search}
+                <form className={home.search}
                 >
                     <Search
                         type="text"
@@ -77,8 +76,8 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
                 </form>
                 <Categories/>
                 <div style={{display: 'flex', justifyContent:'space-between', alignItems: 'baseline'}}>
-                    <h1 className={classes.title} style={{display: 'inline'}}>Последние объявления</h1>
-                    <span style={{textAlign: 'right'}}>* {count} объявлений на сайте</span>
+                <h1 className={classes.title}>Последние объявления</h1>
+                <span style={{textAlign: 'right'}}>* {count} объявлений</span>
                 </div>
                 <div className={classes.magicWrapper}>
                     <InfiniteScroll

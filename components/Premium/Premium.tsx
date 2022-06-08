@@ -79,7 +79,7 @@ const Premium = () => {
                 totalSlides={premium.length}
                 visibleSlides={isMobile ? 2 : 4}
                 isPlaying={true}
-                interval={5000}
+                interval={4000}
                 infinite={true}
                 hasMasterSpinner={premium.length === 0}
             >
