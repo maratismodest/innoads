@@ -15,60 +15,60 @@ import profile from '../styles/Profile.module.scss'
 
 export default function Profile() {
     const [posts, setPosts] = useState<PostInterface[]>([])
-    // const {user, login} = useAuth();
-    //
-
-    useEffect(() => {
-
-        getUserPosts(71233480).then((res) => setPosts(res))
-    }, [])
+    const {user, login} = useAuth();
 
 
     // useEffect(() => {
-    //     if (user) {
-    //         localStorage.setItem('username', user.username)
-    //         localStorage.setItem('id', user.id)
-    //         getUserPosts(user.id).then((res) => setPosts(res))
-    //     }
-    // }, [user])
     //
-    //
-    // if (!user) {
-    //     return (
-    //         <MainLayout title={titles.profile}>
-    //             <div className={classes.center}>
-    //                 <h2>Авторизация</h2>
-    //                 <TelegramLoginButton
-    //                     dataOnauth={(e: any) => handleTelegramResponse(e, login)}
-    //                     botName="InnoAdsPostBot"
-    //                 />
-    //             </div>
-    //         </MainLayout>
-    //     );
-    // }
-    //
-    // if (!user.username) {
-    //     return (
-    //         <MainLayout title={titles.profile}>
-    //             <div className={classes.center}>
-    //                 <h2>Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления!</h2>
-    //                 <p>Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас
-    //                     снова</p>
-    //                 <div className="unset-img">
-    //                     <Image
-    //                         src="https://firebasestorage.googleapis.com/v0/b/classified-b8322.appspot.com/o/Screenshot_1.png?alt=media&token=94cc89c7-fcbc-426e-bd67-3d2dec911203"
-    //                         alt="image"
-    //                         objectFit="contain"
-    //                         layout="fill"
-    //                     />
-    //                 </div>
-    //                 <a href={routes.profile}>
-    //                     <Button>Перезагрузить страницу</Button>
-    //                 </a>
-    //             </div>
-    //         </MainLayout>
-    //     );
-    // }
+    //     getUserPosts(71233480).then((res) => setPosts(res))
+    // }, [])
+
+
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem('username', user.username)
+            localStorage.setItem('id', user.id)
+            getUserPosts(user.id).then((res) => setPosts(res))
+        }
+    }, [user])
+
+
+    if (!user) {
+        return (
+            <MainLayout title={titles.profile}>
+                <div className={classes.center}>
+                    <h2>Авторизация</h2>
+                    <TelegramLoginButton
+                        dataOnauth={(e: any) => handleTelegramResponse(e, login)}
+                        botName="InnoAdsPostBot"
+                    />
+                </div>
+            </MainLayout>
+        );
+    }
+
+    if (!user.username) {
+        return (
+            <MainLayout title={titles.profile}>
+                <div className={classes.center}>
+                    <h2>Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления!</h2>
+                    <p>Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас
+                        снова</p>
+                    <div className="unset-img">
+                        <Image
+                            src="https://firebasestorage.googleapis.com/v0/b/classified-b8322.appspot.com/o/Screenshot_1.png?alt=media&token=94cc89c7-fcbc-426e-bd67-3d2dec911203"
+                            alt="image"
+                            objectFit="contain"
+                            layout="fill"
+                        />
+                    </div>
+                    <a href={routes.profile}>
+                        <Button>Перезагрузить страницу</Button>
+                    </a>
+                </div>
+            </MainLayout>
+        );
+    }
 
     return (
         <MainLayout title={titles.profile}>
