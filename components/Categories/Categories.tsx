@@ -20,7 +20,7 @@ const Categories = () => {
                 // visibleSlides={options.length}
                 visibleSlides={isMobile ? 3 : categories.length}
                 isPlaying={true}
-                interval={5000}
+                interval={4000}
                 infinite={true}
                 hasMasterSpinner={categories.length === 0}
             >
@@ -30,7 +30,7 @@ const Categories = () => {
                             <Slide key={index} index={index} tabIndex={index}>
                                 <Link href={{pathname: "/search", query: {category: item.value}}}>
                                     <a className={classes.category}>
-                                        <div className={classes.img}>
+                                        <div className={classes.categoryImg}>
                                             <img
                                                 src={item.image}
                                                 alt={item.label}

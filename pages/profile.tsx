@@ -10,8 +10,7 @@ import {useAuth} from "../context/AuthContext";
 import {getUserPosts} from "../functions/getUserPosts";
 import {handleTelegramResponse} from "../functions/handleTelegramResponse";
 import {PostInterface} from "../interfaces";
-import mainClasses from '../styles/classes.module.scss'
-import classes from "../styles/Index.module.scss";
+import classes from '../styles/classes.module.scss'
 
 export default function Profile() {
     const [posts, setPosts] = useState<PostInterface[]>([])
@@ -29,7 +28,7 @@ export default function Profile() {
     if (!user) {
         return (
             <MainLayout title={titles.profile}>
-                <div className={mainClasses.center}>
+                <div className={classes.center}>
                     <h2>Авторизация</h2>
                     <TelegramLoginButton
                         dataOnauth={(e: any) => handleTelegramResponse(e, login)}
@@ -43,7 +42,7 @@ export default function Profile() {
     if (!user.username) {
         return (
             <MainLayout title={titles.profile}>
-                <div className={mainClasses.center}>
+                <div className={classes.center}>
                     <h2>Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления!</h2>
                     <p>Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас
                         снова</p>
@@ -65,8 +64,8 @@ export default function Profile() {
 
     return (
         <MainLayout title={titles.profile}>
-            <h2 style={{textAlign: "center"}}>Личный кабинет</h2>
-            <p style={{textAlign: "center"}}>Ваши объявления</p>
+            <h2 className={classes.center}>Личный кабинет</h2>
+            <p className={classes.center}>Ваши объявления</p>
             {posts.length > 0 ? (
                 <ul className={classes.items}>
                     {posts.map((post: PostInterface) => <Item post={post} key={post.id} edit={true}/>)}

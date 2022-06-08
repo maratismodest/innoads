@@ -12,7 +12,7 @@ import SelectInno from "../components/Select/Select";
 import Spinner from "../components/Spinner/Spinner";
 import useDebounce from "../hooks/useDebounce";
 import {PostInterface} from "../interfaces";
-import classes from "../styles/Index.module.scss";
+import classes from '../styles/classes.module.scss'
 
 const SearchPage: NextPage = () => {
     const router = useRouter();
