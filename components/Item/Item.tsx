@@ -20,15 +20,15 @@ const promoted = [917, 1039, 800, 1031]
 
 export const Item = ({post, edit}: ItemInterface) => {
     const router = useRouter()
-    const size = useMemo(() => {
+    const sizes = useMemo(() => {
         if (isMobile) {
-            return '50vw'
+            return 'calc((100vw - 42px) / 2)'
         }
         if (isTablet) {
             return '33vw'
         }
         if (isDesktop) {
-            return '20vw'
+            return '205px'
         }
     }, [])
     const [state, setState] = useState(true)
@@ -68,7 +68,7 @@ export const Item = ({post, edit}: ItemInterface) => {
         if (answer) {
             router.push(`/edit/${post.slug}`)
         }
-    }, [post])
+    }, [post, router])
 
     if (!state) {
         return null
@@ -98,7 +98,7 @@ export const Item = ({post, edit}: ItemInterface) => {
                             objectFit="cover"
                             placeholder="blur"
                             blurDataURL={NO_IMAGE}
-                            sizes={size}
+                            sizes={sizes}
                             title={title}
                         />
                     </div>

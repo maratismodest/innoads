@@ -26,7 +26,7 @@ const Categories = () => {
                 <Slider>
                     {categories.map((item, index) => {
                         return (
-                            <Slide key={index} index={index} tabIndex={index}>
+                            <Slide key={index} index={index}>
                                 <Link href={{pathname: "/search", query: {category: item.value}}}>
                                     <a className={styles.category}>
                                         <div className={styles.categoryImg}>

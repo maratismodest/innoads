@@ -12,7 +12,7 @@ const author = {
 };
 
 
-export default async (req: any, res: any) => {
+const RSS = async (req: any, res: any) => {
     // An array with your links
     const posts: PostInterface[] = await getDynamicPaths(100)
 
@@ -60,3 +60,5 @@ export default async (req: any, res: any) => {
 
     res.end(feed.rss2());
 };
+
+export default RSS

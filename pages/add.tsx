@@ -39,7 +39,7 @@ export default function Add() {
 
     const redirect = useCallback(async () => {
         await router.push(routes.profile)
-    }, [router, inputEl.current])
+    }, [router])
 
     useEffect(() => {
         const res = document.getElementById('hidden')

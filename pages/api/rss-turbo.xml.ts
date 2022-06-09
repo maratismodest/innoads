@@ -4,7 +4,7 @@ import {PostInterface} from "../../interfaces";
 
 const TR = require('turbo-rss');
 
-export default async (req: any, res: any) => {
+const RSSTurbo =  async (req: any, res: any) => {
     const posts: PostInterface[] = await getDynamicPaths(1000)
 
     const feed = new TR({
@@ -56,3 +56,5 @@ export default async (req: any, res: any) => {
 
     res.end(xml);
 }
+
+export default RSSTurbo
