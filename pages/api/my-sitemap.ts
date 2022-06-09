@@ -1,11 +1,11 @@
-import { getDynamicPaths } from "../../functions/getDynamicPaths";
+import {getDynamicPaths} from "../../functions/getDynamicPaths";
 import {PostInterface} from "../../interfaces";
 
 const {SitemapStream, streamToPromise} = require("sitemap");
 const {Readable} = require("stream");
 
 
-export default async (req: any, res: any) => {
+const Sitemap = (async (req: any, res: any) => {
     // An array with your links
     const posts: PostInterface[] = await getDynamicPaths(1000)
 
@@ -25,4 +25,6 @@ export default async (req: any, res: any) => {
     ).then((data: any) => data.toString());
 
     res.end(xmlString);
-};
+})
+
+export default Sitemap

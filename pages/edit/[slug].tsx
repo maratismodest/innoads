@@ -57,7 +57,7 @@ export default function Edit({post: serverPost}: PostProps) {
 
     const redirect = useCallback(async () => {
         await router.push(routes.profile)
-    }, [router, inputEl.current])
+    }, [router])
 
     useEffect(() => {
         const res = document.getElementById('hidden')
