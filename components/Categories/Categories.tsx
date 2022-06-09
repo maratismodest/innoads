@@ -3,6 +3,7 @@ import {isMobile} from "react-device-detect";
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import {categories} from "../../assets/options";
 import {useEffect, useState} from "react";
+import Image from "next/image";
 import Link from "next/link";
 import styles from './Categories.module.scss'
 
@@ -29,10 +30,11 @@ const Categories = () => {
                                 <Link href={{pathname: "/search", query: {category: item.value}}}>
                                     <a className={styles.category}>
                                         <div className={styles.categoryImg}>
-                                            <img
+                                            <Image
                                                 src={item.image}
                                                 alt={item.label}
                                                 width={32}
+                                                height={32}
                                             />
                                         </div>
                                         <h5>{item.label}</h5>
