@@ -14,6 +14,12 @@ import useDebounce from "../hooks/useDebounce";
 import {PostInterface} from "../interfaces";
 import {isMobile} from "react-device-detect";
 import classes from '../styles/classes.module.scss'
+import {getUrl} from "functions/getUrl";
+
+type SearchSubmitForm = {
+    search: string
+    category: number
+};
 
 const SearchPage: NextPage = () => {
     const router = useRouter();
@@ -25,7 +31,7 @@ const SearchPage: NextPage = () => {
     const debouncedValue = useDebounce<string>(input, 500)
 
     const loadFunc = useCallback(async (currentPage: number = page) => {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&category=${category}&text=${debouncedValue}&size=${isMobile ? 8 : 15}`)
+        const response = await axios.get(getUrl(category, currentPage, isMobile ? 8 : 15, debouncedValue))
         const posts: PostInterface[] = orderBy(response.data.content, ['createdAt'], ['desc'])
         setPage(prevState => prevState + 1)
         // @ts-ignore
@@ -96,22 +102,5 @@ const SearchPage: NextPage = () => {
         </MainLayout>
     );
 }
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?category=1`)
-//     const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
-//     if (!posts) {
-//         return {
-//             notFound: true,
-//         };
-//     }
-//
-//     return {
-//         props: {
-//             posts
-//         },
-//         revalidate: 10,
-//     };
-// }
 
 export default SearchPage
