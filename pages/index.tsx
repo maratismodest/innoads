@@ -3,50 +3,72 @@ import {orderBy} from "lodash";
 import type {GetStaticProps, NextPage} from 'next'
 import dynamic from "next/dynamic";
 import Head from 'next/head'
-import Link from 'next/link';
 import React, {useCallback, useMemo, useState} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import Button from "../components/Button/Button";
-import Header from "../components/Header/Header";
-import Item from '../components/Item/Item';
-import Search from '../components/Search/Search';
-import Spinner from '../components/Spinner/Spinner';
-import {SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from "../constants";
-import {PostInterface} from '../interfaces';
-import home from './../styles/Home.module.scss'
-import classes from './../styles/classes.module.scss'
+import Button from "components/Button/Button";
+import Header from "components/Header/Header";
+import Item from 'components/Item/Item';
+import Search from 'components/Search/Search';
+import Spinner from 'components/Spinner/Spinner';
+import {routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from "../constants";
+import {PostInterface} from 'interfaces';
+import home from 'styles/Home.module.scss'
+import classes from 'styles/classes.module.scss'
+import {getUrl} from "functions/getUrl";
+import {useForm} from "react-hook-form";
+import {useRouter} from "next/router";
 
-const Categories = dynamic(() => import('../components/Categories/Categories'), {ssr: true})
+const Categories = dynamic(() => import('components/Categories/Categories'), {ssr: true})
 
 interface HomeProps {
     posts: PostInterface[]
     totalPages: number
 }
 
+type SearchSubmitForm = {
+    search: string
+};
+
+
 const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
+    const router = useRouter()
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
-
-    const [infinite, setInfinite] = useState(posts)
-    const [input, setInput] = useState("");
+    const {handleSubmit, register} = useForm<SearchSubmitForm>({
+        defaultValues: {
+            search: ''
+        }
+    });
+    const [infinite, setInfinite] = useState<PostInterface[]>(posts)
     const count = useMemo(() => totalPages * 10, [totalPages])
 
     const loadFunc = useCallback(async () => {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${page + 1}&size=10`)
-        const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
-        setPage((prevState: number) => prevState + 1)
-        setInfinite((prevState: PostInterface[]) => [...prevState, ...posts])
-        setHasMore((page + 1) < response.data.totalPages)
-        return posts
+        try {
+            const response = await axios.get(getUrl(0, page + 1, 10))
+            const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+            setPage((prevState: number) => prevState + 1)
+            setInfinite((prevState: PostInterface[]) => [...prevState, ...posts])
+            setHasMore((page + 1) < response.data.totalPages)
+            return posts
+        } catch (e) {
+            console.log(e)
+            return []
+        }
+
     }, [page])
+
+
+    const onSubmit = async ({search}: SearchSubmitForm) => router.push({
+        pathname: routes.search,
+        query: {keyword: search},
+    })
 
     return (
         <>
             <Head>
                 <link rel="canonical" href={process.env.NEXT_PUBLIC_NODE_ENV}/>
                 <title>{SEO_TITLE}</title>
-                <meta name="description"
-                      content={SEO_DESCRIPTION}/>
+                <meta name="description" content={SEO_DESCRIPTION}/>
                 <meta name="keywords" content="innoads, Иннополис, доска объявлений"/>
                 <meta name="image" content='/icons/icon-192x192.png'/>
                 <meta property="og:title" content={SEO_TITLE}/>
@@ -57,27 +79,22 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
             </Head>
             <Header/>
             <main>
-                <form className={home.search}
+                <form className={home.search} onSubmit={handleSubmit(onSubmit)}
                 >
                     <Search
                         type="text"
                         placeholder="Поиск"
                         name="search"
                         required={true}
-                        input={input}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value)}
-                        style={{marginRight: 16, marginBottom: 0}}
+                        register={register}
+                        className={home.searchInput}
                     />
-                    <Link href={{pathname: "/search", query: {keyword: input}}}>
-                        <a>
-                            <Button>Поиск</Button>
-                        </a>
-                    </Link>
+                    <Button type='submit'>Поиск</Button>
                 </form>
                 <Categories/>
-                <div style={{display: 'flex', justifyContent:'space-between', alignItems: 'baseline'}}>
-                <h1 className={classes.title}>Последние объявления</h1>
-                <span style={{textAlign: 'right'}}>* {count} объявлений</span>
+                <div className={home.header}>
+                    <h1 className={classes.title}>Последние объявления</h1>
+                    <span>* {count} объявлений</span>
                 </div>
                 <div className={classes.magicWrapper}>
                     <InfiniteScroll
@@ -104,8 +121,8 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
     )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?size=10`)
+export const getStaticProps: GetStaticProps = async () => {
+    const response = await axios.get(getUrl(0, 0, 10))
     const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
 
     if (!posts) {

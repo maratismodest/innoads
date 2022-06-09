@@ -1,0 +1,1 @@
+export const getUrl = (category: number = 0, page: number = 0, size: number = 10, text: string = ''): string => `${process.env.NEXT_PUBLIC_API_URL}/post?category=${category}&page=${page}&size=${size}`

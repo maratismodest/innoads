@@ -1,0 +1,38 @@
+@import "variables";
+
+.categories {
+  margin: 8px 0;
+  background-color: $grey;
+  border-radius: 16px;
+}
+
+.category {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 8px 0 0;
+  padding: 8px 5px 8px 5px;
+  border-radius: 8px;
+
+  &Img {
+    padding: 12px;
+    background: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0px 1px 0px 0px rgb(0 0 0 / 25%);
+    transition: transform .1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      transition: transform .2s;
+      transform: scale(1.1);
+    }
+
+  }
+}
+
