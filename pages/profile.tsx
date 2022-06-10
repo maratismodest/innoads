@@ -13,6 +13,7 @@ import {PostInterface} from "../interfaces";
 import classes from '../styles/classes.module.scss'
 import profile from '../styles/Profile.module.scss'
 
+
 export default function Profile() {
     const [posts, setPosts] = useState<PostInterface[]>([])
     const {user, login} = useAuth();
@@ -39,7 +40,7 @@ export default function Profile() {
                 <div className={classes.center}>
                     <h2>Авторизация</h2>
                     <TelegramLoginButton
-                        dataOnauth={(e: any) => handleTelegramResponse(e, login)}
+                        dataOnauth={async (response: any) => await handleTelegramResponse(response, login)}
                         botName="InnoAdsPostBot"
                     />
                 </div>
