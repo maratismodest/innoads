@@ -1,11 +1,5 @@
 import {createContext, ReactNode, useContext, useState} from "react";
 
-// type authContextType = {
-//     user: any;
-//     login: () => void;
-//     logout: () => void;
-// };
-
 type authContextType = {
     user: any;
     login: any;
