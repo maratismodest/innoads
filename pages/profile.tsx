@@ -1,4 +1,5 @@
 import Image from "next/image";
+import axios from "axios";
 import React, {useEffect, useState} from "react";
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
@@ -8,7 +9,6 @@ import {MainLayout} from "../components/MainLayout/MainLayout";
 import {routes, titles} from "../constants";
 import {useAuth} from "../context/AuthContext";
 import {getUserPosts} from "../functions/getUserPosts";
-import {handleTelegramResponse} from "../functions/handleTelegramResponse";
 import {PostInterface} from "../interfaces";
 import classes from '../styles/classes.module.scss'
 import profile from '../styles/Profile.module.scss'
@@ -18,11 +18,16 @@ export default function Profile() {
     const [posts, setPosts] = useState<PostInterface[]>([])
     const {user, login} = useAuth();
 
-
-    // useEffect(() => {
-    //
-    //     getUserPosts(71233480).then((res) => setPosts(res))
-    // }, [])
+    const handleTelegramResponse = async (response: any) => {
+        try {
+            console.log("response", response)
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response)
+            login(res.data)
+            return res.data
+        } catch (e) {
+            console.log(e)
+        }
+    };
 
 
     useEffect(() => {
@@ -40,7 +45,7 @@ export default function Profile() {
                 <div className={classes.center}>
                     <h2>Авторизация</h2>
                     <TelegramLoginButton
-                        dataOnauth={async (response: any) => await handleTelegramResponse(response, login)}
+                        dataOnauth={async (response: any) => await handleTelegramResponse(response)}
                         botName="InnoAdsPostBot"
                     />
                 </div>
