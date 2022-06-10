@@ -1,5 +1,15 @@
 import {createContext, ReactNode, useContext, useState} from "react";
 
+interface UserProps {
+    id: number,
+    auth_date: string,
+    first_name: string,
+    hash: string,
+    last_name: string,
+    photo_url: string,
+    username: string
+}
+
 type authContextType = {
     user: any;
     login: any;
