@@ -13,6 +13,7 @@ import {PostInterface} from "../interfaces";
 import classes from '../styles/classes.module.scss'
 import profile from '../styles/Profile.module.scss'
 import jwt from 'jsonwebtoken'
+import {requestConfig} from "../functions/handleDeleteImage";
 
 const SECRET = 'Kazan2022!'
 
@@ -23,12 +24,13 @@ export default function Profile() {
 
     const handleTelegramResponse = async (response: any) => {
         try {
-            console.log("response", response)
-            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response)
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response, requestConfig)
+            console.log('data', data)
             const decoded = jwt.verify(data.token, SECRET);
             console.log('decoded', decoded)
-            login(data)
-            return data
+            localStorage.setItem('token', data.token)
+            login(decoded)
+            return
         } catch (e) {
             console.log(e)
         }
@@ -37,8 +39,6 @@ export default function Profile() {
 
     useEffect(() => {
         if (user) {
-            localStorage.setItem('username', user.username)
-            localStorage.setItem('id', user.id)
             getUserPosts(user.id).then((res) => setPosts(res))
         }
     }, [user])
@@ -50,7 +50,7 @@ export default function Profile() {
                 <div className={classes.center}>
                     <h2>Авторизация</h2>
                     <TelegramLoginButton
-                        dataOnauth={async (response: any) => await handleTelegramResponse(response)}
+                        dataOnauth={handleTelegramResponse}
                         botName="InnoAdsPostBot"
                     />
                 </div>
