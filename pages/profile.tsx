@@ -12,6 +12,9 @@ import {getUserPosts} from "../functions/getUserPosts";
 import {PostInterface} from "../interfaces";
 import classes from '../styles/classes.module.scss'
 import profile from '../styles/Profile.module.scss'
+import jwt from 'jsonwebtoken'
+
+const SECRET = 'Kazan2022!'
 
 
 export default function Profile() {
@@ -21,9 +24,11 @@ export default function Profile() {
     const handleTelegramResponse = async (response: any) => {
         try {
             console.log("response", response)
-            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response)
-            login(res.data)
-            return res.data
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response)
+            const decoded = jwt.verify(data.token, SECRET);
+            console.log('decoded', decoded)
+            login(data)
+            return data
         } catch (e) {
             console.log(e)
         }
