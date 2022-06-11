@@ -27,10 +27,7 @@ export default function Profile() {
             const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response, requestConfig)
             console.log('data', data)
             const decoded = jwt.verify(data.token, SECRET);
-            console.log('decoded', decoded)
             localStorage.setItem('token', data.token)
-            localStorage.setItem('id', data.token.id)
-            localStorage.setItem('username', data.token.username)
             login(decoded)
             return
         } catch (e) {
