@@ -29,6 +29,8 @@ export default function Profile() {
             const decoded = jwt.verify(data.token, SECRET);
             console.log('decoded', decoded)
             localStorage.setItem('token', data.token)
+            localStorage.setItem('id', data.token.id)
+            localStorage.setItem('username', data.token.username)
             login(decoded)
             return
         } catch (e) {
