@@ -42,7 +42,7 @@ export default function Add() {
                 <div className={classes.center}>
                     <h2>Вы не авторизованы</h2>
                     <Link href={routes.profile} passHref>
-                        <Button>На страницу авторизации</Button>
+                        <Button>Перейти на страницу авторизации</Button>
                     </Link>
                 </div>
             </MainLayout>
