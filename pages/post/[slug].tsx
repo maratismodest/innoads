@@ -1,4 +1,8 @@
+import {options} from "assets/options";
 import axios from "axios";
+import Button from "components/Button/Button";
+import Header from "components/Header/Header";
+import {PostInterface} from "interfaces";
 import moment from "moment";
 import type {GetServerSideProps} from "next";
 import Head from "next/head";
@@ -6,10 +10,6 @@ import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import React, {useMemo, useState} from "react";
-import {options} from "assets/options";
-import Button from "components/Button/Button";
-import Header from "components/Header/Header";
-import {PostInterface} from "interfaces";
 import item from "styles/Item.module.scss";
 
 interface PostProps {

@@ -1,19 +1,19 @@
-import Image from "next/image";
 import axios from "axios";
+import Button from "components/Button/Button";
+import Item from "components/Item/Item";
+import {MainLayout} from "components/MainLayout/MainLayout";
+import {useAuth, UserProps} from "context/AuthContext";
+import {getUserPosts} from "functions/getUserPosts";
+import {requestConfig} from "functions/handleDeleteImage";
+import {PostInterface} from "interfaces";
+import jwt from 'jsonwebtoken'
+import Image from "next/image";
 import React, {useEffect, useState} from "react";
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
-import Button from "../components/Button/Button";
-import Item from "../components/Item/Item";
-import {MainLayout} from "../components/MainLayout/MainLayout";
+import classes from 'styles/classes.module.scss'
+import profile from 'styles/Profile.module.scss'
 import {routes, titles} from "../constants";
-import {useAuth, UserProps} from "../context/AuthContext";
-import {getUserPosts} from "../functions/getUserPosts";
-import {PostInterface} from "../interfaces";
-import classes from '../styles/classes.module.scss'
-import profile from '../styles/Profile.module.scss'
-import jwt from 'jsonwebtoken'
-import {requestConfig} from "../functions/handleDeleteImage";
 
 export default function Profile() {
     const [posts, setPosts] = useState<PostInterface[]>([])

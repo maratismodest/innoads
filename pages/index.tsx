@@ -1,22 +1,23 @@
-import axios from "axios";
-import {orderBy} from "lodash";
-import type {GetStaticProps, NextPage} from 'next'
-import dynamic from "next/dynamic";
-import Head from 'next/head'
-import React, {useCallback, useMemo, useState} from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
-import Button from "components/Button/Button";
-import Header from "components/Header/Header";
+import axios from 'axios';
+import Button from 'components/Button/Button';
+import Header from 'components/Header/Header';
 import Item from 'components/Item/Item';
 import Search from 'components/Search/Search';
 import Spinner from 'components/Spinner/Spinner';
-import {routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from "../constants";
+import {getUrl} from 'functions/getUrl';
 import {PostInterface} from 'interfaces';
-import home from 'styles/Home.module.scss'
-import classes from 'styles/classes.module.scss'
-import {getUrl} from "functions/getUrl";
-import {useForm} from "react-hook-form";
-import {useRouter} from "next/router";
+import {orderBy} from 'lodash';
+import type {GetStaticProps, NextPage} from 'next'
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import {useRouter} from 'next/router';
+import React, {useCallback, useMemo, useState} from 'react';
+import {useForm} from 'react-hook-form';
+import InfiniteScroll from 'react-infinite-scroller';
+import classes from 'styles/classes.module.scss';
+import home from 'styles/Home.module.scss';
+
+import {routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from '../constants';
 
 const Categories = dynamic(() => import('components/Categories/Categories'), {ssr: true})
 

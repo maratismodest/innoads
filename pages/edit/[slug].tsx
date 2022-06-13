@@ -1,5 +1,19 @@
+import {options} from "assets/options";
 import axios from "axios";
 import cn from "classnames";
+import Button from "components/Button/Button";
+import Icon from "components/Icon/Icon";
+import Input from "components/Input/Input";
+import {MainLayout} from "components/MainLayout/MainLayout";
+import SelectInno from "components/Select/Select";
+import Spinner from "components/Spinner/Spinner";
+import {useAuth} from "context/AuthContext";
+import {handleDeleteImage, requestConfig} from "functions/handleDeleteImage";
+import handleImageUpload from "functions/handleImageUpload";
+import {handlePostImage} from "functions/handlePostImage";
+import {MoveImage, moveImage} from "functions/moveImage";
+import {onImageClick} from "functions/onImageClick";
+import {HTMLInputEvent, PostInterface} from "interfaces";
 import type {GetServerSideProps} from "next";
 import Image from "next/image";
 import {useRouter} from "next/router";
@@ -7,22 +21,8 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
-import {options} from "../../assets/options";
-import Button from "../../components/Button/Button";
-import Icon from "../../components/Icon/Icon";
-import Input from "../../components/Input/Input";
-import {MainLayout} from "../../components/MainLayout/MainLayout";
-import SelectInno from "../../components/Select/Select";
-import Spinner from "../../components/Spinner/Spinner";
+import classes from "styles/classes.module.scss";
 import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE, routes, titles} from "../../constants";
-import {useAuth} from "../../context/AuthContext";
-import handleImageUpload from "../../functions/handleImageUpload";
-import {MoveImage, moveImage} from "../../functions/moveImage";
-import {onImageClick} from "../../functions/onImageClick";
-import {HTMLInputEvent, PostInterface} from "../../interfaces";
-import classes from "../../styles/classes.module.scss";
-import {handleDeleteImage, requestConfig} from "../../functions/handleDeleteImage";
-import {handlePostImage} from "../../functions/handlePostImage";
 
 interface PostProps {
     post: PostInterface
