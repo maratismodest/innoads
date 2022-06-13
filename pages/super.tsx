@@ -7,7 +7,7 @@ import Button from "../components/Button/Button";
 import Item from "../components/Item/Item";
 import {MainLayout} from "../components/MainLayout/MainLayout";
 import {routes, titles} from "../constants";
-import {useAuth} from "../context/AuthContext";
+import {useAuth, UserProps} from "../context/AuthContext";
 import {getUserPosts} from "../functions/getUserPosts";
 import {PostInterface} from "../interfaces";
 import classes from '../styles/classes.module.scss'
@@ -21,13 +21,13 @@ export default function Super() {
     const [posts, setPosts] = useState<PostInterface[]>([])
     const {user, login} = useAuth();
 
-    const handleTelegramResponse = async (response: any) => {
+    const handleTelegramResponse = async (response : any) => {
         try {
             const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response, requestConfig)
             console.log('data', data)
             const decoded = jwt.verify(data.token, `${process.env.NEXT_PUBLIC_JWT_SECRET}`);
             localStorage.setItem('token', data.token)
-            login(decoded)
+            login(decoded as UserProps)
             return
         } catch (e) {
             console.log(e)

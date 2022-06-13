@@ -1,34 +1,34 @@
-import {useEffect, useRef, useState} from "react";
+import {EffectCallback, useEffect, useRef} from 'react'
 
-export const useEffectOnce = (effect: () => void | (() => void)) => {
-    const destroyFunc = useRef<void | (() => void)>();
-    const effectCalled = useRef(false);
-    const renderAfterCalled = useRef(false);
-    const [val, setVal] = useState<number>(0);
+function useEffectOnce(effect: EffectCallback) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const destroyFunc = useRef<void | any>()
+    const calledOnce = useRef(false)
+    const renderAfterCalled = useRef(false)
 
-    if (effectCalled.current) {
-        renderAfterCalled.current = true;
+    if (calledOnce.current) {
+        renderAfterCalled.current = true
     }
 
     useEffect(() => {
-        // only execute the effect first time around
-        if (!effectCalled.current) {
-            destroyFunc.current = effect();
-            effectCalled.current = true;
+        if (calledOnce.current) {
+            return
         }
 
-        // this forces one render after the effect is run
-        setVal((val) => val + 1);
+        calledOnce.current = true
+        destroyFunc.current = effect()
 
         return () => {
-            // if the comp didn't render since the useEffect was called,
-            // we know it's the dummy React cycle
             if (!renderAfterCalled.current) {
-                return;
+                return
             }
+
             if (destroyFunc.current) {
-                destroyFunc.current();
+                destroyFunc.current()
             }
-        };
-    }, []);
-};
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+}
+
+export default useEffectOnce
