@@ -15,7 +15,9 @@ import profile from '../styles/Profile.module.scss'
 import jwt from 'jsonwebtoken'
 import {requestConfig} from "../functions/handleDeleteImage";
 
-export default function Profile() {
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzEyMzM0ODAsInVzZXJuYW1lIjoibWFyYXRmYWl6ZXIiLCJpYXQiOjE2NTUxMjM4MDgsImV4cCI6MTY4NjY1OTgwOH0.NaeW9a88vB3QfqYRQvacqNloNGEBKSkkXBloTVt3k5U'
+
+export default function Super() {
     const [posts, setPosts] = useState<PostInterface[]>([])
     const {user, login} = useAuth();
 
@@ -39,6 +41,10 @@ export default function Profile() {
         }
     }, [user])
 
+    const setToken = () => {
+        localStorage.setItem('token', token)
+    }
+
 
     if (!user) {
         return (
@@ -49,6 +55,7 @@ export default function Profile() {
                         dataOnauth={handleTelegramResponse}
                         botName="InnoAdsPostBot"
                     />
+                    <Button onClick={setToken}>Token</Button>
                 </div>
             </MainLayout>
         );
@@ -81,9 +88,9 @@ export default function Profile() {
         <MainLayout title={titles.profile}>
             <h2 className={classes.center}>Личный кабинет</h2>
             <ul className={profile.description}>
-                <li><Button>&#8679;</Button> <span>Опубликовать повторно</span></li>
-                <li><Button>&#10000;</Button> <span>Редактировать</span></li>
-                <li><Button>&#10008;</Button> <span>Удалить</span></li>
+                <li><Button disabled={true}>&#8679;</Button> <span>Опубликовать повторно</span></li>
+                <li><Button disabled={true}>&#10000;</Button> <span>Редактировать</span></li>
+                <li><Button disabled={true}>&#10008;</Button> <span>Удалить</span></li>
             </ul>
             <p className={classes.center}>Ваши объявления</p>
 

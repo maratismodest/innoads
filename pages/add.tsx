@@ -274,7 +274,7 @@ export default function Add() {
                         )}
                     </ul>
                     {error}
-                    <Button type="submit" disabled={sending || loading}>Создать объявление</Button>
+                    <Button type="submit" disabled={sending || loading ? true : undefined}>Создать объявление</Button>
                 </form>
             </MainLayout>
         </>
