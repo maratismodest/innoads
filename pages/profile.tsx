@@ -20,9 +20,12 @@ export default function Profile() {
     const {user, login} = useAuth();
 
     const handleTelegramResponse = async (response: any) => {
+        const {username} = response
+        if (!username) {
+            return alert('Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова')
+        }
         try {
             const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response, requestConfig)
-            console.log('data', data)
             const decoded = jwt.verify(data.token, `${process.env.NEXT_PUBLIC_JWT_SECRET}`);
             localStorage.setItem('token', data.token)
             login(decoded)
@@ -86,7 +89,6 @@ export default function Profile() {
                 <li><Button>&#10008;</Button> <span>Удалить</span></li>
             </ul>
             <p className={classes.center}>Ваши объявления</p>
-
             {posts.length > 0 ? (
                 <ul className={classes.items}>
                     {posts.map((post: PostInterface) => <Item post={post} key={post.id} edit={true}/>)}
