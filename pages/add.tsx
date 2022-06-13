@@ -35,12 +35,28 @@ export default function Add() {
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
+    const inputEl = useRef();
+
     const redirect = useCallback(async () => {
-        return await router.push(routes.profile)
+        await router.push(routes.profile)
     }, [router])
 
-    if (!user) {
-        redirect()
+    useEffect(() => {
+        const res = document.getElementById('hidden')
+        if (res && (!user || !user.username)) {
+            res.click()
+        }
+    }, [user])
+
+    if (!user || !user.username) {
+        return (
+            <MainLayout title={"Добавить объявление"}>
+                <div className={classes.center}>
+                    <Spinner/>
+                    <Button id='hidden' onClick={redirect}>Hidden</Button>
+                </div>
+            </MainLayout>
+        )
     }
 
     const onSubmit = async (data: any) => {
