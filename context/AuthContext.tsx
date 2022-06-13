@@ -4,18 +4,18 @@ import {useEffectOnce} from "hooks/useEffectOnce";
 
 interface UserProps {
     id: number,
-    auth_date: string,
-    first_name: string,
-    hash: string,
-    last_name: string,
-    photo_url: string,
     username: string
+    auth_date?: string,
+    first_name?: string,
+    hash?: string,
+    last_name?: string,
+    photo_url?: string,
 }
 
 type authContextType = {
-    user: any;
-    login: any;
-    logout: any;
+    user: UserProps | undefined;
+    login: (a: UserProps) => void;
+    logout: () => void;
 };
 
 const authContextDefaultValues: authContextType = {
@@ -36,14 +36,15 @@ type Props = {
 };
 
 export function AuthProvider({children}: Props) {
-    const [user, setUser] = useState<any>(undefined);
+    const [user, setUser] = useState<UserProps | undefined>(undefined);
 
     const checkToken = () => {
         const token = localStorage.getItem('token')
         if (token) {
-            console.log('token', token)
             const decoded = jwt.verify(token, `${process.env.NEXT_PUBLIC_JWT_SECRET}`);
-            setUser(decoded)
+            if (decoded) {
+                setUser(decoded as UserProps)
+            }
         }
     }
     useEffectOnce(() => {
@@ -51,8 +52,8 @@ export function AuthProvider({children}: Props) {
         return () => checkToken()
     });
 
-    const login = (a: any) => {
-        setUser(a);
+    const login = (user: UserProps) => {
+        setUser(user);
     };
 
     const logout = () => {
@@ -65,10 +66,8 @@ export function AuthProvider({children}: Props) {
         logout,
     };
     return (
-        <>
-            <AuthContext.Provider value={value}>
-                {children}
-            </AuthContext.Provider>
-        </>
+        <AuthContext.Provider value={value}>
+            {children}
+        </AuthContext.Provider>
     );
 }
