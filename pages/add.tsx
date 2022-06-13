@@ -41,7 +41,7 @@ export default function Add() {
             <MainLayout title={titles.add}>
                 <div className={classes.center}>
                     <h2>Вы не авторизованы</h2>
-                    <Link href={routes.profile}>
+                    <Link href={routes.profile} passHref>
                         <Button>На страницу авторизации</Button>
                     </Link>
                 </div>

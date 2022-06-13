@@ -1,6 +1,6 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import jwt from 'jsonwebtoken'
-import {useEffectOnce} from "hooks/useEffectOnce";
+import useEffectOnce from "hooks/useEffectOnce";
 
 export interface UserProps {
     id: number,
