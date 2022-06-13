@@ -2,7 +2,8 @@ export const routes = {
     add: '/add',
     profile: '/profile',
     main: '/main',
-    search: '/search'
+    search: '/search',
+    edit: '/edit'
 }
 
 export const titles = {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import React, {useMemo, useState, useCallback} from "react";
 import {isDesktop, isMobile, isTablet} from "react-device-detect";
-import {NO_IMAGE} from "../../constants";
+import {NO_IMAGE, routes} from "../../constants";
 import {PostInterface} from "../../interfaces";
 import Button from "../Button/Button";
 import classes from "./Item.module.scss";
@@ -66,7 +66,7 @@ export const Item = ({post, edit}: ItemInterface) => {
     const editPost = useCallback(() => {
         const answer = confirm('Редактировать объявление?')
         if (answer) {
-            router.push(`/edit/${post.slug}`)
+            router.push(routes.edit + '/' + post.slug)
         }
     }, [post, router])
 

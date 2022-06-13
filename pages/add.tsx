@@ -25,6 +25,7 @@ import classes from "../styles/classes.module.scss";
 import {handleDeleteImage, requestConfig} from "../functions/handleDeleteImage";
 import {HTMLInputEvent} from "../interfaces";
 import {handlePostImage} from "../functions/handlePostImage";
+import Link from "next/link";
 
 export default function Add() {
     const router = useRouter()
@@ -35,25 +36,14 @@ export default function Add() {
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
-    const inputEl = useRef();
-
-    const redirect = useCallback(async () => {
-        await router.push(routes.profile)
-    }, [router])
-
-    useEffect(() => {
-        const res = document.getElementById('hidden')
-        if (res && (!user || !user.username)) {
-            res.click()
-        }
-    }, [user])
-
     if (!user || !user.username) {
         return (
-            <MainLayout title={"Добавить объявление"}>
+            <MainLayout title={titles.add}>
                 <div className={classes.center}>
-                    <Spinner/>
-                    <Button id='hidden' onClick={redirect}>Hidden</Button>
+                    <h2>Вы не авторизованы</h2>
+                    <Link href={routes.profile}>
+                        <Button>На страницу авторизации</Button>
+                    </Link>
                 </div>
             </MainLayout>
         )
@@ -85,7 +75,7 @@ export default function Add() {
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, requestConfig)
             alert("Ваше объявление создано!")
             setSending(false)
-            return router.push("/profile");
+            return router.push(routes.profile);
         } catch (e) {
             console.log(e)
             setSending(false)

@@ -102,7 +102,7 @@ export default function Edit({post: serverPost}: PostProps) {
         alert("Ваше объявление отправлено в канал InnoAds, а скоро появится на сайте!")
         setSending(false)
 
-        return router.push("/profile");
+        return router.push(routes.profile);
     }
 
     const getCompressedImagesLinks = async (imagesFromInput: any) => {
