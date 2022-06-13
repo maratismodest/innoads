@@ -1,20 +1,20 @@
+import {options} from "assets/options";
 import axios from "axios";
+import {Input} from "components/Input/Input";
+import Item from "components/Item/Item";
+import {MainLayout} from "components/MainLayout/MainLayout";
+import SelectInno from "components/Select/Select";
+import Spinner from "components/Spinner/Spinner";
+import {getUrl} from "functions/getUrl";
+import useDebounce from "hooks/useDebounce";
+import {PostInterface} from "interfaces";
 import {orderBy} from "lodash";
 import type {NextPage} from 'next'
 import {useRouter} from "next/router";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
-import InfiniteScroll from 'react-infinite-scroller';
-import {options} from "../assets/options";
-import {Input} from "../components/Input/Input";
-import Item from "../components/Item/Item";
-import {MainLayout} from "../components/MainLayout/MainLayout";
-import SelectInno from "../components/Select/Select";
-import Spinner from "../components/Spinner/Spinner";
-import useDebounce from "../hooks/useDebounce";
-import {PostInterface} from "../interfaces";
 import {isMobile} from "react-device-detect";
-import classes from '../styles/classes.module.scss'
-import {getUrl} from "functions/getUrl";
+import InfiniteScroll from 'react-infinite-scroller';
+import classes from 'styles/classes.module.scss'
 
 type SearchSubmitForm = {
     search: string

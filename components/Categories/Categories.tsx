@@ -1,10 +1,10 @@
-import {CarouselProvider, Slide, Slider} from 'pure-react-carousel';
-import {isMobile} from "react-device-detect";
-import 'pure-react-carousel/dist/react-carousel.es.css';
-import {categories} from "../../assets/options";
-import {useEffect, useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {CarouselProvider, Slide, Slider} from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
+import {useEffect, useState} from "react";
+import {isMobile} from "react-device-detect";
+import {categories} from "../../assets/options";
 import styles from './Categories.module.scss'
 
 const Categories = () => {
