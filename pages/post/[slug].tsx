@@ -1,7 +1,9 @@
 import {options} from "assets/options";
 import axios from "axios";
+import cn from 'classnames'
 import Button from "components/Button/Button";
 import Header from "components/Header/Header";
+import {Price} from "components/Item/Item";
 import {PostInterface} from "interfaces";
 import moment from "moment";
 import type {GetServerSideProps} from "next";
@@ -10,7 +12,9 @@ import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import React, {useMemo, useState} from "react";
-import item from "styles/Item.module.scss";
+import classes from 'styles/classes.module.scss'
+import item from "styles/Post.module.scss";
+import {tgLink} from "../../constants";
 
 interface PostProps {
     post: PostInterface
@@ -55,13 +59,12 @@ export default function Post({post: serverPost}: PostProps) {
             </Head>
             <Header/>
             <main>
-                <div className={item.item} itemScope itemType="https://schema.org/Offer">
+                <div className={item.post} itemScope itemType="https://schema.org/Offer">
                     <div className={item.carousel}>
                         <CarouselProvider
                             naturalSlideWidth={100}
                             naturalSlideHeight={100}
                             totalSlides={images.length}
-                            isPlaying={true}
                         >
                             <Slider>
                                 {images.map((image: string, index: number) => {
@@ -79,22 +82,22 @@ export default function Post({post: serverPost}: PostProps) {
                                     );
                                 })}
                             </Slider>
-                            <ButtonBack className={item.button} style={{left: 0}}>
+                            <ButtonBack className={cn(item.button, item.buttonLeft)}>
                                 &larr;
                             </ButtonBack>
-                            <ButtonNext className={item.button} style={{right: 0}}>
+                            <ButtonNext className={cn(item.button, item.buttonRight)}>
                                 &rarr;
                             </ButtonNext>
                         </CarouselProvider>
                     </div>
-                    <p className={item.category}>Категория: <span itemProp="category">{category.label}</span></p>
+                    <p>Категория: <span itemProp="category">{category.label}</span></p>
                     <h1 itemProp='name'>{title}</h1>
-                    <p itemProp="price" className={item.price}>{price} {!isNaN(price) && <span>&#8381;</span>}</p>
+                    <p itemProp="price" className={item.price}><Price price={price}/></p>
                     <hr/>
-                    <p itemProp='description' className={item.description}>{body}</p>
+                    <p itemProp='description'>{body}</p>
                     <p>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
-                    <div className={item.mt40}>
-                        <Link href={`https://t.me/${telegram}`}>
+                    <div className={classes.mt40}>
+                        <Link href={tgLink + '/' + telegram}>
                             <a itemProp="seller">
                                 <Button>
                                     Написать автору

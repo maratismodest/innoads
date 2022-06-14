@@ -2,6 +2,7 @@ import {options} from "assets/options";
 import axios from "axios";
 import cn from "classnames";
 import Button from "components/Button/Button";
+import GoToProfile from "components/GoToProfile/GoToProfile";
 import Icon from "components/Icon/Icon";
 import Input from "components/Input/Input";
 import {MainLayout} from "components/MainLayout/MainLayout";
@@ -15,7 +16,6 @@ import {MoveImage, moveImage} from "functions/moveImage";
 import {onImageClick} from "functions/onImageClick";
 import {HTMLInputEvent} from "interfaces";
 import Image from "next/image";
-import Link from "next/link";
 import {useRouter} from "next/router";
 import React, {useState} from "react";
 import {isDesktop} from "react-device-detect";
@@ -38,14 +38,7 @@ export default function Add() {
 
     if (!user || !user.username) {
         return (
-            <MainLayout title={titles.add}>
-                <div className={classes.center}>
-                    <h2>Вы не авторизованы</h2>
-                    <Link href={routes.profile} passHref>
-                        <Button>Перейти на страницу авторизации</Button>
-                    </Link>
-                </div>
-            </MainLayout>
+            <GoToProfile/>
         )
     }
 
@@ -104,9 +97,9 @@ export default function Add() {
         }
     }
 
-    const imageHandler = async (e: HTMLInputEvent) => {
-        if (e.target.files) {
-            const imagesFromInput = e.target.files;
+    const imageHandler = async (event: HTMLInputEvent) => {
+        if (event.target.files) {
+            const imagesFromInput = event.target.files;
             const length = imagesFromInput.length + images.length;
             if (length > 4) {
                 return setError("Не больше 4 фотографий!");
@@ -131,7 +124,8 @@ export default function Add() {
             {sending &&
                 <div className={classes.sending}>
                     <Spinner/>
-                </div>}
+                </div>
+            }
             <MainLayout title={titles.add}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}

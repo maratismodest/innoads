@@ -1,5 +1,5 @@
-import { getDynamicPaths } from "../../functions/getDynamicPaths";
-import {PostInterface} from "../../interfaces";
+import {getDynamicPaths} from "functions/getDynamicPaths";
+import {PostInterface} from "interfaces";
 
 const {Feed} = require('feed')
 const moment = require('moment')
