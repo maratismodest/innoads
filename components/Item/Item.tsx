@@ -1,15 +1,16 @@
 import axios from "axios";
+import cn from 'classnames'
+import {useAuth} from "context/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import React, {useMemo, useState, useCallback} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import {isDesktop, isMobile, isTablet} from "react-device-detect";
 import {NO_IMAGE, routes} from "../../constants";
+import {requestConfig} from "../../functions/handleDeleteImage";
 import {PostInterface} from "../../interfaces";
 import Button from "../Button/Button";
 import classes from "./Item.module.scss";
-import {requestConfig} from "../../functions/handleDeleteImage";
-import cn from 'classnames'
 
 interface ItemInterface {
     post: PostInterface,
@@ -24,6 +25,8 @@ export const Price = ({price}: { price: number }): JSX.Element => price !== 0 ? 
 
 export const Item = ({post, edit}: ItemInterface) => {
     const router = useRouter()
+    const {token} = useAuth()
+
     const sizes = useMemo(() => {
         if (isMobile) {
             return 'calc((100vw - 42px) / 2)'
@@ -40,7 +43,11 @@ export const Item = ({post, edit}: ItemInterface) => {
     const deletePost = useCallback(async (id: number) => {
         const answer = confirm('Удалить объявление?')
         if (answer) {
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`, requestConfig)
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            })
             alert('Объявление удалено!')
             setState(false)
         }

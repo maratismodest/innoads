@@ -1,6 +1,6 @@
-import {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import jwt from 'jsonwebtoken'
 import useEffectOnce from "hooks/useEffectOnce";
+import jwt from 'jsonwebtoken'
+import {createContext, ReactNode, useContext, useState} from "react";
 
 export interface UserProps {
     id: number,
@@ -16,10 +16,12 @@ type authContextType = {
     user: UserProps | undefined;
     login: (a: UserProps) => void;
     logout: () => void;
+    token: string
 };
 
 const authContextDefaultValues: authContextType = {
     user: undefined,
+    token: '',
     login: () => {
     },
     logout: () => {
@@ -37,6 +39,7 @@ type Props = {
 
 export function AuthProvider({children}: Props) {
     const [user, setUser] = useState<UserProps | undefined>(undefined);
+    const [token, setToken] = useState('');
 
     const checkToken = () => {
         const token = localStorage.getItem('token')
@@ -44,6 +47,7 @@ export function AuthProvider({children}: Props) {
             const decoded = jwt.verify(token, `${process.env.NEXT_PUBLIC_JWT_SECRET}`);
             if (decoded) {
                 setUser(decoded as UserProps)
+                setToken(token)
             }
         }
     }
@@ -62,6 +66,7 @@ export function AuthProvider({children}: Props) {
 
     const value = {
         user,
+        token,
         login,
         logout,
     };

@@ -1,5 +1,5 @@
 import {options} from "assets/options";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import cn from "classnames";
 import Button from "components/Button/Button";
 import GoToProfile from "components/GoToProfile/GoToProfile";
@@ -9,7 +9,7 @@ import {MainLayout} from "components/MainLayout/MainLayout";
 import SelectInno from "components/Select/Select";
 import Spinner from "components/Spinner/Spinner";
 import {useAuth} from "context/AuthContext";
-import {handleDeleteImage, requestConfig} from "functions/handleDeleteImage";
+import {handleDeleteImage} from "functions/handleDeleteImage";
 import handleImageUpload from "functions/handleImageUpload";
 import {handlePostImage} from "functions/handlePostImage";
 import {MoveImage, moveImage} from "functions/moveImage";
@@ -32,7 +32,7 @@ export default function Add() {
     const [images, setImages] = useState<string[]>([]);
     const [error, setError] = useState<string>("");
     const {control, register, handleSubmit, formState: {errors}} = useForm();
-    const {user} = useAuth();
+    const {user, token} = useAuth();
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
@@ -64,14 +64,23 @@ export default function Add() {
 
         setSending(true)
         try {
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, requestConfig)
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, requestConfig)
+            const token = localStorage.getItem('token')
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            })
+            // await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, requestConfig)
             alert("Ваше объявление создано!")
             setSending(false)
             return router.push(routes.profile);
         } catch (e) {
             console.log(e)
             setSending(false)
+            if (e instanceof AxiosError) {
+                console.log('AxiosError')
+                return alert(e.response?.data)
+            }
             return alert("Что-то пошло не так... Попробуйте отправить еще раз")
         }
 
@@ -117,7 +126,7 @@ export default function Add() {
         return await handleDeleteImage(current)
     };
 
-    const Error = ({name}: ErrorProps) => errors[name] && <span>Поле обязательно для заполнения</span>
+    const ErrorBlock = ({name}: ErrorProps) => errors[name] && <span>Поле обязательно для заполнения</span>
 
     return (
         <>
@@ -139,7 +148,7 @@ export default function Add() {
                             {...field}
                             options={options}/>}
                     />
-                    <Error name={'category'}/>
+                    <ErrorBlock name={'category'}/>
                     <div style={{marginBottom: 10}}></div>
                     <Input
                         type="number"
@@ -148,7 +157,7 @@ export default function Add() {
                         required={true}
                         name="price"
                     />
-                    <Error name={'price'}/>
+                    <ErrorBlock name={'price'}/>
                     <Input
                         type="text"
                         placeholder="Заголовок"
@@ -156,7 +165,7 @@ export default function Add() {
                         required={true}
                         name="title"
                     />
-                    <Error name={'title'}/>
+                    <ErrorBlock name={'title'}/>
                     <textarea
                         rows={5}
                         cols={5}
@@ -164,7 +173,7 @@ export default function Add() {
                         {...register("body", {required: true})}
                         className={classes.textArea}
                     />
-                    <Error name={'body'}/>
+                    <ErrorBlock name={'body'}/>
                     <div>
                         <div>
                             <h4>Добавить фото</h4>
