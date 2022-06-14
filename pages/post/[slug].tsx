@@ -88,10 +88,8 @@ export default function Post({post: serverPost}: PostProps) {
                         </CarouselProvider>
                     </div>
                     <p className={item.category}>Категория: <span itemProp="category">{category.label}</span></p>
-                    <h1 itemProp='name'>
-                        {title}
-                    </h1>
-                    <p itemProp="price" className={item.price}>{price} {isNaN(price) ? null : "р"}</p>
+                    <h1 itemProp='name'>{title}</h1>
+                    <p itemProp="price" className={item.price}>{price} {!isNaN(price) && <span>&#8381;</span>}</p>
                     <hr/>
                     <p itemProp='description' className={item.description}>{body}</p>
                     <p>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
