@@ -2,6 +2,7 @@ import {options} from "assets/options";
 import axios from "axios";
 import cn from "classnames";
 import Button from "components/Button/Button";
+import GoToProfile from "components/GoToProfile/GoToProfile";
 import Icon from "components/Icon/Icon";
 import Input from "components/Input/Input";
 import {MainLayout} from "components/MainLayout/MainLayout";
@@ -24,11 +25,7 @@ import {Controller, useForm} from "react-hook-form";
 import classes from "styles/classes.module.scss";
 import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE, routes, titles} from "../../constants";
 
-interface PostProps {
-    post: PostInterface
-}
-
-export default function Edit({post: serverPost}: PostProps) {
+export default function Edit({post: serverPost}: { post: PostInterface }) {
     const {
         title,
         body,
@@ -53,27 +50,9 @@ export default function Edit({post: serverPost}: PostProps) {
     const [sending, setSending] = useState(false)
 
 
-    const inputEl = useRef();
-
-    const redirect = useCallback(async () => {
-        await router.push(routes.profile)
-    }, [router])
-
-    useEffect(() => {
-        const res = document.getElementById('hidden')
-        if (res && (!user || !user.username)) {
-            res.click()
-        }
-    }, [user])
-
     if (!user || !user.username) {
         return (
-            <MainLayout title={"Добавить объявление"}>
-                <div className={classes.center}>
-                    <Spinner/>
-                    <Button id='hidden' onClick={redirect}>Hidden</Button>
-                </div>
-            </MainLayout>
+            <GoToProfile/>
         )
     }
 

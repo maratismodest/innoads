@@ -18,6 +18,10 @@ interface ItemInterface {
 
 const promoted = [917, 1039, 800, 1031]
 
+export const Price = ({price}: { price: number }): JSX.Element => price !== 0 ? <>{price} <span>&#8381;</span></> :
+    <span>Даром</span>
+
+
 export const Item = ({post, edit}: ItemInterface) => {
     const router = useRouter()
     const sizes = useMemo(() => {
@@ -103,7 +107,7 @@ export const Item = ({post, edit}: ItemInterface) => {
                         />
                     </div>
                     <p>
-                        {price === 0 ? 'Даром' : <>{price} <span>&#8381;</span></>}
+                        <Price price={price}/>
                     </p>
                     <h2>{title}</h2>
                 </a>

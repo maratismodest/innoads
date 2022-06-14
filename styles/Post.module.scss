@@ -1,12 +1,12 @@
 @import "variables";
 
-.related {
-  margin-top: 16px;
-}
-
-.item {
+.post {
   margin: 0 auto;
   max-width: 400px;
+}
+
+.carousel {
+  position: relative;
 }
 
 .button {
@@ -14,49 +14,32 @@
   top: 50%;
   transform: translate(0, -50%);
   width: fit-content;
-  height: 48px;
   cursor: pointer;
   border-radius: 2px;
-  background: $green;
-  border: 1px solid $green;
+  background: $blue;
+  border: none;
   transition: all .3s;
   color: $white;
-  padding: 0 16px;
+  padding: 8px;
+  font-size: 24px;
 
   &:disabled {
     background: initial;
     border: initial;
     color: initial;
   }
-}
 
-.image {
-  object-fit: cover;
-}
+  &Left {
+    left: 0;
+  }
 
-.slider {
-  height: 300px;
-}
-
-.category {
-  font-size: 1em;
+  &Right {
+    right: 0;
+  }
 }
 
 .price {
   display: block;
   font-size: 2em;
   font-weight: bold;
-}
-
-.carousel {
-  position: relative;
-}
-
-.description {
-  white-space: pre-wrap;
-  overflow: hidden;
-}
-
-.mt40 {
-  margin-top: 40px;
 }

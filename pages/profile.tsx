@@ -32,7 +32,6 @@ export default function Profile() {
                 localStorage.setItem('token', data.token)
                 login(decoded as UserProps)
             }
-
             return
         } catch (e) {
             console.log(e)
@@ -45,7 +44,6 @@ export default function Profile() {
             getUserPosts(user.id).then((res) => setPosts(res))
         }
     }, [user])
-
 
     if (!user) {
         return (
@@ -68,14 +66,6 @@ export default function Profile() {
                     <h2>Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления!</h2>
                     <p>Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас
                         снова</p>
-                    <div className="unset-img">
-                        <Image
-                            src="https://firebasestorage.googleapis.com/v0/b/classified-b8322.appspot.com/o/Screenshot_1.png?alt=media&token=94cc89c7-fcbc-426e-bd67-3d2dec911203"
-                            alt="image"
-                            objectFit="contain"
-                            layout="fill"
-                        />
-                    </div>
                     <a href={routes.profile}>
                         <Button>Перезагрузить страницу</Button>
                     </a>
@@ -92,12 +82,12 @@ export default function Profile() {
                 <li><Button>&#10000;</Button> <span>Редактировать</span></li>
                 <li><Button>&#10008;</Button> <span>Удалить</span></li>
             </ul>
-            <p className={classes.center}>Ваши объявления</p>
+            <h3 className={classes.center}>Ваши объявления</h3>
             {posts.length > 0 ? (
                 <ul className={classes.items}>
                     {posts.map((post: PostInterface) => <Item post={post} key={post.id} edit={true}/>)}
                 </ul>
-            ) : <p style={{textAlign: "center"}}>Пусто. Может, пора создать объявление?</p>}
+            ) : <p className={classes.center}>Пусто. Может, пора создать объявление?</p>}
         </MainLayout>
     )
 

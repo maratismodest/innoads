@@ -9,8 +9,11 @@ export const routes = {
 export const titles = {
     profile: "Личный кабинет",
     add: "Добавить объявление",
-    edit: "Редактировать объявление"
+    edit: "Редактировать объявление",
+    auth: "На страницу авторизации"
 }
+
+export const tgLink = 'https://t.me'
 
 export const NO_IMAGE = '/images/no-image.jpeg'
 
