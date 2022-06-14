@@ -116,7 +116,6 @@ export default function Add() {
             setLoading(false)
         }
         return
-
     };
 
     const deleteImage = async (current: string) => {
