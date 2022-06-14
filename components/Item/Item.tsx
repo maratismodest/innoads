@@ -62,7 +62,11 @@ export const Item = ({post, edit}: ItemInterface) => {
                     ...post,
                     createdAt: new Date(),
                     updatedAt: new Date()
-                }, requestConfig)
+                }, {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                })
                 alert('Объявление поднято в поиске!')
                 return
             } catch (e) {
