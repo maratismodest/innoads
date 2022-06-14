@@ -1,5 +1,5 @@
 import {options} from "assets/options";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 import cn from "classnames";
 import Button from "components/Button/Button";
 import GoToProfile from "components/GoToProfile/GoToProfile";
@@ -77,17 +77,22 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
 
         setSending(true)
         try {
-            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${formData.id}`, formData, {
                 headers: {
                     authorization: `Bearer ${token}`
                 }
             })
-            setSending(false)
-            alert("Ваше объявление отправлено в канал InnoAds, а скоро появится на сайте!")
+
+            alert("Ваше объявление на сайте изменено!")
         } catch (e) {
-            setSending(false)
             console.log(e)
+            if (e instanceof AxiosError) {
+                console.log('AxiosError')
+                return alert(e.response?.data)
+            }
             return alert('Что-то пошло не так!')
+        } finally {
+            setSending(false)
         }
 
 
