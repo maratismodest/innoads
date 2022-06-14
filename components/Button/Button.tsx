@@ -5,12 +5,13 @@ import classes from './Button.module.scss'
 interface ButtonProps {
     children: ReactNode,
     disabled?: boolean,
-    className?: string
+    className?: string,
+    title?: string
 }
 
-export const Button = ({children, disabled, className, ...props}: ButtonProps) => {
+export const Button = ({children, disabled, className, title,...props}: ButtonProps) => {
     return (
-        <button className={cn(classes.button, className)} disabled={disabled} {...props} >
+        <button className={cn(classes.button, className)} disabled={disabled} title={title} {...props} >
             {children}
         </button>
     )
