@@ -72,16 +72,18 @@ export default function Add() {
             })
             // await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, requestConfig)
             alert("Ваше объявление создано!")
-            setSending(false)
+
             return router.push(routes.profile);
         } catch (e) {
             console.log(e)
-            setSending(false)
             if (e instanceof AxiosError) {
                 console.log('AxiosError')
                 return alert(e.response?.data)
             }
             return alert("Что-то пошло не так... Попробуйте отправить еще раз")
+        }
+        finally {
+            setSending(false)
         }
 
     }
