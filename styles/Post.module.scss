@@ -9,6 +9,10 @@
   position: relative;
 }
 
+.image {
+  object-fit: cover;
+}
+
 .button {
   position: absolute;
   top: 50%;
