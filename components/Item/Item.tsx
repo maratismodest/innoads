@@ -103,7 +103,7 @@ export const Item = ({post, edit}: ItemInterface) => {
                         />
                     </div>
                     <p>
-                        {price} {isNaN(post.price) ? null : "Р"}
+                        {price === 0 ? 'Даром' : <>{price} <span>&#8381;</span></>}
                     </p>
                     <h2>{title}</h2>
                 </a>
