@@ -1,14 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import {useAuth} from "context/AuthContext";
 import Link from "next/link";
-import classes from './Header.module.scss'
+import React, {useEffect, useState} from 'react';
 import {isMobile} from "react-device-detect";
-import {useAuth} from "../../context/AuthContext";
+import {routes} from "./../../constants";
+import classes from './Header.module.scss'
 
-const routes = {
-    profile: '/profile',
-    add: '/add',
-    main: '/'
-}
 const Header = () => {
     const {user} = useAuth();
     const [mounted, setMounted] = useState(false);

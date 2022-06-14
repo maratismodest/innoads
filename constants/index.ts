@@ -1,7 +1,7 @@
 export const routes = {
     add: '/add',
     profile: '/profile',
-    main: '/main',
+    main: '/',
     search: '/search',
     edit: '/edit'
 }

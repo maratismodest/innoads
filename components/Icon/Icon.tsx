@@ -1,10 +1,17 @@
-import React from "react";
 import cn from 'classnames'
+import React, {MouseEventHandler, ReactNode} from "react";
 import classes from "./Icon.module.scss";
 
-const Icon = ({children, className, ...props}: any) => {
+
+interface IconProps {
+    children: ReactNode,
+    className?: string,
+    onClick?: any,
+}
+
+const Icon = ({children, className, onClick, ...props}: IconProps) => {
     return (
-        <button className={cn(classes.button, className)} {...props}>
+        <button className={cn(classes.button, className)} onClick={onClick} {...props}>
             {children}
         </button>
     );
