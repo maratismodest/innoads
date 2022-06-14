@@ -7,9 +7,8 @@ import Icon from "components/Icon/Icon";
 import Input from "components/Input/Input";
 import {MainLayout} from "components/MainLayout/MainLayout";
 import SelectInno from "components/Select/Select";
-import Spinner from "components/Spinner/Spinner";
 import {useAuth} from "context/AuthContext";
-import {handleDeleteImage, requestConfig} from "functions/handleDeleteImage";
+import {handleDeleteImage} from "functions/handleDeleteImage";
 import handleImageUpload from "functions/handleImageUpload";
 import {handlePostImage} from "functions/handlePostImage";
 import {MoveImage, moveImage} from "functions/moveImage";
@@ -19,7 +18,7 @@ import type {GetServerSideProps} from "next";
 import Image from "next/image";
 import {useRouter} from "next/router";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
 import classes from "styles/classes.module.scss";
@@ -45,7 +44,7 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
         body
     };
     const {control, register, handleSubmit, formState: {errors}} = useForm({defaultValues});
-    const {user} = useAuth();
+    const {user, token} = useAuth();
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
@@ -77,9 +76,20 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
         }
 
         setSending(true)
-        await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, requestConfig)
-        alert("Ваше объявление отправлено в канал InnoAds, а скоро появится на сайте!")
-        setSending(false)
+        try {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            })
+            setSending(false)
+            alert("Ваше объявление отправлено в канал InnoAds, а скоро появится на сайте!")
+        } catch (e) {
+            setSending(false)
+            console.log(e)
+            return alert('Что-то пошло не так!')
+        }
+
 
         return router.push(routes.profile);
     }
