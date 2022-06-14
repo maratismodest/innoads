@@ -6,12 +6,18 @@ interface ButtonProps {
     children: ReactNode,
     disabled?: boolean,
     className?: string,
-    title?: string
+    title?: string,
+    onClick?: () => void
 }
 
-export const Button = ({children, disabled, className, title,...props}: ButtonProps) => {
+export const Button = ({children, disabled, className, title, onClick, ...props}: ButtonProps) => {
     return (
-        <button className={cn(classes.button, className)} disabled={disabled} title={title} {...props} >
+        <button className={cn(classes.button, className)}
+                disabled={disabled}
+                title={title}
+                onClick={onClick}
+                {...props}
+        >
             {children}
         </button>
     )
