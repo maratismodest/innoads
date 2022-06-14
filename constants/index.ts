@@ -10,7 +10,8 @@ export const titles = {
     profile: "Личный кабинет",
     add: "Добавить объявление",
     edit: "Редактировать объявление",
-    auth: "На страницу авторизации"
+    auth: "На страницу авторизации",
+    blog: "Блог"
 }
 
 export const tgLink = 'https://t.me'
