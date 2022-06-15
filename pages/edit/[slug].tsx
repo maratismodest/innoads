@@ -87,7 +87,6 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
         } catch (e) {
             console.log(e)
             if (e instanceof AxiosError) {
-                console.log('AxiosError')
                 return alert(e.response?.data)
             }
             return alert('Что-то пошло не так!')

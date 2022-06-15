@@ -24,7 +24,6 @@ export default function Super() {
     const handleTelegramResponse = async (response : any) => {
         try {
             const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response, requestConfig)
-            console.log('data', data)
             const decoded = jwt.verify(data.token, `${process.env.NEXT_PUBLIC_JWT_SECRET}`);
             localStorage.setItem('token', data.token)
             login(decoded as UserProps)
