@@ -1,5 +1,5 @@
 import axios from "axios";
-import {PostInterface} from "../interfaces";
+import {PostInterface} from "interfaces";
 
 export const getDynamicPaths = async (count: number = 12) => {
     try {

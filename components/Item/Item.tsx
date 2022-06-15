@@ -1,15 +1,15 @@
 import axios from "axios";
 import cn from 'classnames'
+import Button from "components/Button/Button";
 import {useAuth} from "context/AuthContext";
+import {requestConfig} from "functions/handleDeleteImage";
+import {PostInterface} from "interfaces";
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import React, {useCallback, useMemo, useState} from "react";
 import {isDesktop, isMobile, isTablet} from "react-device-detect";
 import {NO_IMAGE, routes} from "../../constants";
-import {requestConfig} from "../../functions/handleDeleteImage";
-import {PostInterface} from "../../interfaces";
-import Button from "../Button/Button";
 import classes from "./Item.module.scss";
 
 interface ItemInterface {
@@ -51,14 +51,14 @@ export const Item = ({post, edit}: ItemInterface) => {
             alert('Объявление удалено!')
             setState(false)
         }
-    }, [])
+    }, [token])
 
     const handleRefresh = useCallback(async () => {
-        const answer = confirm('Опубликовать повторно объявление?')
+        const answer = confirm('Опубликовать повторно объявление в канале и поднять его на сайте?')
         if (answer) {
             try {
                 await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post}, requestConfig)
-                await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post`, {
+                await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`, {
                     ...post,
                     createdAt: new Date(),
                     updatedAt: new Date()
@@ -76,12 +76,12 @@ export const Item = ({post, edit}: ItemInterface) => {
         }
         return
 
-    }, [post])
+    }, [post, token])
 
-    const editPost = useCallback(() => {
+    const editPost = useCallback(async () => {
         const answer = confirm('Редактировать объявление?')
         if (answer) {
-            router.push(routes.edit + '/' + post.slug)
+            await router.push(routes.edit + '/' + post.slug)
         }
     }, [post, router])
 

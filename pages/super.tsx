@@ -3,17 +3,17 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
-import Button from "../components/Button/Button";
-import Item from "../components/Item/Item";
-import {MainLayout} from "../components/MainLayout/MainLayout";
+import Button from "components/Button/Button";
+import Item from "components/Item/Item";
+import {MainLayout} from "components/MainLayout/MainLayout";
 import {routes, titles} from "../constants";
-import {useAuth, UserProps} from "../context/AuthContext";
-import {getUserPosts} from "../functions/getUserPosts";
-import {PostInterface} from "../interfaces";
-import classes from '../styles/classes.module.scss'
-import profile from '../styles/Profile.module.scss'
+import {useAuth, UserProps} from "context/AuthContext";
+import {getUserPosts} from "functions/getUserPosts";
+import {PostInterface} from "interfaces";
+import classes from 'styles/classes.module.scss'
+import profile from 'styles/Profile.module.scss'
 import jwt from 'jsonwebtoken'
-import {requestConfig} from "../functions/handleDeleteImage";
+import {requestConfig} from "functions/handleDeleteImage";
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzEyMzM0ODAsInVzZXJuYW1lIjoibWFyYXRmYWl6ZXIiLCJpYXQiOjE2NTUxMjM4MDgsImV4cCI6MTY4NjY1OTgwOH0.NaeW9a88vB3QfqYRQvacqNloNGEBKSkkXBloTVt3k5U'
 
