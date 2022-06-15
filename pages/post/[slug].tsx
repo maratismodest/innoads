@@ -95,7 +95,7 @@ export default function Post({post: serverPost}: PostProps) {
                     <p itemProp="price" className={item.price}><Price price={price}/></p>
                     <hr/>
                     <p itemProp='description'>{body}</p>
-                    <p>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
+                    <p className={classes.mt20}>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
                     <div className={classes.mt40}>
                         <Link href={tgLink + '/' + telegram}>
                             <a itemProp="seller">
@@ -103,6 +103,13 @@ export default function Post({post: serverPost}: PostProps) {
                                     Написать автору
                                 </Button>
                             </a>
+                        </Link>
+                    </div>
+                    <div className={classes.mt40}>
+                        <Link href={`/person/${post.tgId}`} passHref>
+                            <Button>
+                                Все объявления автора
+                            </Button>
                         </Link>
                     </div>
 
