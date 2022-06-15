@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as fs from 'fs'
 import {GetServerSideProps} from "next"
-import {PostInterface} from '../interfaces'
+import {PostInterface} from 'interfaces'
 
 type Product = {
     id: string

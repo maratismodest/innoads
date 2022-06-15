@@ -4,7 +4,7 @@ import {CarouselProvider, Slide, Slider} from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import {useEffect, useState} from "react";
 import {isMobile} from "react-device-detect";
-import {categories} from "../../assets/options";
+import {categories} from "assets/options";
 import styles from './Categories.module.scss'
 
 const Categories = () => {

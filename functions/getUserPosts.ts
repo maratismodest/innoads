@@ -1,5 +1,5 @@
 import axios from "axios";
-import {PostInterface} from "../interfaces";
+import {PostInterface} from "interfaces";
 
 export const getUserPosts = async (tgId: number): Promise<PostInterface[]> => {
     try {
