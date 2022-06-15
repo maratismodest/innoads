@@ -106,7 +106,7 @@ export default function Post({post: serverPost}: PostProps) {
                         </Link>
                     </div>
                     <div className={classes.mt40}>
-                        <Link href={`/person/${post.tgId}`} passHref>
+                        <Link href={`/user/${post.tgId}`} passHref>
                             <Button>
                                 Все объявления автора
                             </Button>
