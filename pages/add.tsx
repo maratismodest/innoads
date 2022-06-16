@@ -70,7 +70,11 @@ export default function Add() {
                     authorization: `Bearer ${token}`
                 }
             })
-            // await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, requestConfig)
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            })
             alert("Ваше объявление создано!")
 
             return router.push(routes.profile);
