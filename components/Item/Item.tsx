@@ -20,7 +20,7 @@ interface ItemInterface {
 const promoted = [917, 1039, 800, 1031]
 
 export const Price = ({price}: { price: number }): JSX.Element => price !== 0 ? <>{price} <span>&#8381;</span></> :
-    <span>Даром</span>
+    <span>Цена не указана</span>
 
 
 export const Item = ({post, edit}: ItemInterface) => {
