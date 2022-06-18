@@ -5,7 +5,19 @@
     padding: 4px;
 
     & > button {
+      display: inline-flex;
       padding: 4px 16px;
+      max-width: 34px;
+      justify-content: center;
+      align-items: center;
     }
   }
+}
+
+.main {
+  min-height: calc(100vh - 66px);
+}
+
+.exit {
+  margin-top: 100%;
 }

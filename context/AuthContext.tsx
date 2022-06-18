@@ -61,6 +61,7 @@ export function AuthProvider({children}: Props) {
     };
 
     const logout = () => {
+        localStorage.removeItem('token')
         setUser(undefined);
     };
 
