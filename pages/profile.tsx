@@ -7,7 +7,6 @@ import {getUserPosts} from "functions/getUserPosts";
 import {requestConfig} from "functions/handleDeleteImage";
 import {PostInterface} from "interfaces";
 import jwt from 'jsonwebtoken'
-import Image from "next/image";
 import React, {useEffect, useState} from "react";
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
@@ -17,7 +16,7 @@ import {routes, titles} from "../constants";
 
 export default function Profile() {
     const [posts, setPosts] = useState<PostInterface[]>([])
-    const {user, login} = useAuth();
+    const {user, login, logout} = useAuth();
 
     const handleTelegramResponse = async (response: any) => {
         const {username} = response
@@ -75,7 +74,7 @@ export default function Profile() {
     }
 
     return (
-        <MainLayout title={titles.profile}>
+        <MainLayout title={titles.profile} className={profile.main}>
             <h2 className={classes.center}>Личный кабинет</h2>
             <ul className={profile.description}>
                 <li><Button>&#8679;</Button> <span>Опубликовать повторно</span></li>
@@ -88,6 +87,7 @@ export default function Profile() {
                     {posts.map((post: PostInterface) => <Item post={post} key={post.id} edit={true}/>)}
                 </ul>
             ) : <p className={classes.center}>Пусто. Может, пора создать объявление?</p>}
+            <Button onClick={logout} className={profile.exit}>Выйти</Button>
         </MainLayout>
     )
 

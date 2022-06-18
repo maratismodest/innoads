@@ -8,7 +8,8 @@ interface Props {
     image?: string;
     category?: string;
     price?: string;
-    children: ReactNode
+    children: ReactNode;
+    className?: string;
 }
 
 const scrollToTop = () => {
@@ -25,6 +26,7 @@ export const MainLayout: React.FC<Props> = ({
                                                 image = "/icons/icon-192x192.png",
                                                 category,
                                                 price,
+                                                className
                                             }) => {
 
     return (
@@ -44,7 +46,7 @@ export const MainLayout: React.FC<Props> = ({
                 <meta name="author" content="InnoAds"/>
             </Head>
             <Header/>
-            <main>{children}</main>
+            <main className={className}>{children}</main>
             <footer>
                 <div>
                     {/*<Button onClick={scrollToTop}>Навeрх</Button>*/}
