@@ -47,3 +47,13 @@
   font-size: 2em;
   font-weight: bold;
 }
+
+.share {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  span {
+    font-size: 36px;
+    margin-left: 4px;
+  }
+}

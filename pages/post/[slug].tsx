@@ -44,8 +44,9 @@ export default function Post({post: serverPost}: PostProps) {
     const shareData = {
         title: 'InnoAds',
         text: 'Поделиться ссылкой',
-        url: 'https://innoads.ru' + '/post/' + slug
+        url: process.env.NEXT_PUBLIC_NODE_ENV + '/post/' + slug
     }
+
     return (
         <>
             <Head>
@@ -109,8 +110,7 @@ export default function Post({post: serverPost}: PostProps) {
                             </a>
                         </Link>
                     </div>
-                    <Button className={classes.mt40}
-                            onClick={async () => await (navigator.share(shareData))}>Поделиться</Button>
+
                     <div className={classes.mt40}>
                         <Link href={`/user/${post.tgId}`} passHref>
                             <Button>
@@ -118,6 +118,9 @@ export default function Post({post: serverPost}: PostProps) {
                             </Button>
                         </Link>
                     </div>
+
+                    <Button className={cn(classes.mt40, item.share)}
+                            onClick={async () => await (navigator.share(shareData))}>Поделиться<span>&#8631;</span></Button>
 
                 </div>
             </main>
