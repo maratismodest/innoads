@@ -44,7 +44,7 @@ export default function Post({post: serverPost}: PostProps) {
     const shareData = {
         title: 'InnoAds',
         text: 'Поделиться ссылкой',
-        url: tgLink + '/' + slug
+        url: 'https://innoads.ru' + '/' + slug
     }
     return (
         <>
