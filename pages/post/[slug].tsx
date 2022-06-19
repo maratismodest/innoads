@@ -41,7 +41,11 @@ export default function Post({post: serverPost}: PostProps) {
     const seoImage = useMemo(() => preview, [preview])
     const seoKeywords = useMemo(() => `innoads, Иннополис, доска объявлений, ${category.label}`, [category.label])
     const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [slug])
-
+    const shareData = {
+        title: 'InnoAds',
+        text: 'Поделиться ссылкой',
+        url: tgLink + '/' + slug
+    }
     return (
         <>
             <Head>
@@ -105,6 +109,8 @@ export default function Post({post: serverPost}: PostProps) {
                             </a>
                         </Link>
                     </div>
+                    <Button className={classes.mt40}
+                            onClick={async () => await (navigator.share(shareData))}>Поделиться</Button>
                     <div className={classes.mt40}>
                         <Link href={`/user/${post.tgId}`} passHref>
                             <Button>
