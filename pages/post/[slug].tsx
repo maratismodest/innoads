@@ -44,7 +44,7 @@ export default function Post({post: serverPost}: PostProps) {
     const shareData = {
         title: 'InnoAds',
         text: 'Поделиться ссылкой',
-        url: 'https://innoads.ru' + '/' + slug
+        url: 'https://innoads.ru' + '/post/' + slug
     }
     return (
         <>
