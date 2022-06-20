@@ -2,8 +2,7 @@
 const withPWA = require('next-pwa')
 const runtimeCaching = require('next-pwa/cache')
 const withMDX = require('@next/mdx')()
-const { i18n } = require('./next-i18next.config');
-
+const {i18n} = require('./next-i18next.config');
 
 const nextConfig = {
     reactStrictMode: true,
