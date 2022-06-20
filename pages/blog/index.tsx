@@ -1,5 +1,6 @@
 import Header from 'components/Header/Header';
 import {MainLayout} from 'components/MainLayout/MainLayout';
+import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import {titles} from '../../constants';
@@ -62,3 +63,4 @@ const Blog = () => {
 };
 
 export default Blog;
+

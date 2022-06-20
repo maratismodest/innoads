@@ -2,6 +2,7 @@
 const withPWA = require('next-pwa')
 const runtimeCaching = require('next-pwa/cache')
 const withMDX = require('@next/mdx')()
+const {i18n} = require('./next-i18next.config');
 
 const nextConfig = {
     reactStrictMode: true,
@@ -18,6 +19,7 @@ const nextConfig = {
         dest: 'public',
         runtimeCaching
     },
+    i18n
 }
 
 module.exports = withPWA(withMDX(nextConfig))

@@ -1,6 +1,8 @@
 import React, {ReactNode} from "react";
 import Head from "next/head";
 import Header from "components/Header/Header";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+// import {GetStaticProps} from "next/types";
 
 interface Props {
     title?: string;
@@ -56,11 +58,10 @@ export const MainLayout: React.FC<Props> = ({
     );
 };
 
-// export async function getStaticProps({ locale }: any) {
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale, ["common", "footer"])),
-//       // Will be passed to the page component as props
-//     },
-//   };
+// export const getStaticProps: GetStaticProps = async ({locale}) => {
+//     return {
+//         props: {
+//             ...(await serverSideTranslations(locale as string, ['common'])),
+//         },
+//     };
 // }
