@@ -2,12 +2,11 @@ import {options} from "assets/options";
 import axios from "axios";
 import cn from 'classnames'
 import Button from "components/Button/Button";
-import Header from "components/Header/Header";
 import {Price} from "components/Item/Item";
+import {MainLayout} from "components/MainLayout/MainLayout";
 import {PostInterface} from "interfaces";
 import moment from "moment";
 import type {GetServerSideProps} from "next";
-import Head from "next/head";
 import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
@@ -48,21 +47,14 @@ export default function Post({post: serverPost}: PostProps) {
     }
 
     return (
-        <>
-            <Head>
-                <title>{seoTitle}</title>
-                <link rel="canonical" href={canonical}/>
-                <meta name="description" content={seoDescription}/>
-                <meta name="keywords" content={seoKeywords}/>
-                <meta name="image" content={seoImage}/>
-                <meta property="og:title" content={title}/>
-                <meta property="og:description" content={seoDescription}/>
-                <meta property="og:url" content={canonical}/>
-                <meta property="og:image" content={seoImage}/>
-                <meta name="author" content={`https://t.me/${telegram}`}/>
-                <link rel="image_src" href={preview}/>
-            </Head>
-            <Header/>
+        <MainLayout
+            title={seoTitle}
+            description={seoDescription}
+            canonical={canonical}
+            keywords={seoKeywords}
+            image={seoImage}
+            author={`https://t.me/${telegram}`}
+        >
             <main>
                 <div className={item.post} itemScope itemType="https://schema.org/Offer">
                     <div className={item.carousel}>
@@ -124,7 +116,7 @@ export default function Post({post: serverPost}: PostProps) {
 
                 </div>
             </main>
-        </>
+        </MainLayout>
 
     );
 }

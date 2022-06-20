@@ -1,24 +1,23 @@
 import axios from 'axios';
 import Button from 'components/Button/Button';
-import Header from 'components/Header/Header';
 import Item from 'components/Item/Item';
+import {MainLayout} from "components/MainLayout/MainLayout";
 import Search from 'components/Search/Search';
 import Spinner from 'components/Spinner/Spinner';
 import {getUrl} from 'functions/getUrl';
 import {PostInterface} from 'interfaces';
 import {orderBy} from 'lodash';
 import type {GetStaticProps, NextPage} from 'next'
+import {useTranslation} from 'next-i18next';
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
 import {useRouter} from 'next/router';
 import React, {useCallback, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import InfiniteScroll from 'react-infinite-scroller';
 import classes from 'styles/classes.module.scss';
 import home from 'styles/Home.module.scss';
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import {routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from '../constants';
-import {useTranslation} from 'next-i18next';
 
 const Categories = dynamic(() => import('components/Categories/Categories'), {ssr: true})
 
@@ -67,60 +66,47 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
     })
 
     return (
-        <>
-            <Head>
-                <link rel="canonical" href={process.env.NEXT_PUBLIC_NODE_ENV}/>
-                <title>{SEO_TITLE}</title>
-                <meta name="description" content={SEO_DESCRIPTION}/>
-                <meta name="keywords" content="innoads, Иннополис, доска объявлений"/>
-                <meta name="image" content='/icons/icon-192x192.png'/>
-                <meta property="og:title" content={SEO_TITLE}/>
-                <meta property="og:description" content={SEO_DESCRIPTION}/>
-                <meta property="og:url" content={process.env.NEXT_PUBLIC_NODE_ENV}/>
-                <meta property="og:image" content={SEO_IMAGE}/>
-                <meta name="author" content="InnoAds"/>
-            </Head>
-            <Header/>
-            <main>
-                <form className={home.search} onSubmit={handleSubmit(onSubmit)}
+        <MainLayout
+            title={SEO_TITLE}
+            image={SEO_IMAGE}
+            description={SEO_DESCRIPTION}
+        >
+            <form className={home.search} onSubmit={handleSubmit(onSubmit)}
+            >
+                <Search
+                    type="text"
+                    placeholder={t('search')}
+                    name="search"
+                    required={true}
+                    register={register}
+                    className={home.searchInput}
+                />
+                <Button type='submit'>{t('search')}</Button>
+            </form>
+            <Categories/>
+            <div className={home.header}>
+                <h1 className={classes.title}>{t('lastAds')}</h1>
+                <span>* {count} {t('ads')}</span>
+            </div>
+            <div className={classes.magicWrapper}>
+                <InfiniteScroll
+                    pageStart={page}
+                    loadMore={loadFunc}
+                    hasMore={hasMore}
+                    initialLoad={false}
+                    threshold={100}
+                    loader={<div key={0}><Spinner/></div>}
                 >
-                    <Search
-                        type="text"
-                        placeholder={t('search')}
-                        name="search"
-                        required={true}
-                        register={register}
-                        className={home.searchInput}
-                    />
-                    <Button type='submit'>{t('search')}</Button>
-                </form>
-                <Categories/>
-                <div className={home.header}>
-                    <h1 className={classes.title}>{t('lastAds')}</h1>
-                    <span>* {count} {t('ads')}</span>
-                </div>
-                <div className={classes.magicWrapper}>
-                    <InfiniteScroll
-                        pageStart={page}
-                        loadMore={loadFunc}
-                        hasMore={hasMore}
-                        initialLoad={false}
-                        threshold={100}
-                        loader={<div key={0}><Spinner/></div>}
-                    >
-                        <ul className={classes.items}>
-                            {infinite.map((post: PostInterface) => {
-                                return (
-                                    <Item post={post} key={post.slug}/>
-                                );
-                            })}
-                        </ul>
-                    </InfiniteScroll>
-                </div>
-
-            </main>
-
-        </>
+                    <ul className={classes.items}>
+                        {infinite.map((post: PostInterface) => {
+                            return (
+                                <Item post={post} key={post.slug}/>
+                            );
+                        })}
+                    </ul>
+                </InfiniteScroll>
+            </div>
+        </MainLayout>
     )
 }
 
