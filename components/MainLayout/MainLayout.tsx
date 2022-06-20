@@ -56,11 +56,10 @@ export const MainLayout: React.FC<Props> = ({
     );
 };
 
-// export async function getStaticProps({ locale }: any) {
-//   return {
-//     props: {
-//       ...(await serverSideTranslations(locale, ["common", "footer"])),
-//       // Will be passed to the page component as props
-//     },
-//   };
-// }
+export async function getStaticProps({ locale }: any) {
+  return {
+    props: {
+        ...(await serverSideTranslations(locale as string)),
+    },
+  };
+}

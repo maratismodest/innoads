@@ -1,4 +1,5 @@
 import {useAuth} from "context/AuthContext";
+import {useTranslation} from "next-i18next";
 import Link from "next/link";
 import React, {useEffect, useState} from 'react';
 import {isMobile} from "react-device-detect";
@@ -6,6 +7,7 @@ import {routes} from "./../../constants";
 import classes from './Header.module.scss'
 
 const Header = () => {
+    const {t} = useTranslation()
     const {user} = useAuth();
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
@@ -20,7 +22,7 @@ const Header = () => {
                         {!isMobile && (
                             <>
                                 <span>&nbsp;|&nbsp;</span>
-                                <span className={classes.headerDescription}>Доска объявлений города Иннополис</span>
+                                <span className={classes.headerDescription}>{t('innopolisClassified')}</span>
                             </>
                         )}
                     </a>
@@ -29,14 +31,14 @@ const Header = () => {
                     <Link href={routes.profile}>
                         <a className={classes.headerUser} title='Профиль'>
                             {user && 'Профиль'}
-                            {!user && isMobile && 'Вход'}
-                            {!user && !isMobile && 'Вход | Регистрация'}
+                            {!user && isMobile && t('login')}
+                            {!user && !isMobile && `${t('login')} | ${t('registration')}`}
                         </a>
                     </Link>
 
                     <Link href={routes.add}>
-                        <a title='Подать объявление'>
-                            <button className={classes.headerButton}>{!isMobile ? 'Добавить объявление' : '+'}
+                        <a title={t('addAd')}>
+                            <button className={classes.headerButton}>{!isMobile ? t('addAd') : '+'}
                             </button>
                         </a>
                     </Link>

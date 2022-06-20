@@ -1,6 +1,8 @@
 import {AuthProvider} from 'context/AuthContext'
 import type {AppProps} from 'next/app'
 import {YMInitializer} from "react-yandex-metrika";
+import { appWithTranslation } from 'next-i18next';
+
 import 'styles/globals.scss'
 
 function MyApp({Component, pageProps}: AppProps) {
@@ -15,4 +17,5 @@ function MyApp({Component, pageProps}: AppProps) {
     )
 }
 
-export default MyApp
+export default appWithTranslation(MyApp);
+

@@ -16,7 +16,9 @@ import {useForm} from 'react-hook-form';
 import InfiniteScroll from 'react-infinite-scroller';
 import classes from 'styles/classes.module.scss';
 import home from 'styles/Home.module.scss';
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import {routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from '../constants';
+import {useTranslation} from 'next-i18next';
 
 const Categories = dynamic(() => import('components/Categories/Categories'), {ssr: true})
 
@@ -31,6 +33,7 @@ type SearchSubmitForm = {
 
 
 const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
+    const {t} = useTranslation();
     const router = useRouter()
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
@@ -83,18 +86,18 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
                 >
                     <Search
                         type="text"
-                        placeholder="Поиск"
+                        placeholder={t('search')}
                         name="search"
                         required={true}
                         register={register}
                         className={home.searchInput}
                     />
-                    <Button type='submit'>Поиск</Button>
+                    <Button type='submit'>{t('search')}</Button>
                 </form>
                 <Categories/>
                 <div className={home.header}>
-                    <h1 className={classes.title}>Последние объявления</h1>
-                    <span>* {count} объявлений</span>
+                    <h1 className={classes.title}>{t('lastAds')}</h1>
+                    <span>* {count} {t('ads')}</span>
                 </div>
                 <div className={classes.magicWrapper}>
                     <InfiniteScroll
@@ -121,7 +124,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
     )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({locale}) => {
     const response = await axios.get(getUrl(0, 0, 10))
     const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
 
@@ -135,6 +138,7 @@ export const getStaticProps: GetStaticProps = async () => {
         props: {
             posts,
             totalPages: response.data.totalPages,
+            ...(await serverSideTranslations(locale as string)),
         },
         revalidate: 10,
     };
