@@ -10,7 +10,7 @@ import type {GetServerSideProps} from "next";
 import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import React, {useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import classes from 'styles/classes.module.scss'
 import item from "styles/Post.module.scss";
 import {tgLink} from "../../constants";
@@ -19,9 +19,23 @@ interface PostProps {
     post: PostInterface
 }
 
+
+const googleTranslateText = (
+    targetLang: string,
+): Function => (sourceLang: string, text: string): Promise<string> => {
+    const URL = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ru&tl=${targetLang}&dt=t&q=${text}`;
+    const translate: Promise<string> = fetch(URL)
+        .then(res => res.json())
+        .then(res => res[0][0][0]);
+    return translate;
+};
+
+const googleTranslateTextToEN = googleTranslateText('en');
+
 export default function Post({post: serverPost}: PostProps) {
     const [post] = useState<PostInterface>(serverPost);
     const [images] = useState<string[]>(() => post.images.split("||"));
+
 
     const {
         title,
@@ -33,6 +47,17 @@ export default function Post({post: serverPost}: PostProps) {
         telegram,
         slug
     } = post;
+
+    // useEffect(() => {
+    //     const translateText = async (): Promise<void> => {
+    //         const translate = await googleTranslateTextToEN('auto', body);
+    //         if (translate) {
+    //             console.log('translate', translate)
+    //         }
+    //     };
+    //
+    //     translateText();
+    // }, []);
 
     const category = useMemo(() => options.find(option => option.value === categoryId) || options[0], [categoryId])
     const seoTitle = useMemo(() => `${category.label} ${title.slice(0, 50)} ${price.toString()} в городе Иннополис`, [category.label, price, title])
