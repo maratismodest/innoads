@@ -29,8 +29,8 @@ const Header = () => {
                 </Link>
                 <div>
                     <Link href={routes.profile}>
-                        <a className={classes.headerUser} title='Профиль'>
-                            {user && 'Профиль'}
+                        <a className={classes.headerUser} title={t('profile')}>
+                            {user && t('profile')}
                             {!user && isMobile && t('login')}
                             {!user && !isMobile && `${t('login')} | ${t('registration')}`}
                         </a>

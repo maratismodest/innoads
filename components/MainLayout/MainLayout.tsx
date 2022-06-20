@@ -1,8 +1,6 @@
-import React, {ReactNode} from "react";
-import Head from "next/head";
 import Header from "components/Header/Header";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-// import {GetStaticProps} from "next/types";
+import Head from "next/head";
+import React, {ReactNode} from "react";
 
 interface Props {
     title?: string;
@@ -12,6 +10,10 @@ interface Props {
     price?: string;
     children: ReactNode;
     className?: string;
+    canonical?: string;
+    keywords?: string;
+    author?: string;
+    link?: string
 }
 
 const scrollToTop = () => {
@@ -28,16 +30,18 @@ export const MainLayout: React.FC<Props> = ({
                                                 image = "/icons/icon-192x192.png",
                                                 category,
                                                 price,
-                                                className
+                                                className,
+                                                author = 'InnoAds',
+                                                keywords = "innoads, Иннополис, доска объявлений",
+                                                canonical = process.env.NEXT_PUBLIC_NODE_ENV
                                             }) => {
 
     return (
         <>
             <Head>
-                <title>
-                    {category} {title} {price}
-                </title>
-                <meta name="keywords" content="innoads, Иннополис, доска объявлений"/>
+                <title>{title}</title>
+                <link rel="canonical" href={canonical}/>
+                <meta name="keywords" content={keywords}/>
                 <meta name="description" content={description}/>
                 <meta name="image" content={image}/>
                 <meta property="og:title" content={title}/>
@@ -45,7 +49,8 @@ export const MainLayout: React.FC<Props> = ({
                 <meta property="og:type" content="website"/>
                 <meta property="og:url" content="https://innoads.ru/"/>
                 <meta property="og:image" content={image}/>
-                <meta name="author" content="InnoAds"/>
+                <meta name="author" content={author}/>
+                <link rel="image_src" href={image}/>
             </Head>
             <Header/>
             <main className={className}>{children}</main>
@@ -57,11 +62,3 @@ export const MainLayout: React.FC<Props> = ({
         </>
     );
 };
-
-// export const getStaticProps: GetStaticProps = async ({locale}) => {
-//     return {
-//         props: {
-//             ...(await serverSideTranslations(locale as string, ['common'])),
-//         },
-//     };
-// }
