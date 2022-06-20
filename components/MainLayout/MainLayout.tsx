@@ -1,6 +1,7 @@
 import React, {ReactNode} from "react";
 import Head from "next/head";
 import Header from "components/Header/Header";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 interface Props {
     title?: string;

@@ -1,7 +1,6 @@
 import Header from 'components/Header/Header';
 import {MainLayout} from 'components/MainLayout/MainLayout';
 import { GetStaticProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import React from 'react';
 import {titles} from '../../constants';
@@ -65,11 +64,3 @@ const Blog = () => {
 
 export default Blog;
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
-    return {
-        props: {
-            ...(await serverSideTranslations(locale as string)),
-            // Will be passed to the page component as props
-        },
-    };
-}
