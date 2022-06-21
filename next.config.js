@@ -3,6 +3,7 @@ const withPWA = require('next-pwa')
 const runtimeCaching = require('next-pwa/cache')
 const withMDX = require('@next/mdx')()
 const {i18n} = require('./next-i18next.config');
+var path = require("path");
 
 const nextConfig = {
     reactStrictMode: true,
@@ -19,7 +20,8 @@ const nextConfig = {
         dest: 'public',
         runtimeCaching
     },
-    i18n
+    i18n,
+    localePath: path.resolve("./locales")
 }
 
 module.exports = withPWA(withMDX(nextConfig))
