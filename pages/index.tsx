@@ -124,7 +124,7 @@ export const getStaticProps: GetStaticProps = async ({locale}) => {
         props: {
             posts,
             totalPages: response.data.totalPages,
-            ...(await serverSideTranslations(locale as string, ['common'])),
+            // ...(await serverSideTranslations(locale as string, ['common'])),
         },
         revalidate: 10,
     };
