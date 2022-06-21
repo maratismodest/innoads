@@ -2,7 +2,6 @@
   "name": "innoads-frontend",
   "version": "0.1.2",
   "private": true,
-  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
