@@ -8,13 +8,22 @@ interface SelectInnoProps {
     name: string,
     required: boolean,
     onChange: any,
-    value?: OptionProps
+    value?: OptionProps,
+    placeholder?: string;
 }
 
-const SelectInno = ({options, defaultValue, value, name, onChange, ...props}: SelectInnoProps) => {
+const SelectInno = ({
+                        options,
+                        defaultValue,
+                        value,
+                        name,
+                        onChange,
+                        placeholder = 'Выберите категорию',
+                        ...props
+                    }: SelectInnoProps) => {
     return <Select options={options}
                    name={name}
-                   placeholder='Выберите категорию'
+                   placeholder={placeholder}
                    defaultValue={defaultValue}
                    onChange={onChange}
                    value={value}

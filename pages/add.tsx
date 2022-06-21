@@ -15,10 +15,11 @@ import {handlePostImage} from "functions/handlePostImage";
 import {MoveImage, moveImage} from "functions/moveImage";
 import {onImageClick} from "functions/onImageClick";
 import {HTMLInputEvent} from "interfaces";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Image from "next/image";
 import {useRouter} from "next/router";
-import { GetStaticProps } from "next/types";
+import {GetStaticProps} from "next/types";
 import React, {useState} from "react";
 import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
@@ -31,6 +32,7 @@ import {ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, routes, titles} from "../co
 
 export default function Add() {
     const router = useRouter()
+    const {t} = useTranslation('add')
     const [images, setImages] = useState<string[]>([]);
     const [error, setError] = useState<string>("");
     const {control, register, handleSubmit, formState: {errors}} = useForm();
@@ -86,8 +88,7 @@ export default function Add() {
                 return alert(e.response?.data)
             }
             return alert("Что-то пошло не так... Попробуйте отправить еще раз")
-        }
-        finally {
+        } finally {
             setSending(false)
         }
 
@@ -133,7 +134,7 @@ export default function Add() {
         return await handleDeleteImage(current)
     };
 
-    const ErrorBlock = ({name}: ErrorProps) => errors[name] && <span>Поле обязательно для заполнения</span>
+    const ErrorBlock = ({name}: ErrorProps) => errors[name] && <span>{t('required')}</span>
 
     return (
         <>
@@ -152,6 +153,7 @@ export default function Add() {
                         control={control}
                         rules={{required: true}}
                         render={({field}: any) => <SelectInno
+                            placeholder={t('chooseCategory')}
                             {...field}
                             options={options}/>}
                     />
@@ -159,7 +161,7 @@ export default function Add() {
                     <div style={{marginBottom: 10}}></div>
                     <Input
                         type="number"
-                        placeholder="Цена"
+                        placeholder={t('price')}
                         register={register}
                         required={true}
                         name="price"
@@ -167,7 +169,7 @@ export default function Add() {
                     <ErrorBlock name={'price'}/>
                     <Input
                         type="text"
-                        placeholder="Заголовок"
+                        placeholder={t('header')}
                         register={register}
                         required={true}
                         name="title"
@@ -176,14 +178,14 @@ export default function Add() {
                     <textarea
                         rows={5}
                         cols={5}
-                        placeholder={"Описание"}
+                        placeholder={t('description')}
                         {...register("body", {required: true})}
                         className={classes.textArea}
                     />
                     <ErrorBlock name={'body'}/>
                     <div>
                         <div>
-                            <h4>Добавить фото</h4>
+                            <h4>{t('addPhoto')}</h4>
                             <div
                                 className={cn({
                                     [classes.image]: isDesktop,
@@ -208,7 +210,7 @@ export default function Add() {
                             accept={ACCEPTED_IMAGE_FORMAT}
                         />
                     </div>
-                    <h4>Предварительный просмотр</h4>
+                    <h4>{t('preview')}</h4>
                     <ul
                         className={cn({
                             [classes.images]: isDesktop,
@@ -273,7 +275,8 @@ export default function Add() {
                         )}
                     </ul>
                     {error}
-                    <Button type="submit" disabled={sending || loading ? true : undefined}>Создать объявление</Button>
+                    <Button className={classes.mt40} type="submit"
+                            disabled={sending || loading ? true : undefined}>{t('addAd')}</Button>
                 </form>
             </MainLayout>
         </>
@@ -284,7 +287,7 @@ export default function Add() {
 export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
+            ...(await serverSideTranslations(locale as string, ['common', 'footer', 'add'])),
         },
     };
 }

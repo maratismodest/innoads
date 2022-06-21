@@ -1,0 +1,10 @@
+{
+  "price": "Price",
+  "header": "Header",
+  "description": "Description",
+  "preview": "Preview",
+  "addPhoto": "Add Photo",
+  "addAd": "Add an Ad",
+  "chooseCategory": "Choose Category",
+  "required": "Required"
+}

@@ -10,7 +10,8 @@ import useDebounce from "hooks/useDebounce";
 import {PostInterface} from "interfaces";
 import {orderBy} from "lodash";
 import type {GetStaticProps, NextPage} from 'next'
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useRouter} from "next/router";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {isMobile} from "react-device-detect";
@@ -23,6 +24,7 @@ type SearchSubmitForm = {
 };
 
 const SearchPage: NextPage = () => {
+    const {t} = useTranslation('search')
     const router = useRouter();
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
@@ -59,13 +61,12 @@ const SearchPage: NextPage = () => {
 
     return (
         <MainLayout title="Доска объявлений города Иннополис">
-            <h1 className={classes.title}>Поиск</h1>
+            <h1 className={classes.title}>{t('searchSearch')}</h1>
             <hr/>
             <SelectInno
                 options={options}
                 name="category"
                 required={true}
-                // defaultValue={options[0]}
                 onChange={(event: any) => {
                     setCategory(event.value);
                 }}
@@ -73,7 +74,7 @@ const SearchPage: NextPage = () => {
             />
             <Input
                 type="text"
-                placeholder="поиск"
+                placeholder={t('typeText')}
                 name="search"
                 required={true}
                 defaultValue={router.query.keyword}
@@ -109,7 +110,7 @@ export default SearchPage
 export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
+            ...(await serverSideTranslations(locale as string, ['common', 'footer', 'search'])),
         },
     };
 }

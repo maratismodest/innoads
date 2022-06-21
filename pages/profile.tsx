@@ -20,7 +20,7 @@ import {routes, titles} from "../constants";
 export default function Profile() {
     const [posts, setPosts] = useState<PostInterface[]>([])
     const {user, login, logout} = useAuth();
-    const {t} = useTranslation('footer')
+    const {t} = useTranslation('profile')
 
     const handleTelegramResponse = async (response: any) => {
         const {username} = response
@@ -76,7 +76,7 @@ export default function Profile() {
         );
     }
 
-    console.log('t(\'publishAgain\')',t('publishAgain'))
+    console.log('t(\'publishAgain\')', t('publishAgain'))
     return (
         <MainLayout
             title={titles.profile}
@@ -104,7 +104,7 @@ export default function Profile() {
 export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
+            ...(await serverSideTranslations(locale as string, ['common', 'profile'])),
         },
     };
 }
