@@ -82,79 +82,70 @@ export default function Post({post: serverPost}: PostProps) {
             image={seoImage}
             author={`https://t.me/${telegram}`}
         >
-            <main>
-                <div className={item.post} itemScope itemType="https://schema.org/Offer">
-                    <div className={item.carousel}>
-                        <CarouselProvider
-                            naturalSlideWidth={100}
-                            naturalSlideHeight={100}
-                            totalSlides={images.length}
-                        >
-                            <Slider>
-                                {images.map((image: string, index: number) => {
-                                    return (
-                                        <Slide index={index} key={image}>
-                                            <Image
-                                                hasMasterSpinner={true}
-                                                src={image}
-                                                alt="image"
-                                                className={item.image}
-                                                title={title}
-                                                itemProp='image'
-                                            />
-                                        </Slide>
-                                    );
-                                })}
-                            </Slider>
-                            <ButtonBack className={cn(item.button, item.buttonLeft)}>
-                                &larr;
-                            </ButtonBack>
-                            <ButtonNext className={cn(item.button, item.buttonRight)}>
-                                &rarr;
-                            </ButtonNext>
-                        </CarouselProvider>
-                    </div>
-                    <p>Категория: <span itemProp="category">{category.label}</span></p>
-                    <h1 itemProp='name'>{title}</h1>
-                    <p itemProp="price" className={item.price}><Price price={price}/></p>
-                    <hr/>
-                    <p itemProp='description'>{body}</p>
-                    <p className={classes.mt20}>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
-                    <div className={classes.mt40}>
-                        <Link href={tgLink + '/' + telegram}>
-                            <a itemProp="seller">
-                                <Button>
-                                    Написать автору
-                                </Button>
-                            </a>
-                        </Link>
-                    </div>
-
-                    <div className={classes.mt40}>
-                        <Link href={`/user/${post.tgId}`} passHref>
-                            <Button>
-                                Все объявления автора
-                            </Button>
-                        </Link>
-                    </div>
-
-                    <Button className={cn(classes.mt40, item.share)}
-                            onClick={async () => await (navigator.share(shareData))}>Поделиться<span>&#8631;</span></Button>
-
+            <div className={item.post} itemScope itemType="https://schema.org/Offer">
+                <div className={item.carousel}>
+                    <CarouselProvider
+                        naturalSlideWidth={100}
+                        naturalSlideHeight={100}
+                        totalSlides={images.length}
+                    >
+                        <Slider>
+                            {images.map((image: string, index: number) => {
+                                return (
+                                    <Slide index={index} key={image}>
+                                        <Image
+                                            hasMasterSpinner={true}
+                                            src={image}
+                                            alt="image"
+                                            className={item.image}
+                                            title={title}
+                                            itemProp='image'
+                                        />
+                                    </Slide>
+                                );
+                            })}
+                        </Slider>
+                        <ButtonBack className={cn(item.button, item.buttonLeft)}>
+                            &larr;
+                        </ButtonBack>
+                        <ButtonNext className={cn(item.button, item.buttonRight)}>
+                            &rarr;
+                        </ButtonNext>
+                    </CarouselProvider>
                 </div>
-            </main>
+                <p>Категория: <span itemProp="category">{category.label}</span></p>
+                <h1 itemProp='name'>{title}</h1>
+                <p itemProp="price" className={item.price}><Price price={price}/></p>
+                <hr/>
+                <p itemProp='description'>{body}</p>
+                <p className={classes.mt20}>Опубликован: {moment(createdAt).format("DD.MM.YYYY")}</p>
+                <div className={classes.mt40}>
+                    <Link href={tgLink + '/' + telegram}>
+                        <a itemProp="seller">
+                            <Button>
+                                Написать автору
+                            </Button>
+                        </a>
+                    </Link>
+                </div>
+
+                <div className={classes.mt40}>
+                    <Link href={`/user/${post.tgId}`} passHref>
+                        <Button>
+                            Все объявления автора
+                        </Button>
+                    </Link>
+                </div>
+
+                <Button className={cn(classes.mt40, item.share)}
+                        onClick={async () => await (navigator.share(shareData))}>Поделиться<span>&#8631;</span></Button>
+
+            </div>
         </MainLayout>
 
     );
 }
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
-    return {
-        props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
-        },
-    };
-}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const query = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${context.query.slug}`)
@@ -165,6 +156,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
     const snapshot = query.data;
     return {
-        props: {post: snapshot},
+        props: {post: snapshot, ...(await serverSideTranslations(context.locale as string, ['common', 'footer'])),},
+
     };
 }
