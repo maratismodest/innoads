@@ -110,7 +110,7 @@ export default SearchPage
 export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'footer', 'search'])),
+            ...(await serverSideTranslations(locale as string, ['common', 'search'])),
         },
     };
 }

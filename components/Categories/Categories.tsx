@@ -6,9 +6,11 @@ import {useEffect, useState} from "react";
 import {isMobile} from "react-device-detect";
 import {categories} from "assets/options";
 import styles from './Categories.module.scss'
+import { useTranslation } from "next-i18next";
 
 const Categories = () => {
     const [mounted, setMounted] = useState(false);
+    const {t} = useTranslation()
     useEffect(() => setMounted(true), []);
     if (!mounted) return null;
     return (
@@ -37,7 +39,7 @@ const Categories = () => {
                                                 height={32}
                                             />
                                         </div>
-                                        <h5>{item.label}</h5>
+                                        <h5>{t(item.label)}</h5>
                                     </a>
                                 </Link>
 
