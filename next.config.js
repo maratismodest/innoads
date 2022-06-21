@@ -20,8 +20,7 @@ const nextConfig = {
         dest: 'public',
         runtimeCaching
     },
-    i18n,
-    localePath: path.resolve("./locales")
+    i18n
 }
 
 module.exports = withPWA(withMDX(nextConfig))
