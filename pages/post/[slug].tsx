@@ -148,14 +148,6 @@ export default function Post({post: serverPost}: PostProps) {
     );
 }
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
-    return {
-        props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
-        },
-    };
-}
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const query = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${context.query.slug}`)
     if (!query) {
