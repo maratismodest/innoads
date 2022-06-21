@@ -20,7 +20,7 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Image from "next/image";
 import {useRouter} from "next/router";
 import {GetStaticProps} from "next/types";
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
 // @ts-ignore
@@ -30,15 +30,23 @@ import slug from "slug";
 import classes from "styles/classes.module.scss";
 import {ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, routes, titles} from "../constants";
 
+
 export default function Add() {
     const router = useRouter()
-    const {t} = useTranslation('add')
+    const {t, i18n} = useTranslation()
     const [images, setImages] = useState<string[]>([]);
     const [error, setError] = useState<string>("");
     const {control, register, handleSubmit, formState: {errors}} = useForm();
     const {user, token} = useAuth();
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
+
+    const translatedOptions = useMemo(() => options.map((option) => {
+        return {
+            ...option, label: t(option.label)
+        }
+    }), [i18n.language])
+
 
     if (!user || !user.username) {
         return (
@@ -155,7 +163,7 @@ export default function Add() {
                         render={({field}: any) => <SelectInno
                             placeholder={t('chooseCategory')}
                             {...field}
-                            options={options}/>}
+                            options={translatedOptions}/>}
                     />
                     <ErrorBlock name={'category'}/>
                     <div style={{marginBottom: 10}}></div>
@@ -287,7 +295,7 @@ export default function Add() {
 export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'footer', 'add'])),
+            ...(await serverSideTranslations(locale as string, ['common'])),
         },
     };
 }

@@ -13,5 +13,12 @@
   "estate": "Estate",
   "buy": "Buy",
   "vacations": "Vacations",
-  "free": "Free"
+  "free": "Free",
+  "price": "Price",
+  "header": "Header",
+  "description": "Description",
+  "preview": "Preview",
+  "addPhoto": "Add Photo",
+  "chooseCategory": "Choose Category",
+  "required": "Required"
 }

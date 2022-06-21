@@ -21,6 +21,7 @@ const SelectInno = ({
                         placeholder = 'Выберите категорию',
                         ...props
                     }: SelectInnoProps) => {
+
     return <Select options={options}
                    name={name}
                    placeholder={placeholder}

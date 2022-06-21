@@ -13,7 +13,7 @@ import type {GetStaticProps, NextPage} from 'next'
 import {useTranslation} from "next-i18next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useRouter} from "next/router";
-import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {isMobile} from "react-device-detect";
 import InfiniteScroll from 'react-infinite-scroller';
 import classes from 'styles/classes.module.scss'
@@ -24,7 +24,7 @@ type SearchSubmitForm = {
 };
 
 const SearchPage: NextPage = () => {
-    const {t} = useTranslation('search')
+    const {t, i18n} = useTranslation(['common','search'])
     const router = useRouter();
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
@@ -32,6 +32,12 @@ const SearchPage: NextPage = () => {
     const [input, setInput] = useState("");
     const [category, setCategory] = useState(Number(router.query['category']) || 1);
     const debouncedValue = useDebounce<string>(input, 500)
+
+    const translatedOptions = useMemo(() => options.map((option) => {
+        return {
+            ...option, label: t(option.label)
+        }
+    }), [i18n.language])
 
     const loadFunc = useCallback(async (currentPage: number = page) => {
         const response = await axios.get(getUrl(category, currentPage, isMobile ? 8 : 15, debouncedValue))
@@ -61,20 +67,20 @@ const SearchPage: NextPage = () => {
 
     return (
         <MainLayout title="Доска объявлений города Иннополис">
-            <h1 className={classes.title}>{t('searchSearch')}</h1>
+            <h1 className={classes.title}>{t('search', { ns: 'search' })}</h1>
             <hr/>
             <SelectInno
-                options={options}
+                options={translatedOptions}
                 name="category"
                 required={true}
                 onChange={(event: any) => {
                     setCategory(event.value);
                 }}
-                value={options.find(x => x.value === category)}
+                value={translatedOptions.find(x => x.value === category)}
             />
             <Input
                 type="text"
-                placeholder={t('typeText')}
+                placeholder={t('typeText', { ns: 'search' })}
                 name="search"
                 required={true}
                 defaultValue={router.query.keyword}
