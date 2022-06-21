@@ -7,7 +7,9 @@ import {MainLayout} from "components/MainLayout/MainLayout";
 import {PostInterface} from "interfaces";
 import moment from "moment";
 import type {GetServerSideProps} from "next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Link from "next/link";
+import {GetStaticProps} from "next/types";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import React, {useEffect, useMemo, useState} from "react";
@@ -20,17 +22,17 @@ interface PostProps {
 }
 
 
-const googleTranslateText = (
-    targetLang: string,
-): Function => (sourceLang: string, text: string): Promise<string> => {
-    const URL = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ru&tl=${targetLang}&dt=t&q=${text}`;
-    const translate: Promise<string> = fetch(URL)
-        .then(res => res.json())
-        .then(res => res[0][0][0]);
-    return translate;
-};
+// const googleTranslateText = (
+//     targetLang: string,
+// ): Function => (sourceLang: string, text: string): Promise<string> => {
+//     const URL = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=ru&tl=${targetLang}&dt=t&q=${text}`;
+//     const translate: Promise<string> = fetch(URL)
+//         .then(res => res.json())
+//         .then(res => res[0][0][0]);
+//     return translate;
+// };
 
-const googleTranslateTextToEN = googleTranslateText('en');
+// const googleTranslateTextToEN = googleTranslateText('en');
 
 export default function Post({post: serverPost}: PostProps) {
     const [post] = useState<PostInterface>(serverPost);
@@ -146,6 +148,13 @@ export default function Post({post: serverPost}: PostProps) {
     );
 }
 
+export const getStaticProps: GetStaticProps = async ({locale}) => {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
+        },
+    };
+}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const query = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${context.query.slug}`)
