@@ -101,10 +101,10 @@ export default function Profile() {
 
 }
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
-    return {
-        props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
-        },
-    };
-}
+// export const getStaticProps: GetStaticProps = async ({locale}) => {
+//     return {
+//         props: {
+//             ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
+//         },
+//     };
+// }
