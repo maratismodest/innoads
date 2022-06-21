@@ -15,8 +15,10 @@ import {handlePostImage} from "functions/handlePostImage";
 import {MoveImage, moveImage} from "functions/moveImage";
 import {onImageClick} from "functions/onImageClick";
 import {HTMLInputEvent} from "interfaces";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Image from "next/image";
 import {useRouter} from "next/router";
+import { GetStaticProps } from "next/types";
 import React, {useState} from "react";
 import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
@@ -277,4 +279,12 @@ export default function Add() {
         </>
 
     );
+}
+
+export const getStaticProps: GetStaticProps = async ({locale}) => {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
+        },
+    };
 }

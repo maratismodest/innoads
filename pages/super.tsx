@@ -14,6 +14,8 @@ import classes from 'styles/classes.module.scss'
 import profile from 'styles/Profile.module.scss'
 import jwt from 'jsonwebtoken'
 import {requestConfig} from "functions/handleDeleteImage";
+import { GetStaticProps } from "next/types";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzEyMzM0ODAsInVzZXJuYW1lIjoibWFyYXRmYWl6ZXIiLCJpYXQiOjE2NTUxMjM4MDgsImV4cCI6MTY4NjY1OTgwOH0.NaeW9a88vB3QfqYRQvacqNloNGEBKSkkXBloTVt3k5U'
 
@@ -101,4 +103,12 @@ export default function Super() {
         </MainLayout>
     )
 
+}
+
+export const getStaticProps: GetStaticProps = async ({locale}) => {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
+        },
+    };
 }

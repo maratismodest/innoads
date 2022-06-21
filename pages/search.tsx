@@ -9,7 +9,8 @@ import {getUrl} from "functions/getUrl";
 import useDebounce from "hooks/useDebounce";
 import {PostInterface} from "interfaces";
 import {orderBy} from "lodash";
-import type {NextPage} from 'next'
+import type {GetStaticProps, NextPage} from 'next'
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import {useRouter} from "next/router";
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {isMobile} from "react-device-detect";
@@ -104,3 +105,11 @@ const SearchPage: NextPage = () => {
 }
 
 export default SearchPage
+
+export const getStaticProps: GetStaticProps = async ({locale}) => {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
+        },
+    };
+}

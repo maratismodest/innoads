@@ -1,5 +1,7 @@
 import {MainLayout} from 'components/MainLayout/MainLayout';
 import MDX from 'components/MDX/delete.mdx'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { GetStaticProps } from 'next/types';
 import React from 'react';
 
 const Delete = () => {
@@ -11,3 +13,11 @@ const Delete = () => {
 };
 
 export default Delete;
+
+export const getStaticProps: GetStaticProps = async ({locale}) => {
+    return {
+        props: {
+            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
+        },
+    };
+}
