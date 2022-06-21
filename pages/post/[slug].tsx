@@ -9,10 +9,9 @@ import moment from "moment";
 import type {GetServerSideProps} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Link from "next/link";
-import {GetStaticProps} from "next/types";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useMemo, useState} from "react";
 import classes from 'styles/classes.module.scss'
 import item from "styles/Post.module.scss";
 import {tgLink} from "../../constants";
@@ -157,6 +156,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
     const snapshot = query.data;
     return {
-        props: {post: snapshot},
+        props: {post: snapshot, ...(await serverSideTranslations(context.locale as string, ['common'])),},
     };
 }
