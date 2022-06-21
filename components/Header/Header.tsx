@@ -37,7 +37,10 @@ const Header = () => {
                 </Link>
                 <div className={classes.buttons}>
                     <div className={classes.switch}>
-                        <Switch onChange={() => {
+                        <Switch
+                            checkedIcon={<div className={classes.switchIcon}>En</div>}
+                            uncheckedIcon={<div className={classes.switchIcon}>Ru</div>}
+                            onChange={() => {
                             router.push({pathname, query}, asPath, {locale: i18n.language === 'en' ? 'ru' : 'en'})
                         }}
                                 checked={i18n.language === 'en'}/>
