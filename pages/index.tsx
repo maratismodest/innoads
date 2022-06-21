@@ -19,7 +19,6 @@ import classes from 'styles/classes.module.scss';
 import home from 'styles/Home.module.scss';
 import {routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from '../constants';
 
-// import Categories from 'components/Categories/Categories'
 const Categories = dynamic(() => import('components/Categories/Categories'), {ssr: true})
 
 interface HomeProps {
