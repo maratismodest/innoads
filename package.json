@@ -39,7 +39,6 @@
     "turbo-rss": "^2.0.1"
   },
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/lodash": "^4.14.182",
     "@types/node": "17.0.30",
     "@types/react": "18.0.8",
