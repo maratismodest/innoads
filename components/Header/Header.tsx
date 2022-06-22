@@ -1,3 +1,5 @@
+import Button from "components/Button/Button";
+import Dropdown from "components/Dropdown/Dropdown";
 import {useAuth} from "context/AuthContext";
 import {useTranslation} from "next-i18next";
 import Link from "next/link";
@@ -6,8 +8,6 @@ import React, {useEffect, useState} from 'react';
 import {useDetectClickOutside} from "react-detect-click-outside";
 import {isMobile} from "react-device-detect";
 import Switch from "react-switch";
-import Button from "components/Button/Button";
-import Dropdown from "components/Dropdown/Dropdown";
 import {routes} from "./../../constants";
 
 import classes from './Header.module.scss'
@@ -17,11 +17,8 @@ const Header = () => {
     const {user} = useAuth();
     const [mounted, setMounted] = useState(false);
     const [menu, setMenu] = useState(false)
-    const showMenu = () => {
-        setMenu(true)
-    }
 
-    const ref = useDetectClickOutside({onTriggered: () =>  setMenu(false)})
+    const ref = useDetectClickOutside({onTriggered: () => setMenu(false)})
     const router = useRouter()
     const {pathname, asPath, query} = router
 
@@ -75,7 +72,7 @@ const Header = () => {
                 }
                 {isMobile && <div ref={ref}>
                     <Button
-                        onClick={showMenu}
+                        onClick={() => setMenu(true)}
                         className={classes.menu}
                     >
                         &#8801;
@@ -83,7 +80,7 @@ const Header = () => {
 
                     {menu &&
                         <Dropdown
-                            setVisible={setMenu}
+                            closeToggle={() => setMenu(true)}
                         >
                             <ul>
                                 <li>
