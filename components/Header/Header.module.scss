@@ -20,18 +20,7 @@
   }
 
   &Button {
-    background: $blue;
-    border-radius: 8px;
-    padding: 8px 32px;
-    width: fit-content;
-    cursor: pointer;
-    border: 1px solid $blue;
-    transition: all .3s;
     margin-left: 24px;
-    color: $white;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 24px;
     @media (max-width: 1024px) {
       margin-left: 12px;
     }
