@@ -6,8 +6,8 @@ import React, {useEffect, useState} from 'react';
 import {useDetectClickOutside} from "react-detect-click-outside";
 import {isMobile} from "react-device-detect";
 import Switch from "react-switch";
-import Button from "../Button/Button";
-import Dropdown from "../Dropdown/Dropdown";
+import Button from "components/Button/Button";
+import Dropdown from "components/Dropdown/Dropdown";
 import {routes} from "./../../constants";
 
 import classes from './Header.module.scss'
@@ -21,7 +21,7 @@ const Header = () => {
         setMenu(true)
     }
 
-    const ref = useDetectClickOutside({onTriggered: () => setMenu(false)})
+    const ref = useDetectClickOutside({onTriggered: () =>  setMenu(false)})
     const router = useRouter()
     const {pathname, asPath, query} = router
 
