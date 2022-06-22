@@ -9,6 +9,7 @@ import moment from "moment";
 import type {GetServerSideProps} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Link from "next/link";
+import {useTranslation} from 'next-i18next';
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import React, {useMemo, useState} from "react";
@@ -34,6 +35,7 @@ interface PostProps {
 // const googleTranslateTextToEN = googleTranslateText('en');
 
 export default function Post({post: serverPost}: PostProps) {
+    const {t} = useTranslation()
     const [post] = useState<PostInterface>(serverPost);
     const [images] = useState<string[]>(() => post.images.split("||"));
 
@@ -61,7 +63,7 @@ export default function Post({post: serverPost}: PostProps) {
     // }, []);
 
     const category = useMemo(() => options.find(option => option.value === categoryId) || options[0], [categoryId])
-    const seoTitle = useMemo(() => `${category.label} ${title.slice(0, 50)} ${price.toString()} в городе Иннополис`, [category.label, price, title])
+    const seoTitle = useMemo(() => `${t(category.label)} ${title.slice(0, 50)} ${price.toString()} в городе Иннополис`, [category.label, price, title, t])
     const seoDescription = useMemo(() => body.slice(0, 320), [body])
     const seoImage = useMemo(() => preview, [preview])
     const seoKeywords = useMemo(() => `innoads, Иннополис, доска объявлений, ${category.label}`, [category.label])
