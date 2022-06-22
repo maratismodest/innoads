@@ -15,6 +15,8 @@ import {MoveImage, moveImage} from "functions/moveImage";
 import {onImageClick} from "functions/onImageClick";
 import {HTMLInputEvent, PostInterface} from "interfaces";
 import type {GetServerSideProps} from "next";
+import {useTranslation} from "next-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Image from "next/image";
 import {useRouter} from "next/router";
 import "pure-react-carousel/dist/react-carousel.es.css";
@@ -25,6 +27,7 @@ import classes from "styles/classes.module.scss";
 import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE, routes, titles} from "../../constants";
 
 export default function Edit({post: serverPost}: { post: PostInterface }) {
+    const {t} = useTranslation()
     const {
         title,
         body,
@@ -299,5 +302,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const snapshot = query.data;
     return {
         props: {post: snapshot, slug: snapshot.slug},
+        ...(await serverSideTranslations(context.locale as string, ['common'])),
     };
 }

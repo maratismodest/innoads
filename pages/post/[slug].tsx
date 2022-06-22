@@ -61,7 +61,7 @@ export default function Post({post: serverPost}: PostProps) {
             translateSubtitle()
         }
 
-    }, [i18n]);
+    }, [i18n, translateTitle, translateSubtitle]);
 
     const category = useMemo(() => options.find(option => option.value === categoryId) || options[0], [categoryId])
     const seoTitle = useMemo(() => `${t(category.label)} ${title.slice(0, 50)} ${price.toString()} в городе Иннополис`, [category.label, price, title, t])

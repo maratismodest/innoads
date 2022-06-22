@@ -5,6 +5,8 @@ import {MainLayout} from 'components/MainLayout/MainLayout';
 import {getUrl} from 'functions/getUrl';
 import {PostInterface} from 'interfaces';
 import {orderBy} from 'lodash';
+import {useTranslation} from "next-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Link from 'next/link';
 import {GetServerSideProps, NextPage} from 'next/types';
 import React from 'react';
@@ -13,18 +15,16 @@ import {tgLink} from '../../constants';
 
 
 interface PersonProps {
-    posts: PostInterface[],
-    totalPages: number
+    posts: PostInterface[]
 }
 
-const Person: NextPage<PersonProps> = ({posts, totalPages}) => {
-
+const Person: NextPage<PersonProps> = ({posts}) => {
+    const {t} = useTranslation('post')
     return (
         <MainLayout>
-            <h1>Профиль продавца</h1>
-            <p>Количество объявлений: <span>{posts.length}</span></p>
-
-            <div style={{marginTop: 40}}/>
+            <h1>{t('userProfile')}</h1>
+            <p>{t('adsCount')}: <span>{posts.length}</span></p>
+            <div className={classes.mt40}/>
             <ul className={classes.items}>
                 {posts.map((post: PostInterface) => {
                     return (
@@ -32,10 +32,10 @@ const Person: NextPage<PersonProps> = ({posts, totalPages}) => {
                     );
                 })}
             </ul>
-            <div style={{marginTop: 40}}/>
+            <div className={classes.mt40}/>
             <Link href={tgLink + '/' + posts[0].telegram} passHref>
                 <Button>
-                    Написать автору
+                    {t('textAuthor')}
                 </Button>
             </Link>
         </MainLayout>
@@ -46,7 +46,6 @@ export default Person;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const response = await axios.get(getUrl(0, 0, 10, '', +(context.query.id as string)))
-
     if (!response) {
         return {
             notFound: true,
@@ -55,8 +54,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
     return {
         props: {
-            posts: posts,
-            totalPages: response.data.totalPages,
+            posts,
+            ...(await serverSideTranslations(context.locale as string, ['common', 'post'])),
         }
     };
 }
