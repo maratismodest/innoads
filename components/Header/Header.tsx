@@ -3,8 +3,11 @@ import {useTranslation} from "next-i18next";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import React, {useEffect, useState} from 'react';
+import {useDetectClickOutside} from "react-detect-click-outside";
 import {isMobile} from "react-device-detect";
 import Switch from "react-switch";
+import Button from "../Button/Button";
+import Dropdown from "../Dropdown/Dropdown";
 import {routes} from "./../../constants";
 
 import classes from './Header.module.scss'
@@ -13,7 +16,12 @@ const Header = () => {
     const {t, i18n} = useTranslation()
     const {user} = useAuth();
     const [mounted, setMounted] = useState(false);
+    const [menu, setMenu] = useState(false)
+    const showMenu = () => {
+        setMenu(true)
+    }
 
+    const ref = useDetectClickOutside({onTriggered: () => setMenu(false)})
     const router = useRouter()
     const {pathname, asPath, query} = router
 
@@ -35,15 +43,18 @@ const Header = () => {
                         )}
                     </a>
                 </Link>
-                <div className={classes.buttons}>
+                {!isMobile && <div className={classes.buttons}>
                     <div className={classes.switch}>
                         <Switch
                             checkedIcon={<div className={classes.switchIcon}>En</div>}
                             uncheckedIcon={<div className={classes.switchIcon}>Ru</div>}
-                            onChange={() => {
-                            router.push({pathname, query}, asPath, {locale: i18n.language === 'en' ? 'ru' : 'en'})
-                        }}
-                                checked={i18n.language === 'en'}/>
+                            onChange={async () => {
+                                await router.push({
+                                    pathname,
+                                    query
+                                }, asPath, {locale: i18n.language === 'en' ? 'ru' : 'en'})
+                            }}
+                            checked={i18n.language === 'en'}/>
                     </div>
                     <Link href={routes.profile}>
                         <a className={classes.headerUser} title={t('profile')}>
@@ -61,6 +72,53 @@ const Header = () => {
                     </Link>
 
                 </div>
+                }
+                {isMobile && <div ref={ref}>
+                    <Button
+                        onClick={showMenu}
+                        className={classes.menu}
+                    >
+                        &#8801;
+                    </Button>
+
+                    {menu &&
+                        <Dropdown
+                            setVisible={setMenu}
+                        >
+                            <ul>
+                                <li>
+                                    <Link href={routes.profile}>
+                                        <a title={t('profile')}>
+                                            {user && t('profile')}
+                                            {!user && t('login')}
+                                        </a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link href={routes.add}>
+                                        <a title={t('addAd')}>
+                                            {t('addAd')}
+                                        </a>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Switch
+                                        checkedIcon={<div className={classes.switchIcon}>En</div>}
+                                        uncheckedIcon={<div className={classes.switchIcon}>Ru</div>}
+                                        onChange={async () => {
+                                            await router.push({
+                                                pathname,
+                                                query
+                                            }, asPath, {locale: i18n.language === 'en' ? 'ru' : 'en'})
+                                        }}
+                                        checked={i18n.language === 'en'}/>
+                                </li>
+                            </ul>
+
+
+                        </Dropdown>}
+                </div>}
+
             </div>
         </nav>
     );

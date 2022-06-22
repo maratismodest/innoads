@@ -24,7 +24,7 @@ type SearchSubmitForm = {
 };
 
 const SearchPage: NextPage = () => {
-    const {t, i18n} = useTranslation(['common','search'])
+    const {t, i18n} = useTranslation(['common', 'search'])
     const router = useRouter();
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
@@ -37,7 +37,7 @@ const SearchPage: NextPage = () => {
         return {
             ...option, label: t(option.label)
         }
-    }), [i18n.language])
+    }), [t])
 
     const loadFunc = useCallback(async (currentPage: number = page) => {
         const response = await axios.get(getUrl(category, currentPage, isMobile ? 8 : 15, debouncedValue))
@@ -67,7 +67,7 @@ const SearchPage: NextPage = () => {
 
     return (
         <MainLayout title="Доска объявлений города Иннополис">
-            <h1 className={classes.title}>{t('search', { ns: 'search' })}</h1>
+            <h1 className={classes.title}>{t('search', {ns: 'search'})}</h1>
             <hr/>
             <SelectInno
                 options={translatedOptions}
@@ -80,7 +80,7 @@ const SearchPage: NextPage = () => {
             />
             <Input
                 type="text"
-                placeholder={t('typeText', { ns: 'search' })}
+                placeholder={t('typeText', {ns: 'search'})}
                 name="search"
                 required={true}
                 defaultValue={router.query.keyword}

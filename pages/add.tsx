@@ -45,7 +45,7 @@ export default function Add() {
         return {
             ...option, label: t(option.label)
         }
-    }), [i18n.language])
+    }), [t])
 
 
     if (!user || !user.username) {
