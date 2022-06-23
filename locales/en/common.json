@@ -20,5 +20,7 @@
   "preview": "Preview",
   "addPhoto": "Add Photo",
   "chooseCategory": "Choose Category",
-  "required": "Required"
+  "required": "Required",
+  "notAuthorized": "You are not authorized",
+  "goToAuth":"Go to authorization page"
 }
