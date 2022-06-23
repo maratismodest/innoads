@@ -1,5 +1,7 @@
 import {MainLayout} from 'components/MainLayout/MainLayout';
 import MDX from 'components/MDX/blog.mdx'
+import {getDictionary} from 'functions/getDictionary';
+import {GetStaticProps} from 'next/types';
 import React from 'react';
 
 const Blog = () => {
@@ -18,3 +20,10 @@ const Blog = () => {
 
 export default Blog;
 
+export const getStaticProps: GetStaticProps = async ({locale}) => {
+    return {
+        props: {
+            ...(await getDictionary(locale)),
+        },
+    };
+}

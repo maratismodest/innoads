@@ -4,12 +4,12 @@ import Item from 'components/Item/Item';
 import {MainLayout} from "components/MainLayout/MainLayout";
 import Search from 'components/Search/Search';
 import Spinner from 'components/Spinner/Spinner';
+import {getDictionary} from 'functions/getDictionary';
 import {getUrl} from 'functions/getUrl';
 import {PostInterface} from 'interfaces';
 import {orderBy} from 'lodash';
 import type {GetStaticProps, NextPage} from 'next'
 import {useTranslation} from 'next-i18next';
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
 import dynamic from 'next/dynamic';
 import {useRouter} from 'next/router';
 import React, {useCallback, useMemo, useState} from 'react';
@@ -124,7 +124,7 @@ export const getStaticProps: GetStaticProps = async ({locale}) => {
         props: {
             posts,
             totalPages: response.data.totalPages,
-            ...(await serverSideTranslations(locale as string, ['common'])),
+            ...(await getDictionary(locale)),
         },
         revalidate: 10,
     };

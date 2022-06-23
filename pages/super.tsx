@@ -1,7 +1,7 @@
 import Button from "components/Button/Button";
 import {MainLayout} from "components/MainLayout/MainLayout";
+import {getDictionary} from "functions/getDictionary";
 import {useTranslation} from "next-i18next";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {GetStaticProps} from "next/types";
 import React from "react";
 // @ts-ignore
@@ -10,9 +10,6 @@ import classes from 'styles/classes.module.scss'
 import {titles} from "../constants";
 
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzEyMzM0ODAsInVzZXJuYW1lIjoibWFyYXRmYWl6ZXIiLCJpYXQiOjE2NTUxMjM4MDgsImV4cCI6MTY4NjY1OTgwOH0.NaeW9a88vB3QfqYRQvacqNloNGEBKSkkXBloTVt3k5U'
-
-
-export const getDictionary = async (locale: string | undefined, list: string[]) => locale ? await serverSideTranslations(locale as string, ['common']) : null
 
 export default function Super() {
     const {t} = useTranslation()
@@ -35,7 +32,7 @@ export default function Super() {
 export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
-            ...(await getDictionary(locale, ['common'])),
+            ...(await getDictionary(locale)),
         },
     };
 }

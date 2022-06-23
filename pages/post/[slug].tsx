@@ -4,12 +4,12 @@ import cn from 'classnames'
 import Button from "components/Button/Button";
 import {Price} from "components/Item/Item";
 import {MainLayout} from "components/MainLayout/MainLayout";
+import {getDictionary} from "functions/getDictionary";
 import {googleTranslateText} from "functions/translateText";
 import {PostInterface} from "interfaces";
 import moment from "moment";
 import type {GetServerSideProps} from "next";
 import {useTranslation} from 'next-i18next';
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
@@ -148,15 +148,15 @@ export default function Post({post: serverPost}: PostProps) {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const query = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${context.query.slug}`)
-    if (!query) {
+export const getServerSideProps: GetServerSideProps = async ({locale, query}) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`)
+    if (!response) {
         return {
             notFound: true,
         };
     }
-    const snapshot = query.data;
+    const snapshot = response.data;
     return {
-        props: {post: snapshot, ...(await serverSideTranslations(context.locale as string, ['common', 'post'])),},
+        props: {post: snapshot, ...(await getDictionary(locale, ['post'])),},
     };
 }

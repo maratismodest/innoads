@@ -5,13 +5,13 @@ import Item from "components/Item/Item";
 import {MainLayout} from "components/MainLayout/MainLayout";
 import SelectInno from "components/Select/Select";
 import Spinner from "components/Spinner/Spinner";
+import {getDictionary} from "functions/getDictionary";
 import {getUrl} from "functions/getUrl";
 import useDebounce from "hooks/useDebounce";
 import {PostInterface} from "interfaces";
 import {orderBy} from "lodash";
 import type {GetStaticProps, NextPage} from 'next'
 import {useTranslation} from "next-i18next";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useRouter} from "next/router";
 import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from "react";
 import {isMobile} from "react-device-detect";
@@ -116,7 +116,7 @@ export default SearchPage
 export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'search'])),
+            ...(await getDictionary(locale, ['search'])),
         },
     };
 }

@@ -3,12 +3,12 @@ import Button from "components/Button/Button";
 import Item from "components/Item/Item";
 import {MainLayout} from "components/MainLayout/MainLayout";
 import {useAuth, UserProps} from "context/AuthContext";
+import {getDictionary} from "functions/getDictionary";
 import {getUserPosts} from "functions/getUserPosts";
 import {requestConfig} from "functions/handleDeleteImage";
 import {PostInterface} from "interfaces";
 import jwt from 'jsonwebtoken'
 import {useTranslation} from "next-i18next";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {GetStaticProps} from "next/types";
 import React, {useEffect, useState} from "react";
 // @ts-ignore
@@ -104,7 +104,7 @@ export default function Profile() {
 export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'profile'])),
+            ...(await getDictionary(locale, ['profile'])),
         },
     };
 }

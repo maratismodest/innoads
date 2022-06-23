@@ -8,6 +8,7 @@ import Input from "components/Input/Input";
 import {MainLayout} from "components/MainLayout/MainLayout";
 import SelectInno from "components/Select/Select";
 import {useAuth} from "context/AuthContext";
+import {getDictionary} from "functions/getDictionary";
 import {handleDeleteImage} from "functions/handleDeleteImage";
 import handleImageUpload from "functions/handleImageUpload";
 import {handlePostImage} from "functions/handlePostImage";
@@ -16,7 +17,6 @@ import {onImageClick} from "functions/onImageClick";
 import {HTMLInputEvent, PostInterface} from "interfaces";
 import type {GetServerSideProps} from "next";
 import {useTranslation} from "next-i18next";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Image from "next/image";
 import {useRouter} from "next/router";
 import "pure-react-carousel/dist/react-carousel.es.css";
@@ -292,16 +292,16 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
 }
 
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const query = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${context.query.slug}`)
-    if (!query) {
+export const getServerSideProps: GetServerSideProps = async ({locale, query}) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`)
+    if (!response) {
         return {
             notFound: true,
         };
     }
-    const snapshot = query.data;
+    const snapshot = response.data;
     return {
         props: {post: snapshot, slug: snapshot.slug},
-        ...(await serverSideTranslations(context.locale as string, ['common'])),
+        ...(await getDictionary(locale)),
     };
 }

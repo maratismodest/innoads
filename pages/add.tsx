@@ -9,6 +9,7 @@ import {MainLayout} from "components/MainLayout/MainLayout";
 import SelectInno from "components/Select/Select";
 import Spinner from "components/Spinner/Spinner";
 import {useAuth} from "context/AuthContext";
+import {getDictionary} from "functions/getDictionary";
 import {handleDeleteImage} from "functions/handleDeleteImage";
 import handleImageUpload from "functions/handleImageUpload";
 import {handlePostImage} from "functions/handlePostImage";
@@ -16,7 +17,6 @@ import {MoveImage, moveImage} from "functions/moveImage";
 import {onImageClick} from "functions/onImageClick";
 import {HTMLInputEvent} from "interfaces";
 import {useTranslation} from "next-i18next";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Image from "next/image";
 import {useRouter} from "next/router";
 import {GetStaticProps} from "next/types";
@@ -301,7 +301,7 @@ export default function Add() {
 export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale as string, ['common'])),
+            ...(await getDictionary(locale)),
         },
     };
 }
