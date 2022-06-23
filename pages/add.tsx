@@ -23,6 +23,7 @@ import {GetStaticProps} from "next/types";
 import React, {useMemo, useState} from "react";
 import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
+import Modal from 'react-modal';
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
 // @ts-ignore
@@ -31,10 +32,21 @@ import classes from "styles/classes.module.scss";
 import {ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, routes, titles} from "../constants";
 import {convertLinksToMedia} from "../functions/convertLinksToMedia";
 
+const customStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+    },
+};
 
 export default function Add() {
     const router = useRouter()
-    const {t, i18n} = useTranslation()
+    const [showModal, setShowModal] = useState(false)
+    const {t} = useTranslation()
     const [images, setImages] = useState<string[]>([]);
     const [error, setError] = useState<string>("");
     const {control, register, handleSubmit, formState: {errors}} = useForm();
@@ -101,7 +113,8 @@ export default function Add() {
             if (e instanceof AxiosError) {
                 return alert(e.response?.data)
             }
-            return alert("Что-то пошло не так... Попробуйте отправить еще раз")
+            setShowModal(true)
+            return
         } finally {
             setSending(false)
         }
@@ -152,6 +165,14 @@ export default function Add() {
 
     return (
         <>
+            <Modal
+                isOpen={showModal}
+                contentLabel="Minimal Modal Example"
+                style={customStyles}
+            >
+                Что-то пошло не так... Попробуйте отправить еще раз
+                <button onClick={() => setShowModal(false)}>X</button>
+            </Modal>
             {sending &&
                 <div className={classes.sending}>
                     <Spinner/>
