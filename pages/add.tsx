@@ -305,9 +305,3 @@ export const getStaticProps: GetStaticProps = async ({locale}) => {
         },
     };
 }
-
-// await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, {
-//     headers: {
-//         authorization: `Bearer ${token}`
-//     }
-// })

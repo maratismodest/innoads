@@ -2,11 +2,11 @@ import axios from 'axios';
 import Button from 'components/Button/Button';
 import Item from 'components/Item/Item';
 import {MainLayout} from 'components/MainLayout/MainLayout';
+import {getDictionary} from 'functions/getDictionary';
 import {getUrl} from 'functions/getUrl';
 import {PostInterface} from 'interfaces';
 import {orderBy} from 'lodash';
 import {useTranslation} from "next-i18next";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Link from 'next/link';
 import {GetServerSideProps, NextPage} from 'next/types';
 import React from 'react';
@@ -44,8 +44,8 @@ const Person: NextPage<PersonProps> = ({posts}) => {
 
 export default Person;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const response = await axios.get(getUrl(0, 0, 10, '', +(context.query.id as string)))
+export const getServerSideProps: GetServerSideProps = async ({locale, query}) => {
+    const response = await axios.get(getUrl(0, 0, 10, '', +(query.id as string)))
     if (!response) {
         return {
             notFound: true,
@@ -55,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
         props: {
             posts,
-            ...(await serverSideTranslations(context.locale as string, ['common', 'post'])),
+            ...(await getDictionary(locale, ['post'])),
         }
     };
 }

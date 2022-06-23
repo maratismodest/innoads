@@ -8,7 +8,7 @@ import {getDictionary} from 'functions/getDictionary';
 import {getUrl} from 'functions/getUrl';
 import {PostInterface} from 'interfaces';
 import {orderBy} from 'lodash';
-import type {GetStaticProps, NextPage} from 'next'
+import type {GetServerSideProps, NextPage} from 'next'
 import {useTranslation} from 'next-i18next';
 import dynamic from 'next/dynamic';
 import {useRouter} from 'next/router';
@@ -110,7 +110,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
     )
 }
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getServerSideProps: GetServerSideProps = async ({locale}) => {
     const response = await axios.get(getUrl(0, 0, 10))
     const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
 
@@ -126,7 +126,6 @@ export const getStaticProps: GetStaticProps = async ({locale}) => {
             totalPages: response.data.totalPages,
             ...(await getDictionary(locale)),
         },
-        revalidate: 10,
     };
 }
 

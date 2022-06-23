@@ -157,6 +157,6 @@ export const getServerSideProps: GetServerSideProps = async ({locale, query}) =>
     }
     const snapshot = response.data;
     return {
-        props: {post: snapshot, ...(await getDictionary(locale, ['post'])),},
+        props: {post: snapshot, ...(await getDictionary(locale, ['post']))},
     };
 }

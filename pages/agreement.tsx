@@ -13,6 +13,7 @@ const Agreement = () => {
 };
 
 export default Agreement;
+
 export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
