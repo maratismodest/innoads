@@ -1,4 +1,5 @@
 import axios from "axios";
+import cn from 'classnames'
 import Button from "components/Button/Button";
 import Item from "components/Item/Item";
 import {MainLayout} from "components/MainLayout/MainLayout";
@@ -9,6 +10,7 @@ import {requestConfig} from "functions/handleDeleteImage";
 import {PostInterface} from "interfaces";
 import jwt from 'jsonwebtoken'
 import {useTranslation} from "next-i18next";
+import Link from "next/link";
 import {GetStaticProps} from "next/types";
 import React, {useEffect, useState} from "react";
 // @ts-ignore
@@ -86,14 +88,23 @@ export default function Profile() {
                 <li><Button>&#10000;</Button> <span>{t('edit')}</span></li>
                 <li><Button>&#10008;</Button> <span>{t('delete')}</span></li>
             </ul>
-            <h3 className={classes.center}>{t('yourAds')}</h3>
+            <Link href={routes.add}>
+                <a title={t('addAd')} className={cn(classes.center, classes.mt20)}>
+                    <Button>{t('addAd', {ns: 'common'})}
+                    </Button>
+                </a>
+            </Link>
+            <h3 className={cn(classes.center, classes.mt20)}>{t('yourAds')}</h3>
             {posts.length > 0 ? (
-                <ul className={classes.items}>
+                <ul className={cn(classes.mt40, classes.items)}>
                     {posts.map((post: PostInterface) =>
                         <Item post={post} key={post.id} edit={true}/>)}
                 </ul>
-            ) : <p className={classes.center}>{t('shouldCreate')}</p>}
-            <Button onClick={logout} className={profile.exit}>{t('exit')}</Button>
+            ) : <p className={cn(classes.mt40, classes.center)}>{t('shouldCreate')}</p>}
+            <div className={cn(classes.center, profile.exit)}>
+                <Button onClick={logout}>{t('exit')}</Button>
+            </div>
+
         </MainLayout>
     )
 
