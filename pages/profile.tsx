@@ -41,7 +41,6 @@ export default function Profile() {
         }
     };
 
-
     useEffect(() => {
         if (user) {
             getUserPosts(user.id).then((res) => setPosts(res))
@@ -76,7 +75,6 @@ export default function Profile() {
         );
     }
 
-    console.log('t(\'publishAgain\')', t('publishAgain'))
     return (
         <MainLayout
             title={titles.profile}
