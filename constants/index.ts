@@ -3,7 +3,8 @@ export const routes = {
     profile: '/profile',
     main: '/',
     search: '/search',
-    edit: '/edit'
+    edit: '/edit',
+    post: '/post'
 }
 
 export const titles = {
@@ -37,6 +38,7 @@ export const modalStyles = {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
-        maxWidth: 300
+        maxWidth: 300,
     },
+    overlay: {zIndex: 2}
 };

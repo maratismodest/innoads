@@ -9,14 +9,15 @@ interface ButtonProps {
     title?: string,
     onClick?: () => void,
     type?: 'submit' | 'reset' | 'button';
-    id?: string
+    id?: string,
+    transparent? : boolean
 }
 
-export const Button = ({id, children, disabled, className, title, type, onClick, ...props}: ButtonProps) => {
+export const Button = ({id, children, disabled, className, title, type, onClick, transparent,...props}: ButtonProps) => {
     return (
         <button
             id={id}
-            className={cn(classes.button, className)}
+            className={cn(classes.button, className, {[classes.transparent]: transparent})}
             disabled={disabled}
             title={title}
             type={type}

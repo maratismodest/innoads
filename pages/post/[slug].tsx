@@ -27,6 +27,7 @@ export default function Post({post: serverPost}: PostProps) {
     const [post] = useState<PostInterface>(serverPost);
     const [images] = useState<string[]>(() => post.images.split("||"));
 
+
     const {
         title,
         body,
@@ -41,27 +42,27 @@ export default function Post({post: serverPost}: PostProps) {
     const [header, setHeader] = useState<string>(title)
     const [subtitle, setSubtitle] = useState<string>(body)
 
-    const translateTitle = async (): Promise<void> => {
-        const translate = await googleTranslateText(title);
-        if (translate) {
-            setHeader(translate)
-        }
-    };
-
-    const translateSubtitle = async (): Promise<void> => {
-        const translate = await googleTranslateText(body);
-        if (translate) {
-            setSubtitle(translate)
-        }
-    };
 
     useEffect(() => {
+        const translateTitle = async (): Promise<void> => {
+            const translate = await googleTranslateText(title);
+            if (translate) {
+                setHeader(translate)
+            }
+        };
+
+        const translateSubtitle = async (): Promise<void> => {
+            const translate = await googleTranslateText(body);
+            if (translate) {
+                setSubtitle(translate)
+            }
+        };
         if (i18n.language === 'en') {
             translateTitle();
             translateSubtitle()
         }
 
-    }, [i18n, translateTitle, translateSubtitle]);
+    }, [i18n, body, title]);
 
     const category = useMemo(() => options.find(option => option.value === categoryId) || options[0], [categoryId])
     const seoTitle = useMemo(() => `${t(category.label)} ${title.slice(0, 50)} ${price.toString()} в городе Иннополис`, [category.label, price, title, t])

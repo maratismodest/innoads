@@ -21,7 +21,16 @@ interface ItemInterface {
     edit?: boolean
 }
 
-const promoted = [917, 1039, 800, 1031]
+// const promoted = [917, 1039, 800, 1031]
+
+const success = {
+    updated: 'Объявление поднято в поиске!',
+    deleted: 'Объявление удалено! Перезагрузите страницу, чтобы вы увидели изменения'
+}
+const errors = {
+    wentWrong: 'Что-то пошло не так!',
+    noCase: "Нет таких значений"
+}
 
 export const Price = ({price}: { price: number }): JSX.Element => price !== 0 ? <>{price} <span>&#8381;</span></> :
     <span>Цена не указана</span>
@@ -33,7 +42,7 @@ enum ModalText {
     delete = "Удалить объявление?"
 }
 
-export const Item = ({post, edit}: ItemInterface) => {
+export const Item = ({post, edit = false}: ItemInterface) => {
     const {id, slug, title, preview, price} = post
     const {t, i18n} = useTranslation('profile')
     const [header, setHeader] = useState<string>(title)
@@ -57,24 +66,24 @@ export const Item = ({post, edit}: ItemInterface) => {
         switch (modalText) {
             case ModalText.edit: {
                 try {
-                    await router.push(routes.edit + '/' + post.slug)
+                    await router.push(routes.edit + '/' + slug)
                 } catch (e) {
-                    alert('Что-то пошло не так!' + 'edit')
+                    alert(errors.wentWrong)
                     console.log(e)
                 }
                 break;
             }
             case ModalText.delete: {
                 try {
-                    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`, {
+                    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`, {
                         headers: {
                             authorization: `Bearer ${token}`
                         }
                     })
-                    alert('Объявление удалено! Перезагрузите страницу, чтобы вы увидели изменения')
+                    alert(success.deleted)
                     hideModal()
                 } catch (e) {
-                    alert('Что-то пошло не так!' + 'delete')
+                    alert(errors.wentWrong)
                     console.log(e)
                 }
                 break;
@@ -91,19 +100,24 @@ export const Item = ({post, edit}: ItemInterface) => {
                             authorization: `Bearer ${token}`
                         }
                     })
-                    alert('Объявление поднято в поиске!')
+                    alert(success.updated)
                     hideModal()
                 } catch (e) {
-                    alert('Что-то пошло не так!')
+                    alert(errors.wentWrong)
                     console.log(e)
                 }
                 break;
             }
             default:
-                alert("Нет таких значений");
+                alert(errors.noCase);
         }
-    }, [modalText, id, post, router, token, hideModal])
+    }, [modalText, post, router, token, hideModal, id, slug])
 
+    useEffect(() => {
+        if (modalText) {
+            showModal()
+        }
+    }, [modalText, showModal])
 
     const sizes = useMemo(() => {
         if (isMobile) {
@@ -116,21 +130,6 @@ export const Item = ({post, edit}: ItemInterface) => {
             return '205px'
         }
     }, [])
-
-    const handleUpdate = useCallback(() => {
-        setModalText(ModalText.republish)
-        showModal()
-    }, [showModal])
-
-    const handleEdit = useCallback(() => {
-        setModalText(ModalText.edit)
-        showModal()
-    }, [showModal])
-
-    const handleDelete = useCallback(() => {
-        setModalText(ModalText.delete)
-        showModal()
-    }, [showModal])
 
     const translateTitle = useCallback(async (): Promise<void> => {
         const translate = await googleTranslateText(title);
@@ -147,20 +146,33 @@ export const Item = ({post, edit}: ItemInterface) => {
     }, [i18n, translateTitle]);
 
     return (
-        <li key={slug} className={cn(classes.item, {
-            [classes.promoted]: promoted.includes(id) && !edit
-        })}>
+        <li key={slug} className={classes.item}>
             {edit && (
                 <>
-                    <Button title={t('delete')} className={classes.delete}
-                            onClick={handleDelete}>&#10008;</Button>
-                    <Button title={t('edit')} className={classes.edit} onClick={handleEdit}>&#10000;</Button>
-                    <Button title={t('publishAgain')} className={classes.promote}
-                            onClick={handleUpdate}>&#8679;</Button>
+                    <Button title={t('delete')}
+                            className={cn(classes.itemBtn, classes.itemBtnDelete)}
+                            transparent
+                            onClick={() => setModalText(ModalText.delete)}
+                    >
+                        &#10008;</Button>
+                    <Button title={t('edit')}
+                            className={cn(classes.itemBtn, classes.itemBtnEdit)}
+                            onClick={() => setModalText(ModalText.edit)}
+                            transparent
+                    >
+                        &#10000;</Button>
+                    <Button
+                        title={t('publishAgain')}
+                        className={cn(classes.itemBtn, classes.itemBtnPromote)}
+                        transparent
+                        onClick={() => setModalText(ModalText.republish)}
+                    >
+                        &#8679;
+                    </Button>
                 </>
 
             )}
-            <Link href={`/post/${slug}`}>
+            <Link href={`${routes.post}/${slug}`} passHref>
                 <a title={title}>
                     <div className={classes.imageWrapper}>
                         <Image
