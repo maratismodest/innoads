@@ -2,7 +2,6 @@ import axios from "axios";
 import cn from 'classnames'
 import Button from "components/Button/Button";
 import {useAuth} from "context/AuthContext";
-import {requestConfig} from "functions/handleDeleteImage";
 import {googleTranslateText} from "functions/translateText";
 import {PostInterface} from "interfaces";
 import {useTranslation} from "next-i18next";
@@ -90,7 +89,7 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
             }
             case ModalText.republish: {
                 try {
-                    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post}, requestConfig)
+                    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post})
                     await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`, {
                         ...post,
                         createdAt: new Date(),

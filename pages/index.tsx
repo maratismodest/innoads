@@ -6,6 +6,7 @@ import Search from 'components/Search/Search';
 import Spinner from 'components/Spinner/Spinner';
 import {getDictionary} from 'functions/getDictionary';
 import {getUrl} from 'functions/getUrl';
+import ApiClient from 'hooks/interceptor'
 import {PostInterface} from 'interfaces';
 import {orderBy} from 'lodash';
 import type {GetServerSideProps, NextPage} from 'next'
