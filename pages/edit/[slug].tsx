@@ -20,7 +20,7 @@ import {useTranslation} from "next-i18next";
 import Image from "next/image";
 import {useRouter} from "next/router";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
 import classes from "styles/classes.module.scss";
@@ -40,8 +40,13 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
     const router = useRouter()
     const [images, setImages] = useState<string[]>(() => serverPost.images.split('||'));
     const [error, setError] = useState("");
+    const translatedOptions = useMemo(() => options.map((option) => {
+        return {
+            ...option, label: t(option.label)
+        }
+    }), [t])
     const defaultValues = {
-        category: options.find(x => x.value === categoryId),
+        category: translatedOptions.find(x => x.value === categoryId),
         title,
         price,
         body
@@ -50,6 +55,9 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
     const {user, token} = useAuth();
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
+
+
+
 
 
     if (!user || !user.username) {
@@ -78,9 +86,11 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
             id,
         }
 
+        console.log('formData',formData)
+
         setSending(true)
         try {
-            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${formData.id}`, formData, {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`, formData, {
                 headers: {
                     authorization: `Bearer ${token}`
                 }
@@ -154,8 +164,7 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
                     rules={{required: true}}
                     render={({field}: any) => <SelectInno
                         {...field}
-                        options={options}
-                        defaultValue={options.find(x => x.value === categoryId)}
+                        options={translatedOptions}
                     />}
                 />
                 {errors.category && <span>Поле обязательно для заполнения</span>}
@@ -301,7 +310,6 @@ export const getServerSideProps: GetServerSideProps = async ({locale, query}) =>
     }
     const snapshot = response.data;
     return {
-        props: {post: snapshot, slug: snapshot.slug},
-        ...(await getDictionary(locale)),
+        props: {post: snapshot, slug: snapshot.slug, ...(await getDictionary(locale))},
     };
 }
