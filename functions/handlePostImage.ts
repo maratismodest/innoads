@@ -9,8 +9,7 @@ export const handlePostImage = async (formData: FormData): Promise<PostImageProp
     try {
         const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/upload`, formData, {
             headers: {
-                'Content-Type': 'multipart/form-data',
-                'Secret': `${process.env.NEXT_PUBLIC_SECRET}`
+                'Content-Type': 'multipart/form-data'
             }
         })
         return {
