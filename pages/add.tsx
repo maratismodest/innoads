@@ -31,17 +31,6 @@ import classes from "styles/classes.module.scss";
 import {ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, routes, titles} from "../constants";
 import {convertLinksToMedia} from "../functions/convertLinksToMedia";
 
-const customStyles = {
-    content: {
-        top: '50%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-    },
-};
-
 export default function Add() {
     const router = useRouter()
     const {t} = useTranslation()
@@ -69,6 +58,7 @@ export default function Add() {
         if (images.length === 0) {
             return setError("Добавить хотя бы одно фото!");
         }
+        setSending(true)
         const {title, body, price, category} = data
         const slugTitle = slug(title) + "-" + Math.floor(Math.random() * 100)
         const categoryValue = category.value
@@ -84,8 +74,6 @@ export default function Add() {
             tgId: user.id,
             categoryId: categoryValue
         }
-
-        setSending(true)
         try {
             const token = localStorage.getItem('token')
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, {
@@ -300,7 +288,7 @@ export default function Add() {
                     </ul>
                     {error}
                     <Button className={classes.mt40} type="submit"
-                            disabled={sending || loading ? true : undefined}>{t('addAd')}</Button>
+                            disabled={(sending || loading) ? true : false}>{t('addAd')}</Button>
                 </form>
             </MainLayout>
         </>
