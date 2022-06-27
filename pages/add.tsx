@@ -23,7 +23,6 @@ import {GetStaticProps} from "next/types";
 import React, {useMemo, useState} from "react";
 import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
-import Modal from 'react-modal';
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
 // @ts-ignore
@@ -45,7 +44,6 @@ const customStyles = {
 
 export default function Add() {
     const router = useRouter()
-    const [showModal, setShowModal] = useState(false)
     const {t} = useTranslation()
     const [images, setImages] = useState<string[]>([]);
     const [error, setError] = useState<string>("");
@@ -113,7 +111,6 @@ export default function Add() {
             if (e instanceof AxiosError) {
                 return alert(e.response?.data)
             }
-            setShowModal(true)
             return
         } finally {
             setSending(false)
@@ -165,14 +162,6 @@ export default function Add() {
 
     return (
         <>
-            <Modal
-                isOpen={showModal}
-                contentLabel="Minimal Modal Example"
-                style={customStyles}
-            >
-                Что-то пошло не так... Попробуйте отправить еще раз
-                <button onClick={() => setShowModal(false)}>X</button>
-            </Modal>
             {sending &&
                 <div className={classes.sending}>
                     <Spinner/>

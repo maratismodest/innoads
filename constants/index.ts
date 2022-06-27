@@ -24,6 +24,19 @@ export const SEO_IMAGE = '/icons/icon-192x192.png'
 export const ACCEPTED_IMAGE_FORMAT = ".jpg, .jpeg, .png"
 
 export type InputType = 'category' | 'price' | 'title' | 'body'
+
 export interface ErrorProps {
     name: InputType
 }
+
+export const modalStyles = {
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        maxWidth: 300
+    },
+};

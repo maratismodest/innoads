@@ -11,7 +11,9 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {isDesktop, isMobile, isTablet} from "react-device-detect";
-import {NO_IMAGE, routes} from "../../constants";
+import ReactModal from "react-modal";
+import {useModal} from "react-modal-hook";
+import {modalStyles, NO_IMAGE, routes} from "../../constants";
 import classes from "./Item.module.scss";
 
 interface ItemInterface {
@@ -25,12 +27,83 @@ export const Price = ({price}: { price: number }): JSX.Element => price !== 0 ? 
     <span>Цена не указана</span>
 
 
+enum ModalText {
+    edit = 'Редактировать объявление?',
+    republish = 'Опубликовать повторно объявление в канале и поднять его на сайте?',
+    delete = "Удалить объявление?"
+}
+
 export const Item = ({post, edit}: ItemInterface) => {
     const {id, slug, title, preview, price} = post
-    const {t, i18n} = useTranslation()
+    const {t, i18n} = useTranslation('profile')
     const [header, setHeader] = useState<string>(title)
     const router = useRouter()
     const {token} = useAuth()
+
+    const [modalText, setModalText] = useState<ModalText | undefined>()
+
+    const [showModal, hideModal] = useModal(() => (
+        <ReactModal isOpen style={modalStyles}>
+            <p>{modalText}</p>
+            <hr/>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <Button onClick={handleFunction}>Да</Button>
+                <Button onClick={hideModal}>Нет</Button>
+            </div>
+        </ReactModal>
+    ), [modalText]);
+
+    const handleFunction = useCallback(async () => {
+        switch (modalText) {
+            case ModalText.edit: {
+                try {
+                    await router.push(routes.edit + '/' + post.slug)
+                } catch (e) {
+                    alert('Что-то пошло не так!' + 'edit')
+                    console.log(e)
+                }
+                break;
+            }
+            case ModalText.delete: {
+                try {
+                    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`, {
+                        headers: {
+                            authorization: `Bearer ${token}`
+                        }
+                    })
+                    alert('Объявление удалено! Перезагрузите страницу, чтобы вы увидели изменения')
+                    hideModal()
+                } catch (e) {
+                    alert('Что-то пошло не так!' + 'delete')
+                    console.log(e)
+                }
+                break;
+            }
+            case ModalText.republish: {
+                try {
+                    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post}, requestConfig)
+                    await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`, {
+                        ...post,
+                        createdAt: new Date(),
+                        updatedAt: new Date()
+                    }, {
+                        headers: {
+                            authorization: `Bearer ${token}`
+                        }
+                    })
+                    alert('Объявление поднято в поиске!')
+                    hideModal()
+                } catch (e) {
+                    alert('Что-то пошло не так!')
+                    console.log(e)
+                }
+                break;
+            }
+            default:
+                alert("Нет таких значений");
+        }
+    }, [modalText, id, post, router, token, hideModal])
+
 
     const sizes = useMemo(() => {
         if (isMobile) {
@@ -44,49 +117,20 @@ export const Item = ({post, edit}: ItemInterface) => {
         }
     }, [])
 
-    const updatePost = useCallback(async () => {
-        const answer = confirm('Опубликовать повторно объявление в канале и поднять его на сайте?')
-        if (answer) {
-            try {
-                await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post}, requestConfig)
-                await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`, {
-                    ...post,
-                    createdAt: new Date(),
-                    updatedAt: new Date()
-                }, {
-                    headers: {
-                        authorization: `Bearer ${token}`
-                    }
-                })
-                alert('Объявление поднято в поиске!')
-                return
-            } catch (e) {
-                alert('Что-то пошло не так!')
-                console.log(e)
-            }
-        }
-        return
+    const handleUpdate = useCallback(() => {
+        setModalText(ModalText.republish)
+        showModal()
+    }, [showModal])
 
-    }, [post, token])
+    const handleEdit = useCallback(() => {
+        setModalText(ModalText.edit)
+        showModal()
+    }, [showModal])
 
-    const editPost = useCallback(async () => {
-        const answer = confirm('Редактировать объявление?')
-        if (answer) {
-            await router.push(routes.edit + '/' + post.slug)
-        }
-    }, [post, router])
-
-    const deletePost = useCallback(async (id: number) => {
-        const answer = confirm('Удалить объявление?')
-        if (answer) {
-            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`, {
-                headers: {
-                    authorization: `Bearer ${token}`
-                }
-            })
-            alert('Объявление удалено! Перезагрузите страницу')
-        }
-    }, [token])
+    const handleDelete = useCallback(() => {
+        setModalText(ModalText.delete)
+        showModal()
+    }, [showModal])
 
     const translateTitle = useCallback(async (): Promise<void> => {
         const translate = await googleTranslateText(title);
@@ -108,10 +152,11 @@ export const Item = ({post, edit}: ItemInterface) => {
         })}>
             {edit && (
                 <>
-                    <Button title='Удалить' className={classes.delete} onClick={() => deletePost(id)}>&#10008;</Button>
-                    <Button title='Редактировать' className={classes.edit} onClick={editPost}>&#10000;</Button>
-                    <Button title='Опубликовать повторно' className={classes.promote}
-                            onClick={updatePost}>&#8679;</Button>
+                    <Button title={t('delete')} className={classes.delete}
+                            onClick={handleDelete}>&#10008;</Button>
+                    <Button title={t('edit')} className={classes.edit} onClick={handleEdit}>&#10000;</Button>
+                    <Button title={t('publishAgain')} className={classes.promote}
+                            onClick={handleUpdate}>&#8679;</Button>
                 </>
 
             )}
