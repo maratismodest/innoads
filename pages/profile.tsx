@@ -13,13 +13,26 @@ import {useTranslation} from "next-i18next";
 import Link from "next/link";
 import {GetStaticProps} from "next/types";
 import React, {useEffect, useState} from "react";
+import ReactModal from "react-modal";
+import {useModal} from "react-modal-hook";
 // @ts-ignore
 import TelegramLoginButton from "react-telegram-login";
 import classes from 'styles/classes.module.scss'
 import profile from 'styles/Profile.module.scss'
-import {routes, titles} from "../constants";
+import {modalStyles, routes, titles} from "../constants";
+
+const error = 'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
 
 export default function Profile() {
+
+    const [showModal, hideModal] = useModal(() => (
+        <ReactModal isOpen style={modalStyles}>
+            <p>{error}</p>
+            <hr/>
+            <Button onClick={hideModal}>OK</Button>
+        </ReactModal>
+    ), []);
+
     const [posts, setPosts] = useState<PostInterface[]>([])
     const {user, login, logout} = useAuth();
     const {t} = useTranslation('profile')
@@ -27,7 +40,7 @@ export default function Profile() {
     const handleTelegramResponse = async (response: any) => {
         const {username} = response
         if (!username) {
-            return alert('Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова')
+            return showModal()
         }
         try {
             const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response, requestConfig)
@@ -63,44 +76,32 @@ export default function Profile() {
         );
     }
 
-    if (!user.username) {
-        return (
-            <MainLayout title={titles.profile}>
-                <div className={classes.center}>
-                    <h2>{t('addAlias')}</h2>
-                    <p>{t('addAliasDescription')}</p>
-                    <a href={routes.profile}>
-                        <Button>{t('refreshPage')}</Button>
-                    </a>
-                </div>
-            </MainLayout>
-        );
-    }
-
     return (
         <MainLayout
             title={titles.profile}
+            description={titles.profile}
             className={profile.main}
         >
-            <h2 className={classes.center}>{t('cabinet')}</h2>
-            <ul className={profile.description}>
-                <li><Button>&#8679;</Button> <span>{t('publishAgain')}</span></li>
-                <li><Button>&#10000;</Button> <span>{t('edit')}</span></li>
-                <li><Button>&#10008;</Button> <span>{t('delete')}</span></li>
-            </ul>
-            <Link href={routes.add}>
-                <a title={t('addAd')} className={cn(classes.center, classes.mt20)}>
-                    <Button>{t('addAd', {ns: 'common'})}
-                    </Button>
-                </a>
-            </Link>
-            <h3 className={cn(classes.center, classes.mt20)}>{t('yourAds')}</h3>
+            <h1 className={cn(classes.title)}>{t('cabinet')}</h1>
             {posts.length > 0 ? (
                 <ul className={cn(classes.mt40, classes.items)}>
                     {posts.map((post: PostInterface) =>
                         <Item post={post} key={post.id} edit={true}/>)}
                 </ul>
-            ) : <p className={cn(classes.mt40, classes.center)}>{t('shouldCreate')}</p>}
+            ) : <div className={profile.addBlock}>
+                <Link href={routes.add} passHref>
+                    <Button title={t('addAd', {ns: 'common'})}
+                            className={cn(classes.centerBtn, classes.mt20)}>&#43;
+                    </Button>
+                </Link>
+                <p>Опубликуйте объявление, и его увидят потенциальные покупатели</p>
+                <Link href={routes.add} passHref>
+                    <Button title={t('addAd', {ns: 'common'})}
+                            className={cn(classes.centerBtn, classes.mt20)}>{t('addAd', {ns: 'common'})}
+                    </Button>
+                </Link>
+            </div>
+            }
             <div className={cn(classes.center, profile.exit)}>
                 <Button onClick={logout}>{t('exit')}</Button>
             </div>

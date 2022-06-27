@@ -32,6 +32,7 @@ import {ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, routes, titles} from "../co
 import {convertLinksToMedia} from "../functions/convertLinksToMedia";
 
 export default function Add() {
+
     const router = useRouter()
     const {t} = useTranslation()
     const [images, setImages] = useState<string[]>([]);
@@ -160,6 +161,7 @@ export default function Add() {
                     onSubmit={handleSubmit(onSubmit)}
                     className={classes.form}
                 >
+                    <h1 className={classes.title}>Новое объявление</h1>
                     <Controller
                         name="category"
                         control={control}

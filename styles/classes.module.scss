@@ -1,17 +1,10 @@
 @import "variables";
 
 .title {
-  font-weight: bold;
-  font-size: 28px;
-  line-height: 32px;
-  @media (max-width: 1024px) {
-    font-size: 24px;
-    line-height: 28px;
-  }
-  @media (max-width: 768px) {
-    font-size: 20px;
-    line-height: 24px;
-  }
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  color: $black;
 }
 
 .items {
@@ -96,6 +89,7 @@
   border-radius: 4px;
   margin-bottom: 8px;
   padding: 16px;
+  border: 1px solid hsl(0, 0%, 80%);
 }
 
 .leftArrow {
@@ -136,4 +130,8 @@
 
 .mt40 {
   margin-top: 40px;
+}
+
+.centerBtn {
+  margin: 0 auto;
 }

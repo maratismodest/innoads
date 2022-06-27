@@ -16,8 +16,18 @@
 
 .main {
   min-height: calc(100vh - 66px);
+  text-align: center;
 }
 
 .exit {
   margin-top: inherit;
+}
+
+.addBlock {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 432px;
+  gap: 16px;
 }

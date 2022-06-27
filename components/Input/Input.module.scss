@@ -1,8 +1,11 @@
+@import "variables";
 .input {
   border-radius: 4px;
   height: 48px;
   margin-bottom: 8px;
   padding: 0 16px;
+  border: 1px solid hsl(0, 0%, 80%);
+  
 
   &:focus {
     outline: none;
