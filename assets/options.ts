@@ -1,3 +1,5 @@
+type Label = 'sell' | 'buy' | 'services' | 'estate' | 'clothes' | 'free'
+
 export interface OptionProps {
     value: number;
     label: string;

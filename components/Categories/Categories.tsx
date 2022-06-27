@@ -1,14 +1,14 @@
+import {categories} from "assets/options";
+import {useTranslation} from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
 import {CarouselProvider, Slide, Slider} from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import {useEffect, useState} from "react";
 import {isMobile} from "react-device-detect";
-import {categories} from "assets/options";
 import styles from './Categories.module.scss'
-import { useTranslation } from "next-i18next";
 
-const Categories = () => {
+const Categories = (): JSX.Element | null => {
     const [mounted, setMounted] = useState(false);
     const {t} = useTranslation()
     useEffect(() => setMounted(true), []);
@@ -50,7 +50,6 @@ const Categories = () => {
             </CarouselProvider>
         </div>
     )
-        ;
 };
 
 export default Categories;

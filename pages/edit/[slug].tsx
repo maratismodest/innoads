@@ -5,7 +5,7 @@ import Button from "components/Button/Button";
 import GoToProfile from "components/GoToProfile/GoToProfile";
 import Icon from "components/Icon/Icon";
 import Input from "components/Input/Input";
-import {MainLayout} from "components/MainLayout/MainLayout";
+import MainLayout from "components/MainLayout/MainLayout";
 import SelectInno from "components/Select/Select";
 import {useAuth} from "context/AuthContext";
 import {getDictionary} from "functions/getDictionary";

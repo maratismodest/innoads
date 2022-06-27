@@ -10,14 +10,24 @@ interface ButtonProps {
     onClick?: () => void,
     type?: 'submit' | 'reset' | 'button';
     id?: string,
-    transparent? : boolean
+    transparent?: boolean
 }
 
-export const Button = ({id, children, disabled, className, title, type, onClick, transparent,...props}: ButtonProps) => {
+const Button = ({
+                    children,
+                    id,
+                    disabled,
+                    className,
+                    title,
+                    type,
+                    onClick,
+                    transparent,
+                    ...props
+                }: ButtonProps): JSX.Element => {
     return (
         <button
             id={id}
-            className={cn(classes.button, className, {[classes.transparent]: transparent})}
+            className={cn(classes.button, className, {[classes.buttonTransparent]: transparent})}
             disabled={disabled}
             title={title}
             type={type}
@@ -28,4 +38,5 @@ export const Button = ({id, children, disabled, className, title, type, onClick,
         </button>
     )
 }
+
 export default Button

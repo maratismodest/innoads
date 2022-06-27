@@ -42,7 +42,7 @@ enum ModalText {
     delete = "Удалить объявление?"
 }
 
-export const Item = ({post, edit = false}: ItemInterface) => {
+const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
     const {id, slug, title, preview, price} = post
     const {t, i18n} = useTranslation('profile')
     const [header, setHeader] = useState<string>(title)

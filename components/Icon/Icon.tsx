@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, {MouseEventHandler, ReactNode} from "react";
+import React, {ReactNode} from "react";
 import classes from "./Icon.module.scss";
 
 
@@ -9,7 +9,7 @@ interface IconProps {
     onClick?: any,
 }
 
-const Icon = ({children, className, onClick, ...props}: IconProps) => {
+const Icon = ({children, className, onClick, ...props}: IconProps): JSX.Element => {
     return (
         <button className={cn(classes.button, className)} onClick={onClick} {...props}>
             {children}

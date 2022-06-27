@@ -23,7 +23,7 @@ const scrollToTop = () => {
     });
 };
 
-export const MainLayout: React.FC<Props> = ({
+const MainLayout: React.FC<Props> = ({
                                                 children,
                                                 title = "Доска объявлений города Иннополис",
                                                 description = "Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи.",
@@ -62,3 +62,5 @@ export const MainLayout: React.FC<Props> = ({
         </>
     );
 };
+
+export default MainLayout

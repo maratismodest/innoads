@@ -1,4 +1,4 @@
-import {MainLayout} from 'components/MainLayout/MainLayout';
+import MainLayout from 'components/MainLayout/MainLayout';
 import MDX from 'components/MDX/blog.mdx'
 import {getDictionary} from 'functions/getDictionary';
 import {GetStaticProps} from 'next/types';

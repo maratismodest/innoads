@@ -18,21 +18,21 @@ interface InputProp {
     style?: any
 }
 
-export const Input = ({
-                          id,
-                          children,
-                          name,
-                          required,
-                          onChange,
-                          register,
-                          hidden = false,
-                          type = "text",
-                          placeholder,
-                          multiple = false,
-                          accept,
-                          defaultValue,
-                          ...props
-                      }: InputProp) => {
+const Input = ({
+                   id,
+                   children,
+                   name,
+                   required,
+                   onChange,
+                   register,
+                   hidden = false,
+                   type = "text",
+                   placeholder,
+                   multiple = false,
+                   accept,
+                   defaultValue,
+                   ...props
+               }: InputProp): JSX.Element => {
     if (register) {
         return (
             <input

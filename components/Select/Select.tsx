@@ -20,7 +20,7 @@ const SelectInno = ({
                         onChange,
                         placeholder = 'Выберите категорию',
                         ...props
-                    }: SelectInnoProps) => {
+                    }: SelectInnoProps): JSX.Element => {
 
     return <Select options={options}
                    name={name}

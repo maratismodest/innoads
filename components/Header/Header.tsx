@@ -11,7 +11,7 @@ import Switch from "react-switch";
 import {routes} from "./../../constants";
 import classes from './Header.module.scss'
 
-const Header = () => {
+const Header = (): JSX.Element | null => {
     const {t, i18n} = useTranslation()
     const {user} = useAuth();
     const [mounted, setMounted] = useState(false);

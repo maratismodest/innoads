@@ -2,7 +2,7 @@ import axios from "axios";
 import cn from 'classnames'
 import Button from "components/Button/Button";
 import Item from "components/Item/Item";
-import {MainLayout} from "components/MainLayout/MainLayout";
+import MainLayout from "components/MainLayout/MainLayout";
 import {useAuth, UserProps} from "context/AuthContext";
 import {getDictionary} from "functions/getDictionary";
 import {getUserPosts} from "functions/getUserPosts";

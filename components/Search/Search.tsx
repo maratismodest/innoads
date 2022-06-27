@@ -13,7 +13,7 @@ interface SearchProps {
     defaultValue?: any
 }
 
-export const Search = ({
+const Search = ({
                            children,
                            placeholder,
                            type = 'text',
@@ -23,7 +23,7 @@ export const Search = ({
                            register,
                            defaultValue,
                            ...props
-                       }: SearchProps) => {
+                       }: SearchProps) : JSX.Element => {
     if (register) {
         return (
             <input type={type} defaultValue={defaultValue} placeholder={placeholder}

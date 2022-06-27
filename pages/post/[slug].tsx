@@ -3,7 +3,7 @@ import axios from "axios";
 import cn from 'classnames'
 import Button from "components/Button/Button";
 import {Price} from "components/Item/Item";
-import {MainLayout} from "components/MainLayout/MainLayout";
+import MainLayout from "components/MainLayout/MainLayout";
 import {getDictionary} from "functions/getDictionary";
 import {googleTranslateText} from "functions/translateText";
 import {PostInterface} from "interfaces";

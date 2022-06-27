@@ -7,7 +7,7 @@ interface DropdownProps {
     children: ReactNode
 }
 
-const Dropdown = ({closeToggle, children}: DropdownProps) => {
+const Dropdown = ({closeToggle, children}: DropdownProps): JSX.Element => {
     const ref = useDetectClickOutside({onTriggered: closeToggle});
     return (
         <div className={dropdown.dropdown} ref={ref}>

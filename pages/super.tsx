@@ -1,5 +1,5 @@
 import Button from "components/Button/Button";
-import {MainLayout} from "components/MainLayout/MainLayout";
+import MainLayout from "components/MainLayout/MainLayout";
 import {getDictionary} from "functions/getDictionary";
 import {useTranslation} from "next-i18next";
 import {GetStaticProps} from "next/types";
