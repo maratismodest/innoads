@@ -12,7 +12,9 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {isDesktop, isMobile, isTablet} from "react-device-detect";
 import ReactModal from "react-modal";
 import {useModal} from "react-modal-hook";
+import {options} from "../../assets/options";
 import {modalStyles, NO_IMAGE, routes} from "../../constants";
+import {convertLinksToMedia} from "../../functions/convertLinksToMedia";
 import classes from "./Item.module.scss";
 
 interface ItemInterface {
@@ -42,7 +44,7 @@ enum ModalText {
 }
 
 const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
-    const {id, slug, title, preview, price} = post
+    const {id, slug, title, body, preview, price, categoryId, images, telegram} = post
     const {t, i18n} = useTranslation('profile')
     const [header, setHeader] = useState<string>(title)
     const router = useRouter()
@@ -89,7 +91,16 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
             }
             case ModalText.republish: {
                 try {
-                    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post})
+                    // await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post})
+                    const chat_id = "@innoads";
+                    const category = options.find((item) => item.value == categoryId) || options[0]
+
+                    const text = `Категория: #${t(category.label)}\nЦена: ${price} \n\n${title} \n\n${body} \n\nПодробнее: https://innoads.ru/post/${slug} \n\nавтор: @${telegram}`;
+
+                    const sendPhoto = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_BOT_TOKEN}/sendMediaGroup?chat_id=${chat_id}`;
+                    const media = convertLinksToMedia(images.split('||'), text);
+                    await axios.post(sendPhoto, {media});
+
                     await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`, {
                         ...post,
                         createdAt: new Date(),
