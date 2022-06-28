@@ -72,7 +72,7 @@ export default function Post({post: serverPost}: PostProps) {
     const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [slug])
     const shareData = {
         title: 'InnoAds',
-        text: 'Поделиться ссылкой',
+        text: 'Поделиться ссылкой:',
         url: process.env.NEXT_PUBLIC_NODE_ENV + '/post/' + slug
     }
 
@@ -121,6 +121,7 @@ export default function Post({post: serverPost}: PostProps) {
                 <p itemProp="price" className={item.price}><Price price={price}/></p>
                 <hr/>
                 <pre className={classes.paragraph} itemProp='description'>{subtitle}</pre>
+                {/*<p itemProp='description' className={item.postBody}>{subtitle}</p>*/}
                 <p className={classes.mt20}>{t('published', {ns: 'post'})}: {moment(createdAt).format("DD.MM.YYYY")}</p>
                 <div className={classes.mt40}>
                     <Link href={tgLink + '/' + telegram}>
