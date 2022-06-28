@@ -92,14 +92,11 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
             case ModalText.republish: {
                 try {
                     // await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post})
-                    const chat_id = "@innoads";
-                    const category = options.find((item) => item.value == categoryId) || options[0]
-
-                    const text = `Категория: #${t(category.label)}\nЦена: ${price} \n\n${title} \n\n${body} \n\nПодробнее: https://innoads.ru/post/${slug} \n\nавтор: @${telegram}`;
-
-                    const sendPhoto = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_BOT_TOKEN}/sendMediaGroup?chat_id=${chat_id}`;
-                    const media = convertLinksToMedia(images.split('||'), text);
-                    await axios.post(sendPhoto, {media});
+                    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, post, {
+                        headers: {
+                            authorization: `Bearer ${token}`
+                        }
+                    })
 
                     await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`, {
                         ...post,
