@@ -76,6 +76,10 @@ export default function Post({post: serverPost}: PostProps) {
         url: process.env.NEXT_PUBLIC_NODE_ENV + '/post/' + slug
     }
 
+    function createMarkup(text: string) {
+        return {__html: text};
+    }
+
     return (
         <MainLayout
             title={seoTitle}
@@ -120,7 +124,7 @@ export default function Post({post: serverPost}: PostProps) {
                 <h1 itemProp='name'>{header}</h1>
                 <p itemProp="price" className={item.price}><Price price={price}/></p>
                 <hr/>
-                <p itemProp='description'>{subtitle}</p>
+                <pre className={classes.paragraph} itemProp='description' dangerouslySetInnerHTML={createMarkup(subtitle)} />
                 <p className={classes.mt20}>{t('published', {ns: 'post'})}: {moment(createdAt).format("DD.MM.YYYY")}</p>
                 <div className={classes.mt40}>
                     <Link href={tgLink + '/' + telegram}>

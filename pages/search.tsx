@@ -51,7 +51,7 @@ const SearchPage: NextPage = () => {
 
     useEffect(() => {
         loadFunc(0)
-    }, [debouncedValue, category, loadFunc])
+    }, [debouncedValue, category])
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInput(event.target.value)

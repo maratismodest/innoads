@@ -83,14 +83,20 @@ export default function Add() {
                 }
             })
 
-            const chat_id = "@innoads";
-            const category = options.find((item) => item.value == categoryValue) || options[0]
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            })
 
-            const text = `Категория: #${t(category.label)}\nЦена: ${price} \n\n${title} \n\n${body} \n\nПодробнее: https://innoads.ru/post/${slugTitle} \n\nавтор: @${user.username}`;
-
-            const sendPhoto = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_BOT_TOKEN}/sendMediaGroup?chat_id=${chat_id}`;
-            const media = convertLinksToMedia(images, text);
-            await axios.post(sendPhoto, {media});
+            // const chat_id = "@innoads";
+            // const category = options.find((item) => item.value == categoryValue) || options[0]
+            //
+            // const text = `Категория: #${t(category.label)}\nЦена: ${price} \n\n${title} \n\n${body} \n\nПодробнее: https://innoads.ru/post/${slugTitle} \n\nавтор: @${user.username}`;
+            //
+            // const sendPhoto = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_BOT_TOKEN}/sendMediaGroup?chat_id=${chat_id}`;
+            // const media = convertLinksToMedia(images, text);
+            // await axios.post(sendPhoto, {media});
 
             alert("Ваше объявление создано!")
 
