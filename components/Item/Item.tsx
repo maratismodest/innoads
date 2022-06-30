@@ -4,6 +4,7 @@ import Button from "components/Button/Button";
 import {useAuth} from "context/AuthContext";
 import {googleTranslateText} from "functions/translateText";
 import {PostInterface} from "interfaces";
+import moment from "moment";
 import {useTranslation} from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,9 +13,7 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {isDesktop, isMobile, isTablet} from "react-device-detect";
 import ReactModal from "react-modal";
 import {useModal} from "react-modal-hook";
-import {options} from "../../assets/options";
 import {modalStyles, NO_IMAGE, routes} from "../../constants";
-import {convertLinksToMedia} from "../../functions/convertLinksToMedia";
 import classes from "./Item.module.scss";
 
 interface ItemInterface {
@@ -90,29 +89,40 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
                 break;
             }
             case ModalText.republish: {
-                try {
-                    // await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post})
-                    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, post, {
-                        headers: {
-                            authorization: `Bearer ${token}`
-                        }
-                    })
+                const now = new Date().getTime()
+                const created = new Date(post.createdAt).getTime()
+                const sevenDays = 1000 * 60 * 60 * 24 * 7
 
-                    await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`, {
-                        ...post,
-                        createdAt: new Date(),
-                        updatedAt: new Date()
-                    }, {
-                        headers: {
-                            authorization: `Bearer ${token}`
-                        }
-                    })
-                    alert(success.updated)
+                if ((now - created) < sevenDays) {
+                    await alert(`Объявление можно публиковать повторно не чаще раз в неделю! Можно подать повторно ${moment(created + sevenDays).format("DD.MM.YYYY")}`);
                     hideModal()
-                } catch (e) {
-                    alert(errors.wentWrong)
-                    console.log(e)
+                } else {
+                    try {
+                        // await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post})
+                        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, post, {
+                            headers: {
+                                authorization: `Bearer ${token}`
+                            }
+                        })
+
+                        await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`, {
+                            ...post,
+                            createdAt: new Date(),
+                            updatedAt: new Date()
+                        }, {
+                            headers: {
+                                authorization: `Bearer ${token}`
+                            }
+                        })
+                        alert(success.updated)
+                        hideModal()
+                    } catch (e) {
+                        hideModal()
+                        alert(errors.wentWrong)
+                        console.log(e)
+                    }
                 }
+
                 break;
             }
             default:
