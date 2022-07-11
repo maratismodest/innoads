@@ -6,9 +6,7 @@ import Search from 'components/Search/Search';
 import Spinner from 'components/Spinner/Spinner';
 import {getDictionary} from 'functions/getDictionary';
 import {getUrl} from 'functions/getUrl';
-import ApiClient from 'hooks/interceptor'
 import {PostInterface} from 'interfaces';
-import {orderBy} from 'lodash';
 import type {GetServerSideProps, NextPage} from 'next'
 import {useTranslation} from 'next-i18next';
 import dynamic from 'next/dynamic';
@@ -48,7 +46,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
     const loadFunc = useCallback(async () => {
         try {
             const response = await axios.get(getUrl(0, page + 1, 10))
-            const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+            const posts = response.data.content;
             setPage((prevState: number) => prevState + 1)
             setInfinite((prevState: PostInterface[]) => [...prevState, ...posts])
             setHasMore((page + 1) < response.data.totalPages)
@@ -113,7 +111,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
 
 export const getServerSideProps: GetServerSideProps = async ({locale}) => {
     const response = await axios.get(getUrl(0, 0, 10))
-    const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+    const posts = response.data.content
 
     if (!posts) {
         return {

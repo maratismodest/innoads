@@ -4,10 +4,10 @@ import cn from 'classnames'
 import Button from "components/Button/Button";
 import {Price} from "components/Item/Item";
 import MainLayout from "components/MainLayout/MainLayout";
+import dayjs from 'dayjs'
 import {getDictionary} from "functions/getDictionary";
 import {googleTranslateText} from "functions/translateText";
 import {PostInterface} from "interfaces";
-import moment from "moment";
 import type {GetServerSideProps} from "next";
 import {useTranslation} from 'next-i18next';
 import Link from "next/link";
@@ -122,7 +122,7 @@ export default function Post({post: serverPost}: PostProps) {
                 <hr/>
                 <pre className={classes.paragraph} itemProp='description'>{subtitle}</pre>
                 {/*<p itemProp='description' className={item.postBody}>{subtitle}</p>*/}
-                <p className={classes.mt20}>{t('published', {ns: 'post'})}: {moment(createdAt).format("DD.MM.YYYY")}</p>
+                <p className={classes.mt20}>{t('published', {ns: 'post'})}: {dayjs(createdAt).format("DD.MM.YYYY")}</p>
                 <div className={classes.mt40}>
                     <Link href={tgLink + '/' + telegram}>
                         <a itemProp="seller">

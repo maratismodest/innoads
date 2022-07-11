@@ -2,7 +2,7 @@ import {getDynamicPaths} from "functions/getDynamicPaths";
 import {PostInterface} from "interfaces";
 
 const {Feed} = require('feed')
-const moment = require('moment')
+const dayjs = require('dayjs')
 
 const baseUrl = 'https://innoads.ru';
 const author = {
@@ -48,7 +48,7 @@ const RSS = async (req: any, res: any) => {
             description: body,
             content: body,
             author: [author],
-            date: moment(createdAt).toDate(),
+            date: dayjs(createdAt).toDate(),
             image: preview.split('&')[0]
         });
     });

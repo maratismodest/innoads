@@ -2,9 +2,9 @@ import axios from "axios";
 import cn from 'classnames'
 import Button from "components/Button/Button";
 import {useAuth} from "context/AuthContext";
+import dayjs from 'dayjs'
 import {googleTranslateText} from "functions/translateText";
 import {PostInterface} from "interfaces";
-import moment from "moment";
 import {useTranslation} from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
@@ -94,7 +94,7 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
                 const sevenDays = 1000 * 60 * 60 * 24 * 7
 
                 if ((now - created) < sevenDays) {
-                    await alert(`Объявление можно публиковать повторно не чаще раз в неделю! Можно подать повторно ${moment(created + sevenDays).format("DD.MM.YYYY")}`);
+                    await alert(`Объявление можно публиковать повторно не чаще раз в неделю! Можно подать повторно ${dayjs(created + sevenDays).format("DD.MM.YYYY")}`);
                     hideModal()
                 } else {
                     try {

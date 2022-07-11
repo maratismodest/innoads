@@ -1,10 +1,10 @@
-const moment = require('moment')
+const dayjs = require('dayjs')
 import {getDynamicPaths} from "functions/getDynamicPaths";
 import {PostInterface} from "interfaces";
 
 const TR = require('turbo-rss');
 
-const RSSTurbo =  async (req: any, res: any) => {
+const RSSTurbo = async (req: any, res: any) => {
     const posts: PostInterface[] = await getDynamicPaths(1000)
 
     const feed = new TR({
@@ -42,7 +42,7 @@ const RSSTurbo =  async (req: any, res: any) => {
                 image_url: post.preview,
                 url: 'https://innoads.ru/post/' + post.slug,
                 author: 'https://t.me/' + post.telegram,
-                date: moment(post.createdAt).toDate(),
+                date: dayjs(post.createdAt).toDate(),
                 content: post.body,
             }
         )
