@@ -65,7 +65,7 @@ export default function Post({post: serverPost}: PostProps) {
     }, [i18n, body, title]);
 
     const category = useMemo(() => options.find(option => option.value === categoryId) || options[0], [categoryId])
-    const seoTitle = useMemo(() => `${t(category.label)} ${title.slice(0, 50)} ${price.toString()} в городе Иннополис`, [category.label, price, title, t])
+    const seoTitle = useMemo(() => `${t(category.label)} ${title.slice(0, 50)} в городе Иннополис`, [category.label, title, t])
     const seoDescription = useMemo(() => body.slice(0, 320), [body])
     const seoImage = useMemo(() => preview, [preview])
     const seoKeywords = useMemo(() => `innoads, Иннополис, доска объявлений, ${category.label}`, [category.label])
