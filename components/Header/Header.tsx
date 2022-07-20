@@ -63,6 +63,13 @@ const Header = (): JSX.Element | null => {
                                         </Link>
                                     </li>
                                     <li>
+                                        <Link href={routes.favourites}>
+                                            <a title="Избранное">
+                                                Избранное
+                                            </a>
+                                        </Link>
+                                    </li>
+                                    <li>
                                         <Switch
                                             checkedIcon={<div className={classes.switchIcon}>En</div>}
                                             uncheckedIcon={<div className={classes.switchIcon}>Ru</div>}
@@ -109,6 +116,11 @@ const Header = (): JSX.Element | null => {
                             }}
                             checked={i18n.language === 'en'}/>
                     </div>
+                    <Link href={routes.favourites}>
+                        <a title="Избранное">
+                            Избранное
+                        </a>
+                    </Link>
                     <Link href={routes.profile}>
                         <a className={classes.headerUser} title={t('profile')}>
                             {user && t('profile')}

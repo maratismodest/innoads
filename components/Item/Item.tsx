@@ -9,7 +9,7 @@ import {useTranslation} from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import React, {useCallback, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState, } from "react";
 import {isDesktop, isMobile, isTablet} from "react-device-detect";
 import ReactModal from "react-modal";
 import {useModal} from "react-modal-hook";
@@ -43,6 +43,7 @@ enum ModalText {
 }
 
 const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
+    const [favourite, setFavourite] = useState(false)
     const {id, slug, title, body, preview, price, categoryId, images, telegram} = post
     const {t, i18n} = useTranslation('profile')
     const [header, setHeader] = useState<string>(title)
@@ -162,6 +163,39 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
 
     }, [i18n, translateTitle]);
 
+    const handleFavourite = useCallback((e: React.SyntheticEvent) => {
+        e.preventDefault()
+        const favourites = localStorage.getItem('favourites')
+        if (favourites) {
+            const list = JSON.parse(favourites)
+            const isFavourite = list.find((x : PostInterface) => x.slug === slug)
+            if (isFavourite) {
+                setFavourite(false)
+                const res = list.filter((x: PostInterface)=> x.slug !== slug)
+                localStorage.setItem('favourites', JSON.stringify(res))
+            }
+            else {
+                setFavourite(true)
+                const res = [...list, post]
+                localStorage.setItem('favourites', JSON.stringify(res))
+            }
+        }
+    },[slug, post])
+
+    useEffect(() => {
+        const favourites = localStorage.getItem('favourites')
+        if (favourites) {
+            const slugs = JSON.parse(favourites)
+            const isFavourite = slugs.find((x : PostInterface) => x.slug === slug)
+            if (isFavourite) {
+                setFavourite(true)
+            }
+        }
+        else {
+            localStorage.setItem('favourites', JSON.stringify([]))
+        }
+    }, [slug])
+
     return (
         <li key={slug} className={classes.item}>
             {edit && (
@@ -203,9 +237,17 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
                             title={title}
                         />
                     </div>
-                    <p>
+                    <div className={classes.price}>
                         <Price price={price}/>
-                    </p>
+                        <div  className={classes.favourite}>
+                            <Image src={favourite ? '/svg/heart-red.svg' : '/svg/heart.svg'}
+
+                                   layout={'fill'}
+
+                                   onClick={handleFavourite}/>
+                        </div>
+
+                    </div>
                     <h2>{header}</h2>
                 </a>
             </Link>

@@ -12,7 +12,8 @@
   margin-bottom: 8px;
   position: relative;
 
-  p {
+  .price {
+    position: relative;
     font-weight: bold;
     font-size: 18px;
     line-height: 28px;
@@ -36,7 +37,7 @@
   }
 
   @media (max-width: 1024px) {
-    p {
+    .price {
       font-size: 18px;
       line-height: 22px;
       margin: 4px 12px;
@@ -92,3 +93,12 @@
   }
 }
 
+.favourite {
+  position: absolute;
+  z-index: 5;
+  top: 0px;
+  right: 0px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}

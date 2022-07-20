@@ -4,7 +4,8 @@ export const routes = {
     main: '/',
     search: '/search',
     edit: '/edit',
-    post: '/post'
+    post: '/post',
+    favourites: '/favourites'
 }
 
 export const titles = {
