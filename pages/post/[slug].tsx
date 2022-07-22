@@ -2,7 +2,7 @@ import {options} from "assets/options";
 import axios from "axios";
 import cn from 'classnames'
 import Button from "components/Button/Button";
-import {Price} from "components/Item/Item";
+import Item, {Price} from "components/Item/Item";
 import MainLayout from "components/MainLayout/MainLayout";
 import dayjs from 'dayjs'
 import {getDictionary} from "functions/getDictionary";
@@ -20,9 +20,11 @@ import {routes, tgLink} from "../../constants";
 
 interface PostProps {
     post: PostInterface
+    related: PostInterface[]
 }
 
-export default function Post({post: serverPost}: PostProps) {
+export default function Post({post: serverPost, related}: PostProps) {
+    console.log('related', related)
     const {t, i18n} = useTranslation()
     const [post] = useState<PostInterface>(serverPost);
     const [images] = useState<string[]>(() => post.images.split("||"));
@@ -146,6 +148,17 @@ export default function Post({post: serverPost}: PostProps) {
 
                 <Button className={cn(classes.mt40, item.share)}
                         onClick={async () => await (navigator.share(shareData))}>{t('share', {ns: 'post'})}<span>&#8631;</span></Button>
+                <div className={classes.mt40}>
+                    <h2>Похожие объявления</h2>
+                    <ul className={classes.related}>
+                        {related.map((post: PostInterface) => {
+                            return (
+                                <Item post={post} key={post.slug}/>
+                            );
+                        })}
+                    </ul>
+
+                </div>
 
             </div>
         </MainLayout>
@@ -161,7 +174,10 @@ export const getServerSideProps: GetServerSideProps = async ({locale, query}) =>
         };
     }
     const snapshot = response.data;
+
+    const related = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?category=${snapshot.categoryId}&size=4`)
+
     return {
-        props: {post: snapshot, ...(await getDictionary(locale, ['post']))},
+        props: {post: snapshot, related: related.data.content, ...(await getDictionary(locale, ['post']))},
     };
 }
