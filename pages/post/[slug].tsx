@@ -9,9 +9,9 @@ import {getDictionary} from "functions/getDictionary";
 import {getUrl} from "functions/getUrl";
 import {googleTranslateText} from "functions/translateText";
 import {PostInterface} from "interfaces";
-import type {GetServerSideProps} from "next";
 import {useTranslation} from 'next-i18next';
 import Link from "next/link";
+import {GetServerSideProps} from "next/types";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import React, {useEffect, useMemo, useState} from "react";
@@ -149,7 +149,7 @@ export default function Post({post: serverPost, related, isMobile}: PostProps) {
 
                 {isMobile && <Button className={cn(classes.mt40, item.share)}
                                      onClick={async () => await (navigator.share(shareData))}>{t('share', {ns: 'post'})}<span>&#8631;</span></Button>}
-                <div className={classes.mt40}>
+                {related.length > 0 && (<div className={classes.mt40}>
                     <h2>Похожие объявления</h2>
                     <ul className={classes.related}>
                         {related.map((post: PostInterface) => {
@@ -158,8 +158,7 @@ export default function Post({post: serverPost, related, isMobile}: PostProps) {
                             );
                         })}
                     </ul>
-
-                </div>
+                </div>)}
 
             </div>
         </MainLayout>
@@ -167,7 +166,11 @@ export default function Post({post: serverPost, related, isMobile}: PostProps) {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({locale, query, req}) => {
+export const getServerSideProps: GetServerSideProps = async (
+    {
+        locale, query, req
+    }
+) => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`)
 
     const UA = req.headers['user-agent'];
@@ -182,12 +185,12 @@ export const getServerSideProps: GetServerSideProps = async ({locale, query, req
     }
     const snapshot = response.data;
 
-    const related = await axios.get(getUrl(snapshot.categoryId, 0, 4, encodeURIComponent(snapshot.title.split(' ')[0])))
+    const related = await axios.get(getUrl(snapshot.categoryId, 0, 5, encodeURIComponent(snapshot.title.split(' ')[0])))
 
     return {
         props: {
             post: snapshot,
-            related: related.data.content,
+            related: related.data.content.filter((x: PostInterface) => x.id !== snapshot.id),
             isMobile: isMobile,
             ...(await getDictionary(locale, ['post']))
         },
