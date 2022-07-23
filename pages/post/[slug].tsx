@@ -6,6 +6,7 @@ import Item, {Price} from "components/Item/Item";
 import MainLayout from "components/MainLayout/MainLayout";
 import dayjs from 'dayjs'
 import {getDictionary} from "functions/getDictionary";
+import {getUrl} from "functions/getUrl";
 import {googleTranslateText} from "functions/translateText";
 import {PostInterface} from "interfaces";
 import type {GetServerSideProps} from "next";
@@ -21,10 +22,10 @@ import {routes, tgLink} from "../../constants";
 interface PostProps {
     post: PostInterface
     related: PostInterface[]
+    isMobile: boolean
 }
 
-export default function Post({post: serverPost, related}: PostProps) {
-    console.log('related', related)
+export default function Post({post: serverPost, related, isMobile}: PostProps) {
     const {t, i18n} = useTranslation()
     const [post] = useState<PostInterface>(serverPost);
     const [images] = useState<string[]>(() => post.images.split("||"));
@@ -146,8 +147,8 @@ export default function Post({post: serverPost, related}: PostProps) {
                     </Link>
                 </div>
 
-                <Button className={cn(classes.mt40, item.share)}
-                        onClick={async () => await (navigator.share(shareData))}>{t('share', {ns: 'post'})}<span>&#8631;</span></Button>
+                {isMobile && <Button className={cn(classes.mt40, item.share)}
+                                     onClick={async () => await (navigator.share(shareData))}>{t('share', {ns: 'post'})}<span>&#8631;</span></Button>}
                 <div className={classes.mt40}>
                     <h2>Похожие объявления</h2>
                     <ul className={classes.related}>
@@ -166,8 +167,14 @@ export default function Post({post: serverPost, related}: PostProps) {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({locale, query}) => {
+export const getServerSideProps: GetServerSideProps = async ({locale, query, req}) => {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`)
+
+    const UA = req.headers['user-agent'];
+    const isMobile = Boolean(UA?.match(
+        /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+    ))
+
     if (!response) {
         return {
             notFound: true,
@@ -175,9 +182,14 @@ export const getServerSideProps: GetServerSideProps = async ({locale, query}) =>
     }
     const snapshot = response.data;
 
-    const related = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post?category=${snapshot.categoryId}&size=4`)
+    const related = await axios.get(getUrl(snapshot.categoryId, 0, 4, encodeURIComponent(snapshot.title.split(' ')[0])))
 
     return {
-        props: {post: snapshot, related: related.data.content, ...(await getDictionary(locale, ['post']))},
+        props: {
+            post: snapshot,
+            related: related.data.content,
+            isMobile: isMobile,
+            ...(await getDictionary(locale, ['post']))
+        },
     };
 }
