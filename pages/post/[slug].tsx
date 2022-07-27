@@ -7,14 +7,13 @@ import MainLayout from "components/MainLayout/MainLayout";
 import dayjs from 'dayjs'
 import {getDictionary} from "functions/getDictionary";
 import {getUrl} from "functions/getUrl";
-import {googleTranslateText} from "functions/translateText";
 import {PostInterface} from "interfaces";
 import {useTranslation} from 'next-i18next';
 import Link from "next/link";
 import {GetServerSideProps} from "next/types";
 import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import classes from 'styles/classes.module.scss'
 import item from "styles/Post.module.scss";
 import {routes, tgLink} from "../../constants";
@@ -25,11 +24,8 @@ interface PostProps {
     isMobile: boolean
 }
 
-export default function Post({post: serverPost, related, isMobile}: PostProps) {
-    const {t, i18n} = useTranslation()
-    const [post] = useState<PostInterface>(serverPost);
-    const [images] = useState<string[]>(() => post.images.split("||"));
-
+export default function Post({post, related, isMobile}: PostProps) {
+    const {t} = useTranslation()
 
     const {
         title,
@@ -42,31 +38,7 @@ export default function Post({post: serverPost, related, isMobile}: PostProps) {
         slug
     } = post;
 
-    const [header, setHeader] = useState<string>(title)
-    const [subtitle, setSubtitle] = useState<string>(body)
-
-
-    useEffect(() => {
-        const translateTitle = async (): Promise<void> => {
-            const translate = await googleTranslateText(title);
-            if (translate) {
-                setHeader(translate)
-            }
-        };
-
-        const translateSubtitle = async (): Promise<void> => {
-            const translate = await googleTranslateText(body);
-            if (translate) {
-                setSubtitle(translate)
-            }
-        };
-        if (i18n.language === 'en') {
-            translateTitle();
-            translateSubtitle()
-        }
-
-    }, [i18n, body, title]);
-
+    const images = useMemo(() => post.images.split("||"), [post]);
     const category = useMemo(() => options.find(option => option.value === categoryId) || options[0], [categoryId])
     const seoTitle = useMemo(() => `${t(category.label)} ${title.slice(0, 50)} в городе Иннополис`, [category.label, title, t])
     const seoDescription = useMemo(() => body.slice(0, 320), [body])
@@ -104,7 +76,7 @@ export default function Post({post: serverPost, related, isMobile}: PostProps) {
                                             src={image}
                                             alt="image"
                                             className={item.image}
-                                            title={header}
+                                            title={title}
                                             itemProp='image'
                                         />
                                     </Slide>
@@ -119,14 +91,15 @@ export default function Post({post: serverPost, related, isMobile}: PostProps) {
                         </ButtonNext>
                     </CarouselProvider>
                 </div>
-                <Link href={`${routes.main}/search?category=${categoryId}`} passHref>
+                <Link href={`${routes.main}search?category=${categoryId}`} passHref>
                     <a>
                         <p>{t('category', {ns: 'post'})}: <span itemProp="category">{t(category.label)}</span></p>
-                    </a></Link>
-                <h1 itemProp='name'>{header}</h1>
+                    </a>
+                </Link>
+                <h1 itemProp='name'>{title}</h1>
                 <p itemProp="price" className={item.price}><Price price={price}/></p>
                 <hr/>
-                <pre className={classes.paragraph} itemProp='description'>{subtitle}</pre>
+                <pre className={classes.paragraph} itemProp='description'>{body}</pre>
                 {/*<p itemProp='description' className={item.postBody}>{subtitle}</p>*/}
                 <p className={classes.mt20}>{t('published', {ns: 'post'})}: {dayjs(createdAt).format("DD.MM.YYYY")}</p>
                 <div className={classes.mt40}>
@@ -196,3 +169,28 @@ export const getServerSideProps: GetServerSideProps = async (
         },
     };
 }
+
+// const [header, setHeader] = useState<string>(title)
+// const [subtitle, setSubtitle] = useState<string>(body)
+//
+//
+// useEffect(() => {
+//     const translateTitle = async (): Promise<void> => {
+//         const translate = await googleTranslateText(title);
+//         if (translate) {
+//             setHeader(translate)
+//         }
+//     };
+//
+//     const translateSubtitle = async (): Promise<void> => {
+//         const translate = await googleTranslateText(body);
+//         if (translate) {
+//             setSubtitle(translate)
+//         }
+//     };
+//     if (i18n.language === 'en') {
+//         translateTitle();
+//         translateSubtitle()
+//     }
+//
+// }, [i18n, body, title]);

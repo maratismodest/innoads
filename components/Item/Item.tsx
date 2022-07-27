@@ -3,13 +3,12 @@ import cn from 'classnames'
 import Button from "components/Button/Button";
 import {useAuth} from "context/AuthContext";
 import dayjs from 'dayjs'
-import {googleTranslateText} from "functions/translateText";
 import {PostInterface} from "interfaces";
 import {useTranslation} from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import React, {useCallback, useEffect, useMemo, useState, } from "react";
+import React, {useCallback, useEffect, useMemo, useState,} from "react";
 import {isDesktop, isMobile, isTablet} from "react-device-detect";
 import ReactModal from "react-modal";
 import {useModal} from "react-modal-hook";
@@ -149,49 +148,33 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
         }
     }, [])
 
-    const translateTitle = useCallback(async (): Promise<void> => {
-        const translate = await googleTranslateText(title);
-        if (translate) {
-            setHeader(translate)
-        }
-    }, [title])
-
-    useEffect(() => {
-        if (i18n.language === 'en') {
-            translateTitle();
-        }
-
-    }, [i18n, translateTitle]);
-
     const handleFavourite = useCallback((e: React.SyntheticEvent) => {
         e.preventDefault()
         const favourites = localStorage.getItem('favourites')
         if (favourites) {
             const list = JSON.parse(favourites)
-            const isFavourite = list.find((x : PostInterface) => x.slug === slug)
+            const isFavourite = list.find((x: PostInterface) => x.slug === slug)
             if (isFavourite) {
                 setFavourite(false)
-                const res = list.filter((x: PostInterface)=> x.slug !== slug)
+                const res = list.filter((x: PostInterface) => x.slug !== slug)
                 localStorage.setItem('favourites', JSON.stringify(res))
-            }
-            else {
+            } else {
                 setFavourite(true)
                 const res = [...list, post]
                 localStorage.setItem('favourites', JSON.stringify(res))
             }
         }
-    },[slug, post])
+    }, [slug, post])
 
     useEffect(() => {
         const favourites = localStorage.getItem('favourites')
         if (favourites) {
             const slugs = JSON.parse(favourites)
-            const isFavourite = slugs.find((x : PostInterface) => x.slug === slug)
+            const isFavourite = slugs.find((x: PostInterface) => x.slug === slug)
             if (isFavourite) {
                 setFavourite(true)
             }
-        }
-        else {
+        } else {
             localStorage.setItem('favourites', JSON.stringify([]))
         }
     }, [slug])
@@ -239,12 +222,13 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
                     </div>
                     <div className={classes.price}>
                         <Price price={price}/>
-                        <div  className={classes.favourite}>
-                            <Image src={favourite ? '/svg/heart-red.svg' : '/svg/heart.svg'}
-
-                                   layout={'fill'}
-
-                                   onClick={handleFavourite}/>
+                        <div className={classes.favourite}>
+                            <Image
+                                src={favourite ? '/svg/heart-red.svg' : '/svg/heart.svg'}
+                                layout={'fill'}
+                                onClick={handleFavourite}
+                                alt={''}
+                            />
                         </div>
 
                     </div>
@@ -256,3 +240,16 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
 }
 export default Item
 
+// const translateTitle = useCallback(async (): Promise<void> => {
+//     const translate = await googleTranslateText(title);
+//     if (translate) {
+//         setHeader(translate)
+//     }
+// }, [title])
+//
+// useEffect(() => {
+//     if (i18n.language === 'en') {
+//         translateTitle();
+//     }
+//
+// }, [i18n, translateTitle]);
