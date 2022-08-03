@@ -1,5 +1,5 @@
 import {options} from "assets/options";
-import axios, {AxiosError} from "axios";
+import axios, { AxiosError } from "axios";
 import cn from "classnames";
 import Button from "components/Button/Button";
 import GoToProfile from "components/GoToProfile/GoToProfile";
@@ -9,7 +9,7 @@ import MainLayout from "components/MainLayout/MainLayout";
 import SelectInno from "components/Select/Select";
 import Spinner from "components/Spinner/Spinner";
 import {useAuth} from "context/AuthContext";
-import filterBadwords from "functions/filterBadwords";
+import antimat from "functions/antimat";
 import {getDictionary} from "functions/getDictionary";
 import {handleDeleteImage} from "functions/handleDeleteImage";
 import handleImageUpload from "functions/handleImageUpload";
@@ -62,7 +62,7 @@ export default function Add() {
 
         const {title, body, price, category} = data
 
-        if (filterBadwords(title) || filterBadwords(body)) {
+        if (antimat.containsMat(title) || antimat.containsMat(body)) {
             return alert('Есть запрещенные слова!')
         }
         setSending(true)
@@ -80,6 +80,7 @@ export default function Add() {
             tgId: user.id,
             categoryId: categoryValue
         }
+
         try {
             const token = localStorage.getItem('token')
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, {

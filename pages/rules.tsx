@@ -6,7 +6,10 @@ import React from 'react';
 
 const Agreement = () => {
     return (
-        <MainLayout title='Правила'>
+        <MainLayout
+            title='Правила'
+            description='Правила доски объявлений города Иннополис InnoAds'
+        >
             <MDX/>
         </MainLayout>
     );
