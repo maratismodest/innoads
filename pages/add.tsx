@@ -9,6 +9,7 @@ import MainLayout from "components/MainLayout/MainLayout";
 import SelectInno from "components/Select/Select";
 import Spinner from "components/Spinner/Spinner";
 import {useAuth} from "context/AuthContext";
+import filterBadwords from "functions/filterBadwords";
 import {getDictionary} from "functions/getDictionary";
 import {handleDeleteImage} from "functions/handleDeleteImage";
 import handleImageUpload from "functions/handleImageUpload";
@@ -29,7 +30,6 @@ import TelegramLoginButton from "react-telegram-login";
 import slug from "slug";
 import classes from "styles/classes.module.scss";
 import {ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, routes, titles} from "../constants";
-import {convertLinksToMedia} from "../functions/convertLinksToMedia";
 
 export default function Add() {
 
@@ -59,8 +59,13 @@ export default function Add() {
         if (images.length === 0) {
             return setError("Добавить хотя бы одно фото!");
         }
-        setSending(true)
+
         const {title, body, price, category} = data
+
+        if (filterBadwords(title) || filterBadwords(body)) {
+            return alert('Есть запрещенные слова!')
+        }
+        setSending(true)
         const slugTitle = slug(title) + "-" + Math.floor(Math.random() * 100)
         const categoryValue = category.value
 
