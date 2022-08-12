@@ -1,10 +1,11 @@
 const dayjs = require('dayjs')
 import {getDynamicPaths} from "functions/getDynamicPaths";
 import {PostInterface} from "interfaces";
+import {NextApiRequest, NextApiResponse} from "next";
 
 const TR = require('turbo-rss');
 
-const RSSTurbo = async (req: any, res: any) => {
+const RSSTurbo = async (req: NextApiRequest, res: NextApiResponse) => {
     const posts: PostInterface[] = await getDynamicPaths(1000)
 
     const feed = new TR({

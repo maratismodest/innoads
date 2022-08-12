@@ -1,13 +1,14 @@
 import {getDynamicPaths} from "functions/getDynamicPaths";
 import {PostInterface} from "interfaces";
+import {NextApiRequest, NextApiResponse} from "next";
 
 const {SitemapStream, streamToPromise} = require("sitemap");
 const {Readable} = require("stream");
 
 
-const Sitemap = (async (req: any, res: any) => {
+const Sitemap = (async (req: NextApiRequest, res: NextApiResponse) => {
     // An array with your links
-    const posts: PostInterface[] = await getDynamicPaths(1000)
+    const posts: PostInterface[] = await getDynamicPaths(5000)
 
     const links = posts.map((post) => {
         return {url: `/post/${post.slug}`, changefreq: "daily", priority: 0.3}

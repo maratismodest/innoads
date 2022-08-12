@@ -1,5 +1,6 @@
 import {getDynamicPaths} from "functions/getDynamicPaths";
 import {PostInterface} from "interfaces";
+import {NextApiRequest, NextApiResponse} from "next";
 
 const {Feed} = require('feed')
 const dayjs = require('dayjs')
@@ -12,7 +13,7 @@ const author = {
 };
 
 
-const RSS = async (req: any, res: any) => {
+const RSS = async (req: NextApiRequest, res: NextApiResponse) => {
     // An array with your links
     const posts: PostInterface[] = await getDynamicPaths(100)
 
