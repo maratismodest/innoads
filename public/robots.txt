@@ -6,4 +6,4 @@ Disallow: /uslugi/
 Disallow: /user/
 Disallow: /*.php$
 
-Sitemap: https://innoads.ru/api/my-sitemap
+Sitemap: https://innoads.ru/api/sitemap
