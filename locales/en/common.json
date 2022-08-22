@@ -22,5 +22,7 @@
   "chooseCategory": "Choose Category",
   "required": "Required",
   "notAuthorized": "You are not authorized",
-  "goToAuth":"Go to authorization page"
+  "goToAuth": "Go to authorization page",
+  "favourite": "Favourite",
+  "onMain": "On main"
 }

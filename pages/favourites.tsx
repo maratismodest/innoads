@@ -2,12 +2,14 @@ import Item from 'components/Item/Item';
 import MainLayout from 'components/MainLayout/MainLayout';
 import {getDictionary} from 'functions/getDictionary';
 import {PostInterface} from 'interfaces';
+import {NextPage} from "next";
+import {useTranslation} from "next-i18next";
 import {GetServerSideProps} from 'next/types';
 import React, {useEffect, useState} from 'react';
 import classes from 'styles/classes.module.scss';
 
-const Favourites = () => {
-
+const Favourites: NextPage = () => {
+    const {t} = useTranslation();
     const [favourites, setFavourites] = useState<PostInterface[]>([])
 
     useEffect(() => {
@@ -20,7 +22,7 @@ const Favourites = () => {
 
     return (
         <MainLayout>
-            <h1>Избранное</h1>
+            <h1>{t('favourite')}</h1>
             <ul className={classes.items}>
                 {favourites.map((post: PostInterface) => {
                     return (

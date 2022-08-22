@@ -6,7 +6,7 @@ import {NextApiRequest, NextApiResponse} from "next";
 const TR = require('turbo-rss');
 
 const RSSTurbo = async (req: NextApiRequest, res: NextApiResponse) => {
-    const posts: PostInterface[] = await getDynamicPaths(1000)
+    const posts: PostInterface[] = await getDynamicPaths(999)
 
     const feed = new TR({
         title: 'Доска объявлений города Иннополиса',

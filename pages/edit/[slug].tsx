@@ -24,7 +24,7 @@ import React, {useMemo, useState} from "react";
 import {isDesktop} from "react-device-detect";
 import {Controller, useForm} from "react-hook-form";
 import classes from "styles/classes.module.scss";
-import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE, routes, titles} from "../../constants";
+import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE, Routes, titles} from "../../constants";
 
 export default function Edit({post: serverPost}: { post: PostInterface }) {
     const {t} = useTranslation()
@@ -57,9 +57,6 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
     const [sending, setSending] = useState(false)
 
 
-
-
-
     if (!user || !user.username) {
         return (
             <GoToProfile/>
@@ -86,7 +83,7 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
             id,
         }
 
-        console.log('formData',formData)
+        console.log('formData', formData)
 
         setSending(true)
         try {
@@ -108,7 +105,7 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
         }
 
 
-        return router.push(routes.profile);
+        return router.push(Routes.profile);
     }
 
     const getCompressedImagesLinks = async (imagesFromInput: any) => {

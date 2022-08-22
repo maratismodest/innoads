@@ -16,7 +16,7 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 import React, {useMemo} from "react";
 import classes from 'styles/classes.module.scss'
 import item from "styles/Post.module.scss";
-import {routes, tgLink} from "../../constants";
+import {Routes, tgLink} from "../../constants";
 
 interface PostProps {
     post: PostInterface
@@ -91,7 +91,7 @@ export default function Post({post, related, isMobile}: PostProps) {
                         </ButtonNext>
                     </CarouselProvider>
                 </div>
-                <Link href={`${routes.main}search?category=${categoryId}`} passHref>
+                <Link href={`${Routes.main}search?category=${categoryId}`} passHref>
                     <a>
                         <p>{t('category', {ns: 'post'})}: <span itemProp="category">{t(category.label)}</span></p>
                     </a>

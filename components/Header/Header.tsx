@@ -8,7 +8,7 @@ import React, {useEffect, useState} from 'react';
 import {useDetectClickOutside} from "react-detect-click-outside";
 import {isMobile} from "react-device-detect";
 import Switch from "react-switch";
-import {routes} from "./../../constants";
+import {Routes} from "./../../constants";
 import classes from './Header.module.scss'
 
 const Header = (): JSX.Element | null => {
@@ -29,8 +29,8 @@ const Header = (): JSX.Element | null => {
         return (
             <nav data-testid='nav' className={classes.header}>
                 <div className={classes.headerMain}>
-                    <Link href={routes.main}>
-                        <a className={classes.headerHeader} title='На главную'>
+                    <Link href={Routes.main}>
+                        <a className={classes.headerHeader} title={t('onMain')}>
                             <span className={classes.headerTitle}>INNOADS</span>
                         </a>
                     </Link>
@@ -48,7 +48,7 @@ const Header = (): JSX.Element | null => {
                             >
                                 <ul>
                                     <li>
-                                        <Link href={routes.profile}>
+                                        <Link href={Routes.profile}>
                                             <a title={t('profile')}>
                                                 {user && t('profile')}
                                                 {!user && t('login')}
@@ -56,16 +56,16 @@ const Header = (): JSX.Element | null => {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={routes.add}>
+                                        <Link href={Routes.add}>
                                             <a title={t('addAd')}>
                                                 {t('addAd')}
                                             </a>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={routes.favourites}>
-                                            <a title="Избранное">
-                                                Избранное
+                                        <Link href={Routes.favourites}>
+                                            <a title={t('favourite')}>
+                                                {t('favourite')}
                                             </a>
                                         </Link>
                                     </li>
@@ -96,8 +96,8 @@ const Header = (): JSX.Element | null => {
     return (
         <nav data-testid='nav' className={classes.header}>
             <div className={classes.headerMain}>
-                <Link href={routes.main}>
-                    <a className={classes.headerHeader} title='На главную'>
+                <Link href={Routes.main}>
+                    <a className={classes.headerHeader} title={t('onMain')}>
                         <span className={classes.headerTitle}>INNOADS</span>
                         <span>&nbsp;|&nbsp;</span>
                         <span className={classes.headerDescription}>{t('innopolisClassified')}</span>
@@ -116,19 +116,19 @@ const Header = (): JSX.Element | null => {
                             }}
                             checked={i18n.language === 'en'}/>
                     </div>
-                    <Link href={routes.favourites}>
-                        <a title="Избранное">
-                            Избранное
+                    <Link href={Routes.favourites}>
+                        <a title={t('favourite')}>
+                            {t('favourite')}
                         </a>
                     </Link>
-                    <Link href={routes.profile}>
+                    <Link href={Routes.profile}>
                         <a className={classes.headerUser} title={t('profile')}>
                             {user && t('profile')}
                             {!user && `${t('login')} | ${t('registration')}`}
                         </a>
                     </Link>
 
-                    <Link href={routes.add}>
+                    <Link href={Routes.add}>
                         <a title={t('addAd')}>
                             <Button className={classes.headerButton}>{t('addAd')}
                             </Button>

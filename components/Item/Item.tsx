@@ -12,7 +12,7 @@ import React, {useCallback, useEffect, useMemo, useState,} from "react";
 import {isDesktop, isMobile, isTablet} from "react-device-detect";
 import ReactModal from "react-modal";
 import {useModal} from "react-modal-hook";
-import {modalStyles, NO_IMAGE, routes} from "../../constants";
+import {modalStyles, NO_IMAGE, Routes} from "../../constants";
 import classes from "./Item.module.scss";
 
 interface ItemInterface {
@@ -66,7 +66,7 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
         switch (modalText) {
             case ModalText.edit: {
                 try {
-                    await router.push(routes.edit + '/' + slug)
+                    await router.push(Routes.edit + '/' + slug)
                 } catch (e) {
                     alert(errors.wentWrong)
                     console.log(e)
@@ -206,7 +206,7 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
                 </>
 
             )}
-            <Link href={`${routes.post}/${slug}`} passHref>
+            <Link href={`${Routes.post}/${slug}`} passHref>
                 <a title={title}>
                     <div className={classes.imageWrapper}>
                         <Image

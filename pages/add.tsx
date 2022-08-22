@@ -1,5 +1,5 @@
 import {options} from "assets/options";
-import axios, { AxiosError } from "axios";
+import axios, {AxiosError} from "axios";
 import cn from "classnames";
 import Button from "components/Button/Button";
 import GoToProfile from "components/GoToProfile/GoToProfile";
@@ -29,7 +29,7 @@ import TelegramLoginButton from "react-telegram-login";
 // @ts-ignore
 import slug from "slug";
 import classes from "styles/classes.module.scss";
-import {ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, routes, titles} from "../constants";
+import {ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, Routes, titles} from "../constants";
 
 export default function Add() {
 
@@ -97,7 +97,7 @@ export default function Add() {
 
             alert("Ваше объявление создано!")
 
-            return router.push(routes.profile);
+            return router.push(Routes.profile);
         } catch (e) {
             console.log(e)
             if (e instanceof AxiosError) {

@@ -16,7 +16,7 @@ import {useForm} from 'react-hook-form';
 import InfiniteScroll from 'react-infinite-scroller';
 import classes from 'styles/classes.module.scss';
 import home from 'styles/Home.module.scss';
-import {routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from '../constants';
+import {Routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from '../constants';
 
 const Categories = dynamic(() => import('components/Categories/Categories'), {ssr: true})
 
@@ -60,7 +60,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
 
 
     const onSubmit = async ({search}: SearchSubmitForm) => router.push({
-        pathname: routes.search,
+        pathname: Routes.search,
         query: {keyword: search},
     })
 

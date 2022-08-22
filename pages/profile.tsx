@@ -18,7 +18,7 @@ import {useModal} from "react-modal-hook";
 import TelegramLoginButton from "react-telegram-login";
 import classes from 'styles/classes.module.scss'
 import profile from 'styles/Profile.module.scss'
-import {modalStyles, routes, titles} from "../constants";
+import {modalStyles, Routes, titles} from "../constants";
 
 const error = 'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
 
@@ -88,13 +88,13 @@ export default function Profile() {
                         <Item post={post} key={post.id} edit={true}/>)}
                 </ul>
             ) : <div className={profile.addBlock}>
-                <Link href={routes.add} passHref>
+                <Link href={Routes.add} passHref>
                     <Button title={t('addAd', {ns: 'common'})}
                             className={cn(classes.centerBtn, classes.mt20)}>&#43;
                     </Button>
                 </Link>
                 <p>Опубликуйте объявление, и его увидят потенциальные покупатели</p>
-                <Link href={routes.add} passHref>
+                <Link href={Routes.add} passHref>
                     <Button title={t('addAd', {ns: 'common'})}
                             className={cn(classes.centerBtn, classes.mt20)}>{t('addAd', {ns: 'common'})}
                     </Button>
