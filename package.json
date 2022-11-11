@@ -22,7 +22,6 @@
     "next": "12.1.5",
     "next-i18next": "^11.0.0",
     "next-pwa": "^5.5.2",
-    "pure-react-carousel": "^1.28.1",
     "react": "18.1.0",
     "react-detect-click-outside": "^1.1.7",
     "react-device-detect": "^2.2.2",

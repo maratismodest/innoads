@@ -7,10 +7,20 @@
 
 .carousel {
   position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  height: 300px;
 }
 
 .image {
-  object-fit: cover;
+  //object-fit: cover;
+  position: relative;
+  height: 100%;
+  aspect-ratio: 1/1;
+  flex-shrink: 0;
+  scroll-snap-align: start;
 }
 
 .button {
@@ -52,6 +62,7 @@
   display: inline-flex;
   align-items: center;
   padding: 8px 16px;
+
   span {
     font-size: 36px;
     margin-left: 4px;

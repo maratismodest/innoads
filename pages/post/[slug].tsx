@@ -11,12 +11,11 @@ import {PostInterface} from "interfaces";
 import {useTranslation} from 'next-i18next';
 import Link from "next/link";
 import {GetServerSideProps} from "next/types";
-import {ButtonBack, ButtonNext, CarouselProvider, Image, Slide, Slider} from "pure-react-carousel";
-import "pure-react-carousel/dist/react-carousel.es.css";
 import React, {useMemo} from "react";
 import classes from 'styles/classes.module.scss'
 import item from "styles/Post.module.scss";
 import {Routes, tgLink} from "../../constants";
+import Image from "next/image";
 
 interface PostProps {
     post: PostInterface
@@ -61,36 +60,30 @@ export default function Post({post, related, isMobile}: PostProps) {
             author={`https://t.me/${telegram}`}
         >
             <div className={item.post} itemScope itemType="https://schema.org/Offer">
-                <div className={item.carousel}>
-                    <CarouselProvider
-                        naturalSlideWidth={100}
-                        naturalSlideHeight={100}
-                        totalSlides={images.length}
-                    >
-                        <Slider>
-                            {images.map((image: string, index: number) => {
-                                return (
-                                    <Slide index={index} key={image}>
-                                        <Image
-                                            hasMasterSpinner={true}
-                                            src={image}
-                                            alt="image"
-                                            className={item.image}
-                                            title={title}
-                                            itemProp='image'
-                                        />
-                                    </Slide>
-                                );
-                            })}
-                        </Slider>
-                        <ButtonBack className={cn(item.button, item.buttonLeft)}>
-                            &larr;
-                        </ButtonBack>
-                        <ButtonNext className={cn(item.button, item.buttonRight)}>
-                            &rarr;
-                        </ButtonNext>
-                    </CarouselProvider>
-                </div>
+                <ul className={item.carousel}>
+                    {images.map((image: string, index: number) => {
+                        return (
+                            <li key={image} className={item.image}>
+                                <Image
+                                    src={image}
+                                    alt="image"
+                                    title={title}
+                                    itemProp='image'
+                                    layout={'fill'}
+                                />
+                            </li>
+
+                        );
+                    })}
+                    {/*</Slider>*/}
+                    {/*<ButtonBack className={cn(item.button, item.buttonLeft)}>*/}
+                    {/*    &larr;*/}
+                    {/*</ButtonBack>*/}
+                    {/*<ButtonNext className={cn(item.button, item.buttonRight)}>*/}
+                    {/*    &rarr;*/}
+                    {/*</ButtonNext>*/}
+                    {/*</CarouselProvider>*/}
+                </ul>
                 <Link href={`${Routes.main}search?category=${categoryId}`} passHref>
                     <a>
                         <p>{t('category', {ns: 'post'})}: <span itemProp="category">{t(category.label)}</span></p>
