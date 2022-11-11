@@ -20,8 +20,10 @@ const Categories = (): JSX.Element | null => {
             {categories.map((item, index) => {
                 return (
                     <li key={index}>
-                        <Link href={{pathname: "/search", query: {category: item.value}}}>
-                            <a className={cn(styles.category, {
+                        <Link
+                            passHref={true}
+                            href={{pathname: "/search", query: {category: item.value}}}>
+                            <div className={cn(styles.category, {
                                 [styles.categoryIsMobile]: isMobile
                             })}>
                                 <div className={styles.categoryImg}>
@@ -33,7 +35,7 @@ const Categories = (): JSX.Element | null => {
                                     />
                                 </div>
                                 <h5>{t(item.label)}</h5>
-                            </a>
+                            </div>
                         </Link>
 
                     </li>

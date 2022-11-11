@@ -1,5 +1,7 @@
-/** @type {import('next').NextConfig} */
-const withPWA = require('next-pwa')
+/**
+ * @type {import('next').NextConfig}
+ */
+// const withPWA = require('next-pwa')
 const runtimeCaching = require('next-pwa/cache')
 const withMDX = require('@next/mdx')()
 const {i18n} = require('./next-i18next.config');
@@ -21,5 +23,5 @@ const nextConfig = {
     },
     i18n
 }
-
-module.exports = withPWA(withMDX(nextConfig))
+module.exports = withMDX(nextConfig)
+// module.exports = withPWA(withMDX(nextConfig))

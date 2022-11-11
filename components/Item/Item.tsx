@@ -206,8 +206,7 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
                 </>
 
             )}
-            <Link href={`${Routes.post}/${slug}`} passHref>
-                <a title={title}>
+            <Link href={`${Routes.post}/${slug}`} passHref title={title}>
                     <div className={classes.imageWrapper}>
                         <Image
                             alt={title}
@@ -233,7 +232,6 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
 
                     </div>
                     <h2>{header}</h2>
-                </a>
             </Link>
         </li>
     )

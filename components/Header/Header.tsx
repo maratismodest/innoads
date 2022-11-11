@@ -29,7 +29,7 @@ const Header = (): JSX.Element | null => {
         return (
             <nav data-testid='nav' className={classes.header}>
                 <div className={classes.headerMain}>
-                    <Link href={Routes.main}>
+                    <Link href={Routes.main} legacyBehavior>
                         <a className={classes.headerHeader} title={t('onMain')}>
                             <span className={classes.headerTitle}>INNOADS</span>
                         </a>
@@ -48,7 +48,7 @@ const Header = (): JSX.Element | null => {
                             >
                                 <ul>
                                     <li>
-                                        <Link href={Routes.profile}>
+                                        <Link href={Routes.profile} legacyBehavior>
                                             <a title={t('profile')}>
                                                 {user && t('profile')}
                                                 {!user && t('login')}
@@ -56,14 +56,14 @@ const Header = (): JSX.Element | null => {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={Routes.add}>
+                                        <Link href={Routes.add} legacyBehavior>
                                             <a title={t('addAd')}>
                                                 {t('addAd')}
                                             </a>
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={Routes.favourites}>
+                                        <Link href={Routes.favourites} legacyBehavior>
                                             <a title={t('favourite')}>
                                                 {t('favourite')}
                                             </a>
@@ -96,7 +96,7 @@ const Header = (): JSX.Element | null => {
     return (
         <nav data-testid='nav' className={classes.header}>
             <div className={classes.headerMain}>
-                <Link href={Routes.main}>
+                <Link href={Routes.main} legacyBehavior>
                     <a className={classes.headerHeader} title={t('onMain')}>
                         <span className={classes.headerTitle}>INNOADS</span>
                         <span>&nbsp;|&nbsp;</span>
@@ -116,19 +116,19 @@ const Header = (): JSX.Element | null => {
                             }}
                             checked={i18n.language === 'en'}/>
                     </div>
-                    <Link href={Routes.favourites}>
+                    <Link href={Routes.favourites} legacyBehavior>
                         <a title={t('favourite')}>
                             {t('favourite')}
                         </a>
                     </Link>
-                    <Link href={Routes.profile}>
+                    <Link href={Routes.profile} legacyBehavior>
                         <a className={classes.headerUser} title={t('profile')}>
                             {user && t('profile')}
                             {!user && `${t('login')} | ${t('registration')}`}
                         </a>
                     </Link>
 
-                    <Link href={Routes.add}>
+                    <Link href={Routes.add} legacyBehavior>
                         <a title={t('addAd')}>
                             <Button className={classes.headerButton}>{t('addAd')}
                             </Button>

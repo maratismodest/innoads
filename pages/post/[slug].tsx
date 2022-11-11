@@ -11,11 +11,13 @@ import {PostInterface} from "interfaces";
 import {useTranslation} from 'next-i18next';
 import Link from "next/link";
 import {GetServerSideProps} from "next/types";
-import React, {useMemo} from "react";
+import React, {useEffect, useMemo, useRef, useState} from "react";
 import classes from 'styles/classes.module.scss'
 import item from "styles/Post.module.scss";
 import {Routes, tgLink} from "../../constants";
 import Image from "next/image";
+import {useDraggable} from "hooks/useDraggable";
+import {isDesktop} from "react-device-detect";
 
 interface PostProps {
     post: PostInterface
@@ -25,6 +27,8 @@ interface PostProps {
 
 export default function Post({post, related, isMobile}: PostProps) {
     const {t} = useTranslation()
+    const [current, setCurrent] = useState(0)
+    const [mounted, setMounted] = useState(false);
 
     const {
         title,
@@ -50,6 +54,9 @@ export default function Post({post, related, isMobile}: PostProps) {
         url: process.env.NEXT_PUBLIC_NODE_ENV + '/post/' + slug
     }
 
+    useEffect(() => setMounted(true), []);
+    if (!mounted) return null;
+
     return (
         <MainLayout
             title={seoTitle}
@@ -60,34 +67,57 @@ export default function Post({post, related, isMobile}: PostProps) {
             author={`https://t.me/${telegram}`}
         >
             <div className={item.post} itemScope itemType="https://schema.org/Offer">
-                <ul className={item.carousel}>
-                    {images.map((image: string, index: number) => {
-                        return (
-                            <li key={image} className={item.image}>
-                                <Image
-                                    src={image}
-                                    alt="image"
-                                    title={title}
-                                    itemProp='image'
-                                    layout={'fill'}
-                                />
-                            </li>
+                <div style={{position: 'relative'}}>
+                    {isDesktop ?
+                        <>
+                            <ul className={item.carousel}>
+                                <li key={images[current]} className={item.image}>
+                                    <Image
+                                        src={images[current]}
+                                        alt="image"
+                                        title={title}
+                                        itemProp='image'
+                                        width={300}
+                                        height={300}
+                                    />
+                                </li>
+                            </ul>
+                            <button className={cn(item.button, item.buttonLeft)}
+                                    disabled={current < 1}
+                                    onClick={() => current > 0 && setCurrent(prevState => prevState - 1)}
+                            >
+                                &larr;
+                            </button>
+                            <button className={cn(item.button, item.buttonRight)}
+                                    disabled={current + 1 >= images.length}
+                                    onClick={() => current + 1 < images.length && setCurrent(prevState => prevState + 1)}
+                            >
+                                &rarr;
+                            </button>
+                        </>
+                        : <ul className={item.carousel}
 
-                        );
-                    })}
-                    {/*</Slider>*/}
-                    {/*<ButtonBack className={cn(item.button, item.buttonLeft)}>*/}
-                    {/*    &larr;*/}
-                    {/*</ButtonBack>*/}
-                    {/*<ButtonNext className={cn(item.button, item.buttonRight)}>*/}
-                    {/*    &rarr;*/}
-                    {/*</ButtonNext>*/}
-                    {/*</CarouselProvider>*/}
-                </ul>
+                        >
+                            {images.map((image: string) => {
+                                return (
+                                    <li key={image} className={item.image}>
+                                        <Image
+                                            src={image}
+                                            alt="image"
+                                            title={title}
+                                            itemProp='image'
+                                            width={300}
+                                            height={300}
+                                        />
+                                    </li>
+
+                                );
+                            })}
+                        </ul>}
+                </div>
+
                 <Link href={`${Routes.main}search?category=${categoryId}`} passHref>
-                    <a>
-                        <p>{t('category', {ns: 'post'})}: <span itemProp="category">{t(category.label)}</span></p>
-                    </a>
+                    <p>{t('category', {ns: 'post'})}: <span itemProp="category">{t(category.label)}</span></p>
                 </Link>
                 <h1 itemProp='name'>{title}</h1>
                 <p itemProp="price" className={item.price}><Price price={price}/></p>
@@ -96,12 +126,10 @@ export default function Post({post, related, isMobile}: PostProps) {
                 {/*<p itemProp='description' className={item.postBody}>{subtitle}</p>*/}
                 <p className={classes.mt20}>{t('published', {ns: 'post'})}: {dayjs(createdAt).format("DD.MM.YYYY")}</p>
                 <div className={classes.mt40}>
-                    <Link href={tgLink + '/' + telegram}>
-                        <a itemProp="seller">
-                            <Button>
-                                {t('textAuthor', {ns: 'post'})}
-                            </Button>
-                        </a>
+                    <Link href={tgLink + '/' + telegram} itemProp="seller" passHref={true}>
+                        <Button>
+                            {t('textAuthor', {ns: 'post'})}
+                        </Button>
                     </Link>
                 </div>
 

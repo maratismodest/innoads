@@ -11,16 +11,26 @@
   flex-wrap: nowrap;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
-  height: 300px;
+  aspect-ratio: 1/1;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .image {
-  //object-fit: cover;
-  position: relative;
+  flex: none;
+  scroll-snap-align: start;
   height: 100%;
   aspect-ratio: 1/1;
-  flex-shrink: 0;
-  scroll-snap-align: start;
+  position: relative;
+  overflow-y: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .button {
