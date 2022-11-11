@@ -111,6 +111,7 @@ export default function Profile() {
 }
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
+
     return {
         props: {
             ...(await getDictionary(locale, ['profile'])),

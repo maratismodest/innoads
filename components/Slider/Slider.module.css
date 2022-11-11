@@ -1,0 +1,20 @@
+.list {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  flex-wrap: nowrap;
+}
+.list::-webkit-scrollbar {
+  width: 0;
+}
+
+.item {
+  flex-shrink: 0;
+  height: 300px;
+  width: 300px;
+  scroll-snap-align: start;
+  text-align: center;
+  border: 1px solid teal;
+}
+
+/*# sourceMappingURL=Slider.module.css.map */
