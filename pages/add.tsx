@@ -150,7 +150,12 @@ export default function Add() {
         return await handleDeleteImage(current)
     };
 
-    const ErrorBlock = ({name}: ErrorProps) => errors[name] && <span>{t('required')}</span>
+    const ErrorBlock = ({name}: ErrorProps) => {
+        if (errors[name]) {
+            return <span>{t('required')}</span>
+        }
+        return null
+    }
 
     return (
         <>

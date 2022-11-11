@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@mdx-js/loader": "^2.1.5",
-    "@next/mdx": "^12.3.3",
+    "@mdx-js/mdx": "^2.1.5",
+    "@mdx-js/react": "^2.1.5",
+    "@next/mdx": "^13.0.3",
     "@types/jsonwebtoken": "^8.5.9",
     "axios": "^0.27.2",
     "browser-image-compression": "^2.0.0",

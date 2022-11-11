@@ -1,8 +1,8 @@
+import React from 'react';
 import MainLayout from 'components/MainLayout/MainLayout';
 import MDX from 'components/MDX/agreement.mdx'
 import {getDictionary} from 'functions/getDictionary';
 import {GetStaticProps} from 'next/types';
-import React from 'react';
 
 const Agreement = () => {
     return (
