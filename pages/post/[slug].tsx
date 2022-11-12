@@ -28,7 +28,9 @@ interface PostProps {
 export default function Post({post, related, isMobile}: PostProps) {
     const {t} = useTranslation()
     const [current, setCurrent] = useState(0)
+    const [x, setX] = useState(0)
     const [mounted, setMounted] = useState(false);
+    const ref = useRef<HTMLUListElement>(null)
 
     const {
         title,
@@ -55,6 +57,23 @@ export default function Post({post, related, isMobile}: PostProps) {
     }
 
     useEffect(() => setMounted(true), []);
+
+    const handleLeft = () => {
+        if (ref.current) {
+            // console.log(ref.current)
+            ref.current.scrollLeft = ref.current.scrollLeft - 200
+            current > 0 && setCurrent(prevState => prevState - 1)
+        }
+    }
+
+    const handleRight = () => {
+        if (ref.current) {
+            // console.log(ref.current)
+            // ref.current.scroll(-200, 0)
+            ref.current.scrollLeft = ref.current.scrollLeft + 200
+            current + 1 < images.length && setCurrent(prevState => prevState + 1)
+        }
+    }
     if (!mounted) return null;
 
     return (
@@ -70,7 +89,7 @@ export default function Post({post, related, isMobile}: PostProps) {
                 <div style={{position: 'relative'}}>
                     {isDesktop ?
                         <>
-                            <ul className={item.carousel}>
+                            <ul className={cn(item.carousel)}>
                                 <li key={images[current]} className={item.image}>
                                     <Image
                                         src={images[current]}
@@ -84,36 +103,57 @@ export default function Post({post, related, isMobile}: PostProps) {
                             </ul>
                             <button className={cn(item.button, item.buttonLeft)}
                                     disabled={current < 1}
-                                    onClick={() => current > 0 && setCurrent(prevState => prevState - 1)}
+                                    // onClick={handleLeft}
+                                onClick={() => current > 0 && setCurrent(prevState => prevState - 1)}
                             >
                                 &larr;
                             </button>
                             <button className={cn(item.button, item.buttonRight)}
                                     disabled={current + 1 >= images.length}
-                                    onClick={() => current + 1 < images.length && setCurrent(prevState => prevState + 1)}
+                                    // onClick={handleRight}
+                                onClick={() => current + 1 < images.length && setCurrent(prevState => prevState + 1)}
                             >
                                 &rarr;
                             </button>
                         </>
-                        : <ul className={item.carousel}
+                        :
+                        <>
+                            <ul className={item.carousel}
+                                ref={ref}
 
-                        >
-                            {images.map((image: string) => {
-                                return (
-                                    <li key={image} className={item.image}>
-                                        <Image
-                                            src={image}
-                                            alt="image"
-                                            title={title}
-                                            itemProp='image'
-                                            width={300}
-                                            height={300}
-                                        />
-                                    </li>
+                            >
+                                {images.map((image: string) => {
+                                    return (
+                                        <li key={image} className={item.image}>
+                                            <Image
+                                                src={image}
+                                                alt="image"
+                                                title={title}
+                                                itemProp='image'
+                                                width={300}
+                                                height={300}
+                                            />
+                                        </li>
 
-                                );
-                            })}
-                        </ul>}
+                                    );
+                                })}
+                            </ul>
+                            <button className={cn(item.button, item.buttonLeft)}
+                                    disabled={current < 1}
+                                    onClick={handleLeft}
+
+                            >
+                                &larr;
+                            </button>
+                            <button className={cn(item.button, item.buttonRight)}
+                                    disabled={current + 1 >= images.length}
+                                    onClick={handleRight}
+                            >
+                                &rarr;
+                            </button>
+                        </>
+                    }
+
                 </div>
 
                 <Link href={`${Routes.main}search?category=${categoryId}`} passHref>
