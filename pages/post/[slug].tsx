@@ -10,13 +10,11 @@ import {getUrl} from "functions/getUrl";
 import {PostInterface} from "interfaces";
 import {useTranslation} from 'next-i18next';
 import Link from "next/link";
-import {GetServerSideProps} from "next/types";
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import classes from 'styles/classes.module.scss'
 import item from "styles/Post.module.scss";
 import {Routes, tgLink} from "../../constants";
 import Image from "next/image";
-import {useDraggable} from "hooks/useDraggable";
 import {isDesktop} from "react-device-detect";
 
 interface PostProps {
@@ -25,12 +23,26 @@ interface PostProps {
     isMobile: boolean
 }
 
+const getAllPosts = async () => {
+    try {
+        const {data: sell} = await axios.get(getUrl(0, 0, 10000))
+        console.log('sell', sell)
+        return null
+        // const posts = response.data.content
+    } catch (e) {
+        console.log('e', e)
+    }
+}
+
 export default function Post({post, related, isMobile}: PostProps) {
     const {t} = useTranslation()
     const [current, setCurrent] = useState(0)
-    const [x, setX] = useState(0)
     const [mounted, setMounted] = useState(false);
     const ref = useRef<HTMLUListElement>(null)
+
+    useEffect(() => {
+        getAllPosts()
+    }, [])
 
     const {
         title,
@@ -103,15 +115,15 @@ export default function Post({post, related, isMobile}: PostProps) {
                             </ul>
                             <button className={cn(item.button, item.buttonLeft)}
                                     disabled={current < 1}
-                                    // onClick={handleLeft}
-                                onClick={() => current > 0 && setCurrent(prevState => prevState - 1)}
+                                // onClick={handleLeft}
+                                    onClick={() => current > 0 && setCurrent(prevState => prevState - 1)}
                             >
                                 &larr;
                             </button>
                             <button className={cn(item.button, item.buttonRight)}
                                     disabled={current + 1 >= images.length}
-                                    // onClick={handleRight}
-                                onClick={() => current + 1 < images.length && setCurrent(prevState => prevState + 1)}
+                                // onClick={handleRight}
+                                    onClick={() => current + 1 < images.length && setCurrent(prevState => prevState + 1)}
                             >
                                 &rarr;
                             </button>
@@ -200,58 +212,44 @@ export default function Post({post, related, isMobile}: PostProps) {
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async (
-    {
-        locale, query, req
-    }
-) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`)
-
-    const UA = req.headers['user-agent'];
-    const isMobile = Boolean(UA?.match(
-        /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
-    ))
-
-    if (!response) {
-        return {
-            notFound: true,
-        };
-    }
-    const snapshot = response.data;
-
+export async function getStaticProps({params, locale}: any) {
+    const {data: snapshot} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${params.slug}`)
     const related = await axios.get(getUrl(snapshot.categoryId, 0, 5, encodeURIComponent(snapshot.title.split(' ')[0])))
+
+    if (!snapshot.id) {
+        return {
+            notFound: true
+        }
+    }
 
     return {
         props: {
             post: snapshot,
             related: related.data.content.filter((x: PostInterface) => x.id !== snapshot.id),
-            isMobile: isMobile,
             ...(await getDictionary(locale, ['post']))
-        },
-    };
+        }
+    }
 }
 
-// const [header, setHeader] = useState<string>(title)
-// const [subtitle, setSubtitle] = useState<string>(body)
-//
-//
-// useEffect(() => {
-//     const translateTitle = async (): Promise<void> => {
-//         const translate = await googleTranslateText(title);
-//         if (translate) {
-//             setHeader(translate)
-//         }
-//     };
-//
-//     const translateSubtitle = async (): Promise<void> => {
-//         const translate = await googleTranslateText(body);
-//         if (translate) {
-//             setSubtitle(translate)
-//         }
-//     };
-//     if (i18n.language === 'en') {
-//         translateTitle();
-//         translateSubtitle()
-//     }
-//
-// }, [i18n, body, title]);
+export async function getStaticPaths({locale}:any) {
+    const {data} = await axios.get(getUrl(0, 0, 10000))
+
+    const paths = data.content.map((post: PostInterface) => {
+        return {
+            params: {slug: `${post.slug}`},
+            locale
+        }
+    })
+
+    return {
+        paths,
+        fallback: true
+    }
+}
+
+// console.log(`Generating page for /posts/${params.slug}`)
+
+// const UA = req.headers['user-agent'];
+// const isMobile = Boolean(UA?.match(
+//     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+// ))
