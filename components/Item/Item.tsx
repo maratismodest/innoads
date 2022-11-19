@@ -1,4 +1,4 @@
-import { modalStyles, NO_IMAGE, Routes } from '../../constants'
+import { NO_IMAGE, Routes } from '../../constants'
 import Modal from '../Modal/Modal'
 import classes from './Item.module.scss'
 import axios from 'axios'

@@ -58,13 +58,18 @@ export default function Post({ post, related, isMobile }: PostProps) {
         [category.label]
     )
     const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [slug])
+
+    useEffect(() => setMounted(true), [])
+
+    if (!mounted) {
+        return null
+    }
+
     const shareData = {
         title: 'InnoAds',
         text: 'Поделиться ссылкой:',
         url: process.env.NEXT_PUBLIC_NODE_ENV + '/post/' + slug,
     }
-
-    useEffect(() => setMounted(true), [])
 
     const handleClick = (direction: 'left' | 'right') => {
         const res = direction === 'right' ? 1 : -1
@@ -73,8 +78,6 @@ export default function Post({ post, related, isMobile }: PostProps) {
             setCurrent((prevState) => prevState + res)
         }
     }
-
-    if (!mounted) return null
 
     return (
         <MainLayout

@@ -1,4 +1,4 @@
-import { modalStyles, Routes, titles } from '../constants'
+import { Routes, titles } from '../constants'
 import axios from 'axios'
 import cn from 'classnames'
 import Button from 'components/Button/Button'
