@@ -1,72 +1,84 @@
-import {options} from "assets/options";
-import axios, {AxiosError} from "axios";
-import cn from "classnames";
-import Button from "components/Button/Button";
-import GoToProfile from "components/GoToProfile/GoToProfile";
-import Icon from "components/Icon/Icon";
-import Input from "components/Input/Input";
-import MainLayout from "components/MainLayout/MainLayout";
-import SelectInno from "components/Select/Select";
-import Spinner from "components/Spinner/Spinner";
-import {useAuth} from "context/AuthContext";
-import antimat from "functions/antimat";
-import {getDictionary} from "functions/getDictionary";
-import {handleDeleteImage} from "functions/handleDeleteImage";
-import handleImageUpload from "functions/handleImageUpload";
-import {handlePostImage} from "functions/handlePostImage";
-import {MoveImage, moveImage} from "functions/moveImage";
-import {onImageClick} from "functions/onImageClick";
-import {HTMLInputEvent} from "interfaces";
-import {useTranslation} from "next-i18next";
-import Image from "next/image";
-import {useRouter} from "next/router";
-import {GetStaticProps} from "next/types";
-import React, {useMemo, useState} from "react";
-import {isDesktop} from "react-device-detect";
-import {Controller, useForm} from "react-hook-form";
+import {
+    ACCEPTED_IMAGE_FORMAT,
+    ErrorProps,
+    NO_IMAGE,
+    Routes,
+    titles,
+} from '../constants'
+import { options } from 'assets/options'
+import axios, { AxiosError } from 'axios'
+import cn from 'classnames'
+import Button from 'components/Button/Button'
+import GoToProfile from 'components/GoToProfile/GoToProfile'
+import Icon from 'components/Icon/Icon'
+import Input from 'components/Input/Input'
+import MainLayout from 'components/MainLayout/MainLayout'
+import SelectInno from 'components/Select/Select'
+import Spinner from 'components/Spinner/Spinner'
+import { useAuth } from 'context/AuthContext'
+import antimat from 'functions/antimat'
+import { handleDeleteImage } from 'functions/handleDeleteImage'
+import handleImageUpload from 'functions/handleImageUpload'
+import { handlePostImage } from 'functions/handlePostImage'
+import { MoveImage, moveImage } from 'functions/moveImage'
+import { onImageClick } from 'functions/onImageClick'
+import { HTMLInputEvent } from 'interfaces'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next/types'
+import React, { useMemo, useState } from 'react'
+import { isDesktop } from 'react-device-detect'
+import { Controller, useForm } from 'react-hook-form'
 // @ts-ignore
-import TelegramLoginButton from "react-telegram-login";
+import TelegramLoginButton from 'react-telegram-login'
 // @ts-ignore
-import slug from "slug";
-import classes from "styles/classes.module.scss";
-import {ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, Routes, titles} from "../constants";
+import slug from 'slug'
+import classes from 'styles/classes.module.scss'
 
 export default function Add() {
-
     const router = useRouter()
-    const {t} = useTranslation()
-    const [images, setImages] = useState<string[]>([]);
-    const [error, setError] = useState<string>("");
-    const {control, register, handleSubmit, formState: {errors}} = useForm();
-    const {user, token} = useAuth();
+    const { t } = useTranslation()
+    const [images, setImages] = useState<string[]>([])
+    const [error, setError] = useState<string>('')
+    const {
+        control,
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm()
+    const { user, token } = useAuth()
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
-    const translatedOptions = useMemo(() => options.map((option) => {
-        return {
-            ...option, label: t(option.label)
-        }
-    }), [t])
-
+    const translatedOptions = useMemo(
+        () =>
+            options.map((option) => {
+                return {
+                    ...option,
+                    label: t(option.label),
+                }
+            }),
+        [t]
+    )
 
     if (!user || !user.username) {
-        return (
-            <GoToProfile/>
-        )
+        return <GoToProfile />
     }
 
     const onSubmit = async (data: any) => {
         if (images.length === 0) {
-            return setError("Добавить хотя бы одно фото!");
+            return setError('Добавить хотя бы одно фото!')
         }
 
-        const {title, body, price, category} = data
+        const { title, body, price, category } = data
 
         if (antimat.containsMat(title) || antimat.containsMat(body)) {
             return alert('Есть запрещенные слова!')
         }
         setSending(true)
-        const slugTitle = slug(title) + "-" + Math.floor(Math.random() * 100)
+        const slugTitle = slug(title) + '-' + Math.floor(Math.random() * 100)
         const categoryValue = category.value
 
         const formData = {
@@ -78,26 +90,34 @@ export default function Add() {
             slug: slugTitle,
             telegram: user.username,
             tgId: user.id,
-            categoryId: categoryValue
+            categoryId: categoryValue,
         }
 
         try {
             const token = localStorage.getItem('token')
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/post`, formData, {
-                headers: {
-                    authorization: `Bearer ${token}`
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/post`,
+                formData,
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
                 }
-            })
+            )
 
-            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, formData, {
-                headers: {
-                    authorization: `Bearer ${token}`
+            await axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/telegram/post`,
+                formData,
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
                 }
-            })
+            )
 
-            alert("Ваше объявление создано!")
+            alert('Ваше объявление создано!')
 
-            return router.push(Routes.profile);
+            return router.push(Routes.profile)
         } catch (e) {
             console.log(e)
             if (e instanceof AxiosError) {
@@ -107,24 +127,23 @@ export default function Add() {
         } finally {
             setSending(false)
         }
-
     }
 
     const getCompressedImagesLinks = async (imagesFromInput: any) => {
         for (let i = 0; i < imagesFromInput.length; i++) {
-            const initialImage = imagesFromInput[i];
-            const resizedImage = await handleImageUpload(initialImage);
+            const initialImage = imagesFromInput[i]
+            const resizedImage = await handleImageUpload(initialImage)
             if (resizedImage) {
-                const formData = new FormData();
-                formData.append("image", resizedImage, `${Date.now()}.jpg`);
+                const formData = new FormData()
+                formData.append('image', resizedImage, `${Date.now()}.jpg`)
                 const link = await handlePostImage(formData)
-                const {status, value} = link
+                const { status, value } = link
                 if (status === 'ok') {
-                    setImages((prevState: string[]) => [...prevState, value]);
-                    setError("");
+                    setImages((prevState: string[]) => [...prevState, value])
+                    setError('')
                 }
                 if (status === 'error') {
-                    setError(value);
+                    setError(value)
                 }
             }
         }
@@ -132,25 +151,25 @@ export default function Add() {
 
     const imageHandler = async (event: HTMLInputEvent) => {
         if (event.target.files) {
-            const imagesFromInput = event.target.files;
-            const length = imagesFromInput.length + images.length;
+            const imagesFromInput = event.target.files
+            const length = imagesFromInput.length + images.length
             if (length > 4) {
-                return setError("Не больше 4 фотографий!");
+                return setError('Не больше 4 фотографий!')
             }
             setLoading(true)
-            await getCompressedImagesLinks(imagesFromInput);
+            await getCompressedImagesLinks(imagesFromInput)
             setLoading(false)
         }
         return
-    };
+    }
 
     const deleteImage = async (current: string) => {
-        const res = images.filter(image => image !== current)
-        setImages(res);
+        const res = images.filter((image) => image !== current)
+        setImages(res)
         return await handleDeleteImage(current)
-    };
+    }
 
-    const ErrorBlock = ({name}: ErrorProps) => {
+    const ErrorBlock = ({ name }: ErrorProps) => {
         if (errors[name]) {
             return <span>{t('required')}</span>
         }
@@ -159,11 +178,11 @@ export default function Add() {
 
     return (
         <>
-            {sending &&
+            {sending && (
                 <div className={classes.sending}>
-                    <Spinner/>
+                    <Spinner />
                 </div>
-            }
+            )}
             <MainLayout title={titles.add}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -173,14 +192,17 @@ export default function Add() {
                     <Controller
                         name="category"
                         control={control}
-                        rules={{required: true}}
-                        render={({field}: any) => <SelectInno
-                            placeholder={t('chooseCategory')}
-                            {...field}
-                            options={translatedOptions}/>}
+                        rules={{ required: true }}
+                        render={({ field }: any) => (
+                            <SelectInno
+                                placeholder={t('chooseCategory')}
+                                {...field}
+                                options={translatedOptions}
+                            />
+                        )}
                     />
-                    <ErrorBlock name={'category'}/>
-                    <div style={{marginBottom: 10}}></div>
+                    <ErrorBlock name={'category'} />
+                    <div style={{ marginBottom: 10 }}></div>
                     <Input
                         type="number"
                         placeholder={t('price')}
@@ -188,7 +210,7 @@ export default function Add() {
                         required={true}
                         name="price"
                     />
-                    <ErrorBlock name={'price'}/>
+                    <ErrorBlock name={'price'} />
                     <Input
                         type="text"
                         placeholder={t('header')}
@@ -196,15 +218,15 @@ export default function Add() {
                         required={true}
                         name="title"
                     />
-                    <ErrorBlock name={'title'}/>
+                    <ErrorBlock name={'title'} />
                     <textarea
                         rows={5}
                         cols={5}
                         placeholder={t('description')}
-                        {...register("body", {required: true})}
+                        {...register('body', { required: true })}
                         className={classes.textArea}
                     />
-                    <ErrorBlock name={'body'}/>
+                    <ErrorBlock name={'body'} />
                     <div>
                         <div>
                             <h4>{t('addPhoto')}</h4>
@@ -252,14 +274,20 @@ export default function Add() {
                                         alt={image}
                                         src={image}
                                         objectFit="cover"
-                                        layout={"fill"}
+                                        layout={'fill'}
                                         placeholder="blur"
                                         blurDataURL={NO_IMAGE}
                                     />
                                     <Icon
                                         className={classes.leftArrow}
                                         onClick={(e: MouseEvent) => {
-                                            moveImage(e, images, index, MoveImage.left, setImages);
+                                            moveImage(
+                                                e,
+                                                images,
+                                                index,
+                                                MoveImage.left,
+                                                setImages
+                                            )
                                         }}
                                     >
                                         &larr;
@@ -267,7 +295,13 @@ export default function Add() {
                                     <Icon
                                         className={classes.rightArrow}
                                         onClick={(e: MouseEvent) => {
-                                            moveImage(e, images, index, MoveImage.right, setImages);
+                                            moveImage(
+                                                e,
+                                                images,
+                                                index,
+                                                MoveImage.right,
+                                                setImages
+                                            )
                                         }}
                                     >
                                         &rarr;
@@ -275,13 +309,13 @@ export default function Add() {
                                     <Icon
                                         className={classes.deleteIcon}
                                         onClick={async () => {
-                                            await deleteImage(image);
+                                            await deleteImage(image)
                                         }}
                                     >
                                         &times;
                                     </Icon>
                                 </li>
-                            );
+                            )
                         })}
                         {loading && (
                             <li
@@ -297,19 +331,23 @@ export default function Add() {
                         )}
                     </ul>
                     {error}
-                    <Button className={classes.mt40} type="submit"
-                            disabled={(sending || loading) ? true : false}>{t('addAd')}</Button>
+                    <Button
+                        className={classes.mt40}
+                        type="submit"
+                        disabled={sending || loading ? true : false}
+                    >
+                        {t('addAd')}
+                    </Button>
                 </form>
             </MainLayout>
         </>
-
-    );
+    )
 }
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
-            ...(await getDictionary(locale)),
+            ...(await serverSideTranslations(locale as string, ['common'])),
         },
-    };
+    }
 }

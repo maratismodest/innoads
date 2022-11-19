@@ -1,5 +1,3 @@
-type Label = 'sell' | 'buy' | 'services' | 'estate' | 'clothes' | 'free'
-
 export interface OptionProps {
     value: number;
     label: string;
@@ -14,7 +12,9 @@ export const options: OptionProps [] = [
     {value: 7, label: "free"}
 ];
 
-interface CategoryProps extends OptionProps {
+interface CategoryProps {
+    value: number;
+    label: string;
     image: string
 }
 

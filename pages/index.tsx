@@ -1,25 +1,27 @@
-import axios from 'axios';
-import Button from 'components/Button/Button';
-import Item from 'components/Item/Item';
-import MainLayout from "components/MainLayout/MainLayout";
-import Search from 'components/Search/Search';
-import Spinner from 'components/Spinner/Spinner';
-import {getUrl} from 'functions/getUrl';
-import {PostInterface} from 'interfaces';
-import type {NextPage} from 'next'
-import {useTranslation} from 'next-i18next';
-import dynamic from 'next/dynamic';
-import {useRouter} from 'next/router';
-import React, {useCallback, useMemo, useState} from 'react';
-import {useForm} from 'react-hook-form';
-import InfiniteScroll from 'react-infinite-scroller';
-import classes from 'styles/classes.module.scss';
-import home from 'styles/Home.module.scss';
-import {Routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from '../constants';
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {GetStaticProps} from "next/types";
+import { Routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE } from '../constants'
+import axios from 'axios'
+import Button from 'components/Button/Button'
+import Item from 'components/Item/Item'
+import MainLayout from 'components/MainLayout/MainLayout'
+import Search from 'components/Search/Search'
+import Spinner from 'components/Spinner/Spinner'
+import { getUrl } from 'functions/getUrl'
+import { PostInterface } from 'interfaces'
+import type { NextPage } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next/types'
+import React, { useCallback, useMemo, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import InfiniteScroll from 'react-infinite-scroller'
+import home from 'styles/Home.module.scss'
+import classes from 'styles/classes.module.scss'
 
-const Categories = dynamic(() => import('components/Categories/Categories'), {ssr: true})
+const Categories = dynamic(() => import('components/Categories/Categories'), {
+    ssr: true,
+})
 
 interface HomeProps {
     posts: PostInterface[]
@@ -28,42 +30,43 @@ interface HomeProps {
 
 type SearchSubmitForm = {
     search: string
-};
+}
 
-
-const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
-    const {t} = useTranslation();
+const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
+    const { t } = useTranslation()
     const router = useRouter()
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
-    const {handleSubmit, register} = useForm<SearchSubmitForm>({
+    const { handleSubmit, register } = useForm<SearchSubmitForm>({
         defaultValues: {
-            search: ''
-        }
-    });
+            search: '',
+        },
+    })
     const [infinite, setInfinite] = useState<PostInterface[]>(posts)
     const count = useMemo(() => totalPages * 10, [totalPages])
 
     const loadFunc = useCallback(async () => {
         try {
             const response = await axios.get(getUrl(0, page + 1, 10))
-            const posts = response.data.content;
+            const posts = response.data.content
             setPage((prevState: number) => prevState + 1)
-            setInfinite((prevState: PostInterface[]) => [...prevState, ...posts])
-            setHasMore((page + 1) < response.data.totalPages)
+            setInfinite((prevState: PostInterface[]) => [
+                ...prevState,
+                ...posts,
+            ])
+            setHasMore(page + 1 < response.data.totalPages)
             return posts
         } catch (e) {
             console.log(e)
             return []
         }
-
     }, [page])
 
-
-    const onSubmit = async ({search}: SearchSubmitForm) => router.push({
-        pathname: Routes.search,
-        query: {keyword: search},
-    })
+    const onSubmit = async ({ search }: SearchSubmitForm) =>
+        router.push({
+            pathname: Routes.search,
+            query: { keyword: search },
+        })
 
     return (
         <MainLayout
@@ -71,8 +74,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
             image={SEO_IMAGE}
             description={SEO_DESCRIPTION}
         >
-            <form className={home.search} onSubmit={handleSubmit(onSubmit)}
-            >
+            <form className={home.search} onSubmit={handleSubmit(onSubmit)}>
                 <Search
                     type="text"
                     placeholder={t('search')}
@@ -81,12 +83,14 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
                     register={register}
                     className={home.searchInput}
                 />
-                <Button type='submit'>{t('search')}</Button>
+                <Button type="submit">{t('search')}</Button>
             </form>
-            <Categories/>
+            <Categories />
             <div className={home.header}>
                 <h1 className={classes.title}>{t('lastAds')}</h1>
-                <span>* {count} {t('ads')}</span>
+                <span>
+                    * {count} {t('ads')}
+                </span>
             </div>
             <div className={classes.magicWrapper}>
                 <InfiniteScroll
@@ -95,13 +99,15 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
                     hasMore={hasMore}
                     initialLoad={false}
                     threshold={100}
-                    loader={<div key={0}><Spinner/></div>}
+                    loader={
+                        <div key={0}>
+                            <Spinner />
+                        </div>
+                    }
                 >
                     <ul className={classes.items}>
                         {infinite.map((post: PostInterface) => {
-                            return (
-                                <Item post={post} key={post.slug}/>
-                            );
+                            return <Item post={post} key={post.slug} />
                         })}
                     </ul>
                 </InfiniteScroll>
@@ -110,26 +116,25 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
     )
 }
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
-    const {data} = await axios.get(getUrl(0, 0, 10))
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+    const { data } = await axios.get(getUrl(0, 0, 10))
 
-    const {content: posts, totalPages} = data
+    const { content: posts, totalPages } = data
 
     if (!posts) {
         return {
             notFound: true,
-        };
+        }
     }
 
     return {
         props: {
             posts,
             totalPages,
-            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
+            ...(await serverSideTranslations(locale as string, ['common'])),
         },
         revalidate: 60,
-    };
+    }
 }
 
 export default Home
-

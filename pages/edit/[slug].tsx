@@ -1,73 +1,78 @@
-import {options} from "assets/options";
-import axios, {AxiosError} from "axios";
-import cn from "classnames";
-import Button from "components/Button/Button";
-import GoToProfile from "components/GoToProfile/GoToProfile";
-import Icon from "components/Icon/Icon";
-import Input from "components/Input/Input";
-import MainLayout from "components/MainLayout/MainLayout";
-import SelectInno from "components/Select/Select";
-import {useAuth} from "context/AuthContext";
-import {getDictionary} from "functions/getDictionary";
-import {handleDeleteImage} from "functions/handleDeleteImage";
-import handleImageUpload from "functions/handleImageUpload";
-import {handlePostImage} from "functions/handlePostImage";
-import {MoveImage, moveImage} from "functions/moveImage";
-import {onImageClick} from "functions/onImageClick";
-import {HTMLInputEvent, PostInterface} from "interfaces";
-import type {GetServerSideProps} from "next";
-import {useTranslation} from "next-i18next";
-import Image from "next/image";
-import {useRouter} from "next/router";
-import React, {useMemo, useState} from "react";
-import {isDesktop} from "react-device-detect";
-import {Controller, useForm} from "react-hook-form";
-import classes from "styles/classes.module.scss";
-import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE, Routes, titles} from "../../constants";
+import {
+    ACCEPTED_IMAGE_FORMAT,
+    NO_IMAGE,
+    Routes,
+    titles,
+} from '../../constants'
+import { options } from 'assets/options'
+import axios, { AxiosError } from 'axios'
+import cn from 'classnames'
+import Button from 'components/Button/Button'
+import GoToProfile from 'components/GoToProfile/GoToProfile'
+import Icon from 'components/Icon/Icon'
+import Input from 'components/Input/Input'
+import MainLayout from 'components/MainLayout/MainLayout'
+import SelectInno from 'components/Select/Select'
+import { useAuth } from 'context/AuthContext'
+import { handleDeleteImage } from 'functions/handleDeleteImage'
+import handleImageUpload from 'functions/handleImageUpload'
+import { handlePostImage } from 'functions/handlePostImage'
+import { MoveImage, moveImage } from 'functions/moveImage'
+import { onImageClick } from 'functions/onImageClick'
+import { HTMLInputEvent, PostInterface } from 'interfaces'
+import type { GetServerSideProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import React, { useMemo, useState } from 'react'
+import { isDesktop } from 'react-device-detect'
+import { Controller, useForm } from 'react-hook-form'
+import classes from 'styles/classes.module.scss'
 
-export default function Edit({post: serverPost}: { post: PostInterface }) {
-    const {t} = useTranslation()
-    const {
-        title,
-        body,
-        categoryId,
-        price,
-        telegram,
-        tgId,
-        id
-    } = serverPost;
+export default function Edit({ post: serverPost }: { post: PostInterface }) {
+    const { t } = useTranslation()
+    const { title, body, categoryId, price, telegram, tgId, id } = serverPost
     const router = useRouter()
-    const [images, setImages] = useState<string[]>(() => serverPost.images.split('||'));
-    const [error, setError] = useState("");
-    const translatedOptions = useMemo(() => options.map((option) => {
-        return {
-            ...option, label: t(option.label)
-        }
-    }), [t])
+    const [images, setImages] = useState<string[]>(() =>
+        serverPost.images.split('||')
+    )
+    const [error, setError] = useState('')
+    const translatedOptions = useMemo(
+        () =>
+            options.map((option) => {
+                return {
+                    ...option,
+                    label: t(option.label),
+                }
+            }),
+        [t]
+    )
     const defaultValues = {
-        category: translatedOptions.find(x => x.value === categoryId),
+        category: translatedOptions.find((x) => x.value === categoryId),
         title,
         price,
-        body
-    };
-    const {control, register, handleSubmit, formState: {errors}} = useForm({defaultValues});
-    const {user, token} = useAuth();
+        body,
+    }
+    const {
+        control,
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ defaultValues })
+    const { user, token } = useAuth()
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
-
     if (!user || !user.username) {
-        return (
-            <GoToProfile/>
-        )
+        return <GoToProfile />
     }
-
 
     const onSubmit = async (data: any) => {
         if (images.length === 0) {
-            return setError("Добавить хотя бы одно фото!");
+            return setError('Добавить хотя бы одно фото!')
         }
-        const {title, body, price, category} = data
+        const { title, body, price, category } = data
         const categoryValue = category.value
 
         const formData = {
@@ -82,17 +87,19 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
             id,
         }
 
-        console.log('formData', formData)
-
         setSending(true)
         try {
-            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`, formData, {
-                headers: {
-                    authorization: `Bearer ${token}`
+            await axios.put(
+                `${process.env.NEXT_PUBLIC_API_URL}/post/${id}`,
+                formData,
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
                 }
-            })
+            )
 
-            alert("Ваше объявление на сайте изменено!")
+            alert('Ваше объявление на сайте изменено!')
         } catch (e) {
             console.log(e)
             if (e instanceof AxiosError) {
@@ -103,25 +110,24 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
             setSending(false)
         }
 
-
-        return router.push(Routes.profile);
+        return router.push(Routes.profile)
     }
 
     const getCompressedImagesLinks = async (imagesFromInput: any) => {
         for (let i = 0; i < imagesFromInput.length; i++) {
-            const initialImage = imagesFromInput[i];
-            const resizedImage = await handleImageUpload(initialImage);
+            const initialImage = imagesFromInput[i]
+            const resizedImage = await handleImageUpload(initialImage)
             if (resizedImage) {
-                const formData = new FormData();
-                formData.append("image", resizedImage, `${Date.now()}.jpg`);
+                const formData = new FormData()
+                formData.append('image', resizedImage, `${Date.now()}.jpg`)
                 const link = await handlePostImage(formData)
-                const {status, value} = link
+                const { status, value } = link
                 if (status === 'ok') {
-                    setImages((prevState: string[]) => [...prevState, value]);
-                    setError("");
+                    setImages((prevState: string[]) => [...prevState, value])
+                    setError('')
                 }
                 if (status === 'error') {
-                    setError(value);
+                    setError(value)
                 }
             }
         }
@@ -129,42 +135,39 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
 
     const imageHandler = async (e: HTMLInputEvent) => {
         if (e.target.files) {
-            const imagesFromInput = e.target.files;
-            const length = imagesFromInput.length + images.length;
+            const imagesFromInput = e.target.files
+            const length = imagesFromInput.length + images.length
             if (length > 4) {
-                return setError("Не больше 4 фотографий!");
+                return setError('Не больше 4 фотографий!')
             }
             setLoading(true)
-            await getCompressedImagesLinks(imagesFromInput);
+            await getCompressedImagesLinks(imagesFromInput)
             setLoading(false)
         }
         return
-
-    };
+    }
 
     const deleteImage = async (current: string) => {
-        const res = images.filter(image => image !== current)
-        setImages(res);
+        const res = images.filter((image) => image !== current)
+        setImages(res)
         return await handleDeleteImage(current)
-    };
+    }
 
     return (
         <MainLayout title={titles.edit}>
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className={classes.form}
-            >
+            <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
                 <Controller
                     name="category"
                     control={control}
-                    rules={{required: true}}
-                    render={({field}: any) => <SelectInno
-                        {...field}
-                        options={translatedOptions}
-                    />}
+                    rules={{ required: true }}
+                    render={({ field }: any) => (
+                        <SelectInno {...field} options={translatedOptions} />
+                    )}
                 />
-                {errors.category && <span>Поле обязательно для заполнения</span>}
-                <div style={{marginBottom: 10}}></div>
+                {errors.category && (
+                    <span>Поле обязательно для заполнения</span>
+                )}
+                <div style={{ marginBottom: 10 }}></div>
                 <Input
                     type="number"
                     placeholder="Цена"
@@ -191,8 +194,8 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
                     }}
                     rows={5}
                     cols={5}
-                    placeholder={"Описание"}
-                    {...register("body", {required: true})}
+                    placeholder={'Описание'}
+                    {...register('body', { required: true })}
                     defaultValue={body}
                 />
                 {errors.body && <span>Поле обязательно для заполнения</span>}
@@ -205,7 +208,7 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
                                 [classes.imageMobile]: !isDesktop,
                             })}
                             onClick={onImageClick}
-                            style={{cursor: "pointer"}}
+                            style={{ cursor: 'pointer' }}
                         >
                             <Image
                                 alt="image"
@@ -252,7 +255,13 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
                                 <Icon
                                     className={classes.leftArrow}
                                     onClick={(e: MouseEvent) => {
-                                        moveImage(e, images, index, MoveImage.left, setImages);
+                                        moveImage(
+                                            e,
+                                            images,
+                                            index,
+                                            MoveImage.left,
+                                            setImages
+                                        )
                                     }}
                                 >
                                     &larr;
@@ -260,7 +269,13 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
                                 <Icon
                                     className={classes.rightArrow}
                                     onClick={(e: MouseEvent) => {
-                                        moveImage(e, images, index, MoveImage.right, setImages);
+                                        moveImage(
+                                            e,
+                                            images,
+                                            index,
+                                            MoveImage.right,
+                                            setImages
+                                        )
                                     }}
                                 >
                                     &rarr;
@@ -268,13 +283,13 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
                                 <Icon
                                     className={classes.deleteIcon}
                                     onClick={async () => {
-                                        await deleteImage(image);
+                                        await deleteImage(image)
                                     }}
                                 >
                                     &times;
                                 </Icon>
                             </li>
-                        );
+                        )
                     })}
                     {loading && (
                         <li
@@ -290,22 +305,32 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
                     )}
                 </ul>
                 {error}
-                <Button type="submit" disabled={sending}>Сохранить изменения</Button>
+                <Button type="submit" disabled={sending}>
+                    Сохранить изменения
+                </Button>
             </form>
         </MainLayout>
-    );
+    )
 }
 
-
-export const getServerSideProps: GetServerSideProps = async ({locale, query}) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`)
+export const getServerSideProps: GetServerSideProps = async ({
+    locale,
+    query,
+}) => {
+    const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`
+    )
     if (!response) {
         return {
             notFound: true,
-        };
+        }
     }
-    const snapshot = response.data;
+    const snapshot = response.data
     return {
-        props: {post: snapshot, slug: snapshot.slug, ...(await getDictionary(locale))},
-    };
+        props: {
+            post: snapshot,
+            slug: snapshot.slug,
+            ...(await serverSideTranslations(locale as string, ['common'])),
+        },
+    }
 }

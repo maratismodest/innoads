@@ -8,7 +8,6 @@ import styles from './Categories.module.scss'
 import cn from "classnames";
 
 const Categories = (): JSX.Element | null => {
-    console.log('isMobile', isMobile)
     const [mounted, setMounted] = useState(false);
     const {t} = useTranslation()
     useEffect(() => setMounted(true), []);

@@ -1,7 +1,6 @@
-import {EffectCallback, useEffect, useRef} from 'react'
+import { EffectCallback, useEffect, useRef } from 'react'
 
 function useEffectOnce(effect: EffectCallback) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const destroyFunc = useRef<void | any>()
     const calledOnce = useRef(false)
     const renderAfterCalled = useRef(false)

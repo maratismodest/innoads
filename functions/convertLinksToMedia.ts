@@ -13,6 +13,5 @@ export const convertLinksToMedia = (images: string[], caption: string) => {
             "media": image,
         }
     })
-    console.log('res', res)
     return res
 }

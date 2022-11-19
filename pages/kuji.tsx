@@ -1,31 +1,32 @@
-import {GetStaticProps} from "next/types";
-import React, {useEffect, useState} from "react";
-import MainLayout from "../components/MainLayout/MainLayout";
-import {getDictionary} from "../functions/getDictionary";
-import Image from "next/image";
+import MainLayout from '../components/MainLayout/MainLayout'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Image from 'next/image'
+import { GetStaticProps } from 'next/types'
+import React, { useEffect, useState } from 'react'
 
 const Kuji = () => {
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => setMounted(true), []);
-    if (!mounted) return null;
+    const [mounted, setMounted] = useState(false)
+    useEffect(() => setMounted(true), [])
+    if (!mounted) return null
     return (
         <MainLayout>
             <Image
-                src={"/kuji/kuji.jpg"}
+                src={'/kuji/kuji.jpg'}
                 height={300}
                 width={300}
-                style={{objectFit: "cover"}}
-                alt={'kuji'}/>
+                style={{ objectFit: 'cover' }}
+                alt={'kuji'}
+            />
 
             <div>
                 <h1>Kuji</h1>
                 <p>🍣Настоящая паназиатская кухня в Иннополисе 🚀</p>
                 <p>🌌Технопарк им. Лобачевского</p>
                 <p>
-                    📲Для заказа пиши{" "}
+                    📲Для заказа пиши{' '}
                     <a
-                        href={"https:t.me/kuji_admin"}
-                        style={{cursor: "pointer", color: "teal"}}
+                        href={'https:t.me/kuji_admin'}
+                        style={{ cursor: 'pointer', color: 'teal' }}
                     >
                         @kuji_admin
                     </a>
@@ -74,15 +75,15 @@ const Kuji = () => {
                 </ul>
             </div>
         </MainLayout>
-    );
-};
+    )
+}
 
-export default Kuji;
+export default Kuji
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
-            ...(await getDictionary(locale)),
+            ...(await serverSideTranslations(locale as string, ['common'])),
         },
-    };
-};
+    }
+}
