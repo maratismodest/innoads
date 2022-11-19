@@ -187,7 +187,7 @@ export default function Post({post, related, isMobile}: PostProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({
-                                                                 locale,
+                                                                 locale = 'ru',
                                                                  query,
                                                                  req,
                                                              }) => {
@@ -224,8 +224,7 @@ export const getServerSideProps: GetServerSideProps = async ({
             related: related.data.content.filter(
                 (x: PostInterface) => x.id !== post.id
             ),
-            ...(await serverSideTranslations(locale as string, ['common'])),
-
+            ...(await serverSideTranslations(locale, ['common', 'post'])),
         },
     }
 }
