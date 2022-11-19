@@ -224,7 +224,7 @@ export const getServerSideProps: GetServerSideProps = async ({
             related: related.data.content.filter(
                 (x: PostInterface) => x.id !== post.id
             ),
-            ...(await serverSideTranslations(locale as string, ['common', 'post'])),
+            ...(await serverSideTranslations(locale as string, ['common'])),
 
         },
     }
