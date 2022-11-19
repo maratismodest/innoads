@@ -1,19 +1,19 @@
-import { Routes, tgLink } from '../../constants'
-import { options } from 'assets/options'
+import {Routes, tgLink} from '../../constants'
+import {options} from 'assets/options'
 import axios from 'axios'
 import cn from 'classnames'
 import Button from 'components/Button/Button'
-import Item, { Price } from 'components/Item/Item'
+import Item, {Price} from 'components/Item/Item'
 import MainLayout from 'components/MainLayout/MainLayout'
 import dayjs from 'dayjs'
-import { getUrl } from 'functions/getUrl'
-import { PostInterface } from 'interfaces'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import {getUrl} from 'functions/getUrl'
+import {PostInterface} from 'interfaces'
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
 import Link from 'next/link'
-import { GetServerSideProps } from 'next/types'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import {GetServerSideProps} from 'next/types'
+import React, {useEffect, useMemo, useRef, useState} from 'react'
 import item from 'styles/Post.module.scss'
 import classes from 'styles/classes.module.scss'
 
@@ -23,8 +23,12 @@ interface PostProps {
     isMobile: boolean
 }
 
-export default function Post() {
-    // { post, related, isMobile }: PostProps
+export default function Post({post, related, isMobile}: PostProps) {
+
+    console.log('post',post)
+    console.log('related',related)
+    console.log('isMobile',isMobile)
+
     // const { t } = useTranslation()
     // const [current, setCurrent] = useState(0)
     // const [mounted, setMounted] = useState(false)
@@ -188,48 +192,48 @@ export default function Post() {
     // )
 }
 
-// export const getServerSideProps: GetServerSideProps = async ({
-//     locale,
-//     query,
-//     req,
-// }) => {
-//     const { data: post } = await axios.get(
-//         `${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`
-//     )
-//
-//     if (!post) {
-//         return {
-//             notFound: true,
-//         }
-//     }
-//
-//     const related = await axios.get(
-//         getUrl(
-//             post.categoryId,
-//             0,
-//             5,
-//             encodeURIComponent(post.title.split(' ')[0])
-//         )
-//     )
-//
-//     const UA = req.headers['user-agent']
-//     const isMobile = Boolean(
-//         UA?.match(
-//             /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
-//         )
-//     )
-//
-//     return {
-//         props: {
-//             post,
-//             isMobile,
-//             related: related.data.content.filter(
-//                 (x: PostInterface) => x.id !== post.id
-//             ),
-//             ...(await serverSideTranslations(locale as string, [
-//                 'common',
-//                 'post',
-//             ])),
-//         },
-//     }
-// }
+export const getServerSideProps: GetServerSideProps = async ({
+                                                                 locale,
+                                                                 query,
+                                                                 req,
+                                                             }) => {
+    const {data: post} = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`
+    )
+
+    if (!post) {
+        return {
+            notFound: true,
+        }
+    }
+
+    const related = await axios.get(
+        getUrl(
+            post.categoryId,
+            0,
+            5,
+            encodeURIComponent(post.title.split(' ')[0])
+        )
+    )
+
+    const UA = req.headers['user-agent']
+    const isMobile = Boolean(
+        UA?.match(
+            /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+        )
+    )
+
+    return {
+        props: {
+            post,
+            isMobile,
+            related: related.data.content.filter(
+                (x: PostInterface) => x.id !== post.id
+            ),
+            ...(await serverSideTranslations(locale as string, [
+                'common',
+                'post',
+            ])),
+        },
+    }
+}
