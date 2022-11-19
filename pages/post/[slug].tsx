@@ -9,13 +9,13 @@ import dayjs from 'dayjs'
 import {getUrl} from 'functions/getUrl'
 import {PostInterface} from 'interfaces'
 import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
 import Link from 'next/link'
 import {GetServerSideProps} from 'next/types'
 import React, {useEffect, useMemo, useRef, useState} from 'react'
 import item from 'styles/Post.module.scss'
 import classes from 'styles/classes.module.scss'
+import {getDictionary} from "../../functions/getDictionary";
 
 interface PostProps {
     post: PostInterface
@@ -224,7 +224,6 @@ export const getServerSideProps: GetServerSideProps = async ({
             related: related.data.content.filter(
                 (x: PostInterface) => x.id !== post.id
             ),
-            ...(await serverSideTranslations(locale as string, ['common', 'post'], null, ['ru', 'en'])),
-        },
+            ...(await getDictionary(locale, ['post']))        },
     }
 }
