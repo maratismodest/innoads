@@ -14,17 +14,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { GetServerSideProps } from 'next/types'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { isMobile } from 'react-device-detect'
 import item from 'styles/Post.module.scss'
 import classes from 'styles/classes.module.scss'
 
 interface PostProps {
     post: PostInterface
     related: PostInterface[]
-    isMobile?: boolean
+    isMobile: boolean
 }
 
-export default function Post({ post, related }: PostProps) {
+export default function Post({ post, related, isMobile }: PostProps) {
     const { t } = useTranslation()
     const [current, setCurrent] = useState(0)
     const [mounted, setMounted] = useState(false)
@@ -203,9 +202,17 @@ export const getServerSideProps: GetServerSideProps = async ({
         )
     )
 
+    const UA = req.headers['user-agent']
+    const isMobile = Boolean(
+        UA?.match(
+            /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+        )
+    )
+
     return {
         props: {
             post,
+            isMobile,
             related: related.data.content.filter(
                 (x: PostInterface) => x.id !== post.id
             ),
@@ -216,10 +223,3 @@ export const getServerSideProps: GetServerSideProps = async ({
         },
     }
 }
-
-// const UA = req.headers['user-agent']
-// const isMobile = Boolean(
-//   UA?.match(
-//     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
-//   )
-// )
