@@ -85,7 +85,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
             <Categories/>
             <div className={home.header}>
                 <h1 className={classes.title}>{t('lastAds')}</h1>
-                <span>* {count} {t('ads')}</span>
+                {/*<span>* {count} {t('ads')}</span>*/}
             </div>
             <div className={classes.magicWrapper}>
                 <InfiniteScroll

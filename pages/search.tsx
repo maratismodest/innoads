@@ -18,13 +18,7 @@ import {isMobile} from "react-device-detect";
 import InfiniteScroll from 'react-infinite-scroller';
 import classes from 'styles/classes.module.scss'
 
-type SearchSubmitForm = {
-    search: string
-    category: number
-};
-
 const SearchPage: NextPage = () => {
-    const {t, i18n} = useTranslation(['common', 'search'])
     const router = useRouter();
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
@@ -32,12 +26,6 @@ const SearchPage: NextPage = () => {
     const [input, setInput] = useState("");
     const [category, setCategory] = useState(Number(router.query['category']) || 1);
     const debouncedValue = useDebounce<string>(input, 500)
-
-    const translatedOptions = useMemo(() => options.map((option) => {
-        return {
-            ...option, label: t(option.label)
-        }
-    }), [t])
 
     const loadFunc = useCallback(async (currentPage: number = page) => {
         const response = await axios.get(getUrl(category, currentPage, isMobile ? 8 : 15, debouncedValue))
@@ -67,20 +55,20 @@ const SearchPage: NextPage = () => {
 
     return (
         <MainLayout title="Доска объявлений города Иннополис">
-            <h1 className={classes.title}>{t('search', {ns: 'search'})}</h1>
+            <h1 className={classes.title}>Поиск</h1>
             <hr/>
             <SelectInno
-                options={translatedOptions}
+                options={options}
                 name="category"
                 required={true}
                 onChange={(event: any) => {
                     setCategory(event.value);
                 }}
-                value={translatedOptions.find(x => x.value === category)}
+                value={options.find(x => x.value === category)}
             />
             <Input
                 type="text"
-                placeholder={t('typeText', {ns: 'search'})}
+                placeholder={"Например, ноутбук"}
                 name="search"
                 required={true}
                 defaultValue={router.query.keyword}
@@ -112,11 +100,3 @@ const SearchPage: NextPage = () => {
 }
 
 export default SearchPage
-
-export const getStaticProps: GetStaticProps = async ({locale}) => {
-    return {
-        props: {
-            ...(await getDictionary(locale, ['search'])),
-        },
-    };
-}
