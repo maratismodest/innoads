@@ -13,8 +13,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { GetStaticProps } from 'next/types'
 import React, { useEffect, useState } from 'react'
-import ReactModal from 'react-modal'
-import { useModal } from 'react-modal-hook'
 // @ts-ignore
 import TelegramLoginButton from 'react-telegram-login'
 import profile from 'styles/Profile.module.scss'
@@ -24,17 +22,6 @@ const error =
     'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
 
 export default function Profile() {
-    const [showModal, hideModal] = useModal(
-        () => (
-            <ReactModal isOpen style={modalStyles}>
-                <p>{error}</p>
-                <hr />
-                <Button onClick={hideModal}>OK</Button>
-            </ReactModal>
-        ),
-        []
-    )
-
     const [posts, setPosts] = useState<PostInterface[]>([])
     const { user, login, logout } = useAuth()
     const { t } = useTranslation('profile')
@@ -42,7 +29,7 @@ export default function Profile() {
     const handleTelegramResponse = async (response: any) => {
         const { username } = response
         if (!username) {
-            return showModal()
+            return alert({ error })
         }
         try {
             const { data } = await axios.post(
