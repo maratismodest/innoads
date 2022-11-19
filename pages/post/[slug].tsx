@@ -29,7 +29,7 @@ export default function Post({post, related, isMobile}: PostProps) {
     // console.log('related', related)
     // console.log('isMobile', isMobile)
 
-    const { t } = useTranslation()
+    const {t} = useTranslation()
     const [current, setCurrent] = useState(0)
     const [mounted, setMounted] = useState(false)
     const ul = useRef<HTMLUListElement>(null)
@@ -94,7 +94,7 @@ export default function Post({post, related, isMobile}: PostProps) {
             author={`https://t.me/${telegram}`}
         >
             <div className={item.post}>
-                <div style={{ position: 'relative' }}>
+                <div style={{position: 'relative'}}>
                     <ul className={item.carousel} ref={ul}>
                         {images.map((image: string, index: number) => {
                             return (
@@ -137,29 +137,29 @@ export default function Post({post, related, isMobile}: PostProps) {
                     passHref
                 >
                     <p>
-                        {t('category', { ns: 'post' })}:{' '}
+                        {t('category', {ns: 'post'})}:{' '}
                         <span>{t(category.label)}</span>
                     </p>
                 </Link>
                 <h1>{title}</h1>
                 <p className={item.price}>
-                    <Price price={price} />
+                    <Price price={price}/>
                 </p>
-                <hr />
+                <hr/>
                 <pre className={classes.paragraph}>{body}</pre>
                 <p className={classes.mt20}>
-                    {t('published', { ns: 'post' })}:{' '}
+                    {t('published', {ns: 'post'})}:{' '}
                     {dayjs(createdAt).format('DD.MM.YYYY')}
                 </p>
                 <div className={classes.mt40}>
                     <Link href={tgLink + '/' + telegram} passHref={true}>
-                        <Button>{t('textAuthor', { ns: 'post' })}</Button>
+                        <Button>{t('textAuthor', {ns: 'post'})}</Button>
                     </Link>
                 </div>
 
                 <div className={classes.mt40}>
                     <Link href={`/user/${post.tgId}`} passHref>
-                        <Button>{t('userAds', { ns: 'post' })}</Button>
+                        <Button>{t('userAds', {ns: 'post'})}</Button>
                     </Link>
                 </div>
 
@@ -168,7 +168,7 @@ export default function Post({post, related, isMobile}: PostProps) {
                         className={cn(classes.mt40, item.share)}
                         onClick={async () => await navigator.share(shareData)}
                     >
-                        {t('share', { ns: 'post' })}
+                        {t('share', {ns: 'post'})}
                     </Button>
                 )}
                 {related.length > 0 && (
@@ -176,7 +176,7 @@ export default function Post({post, related, isMobile}: PostProps) {
                         <h2>Похожие объявления</h2>
                         <ul className={classes.related}>
                             {related.map((post: PostInterface) => {
-                                return <Item post={post} key={post.slug} />
+                                return <Item post={post} key={post.slug}/>
                             })}
                         </ul>
                     </div>
@@ -224,9 +224,8 @@ export const getServerSideProps: GetServerSideProps = async ({
             related: related.data.content.filter(
                 (x: PostInterface) => x.id !== post.id
             ),
-            // ...(await serverSideTranslations(locale as string, [
-            //     'common',
-            //     'post'])),
+            ...(await serverSideTranslations(locale as string, ['common', 'post'])),
+
         },
     }
 }
