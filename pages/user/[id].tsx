@@ -45,13 +45,13 @@ const Person: NextPage<PersonProps> = ({posts}) => {
 export default Person;
 
 export const getServerSideProps: GetServerSideProps = async ({locale, query}) => {
-    const response = await axios.get(getUrl(0, 0, 10, '', +(query.id as string)))
-    if (!response) {
+    const {data} = await axios.get(getUrl(0, 0, 10, '', +(query.id as string)))
+    if (!data) {
         return {
             notFound: true,
         };
     }
-    const posts = orderBy(response.data.content, ['createdAt'], ['desc'])
+    const posts = orderBy(data.content, ['createdAt'], ['desc'])
     return {
         props: {
             posts,

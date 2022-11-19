@@ -85,7 +85,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
             <Categories/>
             <div className={home.header}>
                 <h1 className={classes.title}>{t('lastAds')}</h1>
-                {/*<span>* {count} {t('ads')}</span>*/}
+                <span>* {count} {t('ads')}</span>
             </div>
             <div className={classes.magicWrapper}>
                 <InfiniteScroll
@@ -110,8 +110,9 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({locale}) => {
-    const response = await axios.get(getUrl(0, 0, 10))
-    const posts = response.data.content
+    const {data} = await axios.get(getUrl(0, 0, 10))
+
+    const {content: posts, totalPages} = data
 
     if (!posts) {
         return {
@@ -122,7 +123,7 @@ export const getServerSideProps: GetServerSideProps = async ({locale}) => {
     return {
         props: {
             posts,
-            totalPages: response.data.totalPages,
+            totalPages,
             ...(await getDictionary(locale)),
         },
     };

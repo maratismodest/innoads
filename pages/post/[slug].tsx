@@ -205,53 +205,27 @@ export const getServerSideProps: GetServerSideProps = async (
         locale, query, req
     }
 ) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`)
+    const {data: post} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`)
 
     const UA = req.headers['user-agent'];
     const isMobile = Boolean(UA?.match(
         /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
     ))
 
-    if (!response) {
+    if (!post) {
         return {
             notFound: true,
         };
     }
-    const snapshot = response.data;
 
-    const related = await axios.get(getUrl(snapshot.categoryId, 0, 5, encodeURIComponent(snapshot.title.split(' ')[0])))
+    const related = await axios.get(getUrl(post.categoryId, 0, 5, encodeURIComponent(post.title.split(' ')[0])))
 
     return {
         props: {
-            post: snapshot,
-            related: related.data.content.filter((x: PostInterface) => x.id !== snapshot.id),
-            isMobile: isMobile,
+            post,
+            related: related.data.content.filter((x: PostInterface) => x.id !== post.id),
+            isMobile,
             ...(await getDictionary(locale, ['post']))
         },
     };
 }
-
-// const [header, setHeader] = useState<string>(title)
-// const [subtitle, setSubtitle] = useState<string>(body)
-//
-//
-// useEffect(() => {
-//     const translateTitle = async (): Promise<void> => {
-//         const translate = await googleTranslateText(title);
-//         if (translate) {
-//             setHeader(translate)
-//         }
-//     };
-//
-//     const translateSubtitle = async (): Promise<void> => {
-//         const translate = await googleTranslateText(body);
-//         if (translate) {
-//             setSubtitle(translate)
-//         }
-//     };
-//     if (i18n.language === 'en') {
-//         translateTitle();
-//         translateSubtitle()
-//     }
-//
-// }, [i18n, body, title]);

@@ -100,3 +100,11 @@ const SearchPage: NextPage = () => {
 }
 
 export default SearchPage
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+    return {
+        props: {
+            ...(await getDictionary(locale)),
+        },
+    };
+};
