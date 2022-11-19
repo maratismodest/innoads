@@ -211,7 +211,7 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
                                 alt="image"
                                 src={NO_IMAGE}
                                 objectFit="cover"
-                                layout="fill"
+                                fill={true}
                             />
                         </div>
                     </div>
@@ -245,7 +245,7 @@ export default function Edit({post: serverPost}: { post: PostInterface }) {
                                     alt={image}
                                     src={image}
                                     objectFit="cover"
-                                    layout={"fill"}
+                                    fill={true}
                                     placeholder="blur"
                                     blurDataURL={NO_IMAGE}
                                 />

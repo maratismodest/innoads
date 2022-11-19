@@ -120,7 +120,6 @@ export default function Post({post, related, isMobile}: PostProps) {
                         <>
                             <ul className={item.carousel}
                                 ref={ref}
-
                             >
                                 {images.map((image: string) => {
                                     return (
@@ -138,19 +137,6 @@ export default function Post({post, related, isMobile}: PostProps) {
                                     );
                                 })}
                             </ul>
-                            <button className={cn(item.button, item.buttonLeft)}
-                                    disabled={current < 1}
-                                    onClick={handleLeft}
-
-                            >
-                                &larr;
-                            </button>
-                            <button className={cn(item.button, item.buttonRight)}
-                                    disabled={current + 1 >= images.length}
-                                    onClick={handleRight}
-                            >
-                                &rarr;
-                            </button>
                         </>
                     }
 

@@ -4,10 +4,9 @@ import Item from 'components/Item/Item';
 import MainLayout from "components/MainLayout/MainLayout";
 import Search from 'components/Search/Search';
 import Spinner from 'components/Spinner/Spinner';
-import {getDictionary} from 'functions/getDictionary';
 import {getUrl} from 'functions/getUrl';
 import {PostInterface} from 'interfaces';
-import type {GetServerSideProps, NextPage} from 'next'
+import type {NextPage} from 'next'
 import {useTranslation} from 'next-i18next';
 import dynamic from 'next/dynamic';
 import {useRouter} from 'next/router';
@@ -17,6 +16,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import classes from 'styles/classes.module.scss';
 import home from 'styles/Home.module.scss';
 import {Routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE} from '../constants';
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {GetStaticProps} from "next/types";
 
 const Categories = dynamic(() => import('components/Categories/Categories'), {ssr: true})
 
@@ -109,7 +110,7 @@ const Home: NextPage<HomeProps> = ({posts, totalPages}) => {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({locale}) => {
     const {data} = await axios.get(getUrl(0, 0, 10))
 
     const {content: posts, totalPages} = data
@@ -124,8 +125,9 @@ export const getServerSideProps: GetServerSideProps = async ({locale}) => {
         props: {
             posts,
             totalPages,
-            ...(await getDictionary(locale)),
+            ...(await serverSideTranslations(locale as string, ['common', 'footer'])),
         },
+        revalidate: 60,
     };
 }
 

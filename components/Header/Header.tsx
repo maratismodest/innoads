@@ -29,10 +29,8 @@ const Header = (): JSX.Element | null => {
         return (
             <nav data-testid='nav' className={classes.header}>
                 <div className={classes.headerMain}>
-                    <Link href={Routes.main} legacyBehavior>
-                        <a className={classes.headerHeader} title={t('onMain')}>
-                            <span className={classes.headerTitle}>INNOADS</span>
-                        </a>
+                    <Link href={Routes.main} title={t('onMain')} className={classes.headerHeader}>
+                        <span className={classes.headerTitle}>INNOADS</span>
                     </Link>
                     <div ref={ref}>
                         <Button
@@ -48,25 +46,18 @@ const Header = (): JSX.Element | null => {
                             >
                                 <ul>
                                     <li>
-                                        <Link href={Routes.profile} legacyBehavior>
-                                            <a title={t('profile')}>
-                                                {user && t('profile')}
-                                                {!user && t('login')}
-                                            </a>
+                                        <Link href={Routes.profile} title={t('profile')}>
+                                            {user ? t('profile') : t('login')}
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={Routes.add} legacyBehavior>
-                                            <a title={t('addAd')}>
-                                                {t('addAd')}
-                                            </a>
+                                        <Link href={Routes.add} title={t('addAd')}>
+                                            {t('addAd')}
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={Routes.favourites} legacyBehavior>
-                                            <a title={t('favourite')}>
-                                                {t('favourite')}
-                                            </a>
+                                        <Link href={Routes.favourites} title={t('favourite')}>
+                                            {t('favourite')}
                                         </Link>
                                     </li>
                                     <li>
@@ -96,12 +87,10 @@ const Header = (): JSX.Element | null => {
     return (
         <nav data-testid='nav' className={classes.header}>
             <div className={classes.headerMain}>
-                <Link href={Routes.main} legacyBehavior>
-                    <a className={classes.headerHeader} title={t('onMain')}>
-                        <span className={classes.headerTitle}>INNOADS</span>
-                        <span>&nbsp;|&nbsp;</span>
-                        <span className={classes.headerDescription}>{t('innopolisClassified')}</span>
-                    </a>
+                <Link href={Routes.main} className={classes.headerHeader} title={t('onMain')}>
+                    <span className={classes.headerTitle}>INNOADS</span>
+                    <span>&nbsp;|&nbsp;</span>
+                    <span className={classes.headerDescription}>{t('innopolisClassified')}</span>
                 </Link>
                 <div className={classes.buttons}>
                     <div className={classes.switch}>
@@ -116,23 +105,16 @@ const Header = (): JSX.Element | null => {
                             }}
                             checked={i18n.language === 'en'}/>
                     </div>
-                    <Link href={Routes.favourites} legacyBehavior>
-                        <a title={t('favourite')}>
-                            {t('favourite')}
-                        </a>
+                    <Link href={Routes.favourites} title={t('favourite')}>
+                        {t('favourite')}
                     </Link>
-                    <Link href={Routes.profile} legacyBehavior>
-                        <a className={classes.headerUser} title={t('profile')}>
-                            {user && t('profile')}
-                            {!user && `${t('login')} | ${t('registration')}`}
-                        </a>
+                    <Link href={Routes.profile} className={classes.headerUser} title={t('profile')}>
+                        {user ? t('profile') : `${t('login')} | ${t('registration')}`}
                     </Link>
 
-                    <Link href={Routes.add} legacyBehavior>
-                        <a title={t('addAd')}>
-                            <Button className={classes.headerButton}>{t('addAd')}
-                            </Button>
-                        </a>
+                    <Link href={Routes.add} title={t('addAd')}>
+                        <Button className={classes.headerButton}>{t('addAd')}
+                        </Button>
                     </Link>
 
                 </div>

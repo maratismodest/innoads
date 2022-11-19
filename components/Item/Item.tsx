@@ -8,8 +8,7 @@ import {useTranslation} from "next-i18next";
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import React, {useCallback, useEffect, useMemo, useState,} from "react";
-import {isDesktop, isMobile, isTablet} from "react-device-detect";
+import React, {useCallback, useEffect, useState,} from "react";
 import ReactModal from "react-modal";
 import {useModal} from "react-modal-hook";
 import {modalStyles, NO_IMAGE, Routes} from "../../constants";
@@ -19,8 +18,6 @@ interface ItemInterface {
     post: PostInterface,
     edit?: boolean
 }
-
-// const promoted = [917, 1039, 800, 1031]
 
 const success = {
     updated: 'Объявление поднято в поиске!',
@@ -43,9 +40,8 @@ enum ModalText {
 
 const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
     const [favourite, setFavourite] = useState(false)
-    const {id, slug, title, body, preview, price, categoryId, images, telegram} = post
-    const {t, i18n} = useTranslation('profile')
-    const [header, setHeader] = useState<string>(title)
+    const {id, slug, title, preview, price} = post
+    const {t} = useTranslation('profile')
     const router = useRouter()
     const {token} = useAuth()
 
@@ -136,18 +132,6 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
         }
     }, [modalText, showModal])
 
-    const sizes = useMemo(() => {
-        if (isMobile) {
-            return 'calc((100vw - 42px) / 2)'
-        }
-        if (isTablet) {
-            return '33vw'
-        }
-        if (isDesktop) {
-            return '205px'
-        }
-    }, [])
-
     const handleFavourite = useCallback((e: React.SyntheticEvent) => {
         e.preventDefault()
         const favourites = localStorage.getItem('favourites')
@@ -207,31 +191,30 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
 
             )}
             <Link href={`${Routes.post}/${slug}`} passHref title={title}>
-                    <div className={classes.imageWrapper}>
+                <div className={classes.imageWrapper}>
+                    <Image
+                        alt={title}
+                        src={preview || NO_IMAGE}
+                        fill={true}
+                        placeholder="blur"
+                        blurDataURL={NO_IMAGE}
+                        title={title}
+                        className={classes.cover}
+                    />
+                </div>
+                <div className={classes.price}>
+                    <Price price={price}/>
+                    <div className={classes.favourite}>
                         <Image
-                            alt={title}
-                            src={preview || NO_IMAGE}
-                            layout="fill"
-                            objectFit="cover"
-                            placeholder="blur"
-                            blurDataURL={NO_IMAGE}
-                            sizes={sizes}
-                            title={title}
+                            src={favourite ? '/svg/heart-red.svg' : '/svg/heart.svg'}
+                            fill={true}
+                            onClick={handleFavourite}
+                            alt={'favourite'}
                         />
                     </div>
-                    <div className={classes.price}>
-                        <Price price={price}/>
-                        <div className={classes.favourite}>
-                            <Image
-                                src={favourite ? '/svg/heart-red.svg' : '/svg/heart.svg'}
-                                layout={'fill'}
-                                onClick={handleFavourite}
-                                alt={''}
-                            />
-                        </div>
 
-                    </div>
-                    <h2>{header}</h2>
+                </div>
+                <h2>{title}</h2>
             </Link>
         </li>
     )

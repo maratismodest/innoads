@@ -21,7 +21,6 @@ const Categories = (): JSX.Element | null => {
                 return (
                     <li key={index}>
                         <Link
-                            passHref={true}
                             href={{pathname: "/search", query: {category: item.value}}}>
                             <div className={cn(styles.category, {
                                 [styles.categoryIsMobile]: isMobile

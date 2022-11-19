@@ -88,13 +88,13 @@ export default function Profile() {
                         <Item post={post} key={post.id} edit={true}/>)}
                 </ul>
             ) : <div className={profile.addBlock}>
-                <Link href={Routes.add} passHref>
+                <Link href={Routes.add}>
                     <Button title={t('addAd', {ns: 'common'})}
                             className={cn(classes.centerBtn, classes.mt20)}>&#43;
                     </Button>
                 </Link>
                 <p>Опубликуйте объявление, и его увидят потенциальные покупатели</p>
-                <Link href={Routes.add} passHref>
+                <Link href={Routes.add} >
                     <Button title={t('addAd', {ns: 'common'})}
                             className={cn(classes.centerBtn, classes.mt20)}>{t('addAd', {ns: 'common'})}
                     </Button>

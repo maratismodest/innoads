@@ -12,7 +12,7 @@ const GoToProfile = (): JSX.Element => {
         <MainLayout title={titles.auth}>
             <div className={classes.center}>
                 <h2>{t('notAuthorized')}</h2>
-                <Link href={Routes.profile} passHref>
+                <Link href={Routes.profile}>
                     <Button>{t('goToAuth')}</Button>
                 </Link>
             </div>
