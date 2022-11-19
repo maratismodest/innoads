@@ -34,9 +34,6 @@ type SearchSubmitForm = {
 }
 
 const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
-    // const [visible, setVisible] = useState(false)
-    // const showModal = () => setVisible(true)
-    // const hideModal = () => setVisible(false)
     const { t } = useTranslation()
     const router = useRouter()
     const [page, setPage] = useState(0)
@@ -78,17 +75,6 @@ const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
             image={SEO_IMAGE}
             description={SEO_DESCRIPTION}
         >
-            {/*<Modal visible={visible}>*/}
-            {/*    <p>test</p>*/}
-            {/*    <hr />*/}
-            {/*    <div*/}
-            {/*        style={{ display: 'flex', justifyContent: 'space-between' }}*/}
-            {/*    >*/}
-            {/*        <Button>Да</Button>*/}
-            {/*        <Button onClick={hideModal}>Нет</Button>*/}
-            {/*    </div>*/}
-            {/*</Modal>*/}
-            {/*<Button onClick={showModal}>OK</Button>*/}
             <form className={home.search} onSubmit={handleSubmit(onSubmit)}>
                 <Search
                     type="text"

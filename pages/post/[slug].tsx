@@ -19,15 +19,15 @@ import classes from 'styles/classes.module.scss'
 
 interface PostProps {
     post: PostInterface
-    related: PostInterface[]
-    isMobile: boolean
+    // related: PostInterface[]
+    // isMobile: boolean
 }
 
-export default function Post({post, related, isMobile}: PostProps) {
+export default function Post({post}: PostProps) {
 
-    console.log('post',post)
-    console.log('related',related)
-    console.log('isMobile',isMobile)
+    console.log('post', post)
+    // console.log('related', related)
+    // console.log('isMobile', isMobile)
 
     // const { t } = useTranslation()
     // const [current, setCurrent] = useState(0)
@@ -197,6 +197,13 @@ export const getServerSideProps: GetServerSideProps = async ({
                                                                  query,
                                                                  req,
                                                              }) => {
+
+    // const UA = req.headers['user-agent']
+    // const isMobile = Boolean(
+    //     UA?.match(
+    //         /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+    //     )
+    // )
     const {data: post} = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`
     )
@@ -207,33 +214,25 @@ export const getServerSideProps: GetServerSideProps = async ({
         }
     }
 
-    const related = await axios.get(
-        getUrl(
-            post.categoryId,
-            0,
-            5,
-            encodeURIComponent(post.title.split(' ')[0])
-        )
-    )
-
-    const UA = req.headers['user-agent']
-    const isMobile = Boolean(
-        UA?.match(
-            /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
-        )
-    )
+    // const related = await axios.get(
+    //     getUrl(
+    //         post.categoryId,
+    //         0,
+    //         5,
+    //         encodeURIComponent(post.title.split(' ')[0])
+    //     )
+    // )
 
     return {
         props: {
             post,
-            isMobile,
-            related: related.data.content.filter(
-                (x: PostInterface) => x.id !== post.id
-            ),
+            // isMobile,
+            // related: related.data.content.filter(
+            //     (x: PostInterface) => x.id !== post.id
+            // ),
             ...(await serverSideTranslations(locale as string, [
                 'common',
-                'post',
-            ])),
+                'post'])),
         },
     }
 }
