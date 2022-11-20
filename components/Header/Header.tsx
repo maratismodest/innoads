@@ -1,28 +1,29 @@
-import Button from "components/Button/Button";
-import Dropdown from "components/Dropdown/Dropdown";
-import {useAuth} from "context/AuthContext";
-import {useTranslation} from "next-i18next";
-import Link from "next/link";
-import {useRouter} from "next/router";
-import React, {useEffect, useState} from 'react';
-import {useDetectClickOutside} from "react-detect-click-outside";
-import {isMobile} from "react-device-detect";
-import Switch from "react-switch";
-import {Routes} from "./../../constants";
+import Button from 'components/Button/Button'
+import Dropdown from 'components/Dropdown/Dropdown'
+import { useAuth } from 'context/AuthContext'
+import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+// import {useDetectClickOutside} from "react-detect-click-outside";
+import { isMobile } from 'react-device-detect'
+import Switch from 'react-switch'
+import { Routes } from './../../constants'
 import classes from './Header.module.scss'
+import useOnClickOutsideRef from 'hooks/useOnClickOutsideRef'
 
 const Header = (): JSX.Element | null => {
-    const {t, i18n} = useTranslation()
-    const {user} = useAuth();
-    const [mounted, setMounted] = useState(false);
+    const { t, i18n } = useTranslation()
+    const { user } = useAuth()
+    const [mounted, setMounted] = useState(false)
     const [menu, setMenu] = useState(false)
 
-    const ref = useDetectClickOutside({onTriggered: () => setMenu(false)})
+    const ref = useOnClickOutsideRef(() => setMenu(false))
     const router = useRouter()
-    const {pathname, asPath, query} = router
+    const { pathname, asPath, query } = router
 
-    useEffect(() => setMounted(true), []);
-    if (!mounted) return null;
+    useEffect(() => setMounted(true), [])
+    if (!mounted) return null
 
 
     if (isMobile) {
@@ -67,10 +68,10 @@ const Header = (): JSX.Element | null => {
                                             onChange={async () => {
                                                 await router.push({
                                                     pathname,
-                                                    query
-                                                }, asPath, {locale: i18n.language === 'en' ? 'ru' : 'en'})
+                                                    query,
+                                                }, asPath, { locale: i18n.language === 'en' ? 'ru' : 'en' })
                                             }}
-                                            checked={i18n.language === 'en'}/>
+                                            checked={i18n.language === 'en'} />
                                     </li>
                                 </ul>
 
@@ -100,10 +101,10 @@ const Header = (): JSX.Element | null => {
                             onChange={async () => {
                                 await router.push({
                                     pathname,
-                                    query
-                                }, asPath, {locale: i18n.language === 'en' ? 'ru' : 'en'})
+                                    query,
+                                }, asPath, { locale: i18n.language === 'en' ? 'ru' : 'en' })
                             }}
-                            checked={i18n.language === 'en'}/>
+                            checked={i18n.language === 'en'} />
                     </div>
                     <Link href={Routes.favourites} title={t('favourite')}>
                         {t('favourite')}
@@ -121,7 +122,7 @@ const Header = (): JSX.Element | null => {
 
             </div>
         </nav>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header
