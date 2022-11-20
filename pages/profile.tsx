@@ -11,14 +11,13 @@ import jwt from 'jsonwebtoken'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
-import { GetServerSideProps } from 'next/types'
+import { GetStaticProps } from 'next/types'
 import React, { useEffect, useState } from 'react'
 // @ts-ignore
-// import TelegramLoginButton from 'react-telegram-login'
+import TelegramLoginButton from 'react-telegram-login'
 import profile from 'styles/Profile.module.scss'
 import classes from 'styles/classes.module.scss'
-import Script from 'next/script'
-import { awaitExpression } from '@babel/types'
+// import Script from 'next/script'
 
 const error =
     'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
@@ -35,25 +34,24 @@ export default function Profile() {
         if (!username) {
             return alert({ error })
         }
-        alert(username)
-        // try {
-        //     const { data } = await axios.post(
-        //         `${process.env.NEXT_PUBLIC_API_URL}/telegram`,
-        //         response,
-        //     )
-        //     const decoded = jwt.verify(
-        //         data.token,
-        //         `${process.env.NEXT_PUBLIC_JWT_SECRET}`,
-        //     )
-        //
-        //     if (decoded) {
-        //         localStorage.setItem('token', data.token)
-        //         login(decoded as UserProps)
-        //     }
-        //     return
-        // } catch (e) {
-        //     console.log(e)
-        // }
+        try {
+            const { data } = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/telegram`,
+                response,
+            )
+            const decoded = jwt.verify(
+                data.token,
+                `${process.env.NEXT_PUBLIC_JWT_SECRET}`,
+            )
+
+            if (decoded) {
+                localStorage.setItem('token', data.token)
+                login(decoded as UserProps)
+            }
+            return
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     useEffect(() => {
@@ -64,27 +62,21 @@ export default function Profile() {
 
     if (!user) {
 
-        //
-        // <Script type="text/javascript">
-        //     function onTelegramAuth(user) {
-        //     alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-        // }
-        // </Script>
         return (
             <MainLayout title={titles.profile}>
                 <div className={classes.center}>
                     <h2>{t('authorization')}</h2>
 
-                    <Script async={true}
-                            src={'https://telegram.org/js/telegram-widget.js?21'}
-                            data-telegram-login='InnoAdsPostBot'
-                            data-size='large'
-                            data-onauth={handleTelegramResponse}
-                            data-request-access='write' />
-                    {/*<TelegramLoginButton*/}
-                    {/*    dataOnauth={handleTelegramResponse}*/}
-                    {/*    botName="InnoAdsPostBot"*/}
-                    {/*/>*/}
+                    {/*<Script async={true}*/}
+                    {/*        src={'https://telegram.org/js/telegram-widget.js?21'}*/}
+                    {/*        data-telegram-login='InnoAdsPostBot'*/}
+                    {/*        data-size='large'*/}
+                    {/*        data-onauth="han"*/}
+                    {/*        data-request-access='write' />*/}
+                    <TelegramLoginButton
+                        dataOnauth={handleTelegramResponse}
+                        botName="InnoAdsPostBot"
+                    />
                 </div>
             </MainLayout>
         )
@@ -134,7 +126,7 @@ export default function Profile() {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
             ...(await serverSideTranslations(locale as string, [
