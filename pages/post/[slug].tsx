@@ -16,6 +16,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react'
 import item from 'styles/Post.module.scss'
 import classes from 'styles/classes.module.scss'
 import {getDictionary} from "../../functions/getDictionary";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 interface PostProps {
     post: PostInterface
@@ -224,6 +225,10 @@ export const getServerSideProps: GetServerSideProps = async ({
             related: related.data.content.filter(
                 (x: PostInterface) => x.id !== post.id
             ),
-            ...(await getDictionary(locale, ['post']))        },
+            ...(await serverSideTranslations(locale as string, [
+                'common',
+                'post',
+            ])),
+        },
     }
 }
