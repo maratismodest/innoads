@@ -11,10 +11,10 @@ import jwt from 'jsonwebtoken'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
-import { GetStaticProps } from 'next/types'
+import { GetServerSideProps } from 'next/types'
 import React, { useEffect, useState } from 'react'
 // @ts-ignore
-import TelegramLoginButton from 'react-telegram-login'
+// import TelegramLoginButton from 'react-telegram-login'
 import profile from 'styles/Profile.module.scss'
 import classes from 'styles/classes.module.scss'
 import Script from 'next/script'
@@ -77,7 +77,7 @@ export default function Profile() {
                             src={'https://telegram.org/js/telegram-widget.js?21'}
                             data-telegram-login='InnoAdsPostBot'
                             data-size='large'
-                            data-onauth={(user: any)=>console.log('user',user)}
+                            data-onauth={(user: any) => console.log('user', user)}
                             data-request-access='write' />
                     {/*<TelegramLoginButton*/}
                     {/*    dataOnauth={handleTelegramResponse}*/}
@@ -132,7 +132,7 @@ export default function Profile() {
     )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     return {
         props: {
             ...(await serverSideTranslations(locale as string, [
