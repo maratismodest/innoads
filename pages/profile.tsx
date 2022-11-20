@@ -78,7 +78,7 @@ export default function Profile() {
                             src={'https://telegram.org/js/telegram-widget.js?21'}
                             data-telegram-login='InnoAdsPostBot'
                             data-size='large'
-                            data-onauth={async (user: any) => await handleTelegramResponse(user)}
+                            data-onauth='handleTelegramResponse(user)'
                             data-request-access='write' />
                     {/*<TelegramLoginButton*/}
                     {/*    dataOnauth={handleTelegramResponse}*/}
