@@ -1,6 +1,6 @@
 import React, {ReactNode} from "react";
-import {useDetectClickOutside} from "react-detect-click-outside";
 import dropdown from './Dropdown.module.scss'
+import useOnClickOutsideRef from "hooks/useOnClickOutsideRef";
 
 interface DropdownProps {
     closeToggle: (e: Event) => void
@@ -8,9 +8,10 @@ interface DropdownProps {
 }
 
 const Dropdown = ({closeToggle, children}: DropdownProps): JSX.Element => {
-    const ref = useDetectClickOutside({onTriggered: closeToggle});
+    const modalRef = useOnClickOutsideRef(() => closeToggle)
+
     return (
-        <div className={dropdown.dropdown} ref={ref}>
+        <div className={dropdown.dropdown} ref={modalRef}>
             {children}
         </div>
     );

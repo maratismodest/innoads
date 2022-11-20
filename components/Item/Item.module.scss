@@ -106,3 +106,9 @@
 .cover {
   object-fit: cover;
 }
+
+.modal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20%
+}

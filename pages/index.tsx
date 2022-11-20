@@ -25,8 +25,8 @@ const Categories = dynamic(() => import('components/Categories/Categories'), {
 })
 
 interface HomeProps {
-    posts: PostInterface[]
-    totalPages: number
+    posts: PostInterface[];
+    totalPages: number;
 }
 
 type SearchSubmitForm = {
@@ -59,7 +59,6 @@ const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
             return posts
         } catch (e) {
             console.log(e)
-            return []
         }
     }, [page])
 
@@ -70,21 +69,17 @@ const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
         })
 
     return (
-        <MainLayout
-            title={SEO_TITLE}
-            image={SEO_IMAGE}
-            description={SEO_DESCRIPTION}
-        >
+        <MainLayout>
             <form className={home.search} onSubmit={handleSubmit(onSubmit)}>
                 <Search
-                    type="text"
+                    type='text'
                     placeholder={t('search')}
-                    name="search"
+                    name='search'
                     required={true}
                     register={register}
                     className={home.searchInput}
                 />
-                <Button type="submit">{t('search')}</Button>
+                <Button type='submit'>{t('search')}</Button>
             </form>
             <Categories />
             <div className={home.header}>
@@ -107,9 +102,7 @@ const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
                     }
                 >
                     <ul className={classes.items}>
-                        {infinite.map((post: PostInterface) => {
-                            return <Item post={post} key={post.slug} />
-                        })}
+                        {infinite.map((post: PostInterface) => <Item post={post} key={post.slug} />)}
                     </ul>
                 </InfiniteScroll>
             </div>

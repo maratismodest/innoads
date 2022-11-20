@@ -17,6 +17,7 @@ import React, { useEffect, useState } from 'react'
 import TelegramLoginButton from 'react-telegram-login'
 import profile from 'styles/Profile.module.scss'
 import classes from 'styles/classes.module.scss'
+import Script from 'next/script'
 
 const error =
     'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
@@ -26,7 +27,9 @@ export default function Profile() {
     const { user, login, logout } = useAuth()
     const { t } = useTranslation('profile')
 
+
     const handleTelegramResponse = async (response: any) => {
+        console.log(response)
         const { username } = response
         if (!username) {
             return alert({ error })
@@ -34,11 +37,11 @@ export default function Profile() {
         try {
             const { data } = await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/telegram`,
-                response
+                response,
             )
             const decoded = jwt.verify(
                 data.token,
-                `${process.env.NEXT_PUBLIC_JWT_SECRET}`
+                `${process.env.NEXT_PUBLIC_JWT_SECRET}`,
             )
 
             if (decoded) {
@@ -58,14 +61,27 @@ export default function Profile() {
     }, [user])
 
     if (!user) {
+
+        //
+        // <Script type="text/javascript">
+        //     function onTelegramAuth(user) {
+        //     alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
+        // }
+        // </Script>
         return (
             <MainLayout title={titles.profile}>
                 <div className={classes.center}>
                     <h2>{t('authorization')}</h2>
-                    <TelegramLoginButton
-                        dataOnauth={handleTelegramResponse}
-                        botName="InnoAdsPostBot"
-                    />
+                    <Script async={true}
+                            src={'https://telegram.org/js/telegram-widget.js?21'}
+                            data-telegram-login='InnoAdsPostBot'
+                            data-size='large'
+                            data-onauth={handleTelegramResponse}
+                            data-request-access='write' />
+                    {/*<TelegramLoginButton*/}
+                    {/*    dataOnauth={handleTelegramResponse}*/}
+                    {/*    botName="InnoAdsPostBot"*/}
+                    {/*/>*/}
                 </div>
             </MainLayout>
         )

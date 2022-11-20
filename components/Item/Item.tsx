@@ -191,7 +191,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                     <p>{modalText}</p>
                     <hr />
                     <div
-                        style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20%' }}
+                        className={classes.modal}
                     >
                         <Button onClick={handleFunction}>Да</Button>
                         <Button onClick={hideModal}>Нет</Button>

@@ -1,5 +1,6 @@
-import React, {ChangeEventHandler, HTMLInputTypeAttribute, ReactNode} from "react";
+import React, { ChangeEventHandler, HTMLInputTypeAttribute, ReactNode } from 'react'
 import classes from './Input.module.scss'
+import cn from 'classnames'
 
 interface InputProp {
     children?: ReactNode,
@@ -15,7 +16,8 @@ interface InputProp {
     accept?: string,
     defaultValue?: string | number | string[] | undefined
     value?: any,
-    style?: any
+    style?: any,
+    className?: string
 }
 
 const Input = ({
@@ -26,33 +28,15 @@ const Input = ({
                    onChange,
                    register,
                    hidden = false,
-                   type = "text",
+                   type = 'text',
                    placeholder,
                    multiple = false,
                    accept,
                    defaultValue,
+                   className,
                    ...props
                }: InputProp): JSX.Element => {
-    if (register) {
-        return (
-            <input
-                id={id}
-                accept={accept}
-                hidden={hidden}
-                type={type}
-                placeholder={placeholder}
-                className={classes.input}
-                {...register(name, {required})}
-                onChange={onChange}
-                multiple={multiple}
-                defaultValue={defaultValue}
-                {...props}
-
-            >
-                {children}
-            </input>
-        )
-    }
+    const formRegister = register ? { ...register(name, { required }) } : null
     return (
         <input id={id}
                hidden={hidden}
@@ -61,9 +45,12 @@ const Input = ({
                defaultValue={defaultValue}
                onChange={onChange}
                placeholder={placeholder}
-               className={classes.input}
+               className={cn(classes.input, className)}
                multiple={multiple}
-               {...props}>
+               {...formRegister}
+               {...props}
+
+        >
             {children}
         </input>
     )

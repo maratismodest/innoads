@@ -16,36 +16,39 @@ import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import InfiniteScroll from 'react-infinite-scroller'
 import classes from 'styles/classes.module.scss'
+import search from 'styles/Search.module.scss'
+import { useTranslation } from 'next-i18next'
 
 const SearchPage: NextPage = () => {
+    const { t } = useTranslation()
     const router = useRouter()
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
     const [infinite, setInfinite] = useState([])
     const [input, setInput] = useState('')
     const [category, setCategory] = useState(
-        Number(router.query['category']) || 1
+        Number(router.query['category']) || 1,
     )
     const debouncedValue = useDebounce<string>(input, 500)
 
     const loadFunc = useCallback(
         async (currentPage: number = page) => {
             const response = await axios.get(
-                getUrl(category, currentPage, isMobile ? 8 : 15, debouncedValue)
+                getUrl(category, currentPage, isMobile ? 8 : 15, debouncedValue),
             )
             const posts: PostInterface[] = orderBy(
                 response.data.content,
                 ['createdAt'],
-                ['desc']
+                ['desc'],
             )
             setPage((prevState) => prevState + 1)
             // @ts-ignore
             setInfinite((prevState: PostInterface[]) =>
-                currentPage === 0 ? posts : [...prevState, ...posts]
+                currentPage === 0 ? posts : [...prevState, ...posts],
             )
             setHasMore(currentPage + 1 < response.data.totalPages)
         },
-        [page, category, debouncedValue]
+        [page, category, debouncedValue],
     )
 
     useEffect(() => {
@@ -64,12 +67,12 @@ const SearchPage: NextPage = () => {
     }, [router.query])
 
     return (
-        <MainLayout title="Доска объявлений города Иннополис">
-            <h1 className={classes.title}>Поиск</h1>
+        <MainLayout>
+            <h1 className={classes.title}>{t('search')}</h1>
             <hr />
             <SelectInno
                 options={options}
-                name="category"
+                name='category'
                 required={true}
                 onChange={(event: any) => {
                     setCategory(event.value)
@@ -77,14 +80,14 @@ const SearchPage: NextPage = () => {
                 value={options.find((x) => x.value === category)}
             />
             <Input
-                type="text"
+                type='text'
                 placeholder={'Например, ноутбук'}
-                name="search"
+                name='search'
                 required={true}
                 defaultValue={router.query.keyword}
                 value={input}
                 onChange={handleChange}
-                style={{ marginTop: 10, width: '-webkit-fill-available' }}
+                className={search.searchInput}
             />
             <hr />
             <div className={classes.magicWrapper}>
@@ -101,9 +104,7 @@ const SearchPage: NextPage = () => {
                     }
                 >
                     <ul className={classes.items}>
-                        {infinite.map((post: PostInterface) => {
-                            return <Item post={post} key={post.slug} />
-                        })}
+                        {infinite.map((post: PostInterface) => <Item post={post} key={post.slug} />)}
                     </ul>
                 </InfiniteScroll>
             </div>
@@ -116,7 +117,7 @@ export default SearchPage
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale as string, ['common'])),
+            ...(await serverSideTranslations(locale as string, ['common', 'search'])),
         },
     }
 }

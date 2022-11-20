@@ -32,8 +32,6 @@ import React, { useMemo, useState } from 'react'
 import { isDesktop } from 'react-device-detect'
 import { Controller, useForm } from 'react-hook-form'
 // @ts-ignore
-import TelegramLoginButton from 'react-telegram-login'
-// @ts-ignore
 import slug from 'slug'
 import classes from 'styles/classes.module.scss'
 
@@ -48,7 +46,7 @@ export default function Add() {
         handleSubmit,
         formState: { errors },
     } = useForm()
-    const { user, token } = useAuth()
+    const { user } = useAuth()
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
@@ -171,7 +169,7 @@ export default function Add() {
 
     const ErrorBlock = ({ name }: ErrorProps) => {
         if (errors[name]) {
-            return <span>{t('required')}</span>
+            return <span style={{color: 'red'}}>{t('required')}</span>
         }
         return null
     }

@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, {HTMLInputTypeAttribute, ReactNode} from "react";
+import React, { HTMLInputTypeAttribute, ReactNode } from 'react'
 import classes from './Search.module.scss'
 
 interface SearchProps {
@@ -14,29 +14,23 @@ interface SearchProps {
 }
 
 const Search = ({
-                           children,
-                           placeholder,
-                           type = 'text',
-                           name,
-                           required,
-                           className,
-                           register,
-                           defaultValue,
-                           ...props
-                       }: SearchProps) : JSX.Element => {
-    if (register) {
-        return (
-            <input type={type} defaultValue={defaultValue} placeholder={placeholder}
-                   className={cn(classes.input, className)} {...register(name, {required})} {...props}>
-                {children}
-            </input>
-        )
-    }
+                    children,
+                    placeholder,
+                    type = 'text',
+                    name,
+                    required,
+                    className,
+                    register,
+                    defaultValue,
+                    ...props
+                }: SearchProps): JSX.Element => {
+    const formRegister = register ? register(name, { required }) : null
     return (
         <input type={type} defaultValue={defaultValue} placeholder={placeholder}
-               className={cn(classes.input, className)} {...props}>
+               className={cn(classes.input, className)} {...formRegister} {...props}>
             {children}
         </input>
     )
+
 }
 export default Search
