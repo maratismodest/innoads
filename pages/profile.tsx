@@ -35,24 +35,25 @@ export default function Profile() {
         if (!username) {
             return alert({ error })
         }
-        try {
-            const { data } = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/telegram`,
-                response,
-            )
-            const decoded = jwt.verify(
-                data.token,
-                `${process.env.NEXT_PUBLIC_JWT_SECRET}`,
-            )
-
-            if (decoded) {
-                localStorage.setItem('token', data.token)
-                login(decoded as UserProps)
-            }
-            return
-        } catch (e) {
-            console.log(e)
-        }
+        alert(username)
+        // try {
+        //     const { data } = await axios.post(
+        //         `${process.env.NEXT_PUBLIC_API_URL}/telegram`,
+        //         response,
+        //     )
+        //     const decoded = jwt.verify(
+        //         data.token,
+        //         `${process.env.NEXT_PUBLIC_JWT_SECRET}`,
+        //     )
+        //
+        //     if (decoded) {
+        //         localStorage.setItem('token', data.token)
+        //         login(decoded as UserProps)
+        //     }
+        //     return
+        // } catch (e) {
+        //     console.log(e)
+        // }
     }
 
     useEffect(() => {
@@ -78,7 +79,7 @@ export default function Profile() {
                             src={'https://telegram.org/js/telegram-widget.js?21'}
                             data-telegram-login='InnoAdsPostBot'
                             data-size='large'
-                            data-onauth='handleTelegramResponse(user)'
+                            data-onauth={handleTelegramResponse(user)}
                             data-request-access='write' />
                     {/*<TelegramLoginButton*/}
                     {/*    dataOnauth={handleTelegramResponse}*/}
