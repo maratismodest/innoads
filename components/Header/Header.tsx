@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import {useDetectClickOutside} from "react-detect-click-outside";
+// import {useDetectClickOutside} from "react-detect-click-outside";
 import { isMobile } from 'react-device-detect'
 import Switch from 'react-switch'
 import { Routes } from './../../constants'
