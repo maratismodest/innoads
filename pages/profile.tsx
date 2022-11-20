@@ -72,11 +72,12 @@ export default function Profile() {
             <MainLayout title={titles.profile}>
                 <div className={classes.center}>
                     <h2>{t('authorization')}</h2>
+
                     <Script async={true}
                             src={'https://telegram.org/js/telegram-widget.js?21'}
                             data-telegram-login='InnoAdsPostBot'
                             data-size='large'
-                            data-onauth={handleTelegramResponse}
+                            data-onauth='handleTelegramResponse(response)'
                             data-request-access='write' />
                     {/*<TelegramLoginButton*/}
                     {/*    dataOnauth={handleTelegramResponse}*/}
