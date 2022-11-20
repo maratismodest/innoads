@@ -51,8 +51,8 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
     const { token } = useAuth()
 
     const [visible, setVisible] = useState(false)
-    const showModal = () => setVisible(true)
-    const hideModal = () => setVisible(false)
+    const showModal = useCallback(() => setVisible(true),[])
+    const hideModal = useCallback(() => setVisible(false),[])
 
     const [modalText, setModalText] = useState<ModalText | undefined>()
 
@@ -99,7 +99,6 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                     hideModal()
                 } else {
                     try {
-                        // await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram/post`, {...post})
                         await axios.post(
                             `${process.env.NEXT_PUBLIC_API_URL}/telegram/post`,
                             post,
@@ -188,14 +187,17 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
     return (
         <>
             <Modal visible={visible}>
-                <p>{modalText}</p>
-                <hr />
-                <div
-                    style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
-                    <Button onClick={handleFunction}>Да</Button>
-                    <Button onClick={hideModal}>Нет</Button>
+                <div>
+                    <p>{modalText}</p>
+                    <hr />
+                    <div
+                        style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20%' }}
+                    >
+                        <Button onClick={handleFunction}>Да</Button>
+                        <Button onClick={hideModal}>Нет</Button>
+                    </div>
                 </div>
+
             </Modal>
 
             <li key={slug} className={classes.item}>
@@ -276,17 +278,3 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
     )
 }
 export default Item
-
-// const translateTitle = useCallback(async (): Promise<void> => {
-//     const translate = await googleTranslateText(title);
-//     if (translate) {
-//         setHeader(translate)
-//     }
-// }, [title])
-//
-// useEffect(() => {
-//     if (i18n.language === 'en') {
-//         translateTitle();
-//     }
-//
-// }, [i18n, translateTitle]);

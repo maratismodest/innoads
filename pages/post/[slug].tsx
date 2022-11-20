@@ -15,7 +15,6 @@ import {GetServerSideProps} from 'next/types'
 import React, {useEffect, useMemo, useRef, useState} from 'react'
 import item from 'styles/Post.module.scss'
 import classes from 'styles/classes.module.scss'
-import {getDictionary} from "../../functions/getDictionary";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 interface PostProps {

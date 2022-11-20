@@ -1,11 +1,11 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
+import React, {useEffect, useRef} from 'react'
 
 interface ModalProps {
     visible: boolean
     children: React.ReactNode
 }
 
-const Modal = ({ visible, children }: ModalProps) => {
+const Modal = ({visible, children}: ModalProps) => {
     const ref = useRef<HTMLDialogElement>(null)
 
     useEffect(() => {

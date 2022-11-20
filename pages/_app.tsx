@@ -11,14 +11,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <AuthProvider>
-                {/*<ModalProvider>*/}
                 <Component {...pageProps} />
                 <YMInitializer
                     accounts={[88487475]}
                     options={{ webvisor: true, differ: true }}
                     version="2"
                 />
-                {/*</ModalProvider>*/}
             </AuthProvider>
         </>
     )
