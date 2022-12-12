@@ -12,6 +12,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'next-i18next'
 
 interface ItemInterface {
     post: PostInterface
@@ -46,7 +47,7 @@ enum ModalText {
 const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
     const [favourite, setFavourite] = useState(false)
     const { id, slug, title, preview, price } = post
-    // const { t } = useTranslation('profile')
+    const { t } = useTranslation('profile')
     const router = useRouter()
     const { token } = useAuth()
 
@@ -201,7 +202,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                 {edit && (
                     <>
                         <Button
-                            // title={t('delete')}
+                            title={t('delete') as string}
                             className={cn(
                                 classes.itemBtn,
                                 classes.itemBtnDelete
@@ -215,7 +216,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             &#10008;
                         </Button>
                         <Button
-                            // title={t('edit')}
+                            title={t('edit') as string}
                             className={cn(classes.itemBtn, classes.itemBtnEdit)}
                             onClick={() => {
                                 setModalText(ModalText.edit)
@@ -226,7 +227,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             &#10000;
                         </Button>
                         <Button
-                            // title={t('publishAgain')}
+                            title={t('publishAgain') as string}
                             className={cn(
                                 classes.itemBtn,
                                 classes.itemBtnPromote

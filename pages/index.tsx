@@ -6,7 +6,6 @@ import Search from 'components/Search/Search'
 import Spinner from 'components/Spinner/Spinner'
 import { getUrl } from 'functions/getUrl'
 import { PostInterface } from 'interfaces'
-import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next/types'
@@ -127,7 +126,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         props: {
             posts,
             totalPages,
-            ...(await serverSideTranslations(locale as string, ['common'])),
+            ...(await serverSideTranslations(locale ?? 'ru', ['common'])),
         },
         revalidate: 180,
     }
