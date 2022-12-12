@@ -3,7 +3,7 @@ import axios from 'axios'
 import cn from 'classnames'
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
-import MainLayout from 'components/MainLayout/MainLayout'
+import MainLayout from 'components/Layout/Layout'
 import { useAuth, UserProps } from 'context/AuthContext'
 import { getUserPosts } from 'functions/getUserPosts'
 import { PostInterface } from 'interfaces'
@@ -17,6 +17,7 @@ import React, { useEffect, useState } from 'react'
 import TelegramLoginButton from 'react-telegram-login'
 import profile from 'styles/Profile.module.scss'
 import classes from 'styles/classes.module.scss'
+
 // import Script from 'next/script'
 
 const error =
@@ -27,7 +28,6 @@ export default function Profile() {
     const { user, login, logout } = useAuth()
     const { t } = useTranslation('profile')
 
-
     const handleTelegramResponse = async (response: any) => {
         console.log(response)
         const { username } = response
@@ -37,11 +37,11 @@ export default function Profile() {
         try {
             const { data } = await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/telegram`,
-                response,
+                response
             )
             const decoded = jwt.verify(
                 data.token,
-                `${process.env.NEXT_PUBLIC_JWT_SECRET}`,
+                `${process.env.NEXT_PUBLIC_JWT_SECRET}`
             )
 
             if (decoded) {
@@ -61,7 +61,6 @@ export default function Profile() {
     }, [user])
 
     if (!user) {
-
         return (
             <MainLayout title={titles.profile}>
                 <div className={classes.center}>
@@ -99,7 +98,7 @@ export default function Profile() {
                 <div className={profile.addBlock}>
                     <Link href={Routes.add}>
                         <Button
-                            title={t('addAd', { ns: 'common' })}
+                            title={t('addAd', { ns: 'common' }) as string}
                             className={cn(classes.centerBtn, classes.mt20)}
                         >
                             &#43;
@@ -111,7 +110,7 @@ export default function Profile() {
                     </p>
                     <Link href={Routes.add}>
                         <Button
-                            title={t('addAd', { ns: 'common' })}
+                            title={t('addAd', { ns: 'common' }) as string}
                             className={cn(classes.centerBtn, classes.mt20)}
                         >
                             {t('addAd', { ns: 'common' })}

@@ -7,7 +7,7 @@ import Button from 'components/Button/Button'
 import { useAuth } from 'context/AuthContext'
 import dayjs from 'dayjs'
 import { PostInterface } from 'interfaces'
-import { useTranslation } from 'next-i18next'
+// import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -46,13 +46,13 @@ enum ModalText {
 const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
     const [favourite, setFavourite] = useState(false)
     const { id, slug, title, preview, price } = post
-    const { t } = useTranslation('profile')
+    // const { t } = useTranslation('profile')
     const router = useRouter()
     const { token } = useAuth()
 
     const [visible, setVisible] = useState(false)
-    const showModal = useCallback(() => setVisible(true),[])
-    const hideModal = useCallback(() => setVisible(false),[])
+    const showModal = useCallback(() => setVisible(true), [])
+    const hideModal = useCallback(() => setVisible(false), [])
 
     const [modalText, setModalText] = useState<ModalText | undefined>()
 
@@ -190,21 +190,18 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                 <div>
                     <p>{modalText}</p>
                     <hr />
-                    <div
-                        className={classes.modal}
-                    >
+                    <div className={classes.modal}>
                         <Button onClick={handleFunction}>Да</Button>
                         <Button onClick={hideModal}>Нет</Button>
                     </div>
                 </div>
-
             </Modal>
 
             <li key={slug} className={classes.item}>
                 {edit && (
                     <>
                         <Button
-                            title={t('delete')}
+                            // title={t('delete')}
                             className={cn(
                                 classes.itemBtn,
                                 classes.itemBtnDelete
@@ -218,7 +215,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             &#10008;
                         </Button>
                         <Button
-                            title={t('edit')}
+                            // title={t('edit')}
                             className={cn(classes.itemBtn, classes.itemBtnEdit)}
                             onClick={() => {
                                 setModalText(ModalText.edit)
@@ -229,7 +226,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             &#10000;
                         </Button>
                         <Button
-                            title={t('publishAgain')}
+                            // title={t('publishAgain')}
                             className={cn(
                                 classes.itemBtn,
                                 classes.itemBtnPromote

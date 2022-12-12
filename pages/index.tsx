@@ -1,32 +1,32 @@
-import Modal from '../components/Modal/Modal'
-import { Routes, SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE } from '../constants'
 import axios from 'axios'
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
-import MainLayout from 'components/MainLayout/MainLayout'
+import Layout from 'components/Layout/Layout'
 import Search from 'components/Search/Search'
 import Spinner from 'components/Spinner/Spinner'
 import { getUrl } from 'functions/getUrl'
 import { PostInterface } from 'interfaces'
 import type { NextPage } from 'next'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import InfiniteScroll from 'react-infinite-scroller'
-import home from 'styles/Home.module.scss'
 import classes from 'styles/classes.module.scss'
+import home from 'styles/Home.module.scss'
+
+import { Routes } from '../constants'
 
 const Categories = dynamic(() => import('components/Categories/Categories'), {
     ssr: true,
 })
 
 interface HomeProps {
-    posts: PostInterface[];
-    totalPages: number;
+    posts: PostInterface[]
+    totalPages: number
 }
 
 type SearchSubmitForm = {
@@ -34,8 +34,8 @@ type SearchSubmitForm = {
 }
 
 const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
-    const { t } = useTranslation()
     const router = useRouter()
+    const { t } = useTranslation()
     const [page, setPage] = useState(0)
     const [hasMore, setHasMore] = useState(true)
     const { handleSubmit, register } = useForm<SearchSubmitForm>({
@@ -69,11 +69,11 @@ const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
         })
 
     return (
-        <MainLayout>
+        <Layout>
             <form className={home.search} onSubmit={handleSubmit(onSubmit)}>
                 <Search
                     type='text'
-                    placeholder={t('search')}
+                    placeholder={t('search') as string}
                     name='search'
                     required={true}
                     register={register}
@@ -85,7 +85,7 @@ const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
             <div className={home.header}>
                 <h1 className={classes.title}>{t('lastAds')}</h1>
                 <span>
-                    * {count} {t('ads')}
+                    {count} {t('ads')}
                 </span>
             </div>
             <div className={classes.magicWrapper}>
@@ -102,11 +102,13 @@ const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
                     }
                 >
                     <ul className={classes.items}>
-                        {infinite.map((post: PostInterface) => <Item post={post} key={post.slug} />)}
+                        {infinite.map((post: PostInterface) => (
+                            <Item post={post} key={post.slug} />
+                        ))}
                     </ul>
                 </InfiniteScroll>
             </div>
-        </MainLayout>
+        </Layout>
     )
 }
 
@@ -127,7 +129,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
             totalPages,
             ...(await serverSideTranslations(locale as string, ['common'])),
         },
-        revalidate: 60,
+        revalidate: 180,
     }
 }
 

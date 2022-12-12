@@ -1,5 +1,5 @@
 import Item from 'components/Item/Item'
-import MainLayout from 'components/MainLayout/MainLayout'
+import MainLayout from 'components/Layout/Layout'
 import { PostInterface } from 'interfaces'
 import { NextPage } from 'next'
 import { useTranslation } from 'next-i18next'

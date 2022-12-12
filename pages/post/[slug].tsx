@@ -1,21 +1,21 @@
-import {Routes, tgLink} from '../../constants'
-import {options} from 'assets/options'
+import { Routes, tgLink } from '../../constants'
+import { options } from 'assets/options'
 import axios from 'axios'
 import cn from 'classnames'
 import Button from 'components/Button/Button'
-import Item, {Price} from 'components/Item/Item'
-import MainLayout from 'components/MainLayout/MainLayout'
+import Item, { Price } from 'components/Item/Item'
+import MainLayout from 'components/Layout/Layout'
 import dayjs from 'dayjs'
-import {getUrl} from 'functions/getUrl'
-import {PostInterface} from 'interfaces'
-import {useTranslation} from 'next-i18next'
+import { getUrl } from 'functions/getUrl'
+import { PostInterface } from 'interfaces'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
 import Link from 'next/link'
-import {GetServerSideProps} from 'next/types'
-import React, {useEffect, useMemo, useRef, useState} from 'react'
+import { GetServerSideProps } from 'next/types'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import item from 'styles/Post.module.scss'
 import classes from 'styles/classes.module.scss'
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 interface PostProps {
     post: PostInterface
@@ -23,13 +23,12 @@ interface PostProps {
     isMobile: boolean
 }
 
-export default function Post({post, related, isMobile}: PostProps) {
-
+export default function Post({ post, related, isMobile }: PostProps) {
     console.log('post', post)
     // console.log('related', related)
     // console.log('isMobile', isMobile)
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const [current, setCurrent] = useState(0)
     const [mounted, setMounted] = useState(false)
     const ul = useRef<HTMLUListElement>(null)
@@ -94,7 +93,7 @@ export default function Post({post, related, isMobile}: PostProps) {
             author={`https://t.me/${telegram}`}
         >
             <div className={item.post}>
-                <div style={{position: 'relative'}}>
+                <div style={{ position: 'relative' }}>
                     <ul className={item.carousel} ref={ul}>
                         {images.map((image: string, index: number) => {
                             return (
@@ -137,29 +136,29 @@ export default function Post({post, related, isMobile}: PostProps) {
                     passHref
                 >
                     <p>
-                        {t('category', {ns: 'post'})}:{' '}
+                        {t('category', { ns: 'post' })}:{' '}
                         <span>{t(category.label)}</span>
                     </p>
                 </Link>
                 <h1>{title}</h1>
                 <p className={item.price}>
-                    <Price price={price}/>
+                    <Price price={price} />
                 </p>
-                <hr/>
+                <hr />
                 <pre className={classes.paragraph}>{body}</pre>
                 <p className={classes.mt20}>
-                    {t('published', {ns: 'post'})}:{' '}
+                    {t('published', { ns: 'post' })}:{' '}
                     {dayjs(createdAt).format('DD.MM.YYYY')}
                 </p>
                 <div className={classes.mt40}>
                     <Link href={tgLink + '/' + telegram} passHref={true}>
-                        <Button>{t('textAuthor', {ns: 'post'})}</Button>
+                        <Button>{t('textAuthor', { ns: 'post' })}</Button>
                     </Link>
                 </div>
 
                 <div className={classes.mt40}>
                     <Link href={`/user/${post.tgId}`} passHref>
-                        <Button>{t('userAds', {ns: 'post'})}</Button>
+                        <Button>{t('userAds', { ns: 'post' })}</Button>
                     </Link>
                 </div>
 
@@ -168,7 +167,7 @@ export default function Post({post, related, isMobile}: PostProps) {
                         className={cn(classes.mt40, item.share)}
                         onClick={async () => await navigator.share(shareData)}
                     >
-                        {t('share', {ns: 'post'})}
+                        {t('share', { ns: 'post' })}
                     </Button>
                 )}
                 {related.length > 0 && (
@@ -176,7 +175,7 @@ export default function Post({post, related, isMobile}: PostProps) {
                         <h2>Похожие объявления</h2>
                         <ul className={classes.related}>
                             {related.map((post: PostInterface) => {
-                                return <Item post={post} key={post.slug}/>
+                                return <Item post={post} key={post.slug} />
                             })}
                         </ul>
                     </div>
@@ -187,18 +186,17 @@ export default function Post({post, related, isMobile}: PostProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({
-                                                                 locale,
-                                                                 query,
-                                                                 req,
-                                                             }) => {
-
+    locale,
+    query,
+    req,
+}) => {
     const UA = req.headers['user-agent']
     const isMobile = Boolean(
         UA?.match(
             /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
         )
     )
-    const {data: post} = await axios.get(
+    const { data: post } = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`
     )
 

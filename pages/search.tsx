@@ -2,22 +2,29 @@ import { options } from 'assets/options'
 import axios from 'axios'
 import Input from 'components/Input/Input'
 import Item from 'components/Item/Item'
-import MainLayout from 'components/MainLayout/MainLayout'
-import SelectInno from 'components/Select/Select'
+import MainLayout from 'components/Layout/Layout'
 import Spinner from 'components/Spinner/Spinner'
 import { getUrl } from 'functions/getUrl'
 import useDebounce from 'hooks/useDebounce'
 import { PostInterface } from 'interfaces'
 import { orderBy } from 'lodash'
 import type { GetStaticProps, NextPage } from 'next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, {
+    ChangeEvent,
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+} from 'react'
 import { isMobile } from 'react-device-detect'
 import InfiniteScroll from 'react-infinite-scroller'
-import classes from 'styles/classes.module.scss'
 import search from 'styles/Search.module.scss'
-import { useTranslation } from 'next-i18next'
+import classes from 'styles/classes.module.scss'
+import selectStyles from 'styles/select.module.scss'
+import cn from 'classnames'
 
 const SearchPage: NextPage = () => {
     const { t } = useTranslation()
@@ -30,6 +37,17 @@ const SearchPage: NextPage = () => {
         Number(router.query['category']) || 1,
     )
     const debouncedValue = useDebounce<string>(input, 500)
+
+    const translatedOptions = useMemo(
+        () =>
+            options.map((option) => {
+                return {
+                    ...option,
+                    label: t(option.label),
+                }
+            }),
+        [t],
+    )
 
     const loadFunc = useCallback(
         async (currentPage: number = page) => {
@@ -70,15 +88,12 @@ const SearchPage: NextPage = () => {
         <MainLayout>
             <h1 className={classes.title}>{t('search')}</h1>
             <hr />
-            <SelectInno
-                options={options}
-                name='category'
-                required={true}
-                onChange={(event: any) => {
-                    setCategory(event.value)
-                }}
-                value={options.find((x) => x.value === category)}
-            />
+            <select className={cn(selectStyles.select, 'select-css')}
+                    onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+                        setCategory(Number(event.target.value))
+                    }}>
+                {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
+            </select>
             <Input
                 type='text'
                 placeholder={'Например, ноутбук'}
@@ -104,7 +119,9 @@ const SearchPage: NextPage = () => {
                     }
                 >
                     <ul className={classes.items}>
-                        {infinite.map((post: PostInterface) => <Item post={post} key={post.slug} />)}
+                        {infinite.map((post: PostInterface) => (
+                            <Item post={post} key={post.slug} />
+                        ))}
                     </ul>
                 </InfiniteScroll>
             </div>
@@ -117,7 +134,10 @@ export default SearchPage
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale as string, ['common', 'search'])),
+            ...(await serverSideTranslations(locale as string, [
+                'common',
+                'search',
+            ])),
         },
     }
 }

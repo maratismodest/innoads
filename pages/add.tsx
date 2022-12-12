@@ -12,8 +12,7 @@ import Button from 'components/Button/Button'
 import GoToProfile from 'components/GoToProfile/GoToProfile'
 import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
-import MainLayout from 'components/MainLayout/MainLayout'
-import SelectInno from 'components/Select/Select'
+import MainLayout from 'components/Layout/Layout'
 import Spinner from 'components/Spinner/Spinner'
 import { useAuth } from 'context/AuthContext'
 import antimat from 'functions/antimat'
@@ -30,10 +29,12 @@ import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next/types'
 import React, { useMemo, useState } from 'react'
 import { isDesktop } from 'react-device-detect'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 // @ts-ignore
 import slug from 'slug'
 import classes from 'styles/classes.module.scss'
+
+import selectStyles from 'styles/select.module.scss'
 
 export default function Add() {
     const router = useRouter()
@@ -58,7 +59,7 @@ export default function Add() {
                     label: t(option.label),
                 }
             }),
-        [t]
+        [t],
     )
 
     if (!user || !user.username) {
@@ -100,7 +101,7 @@ export default function Add() {
                     headers: {
                         authorization: `Bearer ${token}`,
                     },
-                }
+                },
             )
 
             await axios.post(
@@ -110,7 +111,7 @@ export default function Add() {
                     headers: {
                         authorization: `Bearer ${token}`,
                     },
-                }
+                },
             )
 
             alert('Ваше объявление создано!')
@@ -169,7 +170,7 @@ export default function Add() {
 
     const ErrorBlock = ({ name }: ErrorProps) => {
         if (errors[name]) {
-            return <span style={{color: 'red'}}>{t('required')}</span>
+            return <span style={{ color: 'red' }}>{t('required')}</span>
         }
         return null
     }
@@ -187,40 +188,45 @@ export default function Add() {
                     className={classes.form}
                 >
                     <h1 className={classes.title}>Новое объявление</h1>
-                    <Controller
-                        name="category"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }: any) => (
-                            <SelectInno
-                                placeholder={t('chooseCategory')}
-                                {...field}
-                                options={translatedOptions}
-                            />
-                        )}
-                    />
+                    <select
+                        className={cn(selectStyles.select, 'select-css')} {...register('category', { required: true })}>
+                        {translatedOptions.map(({ value, label }) => <option key={value}
+                                                                             value={value}>{t(label)}</option>)}
+                    </select>
+                    {/*<Controller*/}
+                    {/*    name="category"*/}
+                    {/*    control={control}*/}
+                    {/*    rules={{ required: true }}*/}
+                    {/*    render={({ field }: any) => (*/}
+                    {/*        <SelectInno*/}
+                    {/*            placeholder={t('chooseCategory')}*/}
+                    {/*            {...field}*/}
+                    {/*            options={translatedOptions}*/}
+                    {/*        />*/}
+                    {/*    )}*/}
+                    {/*/>*/}
                     <ErrorBlock name={'category'} />
                     <div style={{ marginBottom: 10 }}></div>
                     <Input
-                        type="number"
-                        placeholder={t('price')}
+                        type='number'
+                        placeholder={t('price') as string}
                         register={register}
                         required={true}
-                        name="price"
+                        name='price'
                     />
                     <ErrorBlock name={'price'} />
                     <Input
-                        type="text"
-                        placeholder={t('header')}
+                        type='text'
+                        placeholder={t('header') as string}
                         register={register}
                         required={true}
-                        name="title"
+                        name='title'
                     />
                     <ErrorBlock name={'title'} />
                     <textarea
                         rows={5}
                         cols={5}
-                        placeholder={t('description')}
+                        placeholder={t('description') as string}
                         {...register('body', { required: true })}
                         className={classes.textArea}
                     />
@@ -236,16 +242,16 @@ export default function Add() {
                                 onClick={onImageClick}
                             >
                                 <Image
-                                    alt="image"
+                                    alt='image'
                                     src={NO_IMAGE}
-                                    objectFit="cover"
-                                    layout="fill"
+                                    fill={true}
+                                    objectFit={'cover'}
                                 />
                             </div>
                         </div>
                         <Input
-                            id="upload"
-                            type="file"
+                            id='upload'
+                            type='file'
                             onChange={imageHandler}
                             hidden
                             multiple
@@ -271,9 +277,9 @@ export default function Add() {
                                     <Image
                                         alt={image}
                                         src={image}
-                                        objectFit="cover"
-                                        layout={'fill'}
-                                        placeholder="blur"
+                                        objectFit='cover'
+                                        fill={true}
+                                        placeholder='blur'
                                         blurDataURL={NO_IMAGE}
                                     />
                                     <Icon
@@ -284,7 +290,7 @@ export default function Add() {
                                                 images,
                                                 index,
                                                 MoveImage.left,
-                                                setImages
+                                                setImages,
                                             )
                                         }}
                                     >
@@ -298,7 +304,7 @@ export default function Add() {
                                                 images,
                                                 index,
                                                 MoveImage.right,
-                                                setImages
+                                                setImages,
                                             )
                                         }}
                                     >
@@ -331,7 +337,7 @@ export default function Add() {
                     {error}
                     <Button
                         className={classes.mt40}
-                        type="submit"
+                        type='submit'
                         disabled={sending || loading ? true : false}
                     >
                         {t('addAd')}

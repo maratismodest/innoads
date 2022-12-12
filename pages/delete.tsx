@@ -1,5 +1,5 @@
+import MainLayout from 'components/Layout/Layout'
 import MDX from 'components/MDX/delete.mdx'
-import MainLayout from 'components/MainLayout/MainLayout'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next/types'
 import React from 'react'
