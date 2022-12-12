@@ -1,9 +1,4 @@
-import {
-    ACCEPTED_IMAGE_FORMAT,
-    NO_IMAGE,
-    Routes,
-    titles,
-} from '../../constants'
+import { ACCEPTED_IMAGE_FORMAT, NO_IMAGE, Routes, titles } from '../../constants'
 import { options } from 'assets/options'
 import axios, { AxiosError } from 'axios'
 import cn from 'classnames'
@@ -12,7 +7,6 @@ import GoToProfile from 'components/GoToProfile/GoToProfile'
 import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
 import MainLayout from 'components/Layout/Layout'
-import SelectInno from 'components/Select/Select'
 import { useAuth } from 'context/AuthContext'
 import { handleDeleteImage } from 'functions/handleDeleteImage'
 import handleImageUpload from 'functions/handleImageUpload'
@@ -27,15 +21,16 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { useMemo, useState } from 'react'
 import { isDesktop } from 'react-device-detect'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import classes from 'styles/classes.module.scss'
+import selectStyles from '../../styles/select.module.scss'
 
 export default function Edit({ post: serverPost }: { post: PostInterface }) {
     const { t } = useTranslation()
     const { title, body, categoryId, price, telegram, tgId, id } = serverPost
     const router = useRouter()
     const [images, setImages] = useState<string[]>(() =>
-        serverPost.images.split('||')
+        serverPost.images.split('||'),
     )
     const [error, setError] = useState('')
     const translatedOptions = useMemo(
@@ -46,7 +41,7 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
                     label: t(option.label),
                 }
             }),
-        [t]
+        [t],
     )
     const defaultValues = {
         category: translatedOptions.find((x) => x.value === categoryId),
@@ -73,7 +68,6 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
             return setError('Добавить хотя бы одно фото!')
         }
         const { title, body, price, category } = data
-        const categoryValue = category.value
 
         const formData = {
             title: title,
@@ -83,7 +77,7 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
             images: images.join('||'),
             telegram,
             tgId,
-            categoryId: categoryValue,
+            categoryId: category,
             id,
         }
 
@@ -96,7 +90,7 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
                     headers: {
                         authorization: `Bearer ${token}`,
                     },
-                }
+                },
             )
 
             alert('Ваше объявление на сайте изменено!')
@@ -156,33 +150,32 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
     return (
         <MainLayout title={titles.edit}>
             <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-                <Controller
-                    name="category"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }: any) => (
-                        <SelectInno {...field} options={translatedOptions} />
-                    )}
-                />
+                <select
+                    className={cn(selectStyles.select, 'select-css')}
+                    {...register('category', { required: true })}
+                >
+                    {translatedOptions.map(({ value, label }) => <option key={value}
+                                                                         value={value}>{t(label)}</option>)}
+                </select>
                 {errors.category && (
                     <span>Поле обязательно для заполнения</span>
                 )}
                 <div style={{ marginBottom: 10 }}></div>
                 <Input
-                    type="number"
-                    placeholder="Цена"
+                    type='number'
+                    placeholder='Цена'
                     register={register}
                     required={true}
-                    name="price"
+                    name='price'
                     defaultValue={price}
                 />
                 {errors.price && <span>Поле обязательно для заполнения</span>}
                 <Input
-                    type="text"
-                    placeholder="Заголовок"
+                    type='text'
+                    placeholder='Заголовок'
                     register={register}
                     required={true}
-                    name="title"
+                    name='title'
                     defaultValue={title}
                 />
                 {errors.title && <span>Поле обязательно для заполнения</span>}
@@ -211,16 +204,16 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
                             style={{ cursor: 'pointer' }}
                         >
                             <Image
-                                alt="image"
+                                alt='image'
                                 src={NO_IMAGE}
-                                objectFit="cover"
+                                objectFit='cover'
                                 fill={true}
                             />
                         </div>
                     </div>
                     <Input
-                        id="upload"
-                        type="file"
+                        id='upload'
+                        type='file'
                         onChange={imageHandler}
                         hidden
                         multiple
@@ -247,9 +240,9 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
                                 <Image
                                     alt={image}
                                     src={image}
-                                    objectFit="cover"
+                                    objectFit='cover'
                                     fill={true}
-                                    placeholder="blur"
+                                    placeholder='blur'
                                     blurDataURL={NO_IMAGE}
                                 />
                                 <Icon
@@ -260,7 +253,7 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
                                             images,
                                             index,
                                             MoveImage.left,
-                                            setImages
+                                            setImages,
                                         )
                                     }}
                                 >
@@ -274,7 +267,7 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
                                             images,
                                             index,
                                             MoveImage.right,
-                                            setImages
+                                            setImages,
                                         )
                                     }}
                                 >
@@ -305,7 +298,7 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
                     )}
                 </ul>
                 {error}
-                <Button type="submit" disabled={sending}>
+                <Button type='submit' disabled={sending}>
                     Сохранить изменения
                 </Button>
             </form>
@@ -314,11 +307,11 @@ export default function Edit({ post: serverPost }: { post: PostInterface }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({
-    locale,
-    query,
-}) => {
+                                                                 locale,
+                                                                 query,
+                                                             }) => {
     const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`
+        `${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`,
     )
     if (!response) {
         return {

@@ -67,6 +67,7 @@ export default function Add() {
     }
 
     const onSubmit = async (data: any) => {
+        console.log('data', data)
         if (images.length === 0) {
             return setError('Добавить хотя бы одно фото!')
         }
@@ -78,7 +79,6 @@ export default function Add() {
         }
         setSending(true)
         const slugTitle = slug(title) + '-' + Math.floor(Math.random() * 100)
-        const categoryValue = category.value
 
         const formData = {
             title: title,
@@ -87,9 +87,9 @@ export default function Add() {
             preview: images[0],
             images: images.join('||'),
             slug: slugTitle,
-            telegram: user.username,
-            tgId: user.id,
-            categoryId: categoryValue,
+            telegram: user?.username,
+            tgId: user?.id,
+            categoryId: category,
         }
 
         try {
@@ -104,7 +104,7 @@ export default function Add() {
                 },
             )
 
-            await axios.post(
+            const res = await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/telegram/post`,
                 formData,
                 {
@@ -113,6 +113,7 @@ export default function Add() {
                     },
                 },
             )
+            console.log('res', res)
 
             alert('Ваше объявление создано!')
 
@@ -189,7 +190,9 @@ export default function Add() {
                 >
                     <h1 className={classes.title}>Новое объявление</h1>
                     <select
-                        className={cn(selectStyles.select, 'select-css')} {...register('category', { required: true })}>
+                        className={cn(selectStyles.select, 'select-css')}
+                        {...register('category', { required: true })}
+                    >
                         {translatedOptions.map(({ value, label }) => <option key={value}
                                                                              value={value}>{t(label)}</option>)}
                     </select>
