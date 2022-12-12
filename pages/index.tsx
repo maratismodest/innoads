@@ -33,7 +33,7 @@ type SearchSubmitForm = {
     search: string
 }
 
-const Home: NextPage<HomeProps> = ({ posts, totalPages }) => {
+export default function Home({ posts, totalPages }: HomeProps) {
     const router = useRouter()
     const { t } = useTranslation()
     const [page, setPage] = useState(0)
@@ -133,4 +133,3 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     }
 }
 
-export default Home

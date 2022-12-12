@@ -4,18 +4,16 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next/types'
 import React from 'react'
 
-const Agreement = () => {
+export default function Agreement() {
     return (
         <MainLayout
-            title="Правила"
-            description="Правила доски объявлений города Иннополис InnoAds"
+            title='Правила'
+            description='Правила доски объявлений города Иннополис InnoAds'
         >
             <MDX />
         </MainLayout>
     )
 }
-
-export default Agreement
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {

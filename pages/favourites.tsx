@@ -8,7 +8,7 @@ import { GetServerSideProps } from 'next/types'
 import React, { useEffect, useState } from 'react'
 import classes from 'styles/classes.module.scss'
 
-const Favourites: NextPage = () => {
+export default function Favourites() {
     const { t } = useTranslation()
     const [favourites, setFavourites] = useState<PostInterface[]>([])
 
@@ -31,8 +31,6 @@ const Favourites: NextPage = () => {
         </MainLayout>
     )
 }
-
-export default Favourites
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     return {

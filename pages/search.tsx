@@ -26,7 +26,7 @@ import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
 import cn from 'classnames'
 
-const SearchPage: NextPage = () => {
+export default function SearchPage() {
     const { t } = useTranslation()
     const router = useRouter()
     const [page, setPage] = useState(0)
@@ -128,8 +128,6 @@ const SearchPage: NextPage = () => {
         </MainLayout>
     )
 }
-
-export default SearchPage
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
