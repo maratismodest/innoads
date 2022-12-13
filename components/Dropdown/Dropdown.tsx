@@ -1,20 +1,19 @@
-import React, {ReactNode} from "react";
+import React from 'react'
+import useOnClickOutsideRef from 'hooks/useOnClickOutsideRef'
 import dropdown from './Dropdown.module.scss'
-import useOnClickOutsideRef from "hooks/useOnClickOutsideRef";
 
-interface DropdownProps {
+interface DropdownProps extends React.HTMLProps<HTMLDivElement> {
     closeToggle: (e: Event) => void
-    children: ReactNode
 }
 
-const Dropdown = ({closeToggle, children}: DropdownProps): JSX.Element => {
+const Dropdown = ({ closeToggle, children }: DropdownProps): JSX.Element => {
     const modalRef = useOnClickOutsideRef(() => closeToggle)
 
     return (
         <div className={dropdown.dropdown} ref={modalRef}>
             {children}
         </div>
-    );
-};
+    )
+}
 
-export default Dropdown;
+export default Dropdown

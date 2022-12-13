@@ -219,16 +219,19 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                     </>
                 )}
                 <Link href={`${Routes.post}/${slug}`} title={title}>
-                    <Image
-                        width={200}
-                        height={200}
-                        alt={title}
-                        src={preview || NO_IMAGE}
-                        placeholder='blur'
-                        blurDataURL={NO_IMAGE}
-                        title={title}
-                        className={classes.itemImage}
-                    />
+                    <div className={classes.itemImage}>
+                        <Image
+                            fill={true}
+                            style={{ objectFit: 'cover' }}
+                            sizes={'(max-width: 768px) 50vw,(max-width: 1024px) 25vw, 200px'}
+                            alt={title}
+                            src={preview || NO_IMAGE}
+                            placeholder='blur'
+                            blurDataURL={NO_IMAGE}
+                            title={title}
+                        />
+                    </div>
+
                     <div className={classes.itemPrice}>
                         <Price price={price} />
                         <h2 className={classes.itemTitle}>{title}</h2>

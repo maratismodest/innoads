@@ -6,11 +6,11 @@
   min-height: 100vh;
   background: white;
   border-radius: 0 0 4px 4px;
-  padding: 40px 24px;
-  font-size: 24px;
+  box-shadow: 0px 32px 64px rgba(17, 17, 17, 0.12);  padding: 40px 24px;
+
   ul {
     li {
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
   }
 }

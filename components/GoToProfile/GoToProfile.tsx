@@ -10,9 +10,9 @@ const GoToProfile = (): JSX.Element => {
     const {t} = useTranslation()
     return (
         <Layout title={titles.auth}>
-            <div className={classes.center}>
+            <div className={classes.center} style={{marginTop:100}}>
                 <h2>{t('notAuthorized')}</h2>
-                <Link href={Routes.profile}>
+                <Link href={Routes.profile} style={{marginTop:40}}>
                     <Button>{t('goToAuth')}</Button>
                 </Link>
             </div>

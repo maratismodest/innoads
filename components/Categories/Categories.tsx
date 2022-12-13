@@ -8,8 +8,8 @@ import { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 
 const Categories = (): JSX.Element | null => {
-    const [mounted, setMounted] = useState(false)
     const { t } = useTranslation()
+    const [mounted, setMounted] = useState(false)
     useEffect(() => setMounted(true), [])
     if (!mounted) return null
     return (
@@ -18,30 +18,28 @@ const Categories = (): JSX.Element | null => {
                 [styles.categoriesIsMobile]: isMobile,
             })}
         >
-            {categories.map((item, index) => {
+            {categories.map(({ value, image, label }, index) => {
                 return (
-                    <li key={index}>
+                    <li key={value} tabIndex={index}>
                         <Link
                             href={{
                                 pathname: '/search',
-                                query: { category: item.value },
+                                query: { category: value },
                             }}
+                            className={cn(styles.category, {
+                                [styles.categoryIsMobile]: isMobile,
+                            })}
                         >
-                            <div
-                                className={cn(styles.category, {
-                                    [styles.categoryIsMobile]: isMobile,
-                                })}
-                            >
-                                <div className={styles.categoryImg}>
-                                    <Image
-                                        src={item.image}
-                                        alt={item.label}
-                                        width={32}
-                                        height={32}
-                                    />
-                                </div>
-                                <h5>{t(item.label)}</h5>
+                            <div className={styles.categoryImg}>
+                                <Image
+                                    src={image}
+                                    alt={label}
+                                    fill={true}
+                                    style={{ objectFit: 'contain', padding: 8 }}
+                                />
                             </div>
+
+                            <h5>{t(label)}</h5>
                         </Link>
                     </li>
                 )

@@ -36,7 +36,6 @@
   }
 
 
-
   &Btn {
     position: absolute;
     z-index: 1;
@@ -60,8 +59,7 @@
   }
 
   &Image {
-    width: 100%;
-    object-fit: cover;
+    position: relative;
     aspect-ratio: 1/1;
     transition: all .2s ease-in-out;
 
