@@ -7,41 +7,17 @@ import Button from 'components/Button/Button'
 import { useAuth } from 'context/AuthContext'
 import dayjs from 'dayjs'
 import { PostInterface } from 'interfaces'
-// import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'next-i18next'
+import Price from '../Price/Price'
+import { errors, ModalText, success } from './utils'
 
 interface ItemInterface {
     post: PostInterface
     edit?: boolean
-}
-
-const success = {
-    updated: 'Объявление поднято в поиске!',
-    deleted:
-        'Объявление удалено! Перезагрузите страницу, чтобы вы увидели изменения',
-}
-const errors = {
-    wentWrong: 'Что-то пошло не так!',
-    noCase: 'Нет таких значений',
-}
-
-export const Price = ({ price }: { price: number }): JSX.Element =>
-    price !== 0 ? (
-        <>
-            {price} <span>&#8381;</span>
-        </>
-    ) : (
-        <span>Цена не указана</span>
-    )
-
-enum ModalText {
-    edit = 'Редактировать объявление?',
-    republish = 'Опубликовать повторно объявление в канале и поднять его на сайте?',
-    delete = 'Удалить объявление?',
 }
 
 const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
@@ -76,7 +52,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             headers: {
                                 authorization: `Bearer ${token}`,
                             },
-                        }
+                        },
                     )
                     alert(success.deleted)
                     hideModal()
@@ -94,8 +70,8 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                 if (now - created < sevenDays) {
                     await alert(
                         `Объявление можно публиковать повторно не чаще раз в неделю! Можно подать повторно ${dayjs(
-                            created + sevenDays
-                        ).format('DD.MM.YYYY')}`
+                            created + sevenDays,
+                        ).format('DD.MM.YYYY')}`,
                     )
                     hideModal()
                 } else {
@@ -107,7 +83,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                                 headers: {
                                     authorization: `Bearer ${token}`,
                                 },
-                            }
+                            },
                         )
 
                         await axios.put(
@@ -121,7 +97,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                                 headers: {
                                     authorization: `Bearer ${token}`,
                                 },
-                            }
+                            },
                         )
                         alert(success.updated)
                         hideModal()
@@ -152,12 +128,12 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
             if (favourites) {
                 const list = JSON.parse(favourites)
                 const isFavourite = list.find(
-                    (x: PostInterface) => x.slug === slug
+                    (x: PostInterface) => x.slug === slug,
                 )
                 if (isFavourite) {
                     setFavourite(false)
                     const res = list.filter(
-                        (x: PostInterface) => x.slug !== slug
+                        (x: PostInterface) => x.slug !== slug,
                     )
                     localStorage.setItem('favourites', JSON.stringify(res))
                 } else {
@@ -167,7 +143,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                 }
             }
         },
-        [slug, post]
+        [slug, post],
     )
 
     useEffect(() => {
@@ -175,7 +151,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
         if (favourites) {
             const slugs = JSON.parse(favourites)
             const isFavourite = slugs.find(
-                (x: PostInterface) => x.slug === slug
+                (x: PostInterface) => x.slug === slug,
             )
             if (isFavourite) {
                 setFavourite(true)
@@ -205,7 +181,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             title={t('delete') as string}
                             className={cn(
                                 classes.itemBtn,
-                                classes.itemBtnDelete
+                                classes.itemBtnDelete,
                             )}
                             transparent
                             onClick={() => {
@@ -230,7 +206,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             title={t('publishAgain') as string}
                             className={cn(
                                 classes.itemBtn,
-                                classes.itemBtnPromote
+                                classes.itemBtnPromote,
                             )}
                             transparent
                             onClick={() => {
@@ -242,34 +218,30 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         </Button>
                     </>
                 )}
-                <Link href={`${Routes.post}/${slug}`} passHref title={title}>
-                    <div className={classes.imageWrapper}>
+                <Link href={`${Routes.post}/${slug}`} title={title}>
+                    <Image
+                        width={200}
+                        height={200}
+                        alt={title}
+                        src={preview || NO_IMAGE}
+                        placeholder='blur'
+                        blurDataURL={NO_IMAGE}
+                        title={title}
+                        className={classes.itemImage}
+                    />
+                    <div className={classes.itemPrice}>
+                        <Price price={price} />
+                        <h2 className={classes.itemTitle}>{title}</h2>
                         <Image
-                            alt={title}
-                            src={preview || NO_IMAGE}
-                            fill={true}
-                            placeholder="blur"
-                            blurDataURL={NO_IMAGE}
-                            title={title}
-                            className={classes.cover}
+                            width={24}
+                            height={24}
+                            alt='favourite'
+                            src={favourite ? '/svg/heart-red.svg' : '/svg/heart.svg'}
+                            onClick={handleFavourite}
+                            className={classes.itemFavourite}
                         />
                     </div>
-                    <div className={classes.price}>
-                        <Price price={price} />
-                        <div className={classes.favourite}>
-                            <Image
-                                src={
-                                    favourite
-                                        ? '/svg/heart-red.svg'
-                                        : '/svg/heart.svg'
-                                }
-                                fill={true}
-                                onClick={handleFavourite}
-                                alt={'favourite'}
-                            />
-                        </div>
-                    </div>
-                    <h2>{title}</h2>
+
                 </Link>
             </li>
         </>

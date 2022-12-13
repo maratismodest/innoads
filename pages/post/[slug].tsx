@@ -3,7 +3,7 @@ import { options } from 'assets/options'
 import axios from 'axios'
 import cn from 'classnames'
 import Button from 'components/Button/Button'
-import Item, { Price } from 'components/Item/Item'
+import Item from 'components/Item/Item'
 import MainLayout from 'components/Layout/Layout'
 import dayjs from 'dayjs'
 import { getUrl } from 'functions/getUrl'
@@ -16,6 +16,7 @@ import { GetServerSideProps } from 'next/types'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import item from 'styles/Post.module.scss'
 import classes from 'styles/classes.module.scss'
+import Price from '../../components/Price/Price'
 
 interface PostProps {
     post: PostInterface
