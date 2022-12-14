@@ -1,6 +1,6 @@
-import { getDynamicPaths } from 'functions/getDynamicPaths'
-import { PostInterface } from 'interfaces'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { PostInterface } from 'interfaces'
+import { getDynamicPaths } from 'utils/functions/getDynamicPaths'
 
 const { Feed } = require('feed')
 const dayjs = require('dayjs')

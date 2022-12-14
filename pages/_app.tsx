@@ -1,8 +1,9 @@
+import type { AppProps } from 'next/app'
+import { appWithTranslation } from 'next-i18next'
+import { YMInitializer } from 'react-yandex-metrika'
 import axios from 'axios'
 import { AuthProvider } from 'context/AuthContext'
-import { appWithTranslation } from 'next-i18next'
-import type { AppProps } from 'next/app'
-import { YMInitializer } from 'react-yandex-metrika'
+
 import 'styles/globals.scss'
 
 axios.defaults.headers.common['Secret'] = `${process.env.NEXT_PUBLIC_SECRET}`

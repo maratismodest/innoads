@@ -1,17 +1,7 @@
-import { options } from 'assets/options'
-import axios from 'axios'
-import Input from 'components/Input/Input'
-import Item from 'components/Item/Item'
-import MainLayout from 'components/Layout/Layout'
-import Spinner from 'components/Spinner/Spinner'
-import { getUrl } from 'functions/getUrl'
-import useDebounce from 'hooks/useDebounce'
-import { PostInterface } from 'interfaces'
-import { orderBy } from 'lodash'
-import type { GetStaticProps, NextPage } from 'next'
+import type { GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useRouter } from 'next/router'
 import React, {
     ChangeEvent,
     useCallback,
@@ -21,10 +11,22 @@ import React, {
 } from 'react'
 import { isMobile } from 'react-device-detect'
 import InfiniteScroll from 'react-infinite-scroller'
-import search from 'styles/Search.module.scss'
-import classes from 'styles/classes.module.scss'
-import selectStyles from 'styles/select.module.scss'
+import axios from 'axios'
 import cn from 'classnames'
+import useDebounce from 'hooks/useDebounce'
+import { PostInterface } from 'interfaces'
+import { orderBy } from 'lodash'
+import { getUrl } from 'utils/functions/getUrl'
+import { options } from 'utils/options'
+
+import Input from 'components/Input/Input'
+import Item from 'components/Item/Item'
+import MainLayout from 'components/Layout/Layout'
+import Spinner from 'components/Spinner/Spinner'
+
+import classes from 'styles/classes.module.scss'
+import search from 'styles/Search.module.scss'
+import selectStyles from 'styles/select.module.scss'
 
 export default function SearchPage() {
     const { t } = useTranslation()

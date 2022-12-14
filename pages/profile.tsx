@@ -1,22 +1,25 @@
-import { Routes, titles } from '../constants'
-import axios from 'axios'
-import cn from 'classnames'
-import Button from 'components/Button/Button'
-import Item from 'components/Item/Item'
-import MainLayout from 'components/Layout/Layout'
-import { useAuth, UserProps } from 'context/AuthContext'
-import { getUserPosts } from 'functions/getUserPosts'
-import { PostInterface } from 'interfaces'
-import jwt from 'jsonwebtoken'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { GetStaticProps } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import TelegramLoginButton from 'react-telegram-login'
-import profile from 'styles/Profile.module.scss'
+import axios from 'axios'
+import cn from 'classnames'
+import { UserProps } from 'context/AuthContext'
+import { useAuth } from 'hooks/useAuth'
+import { PostInterface } from 'interfaces'
+import jwt from 'jsonwebtoken'
+import { Routes, titles } from 'utils/constants'
+import { getUserPosts } from 'utils/functions/getUserPosts'
+
+import Button from 'components/Button/Button'
+import Item from 'components/Item/Item'
+import MainLayout from 'components/Layout/Layout'
+
 import classes from 'styles/classes.module.scss'
+import profile from 'styles/Profile.module.scss'
 
 // import Script from 'next/script'
 
@@ -37,11 +40,11 @@ export default function Profile() {
         try {
             const { data } = await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/telegram`,
-                response
+                response,
             )
             const decoded = jwt.verify(
                 data.token,
-                `${process.env.NEXT_PUBLIC_JWT_SECRET}`
+                `${process.env.NEXT_PUBLIC_JWT_SECRET}`,
             )
 
             if (decoded) {
@@ -74,7 +77,7 @@ export default function Profile() {
                     {/*        data-request-access='write' />*/}
                     <TelegramLoginButton
                         dataOnauth={handleTelegramResponse}
-                        botName="InnoAdsPostBot"
+                        botName='InnoAdsPostBot'
                     />
                 </div>
             </MainLayout>

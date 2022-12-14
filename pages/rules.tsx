@@ -1,8 +1,9 @@
+import { GetStaticProps } from 'next/types'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+    import React from 'react'
+
 import MainLayout from 'components/Layout/Layout'
 import MDX from 'components/MDX/rules.mdx'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next/types'
-import React from 'react'
 
 export default function Agreement() {
     return (

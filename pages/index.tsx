@@ -1,11 +1,3 @@
-import axios from 'axios'
-import Button from 'components/Button/Button'
-import Item from 'components/Item/Item'
-import Layout from 'components/Layout/Layout'
-import Search from 'components/Search/Search'
-import Spinner from 'components/Spinner/Spinner'
-import { getUrl } from 'functions/getUrl'
-import { PostInterface } from 'interfaces'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { GetStaticProps } from 'next/types'
@@ -14,10 +6,19 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useCallback, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import InfiniteScroll from 'react-infinite-scroller'
+import axios from 'axios'
+import { PostInterface } from 'interfaces'
+import { Routes } from 'utils/constants'
+import { getUrl } from 'utils/functions/getUrl'
+
+import Button from 'components/Button/Button'
+import Item from 'components/Item/Item'
+import Layout from 'components/Layout/Layout'
+import Search from 'components/Search/Search'
+import Spinner from 'components/Spinner/Spinner'
+
 import classes from 'styles/classes.module.scss'
 import home from 'styles/Home.module.scss'
-
-import { Routes } from '../constants'
 
 const Categories = dynamic(() => import('components/Categories/Categories'), {
     ssr: true,

@@ -1,6 +1,6 @@
+import {createContext, ReactNode, useContext, useState} from "react";
 import useEffectOnce from "hooks/useEffectOnce";
 import jwt from 'jsonwebtoken'
-import {createContext, ReactNode, useContext, useState} from "react";
 
 export interface UserProps {
     id: number,
@@ -27,11 +27,8 @@ const authContextDefaultValues: authContextType = {
     logout: () => {
     },
 };
-const AuthContext = createContext<authContextType>(authContextDefaultValues);
+export const AuthContext = createContext<authContextType>(authContextDefaultValues);
 
-export function useAuth() {
-    return useContext(AuthContext);
-}
 
 type Props = {
     children: ReactNode;

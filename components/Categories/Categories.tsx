@@ -1,11 +1,12 @@
-import styles from './Categories.module.scss'
-import { categories } from 'assets/options'
-import cn from 'classnames'
-import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import cn from 'classnames'
+import { categories } from 'utils/options'
+
+import styles from './Categories.module.scss'
 
 const Categories = (): JSX.Element | null => {
     const { t } = useTranslation()

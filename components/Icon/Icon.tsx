@@ -1,5 +1,6 @@
-import cn from 'classnames'
 import React, {ReactNode} from "react";
+import cn from 'classnames'
+
 import classes from "./Icon.module.scss";
 
 

@@ -1,10 +1,10 @@
 import Document, {
-    Html,
+    DocumentProps,
     Head,
+    Html,
     Main,
-    NextScript,
-} from 'next/document'
-import type { DocumentProps } from 'next/document'
+    NextScript} from 'next/document'
+
 import i18nextConfig from '../next-i18next.config'
 
 type Props = DocumentProps & {

@@ -1,19 +1,23 @@
-import { NO_IMAGE, Routes } from '../../constants'
-import Modal from '../Modal/Modal'
-import classes from './Item.module.scss'
-import axios from 'axios'
-import cn from 'classnames'
-import Button from 'components/Button/Button'
-import { useAuth } from 'context/AuthContext'
-import dayjs from 'dayjs'
-import { PostInterface } from 'interfaces'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'next-i18next'
+import React, { useCallback, useEffect, useState } from 'react'
+import axios from 'axios'
+import cn from 'classnames'
+import dayjs from 'dayjs'
+import { useAuth } from 'hooks/useAuth'
+import { PostInterface } from 'interfaces'
+import { NO_IMAGE, Routes } from 'utils/constants'
+
+import Button from 'components/Button/Button'
+
+import Modal from '../Modal/Modal'
 import Price from '../Price/Price'
+
 import { errors, ModalText, success } from './utils'
+
+import classes from './Item.module.scss'
 
 interface ItemInterface {
     post: PostInterface

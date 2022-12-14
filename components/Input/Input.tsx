@@ -1,6 +1,7 @@
 import React, { ChangeEventHandler, HTMLInputTypeAttribute, ReactNode } from 'react'
-import classes from './Input.module.scss'
 import cn from 'classnames'
+
+import classes from './Input.module.scss'
 
 interface InputProp {
     children?: ReactNode,

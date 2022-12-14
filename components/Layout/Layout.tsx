@@ -1,7 +1,7 @@
-import { SEO_DESCRIPTION, SEO_IMAGE, SEO_TITLE } from '../../constants'
-import Header from 'components/Header/Header'
 import Head from 'next/head'
 import React, { ReactNode } from 'react'
+
+import Header from 'components/Header/Header'
 
 interface Props {
     title?: string
@@ -15,13 +15,6 @@ interface Props {
     keywords?: string
     author?: string
     link?: string
-}
-
-const scrollToTop = () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-    })
 }
 
 const Layout: React.FC<Props> = ({

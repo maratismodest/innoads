@@ -1,39 +1,34 @@
-import {
-    ACCEPTED_IMAGE_FORMAT,
-    ErrorProps,
-    NO_IMAGE,
-    Routes,
-    titles,
-} from '../constants'
-import { options } from 'assets/options'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useMemo, useState } from 'react'
+import { isDesktop } from 'react-device-detect'
+import { useForm } from 'react-hook-form'
 import axios, { AxiosError } from 'axios'
 import cn from 'classnames'
+import { useAuth } from 'hooks/useAuth'
+import { HTMLInputEvent } from 'interfaces'
+// @ts-ignore
+import slug from 'slug'
+import { ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, Routes, titles } from 'utils/constants'
+import antimat from 'utils/functions/antimat'
+import { handleDeleteImage } from 'utils/functions/handleDeleteImage'
+import handleImageUpload from 'utils/functions/handleImageUpload'
+import { handlePostImage } from 'utils/functions/handlePostImage'
+import { MoveImage, moveImage } from 'utils/functions/moveImage'
+import { onImageClick } from 'utils/functions/onImageClick'
+import { options } from 'utils/options'
+
 import Button from 'components/Button/Button'
 import GoToProfile from 'components/GoToProfile/GoToProfile'
 import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
 import MainLayout from 'components/Layout/Layout'
 import Spinner from 'components/Spinner/Spinner'
-import { useAuth } from 'context/AuthContext'
-import antimat from 'functions/antimat'
-import { handleDeleteImage } from 'functions/handleDeleteImage'
-import handleImageUpload from 'functions/handleImageUpload'
-import { handlePostImage } from 'functions/handlePostImage'
-import { MoveImage, moveImage } from 'functions/moveImage'
-import { onImageClick } from 'functions/onImageClick'
-import { HTMLInputEvent } from 'interfaces'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { GetStaticProps } from 'next/types'
-import React, { useMemo, useState } from 'react'
-import { isDesktop } from 'react-device-detect'
-import { useForm } from 'react-hook-form'
-// @ts-ignore
-import slug from 'slug'
-import classes from 'styles/classes.module.scss'
 
+import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
 
 export default function Add() {
@@ -196,18 +191,6 @@ export default function Add() {
                         {translatedOptions.map(({ value, label }) => <option key={value}
                                                                              value={value}>{t(label)}</option>)}
                     </select>
-                    {/*<Controller*/}
-                    {/*    name="category"*/}
-                    {/*    control={control}*/}
-                    {/*    rules={{ required: true }}*/}
-                    {/*    render={({ field }: any) => (*/}
-                    {/*        <SelectInno*/}
-                    {/*            placeholder={t('chooseCategory')}*/}
-                    {/*            {...field}*/}
-                    {/*            options={translatedOptions}*/}
-                    {/*        />*/}
-                    {/*    )}*/}
-                    {/*/>*/}
                     <ErrorBlock name={'category'} />
                     <div style={{ marginBottom: 10 }}></div>
                     <Input
@@ -357,4 +340,4 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
             ...(await serverSideTranslations(locale as string, ['common'])),
         },
     }
-}
+};

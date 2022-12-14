@@ -1,16 +1,18 @@
-import { tgLink } from '../../constants'
+import Link from 'next/link'
+import { GetServerSideProps, NextPage } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React from 'react'
 import axios from 'axios'
+import { PostInterface } from 'interfaces'
+import { orderBy } from 'lodash'
+import { tgLink } from 'utils/constants'
+import { getUrl } from 'utils/functions/getUrl'
+
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
 import MainLayout from 'components/Layout/Layout'
-import { getUrl } from 'functions/getUrl'
-import { PostInterface } from 'interfaces'
-import { orderBy } from 'lodash'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Link from 'next/link'
-import { GetServerSideProps, NextPage } from 'next/types'
-import React from 'react'
+
 import classes from 'styles/classes.module.scss'
 
 interface PersonProps {

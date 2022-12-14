@@ -1,16 +1,11 @@
+import React from 'react'
 import cn from 'classnames'
-import React, { HTMLInputTypeAttribute, ReactNode } from 'react'
+
 import classes from './Search.module.scss'
 
-interface SearchProps {
-    children?: ReactNode,
+interface SearchProps extends React.HTMLProps<HTMLInputElement> {
     name?: string,
-    required?: boolean,
-    className?: string,
     register?: any
-    type?: HTMLInputTypeAttribute,
-    placeholder?: string,
-    defaultValue?: any
 }
 
 const Search = ({

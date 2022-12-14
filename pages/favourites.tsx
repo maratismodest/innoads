@@ -1,11 +1,12 @@
-import Item from 'components/Item/Item'
-import MainLayout from 'components/Layout/Layout'
-import { PostInterface } from 'interfaces'
-import { NextPage } from 'next'
+import { GetServerSideProps } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetServerSideProps } from 'next/types'
 import React, { useEffect, useState } from 'react'
+import { PostInterface } from 'interfaces'
+
+import Item from 'components/Item/Item'
+import MainLayout from 'components/Layout/Layout'
+
 import classes from 'styles/classes.module.scss'
 
 export default function Favourites() {
