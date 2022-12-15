@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ngrok": "ngrok http 3000 --authtoken 2G0DGfZVVn1ONsk6O7ocixyBPl0_3VxKJmi7iX8XaRpzZ9rFH"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.1.5",
@@ -50,6 +51,7 @@
     "eslint-config-next": "13.0.6",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-simple-import-sort": "^8.0.0",
+    "ngrok": "4.3.3",
     "typescript": "4.9.4"
   }
 }

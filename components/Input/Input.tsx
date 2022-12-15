@@ -1,9 +1,9 @@
-import React, { ChangeEventHandler, HTMLInputTypeAttribute, ReactNode } from 'react'
+import React, { ChangeEventHandler, forwardRef, HTMLInputTypeAttribute, ReactNode } from 'react'
 import cn from 'classnames'
 
 import classes from './Input.module.scss'
 
-interface InputProp {
+interface InputProp extends React.ComponentPropsWithoutRef<'input'> {
     children?: ReactNode,
     name?: string,
     required?: boolean,
@@ -21,7 +21,8 @@ interface InputProp {
     className?: string
 }
 
-const Input = ({
+// eslint-disable-next-line react/display-name
+const Input = forwardRef<HTMLInputElement, InputProp>(({
                    id,
                    children,
                    name,
@@ -36,10 +37,11 @@ const Input = ({
                    defaultValue,
                    className,
                    ...props
-               }: InputProp): JSX.Element => {
+               }, ref): JSX.Element => {
     const formRegister = register ? { ...register(name, { required }) } : null
     return (
         <input id={id}
+               ref={ref}
                hidden={hidden}
                accept={accept}
                type={type}
@@ -55,5 +57,5 @@ const Input = ({
             {children}
         </input>
     )
-}
+})
 export default Input

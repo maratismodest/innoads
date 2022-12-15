@@ -1,125 +1,110 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { GetStaticProps } from 'next/types'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { isDesktop } from 'react-device-detect'
 import { useForm } from 'react-hook-form'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import cn from 'classnames'
-import { useAuth } from 'hooks/useAuth'
 import { HTMLInputEvent } from 'interfaces'
-// @ts-ignore
-import slug from 'slug'
-import { ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, Routes, titles } from 'utils/constants'
-import antimat from 'utils/functions/antimat'
+import { ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE } from 'utils/constants'
+import { convertLinksToMedia } from 'utils/functions/convertLinksToMedia'
 import { handleDeleteImage } from 'utils/functions/handleDeleteImage'
 import handleImageUpload from 'utils/functions/handleImageUpload'
 import { handlePostImage } from 'utils/functions/handlePostImage'
 import { MoveImage, moveImage } from 'utils/functions/moveImage'
-import { onImageClick } from 'utils/functions/onImageClick'
-import { options } from 'utils/options'
+import { translatedOptions } from 'utils/translatedOptions'
 
 import Button from 'components/Button/Button'
-import GoToProfile from 'components/GoToProfile/GoToProfile'
 import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
-import MainLayout from 'components/Layout/Layout'
-import Spinner from 'components/Spinner/Spinner'
 
 import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
 
-export default function Add() {
-    const ref = useRef<HTMLInputElement>(null);
-    const router = useRouter()
+export default function BotForm({ tg }: { tg: any }) {
     const { t } = useTranslation()
+    const router = useRouter()
+    const { alias } = router.query
+
+    useEffect(() => {
+        if (tg) {
+            tg.ready()
+        }
+    }, [tg])
+    const ref = useRef<HTMLInputElement>(null)
+
+    const [published, setPublished] = useState(false)
     const [images, setImages] = useState<string[]>([])
     const [error, setError] = useState<string>('')
     const {
-        control,
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm()
-    const { user } = useAuth()
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
-    const translatedOptions = useMemo(
-        () =>
-            options.map((option) => {
-                return {
-                    ...option,
-                    label: t(option.label),
-                }
-            }),
-        [t],
-    )
+    useEffect(() => {
+        if (tg) {
+            tg.MainButton.setParams({
+                text: 'Закрыть окно',
+            })
+        }
 
-    if (!user || !user.username) {
-        return <GoToProfile />
-    }
+    }, [tg])
+
+    const onSendData = useCallback(() => {
+        if (tg) {
+            const data = {
+                type: 'success',
+                text: 'Объявление подано в канал InnoAds',
+            }
+            tg.sendData(JSON.stringify(data))
+        }
+
+    }, [tg])
+
+    useEffect(() => {
+        if (tg && onSendData) {
+            tg.onEvent('mainButtonClicked', onSendData)
+            return () => {
+                tg.offEvent('mainButtonClicked', onSendData)
+            }
+        }
+
+    }, [onSendData, tg])
+
 
     const onSubmit = async (data: any) => {
-        console.log('data', data)
         if (images.length === 0) {
             return setError('Добавить хотя бы одно фото!')
         }
 
-        const { title, body, price, category } = data
-
-        if (antimat.containsMat(title) || antimat.containsMat(body)) {
-            return alert('Есть запрещенные слова!')
-        }
         setSending(true)
-        const slugTitle = slug(title) + '-' + Math.floor(Math.random() * 100)
 
         const formData = {
-            title: title,
-            body: body,
-            price: Number(price),
-            preview: images[0],
-            images: images.join('||'),
-            slug: slugTitle,
-            telegram: user?.username,
-            tgId: user?.id,
-            categoryId: category,
+            body: data.body,
+            price: Number(data.price),
+            images,
+            category: translatedOptions.find(x => x.value === Number(data.category))?.label,
         }
 
         try {
-            const token = localStorage.getItem('token')
-            await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/post`,
-                formData,
-                {
-                    headers: {
-                        authorization: `Bearer ${token}`,
-                    },
-                },
-            )
+            const { body, price, images, category } = formData
+            const bodyText = body.length > 800 ? body.substring(0, 800) + '...' : body
+            const text = `Категория: #${category}\n\n${bodyText} \nЦена: ${price}\n\nавтор: @${alias}`
+            const sendPhoto = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_WEB_APP_BOT}/sendMediaGroup?chat_id=${process.env.NEXT_PUBLIC_CHAT_NAME}`
+            const media = convertLinksToMedia(images, text)
 
-            const res = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/telegram/post`,
-                formData,
-                {
-                    headers: {
-                        authorization: `Bearer ${token}`,
-                    },
-                },
-            )
-            console.log('res', res)
-
-            alert('Ваше объявление создано!')
-
-            return router.push(Routes.profile)
+            await axios.post(sendPhoto, { media })
+            reset()
+            tg.MainButton.show()
+            setPublished(true)
         } catch (e) {
             console.log(e)
-            if (e instanceof AxiosError) {
-                return alert(e.response?.data)
-            }
-            return
+            alert('Что-то пошло не так. Попробуйте перезапустить бота')
         } finally {
             setSending(false)
         }
@@ -168,14 +153,15 @@ export default function Add() {
     const ErrorBlock = ({ name }: ErrorProps) => <span
         style={{ color: 'red', fontSize: 14, marginBottom: 10 }}>{errors[name] ? t('required') : null}</span>
 
-    return (
-        <>
-            {sending && (
-                <div className={classes.sending}>
-                    <Spinner />
-                </div>
-            )}
-            <MainLayout title={titles.add}>
+    if (!alias) {
+        return (
+            <h1 style={{ padding: 16 }} className={classes.title}>Что-то пошло не так - я не знаю вашего алиаса</h1>
+        )
+    }
+
+    if (!published) {
+        return (
+            <div style={{ padding: 16 }}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className={classes.form}
@@ -223,8 +209,7 @@ export default function Add() {
                                     [classes.imageMobile]: !isDesktop,
                                 })}
                                 onClick={() => {
-                                    if (ref.current)
-                                    {
+                                    if (ref.current) {
                                         ref.current.click()
                                     }
                                 }}
@@ -234,7 +219,7 @@ export default function Add() {
                                     src={NO_IMAGE}
                                     fill={true}
                                     style={{
-                                        objectFit: 'cover'
+                                        objectFit: 'cover',
                                     }}
                                 />
                             </div>
@@ -269,7 +254,7 @@ export default function Add() {
                                         alt={image}
                                         src={image}
                                         style={{
-                                            objectFit:'cover'
+                                            objectFit: 'cover',
                                         }}
                                         fill={true}
                                         placeholder='blur'
@@ -336,15 +321,11 @@ export default function Add() {
                         {t('addAd')}
                     </Button>
                 </form>
-            </MainLayout>
-        </>
+            </div>
+        )
+    }
+
+    return (
+        <h1 style={{ padding: 16 }} className={classes.title}>Объявление подано! Можно закрыть окно</h1>
     )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    return {
-        props: {
-            ...(await serverSideTranslations(locale as string, ['common'])),
-        },
-    }
-};
