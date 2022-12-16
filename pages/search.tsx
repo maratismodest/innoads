@@ -2,22 +2,16 @@ import type { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, {
-    ChangeEvent,
-    useCallback,
-    useEffect,
-    useMemo,
-    useState,
-} from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import InfiniteScroll from 'react-infinite-scroller'
 import axios from 'axios'
 import cn from 'classnames'
 import useDebounce from 'hooks/useDebounce'
 import { PostInterface } from 'interfaces'
-import { orderBy } from 'lodash'
 import { getUrl } from 'utils/functions/getUrl'
 import { options } from 'utils/options'
+import { sortByUpdatedAt } from 'utils/sortByUpdatedAt'
 
 import Input from 'components/Input/Input'
 import Item from 'components/Item/Item'
@@ -56,11 +50,7 @@ export default function SearchPage() {
             const response = await axios.get(
                 getUrl(category, currentPage, isMobile ? 8 : 15, debouncedValue),
             )
-            const posts: PostInterface[] = orderBy(
-                response.data.content,
-                ['createdAt'],
-                ['desc'],
-            )
+            const posts: PostInterface[] = sortByUpdatedAt(response.data.content)
             setPage((prevState) => prevState + 1)
             // @ts-ignore
             setInfinite((prevState: PostInterface[]) =>

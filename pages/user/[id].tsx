@@ -5,9 +5,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
 import axios from 'axios'
 import { PostInterface } from 'interfaces'
-import { orderBy } from 'lodash'
 import { tgLink } from 'utils/constants'
 import { getUrl } from 'utils/functions/getUrl'
+import { sortByUpdatedAt } from 'utils/sortByUpdatedAt'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
@@ -44,18 +44,18 @@ const Person: NextPage<PersonProps> = ({ posts }) => {
 export default Person
 
 export const getServerSideProps: GetServerSideProps = async ({
-    locale,
-    query,
-}) => {
+                                                                 locale,
+                                                                 query,
+                                                             }) => {
     const { data } = await axios.get(
-        getUrl(0, 0, 10, '', +(query.id as string))
+        getUrl(0, 0, 10, '', +(query.id as string)),
     )
     if (!data) {
         return {
             notFound: true,
         }
     }
-    const posts = orderBy(data.content, ['createdAt'], ['desc'])
+    const posts: PostInterface[] = sortByUpdatedAt(data.content)
     return {
         props: {
             posts,

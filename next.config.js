@@ -1,5 +1,9 @@
 const { i18n } = require('./next-i18next.config')
 
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+})
+
 const withPWA = require('next-pwa')({
     dest: 'public',
     disable: process.env.NODE_ENV === 'development',
@@ -19,4 +23,4 @@ const nextConfig = {
     i18n,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
 }
-module.exports = withPWA(withMDX(nextConfig))
+module.exports = withPWA(withBundleAnalyzer(withMDX(nextConfig)))

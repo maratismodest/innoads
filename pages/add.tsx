@@ -18,7 +18,6 @@ import { handleDeleteImage } from 'utils/functions/handleDeleteImage'
 import handleImageUpload from 'utils/functions/handleImageUpload'
 import { handlePostImage } from 'utils/functions/handlePostImage'
 import { MoveImage, moveImage } from 'utils/functions/moveImage'
-import { onImageClick } from 'utils/functions/onImageClick'
 import { options } from 'utils/options'
 
 import Button from 'components/Button/Button'
@@ -27,6 +26,8 @@ import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
 import MainLayout from 'components/Layout/Layout'
 import Spinner from 'components/Spinner/Spinner'
+
+import Modal from '../components/Modal/Modal'
 
 import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
@@ -37,12 +38,20 @@ export default function Add() {
     const { t } = useTranslation()
     const [images, setImages] = useState<string[]>([])
     const [error, setError] = useState<string>('')
+    const defaultValues = {
+        category: 1,
+        title: '',
+        price:null,
+        body:'',
+    }
     const {
         control,
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm()
+    } = useForm({defaultValues})
+
+
     const { user } = useAuth()
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
@@ -63,7 +72,7 @@ export default function Add() {
     }
 
     const onSubmit = async (data: any) => {
-        console.log('data', data)
+
         if (images.length === 0) {
             return setError('Добавить хотя бы одно фото!')
         }
@@ -170,11 +179,9 @@ export default function Add() {
 
     return (
         <>
-            {sending && (
-                <div className={classes.sending}>
-                    <Spinner />
-                </div>
-            )}
+            <Modal visible={sending}>
+                <Spinner />
+            </Modal>
             <MainLayout title={titles.add}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
