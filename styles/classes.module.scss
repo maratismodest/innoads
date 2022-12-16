@@ -11,18 +11,20 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 10px;
+
   @media (max-width: 1024px) {
-    grid-template-columns: 1fr 1fr 1fr 1fr
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
+
   @media (max-width: 768px) {
-    grid-template-columns: 1fr 1fr
+    grid-template-columns: 1fr 1fr;
   }
 }
 
 .related {
   display: grid;
   grid-gap: 10px;
-  grid-template-columns: 1fr 1fr
+  grid-template-columns: 1fr 1fr;
 }
 
 .image {
@@ -34,34 +36,33 @@
   cursor: pointer;
 
   &:hover {
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgb(149 157 165 / 20%) 0 8px 24px;
+  }
+
+  &Mobile {
+    position: relative;
+    width: 48%;
+    margin-bottom: 10px;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: rgb(149 157 165 / 20%) 0 8px 24px;
+    }
   }
 }
-
-.imageMobile {
-  position: relative;
-  width: 48%;
-  margin-bottom: 10px;
-  aspect-ratio: 1/1;
-  cursor: pointer;
-
-  &:hover {
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  }
-}
-
 
 .images {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-}
 
-.imagesMobile {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: space-between;
+  &Mobile {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 
 .form {
@@ -77,46 +78,60 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
 
-.loadingImage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: $red;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-  border: 1px solid $grey;
-  border-radius: 4px;
-}
-
-.textArea {
-  border-radius: 4px;
-  //margin-bottom: 8px;
-  padding: 16px;
-  border: 1px solid hsl(0, 0%, 80%);
-  &::placeholder {
-    font-family: Arial;
+  &Btn {
+    margin: 0 auto;
   }
 }
 
-.leftArrow {
-  position: absolute;
-  top: 40%;
-  left: 0;
+.loading {
+  &Image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $red;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    border: 1px solid $grey;
+    border-radius: 4px;
+  }
 }
 
-.rightArrow {
-  position: absolute;
-  top: 40%;
-  right: 0;
+.text {
+  &Area {
+    border-radius: 4px;
+    padding: 16px;
+    border: 1px solid hsl(0deg 0% 80%);
+
+    &::placeholder {
+      font-family: Arial, serif;
+    }
+  }
 }
 
-.deleteIcon {
-  position: absolute;
-  top: 0;
-  right: 0;
+.left {
+  &Arrow {
+    position: absolute;
+    top: 40%;
+    left: 0;
+  }
+}
+
+.right {
+  &Arrow {
+    position: absolute;
+    top: 40%;
+    right: 0;
+  }
+}
+
+.delete {
+  &Icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 }
 
 .sending {
@@ -141,13 +156,8 @@
   margin-top: 40px;
 }
 
-.centerBtn {
-  margin: 0 auto;
-}
-
 .paragraph {
   font-family: Roboto, sans-serif;
-  //font-size: 16px;
   white-space: break-spaces;
   word-break: break-word;
 }
