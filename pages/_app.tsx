@@ -13,16 +13,14 @@ axios.defaults.headers.common['Secret'] = `${process.env.NEXT_PUBLIC_SECRET}`
 function MyApp({ Component, pageProps }: AppProps) {
 
     return (
-        <>
             <AuthProvider>
                 <Component {...pageProps} />
                 <YMInitializer
                     accounts={[88487475]}
-                    options={{ webvisor: true, differ: true }}
+                    options={{ webvisor: true, defer: true }}
                     version="2"
                 />
             </AuthProvider>
-        </>
     )
 }
 
