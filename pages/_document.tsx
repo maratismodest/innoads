@@ -31,7 +31,7 @@ class MyDocument extends Document<Props> {
                 <body>
                 <Main />
                 <NextScript />
-                <Script src='https://telegram.org/js/telegram-web-app.js' strategy='beforeInteractive' />
+                <Script src='https://telegram.org/js/telegram-web-app.js' />
                 </body>
             </Html>
         )
