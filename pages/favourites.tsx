@@ -1,7 +1,8 @@
 import { GetServerSideProps } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useLocalStorage } from 'hooks/useLocalStorage'
 import { PostInterface } from 'interfaces'
 
 import Item from 'components/Item/Item'
@@ -11,15 +12,7 @@ import classes from 'styles/classes.module.scss'
 
 export default function Favourites() {
     const { t } = useTranslation()
-    const [favourites, setFavourites] = useState<PostInterface[]>([])
-
-    useEffect(() => {
-        const favourites = localStorage.getItem('favourites')
-        if (favourites) {
-            const list = JSON.parse(favourites)
-            setFavourites(list)
-        }
-    }, [])
+    const [favourites] = useLocalStorage()
 
     return (
         <MainLayout>

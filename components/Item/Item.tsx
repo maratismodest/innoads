@@ -15,6 +15,8 @@ import Modal from 'components/Modal/Modal'
 import modal from 'components/Modal/Modal.module.scss'
 import Price from 'components/Price/Price'
 
+import { useLocalStorage } from '../../hooks/useLocalStorage'
+
 import { errors, ModalText, success } from './utils'
 
 import classes from './Item.module.scss'
@@ -26,6 +28,7 @@ interface ItemInterface {
 
 const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
     const [favourite, setFavourite] = useState(false)
+    const [favourites, setFavourites] = useLocalStorage()
     const { id, slug, title, preview, price } = post
     const { t } = useTranslation('profile')
     const router = useRouter()
@@ -128,42 +131,21 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
     const handleFavourite = useCallback(
         (e: React.SyntheticEvent) => {
             e.preventDefault()
-            const favourites = localStorage.getItem('favourites')
-            if (favourites) {
-                const list = JSON.parse(favourites)
-                const isFavourite = list.find(
-                    (x: PostInterface) => x.slug === slug,
-                )
-                if (isFavourite) {
-                    setFavourite(false)
-                    const res = list.filter(
-                        (x: PostInterface) => x.slug !== slug,
-                    )
-                    localStorage.setItem('favourites', JSON.stringify(res))
-                } else {
-                    setFavourite(true)
-                    const res = [...list, post]
-                    localStorage.setItem('favourites', JSON.stringify(res))
-                }
-            }
+            const liked = favourites.find(x => x.id === id)
+            setFavourite(false)
+            const res = liked
+                ? favourites.filter(x => x.id !== id)
+                : [...favourites, post]
+            localStorage.setItem('favourites', JSON.stringify(res))
+            setFavourites(res)
         },
-        [slug, post],
+        [id, post, favourites, setFavourites],
     )
 
     useEffect(() => {
-        const favourites = localStorage.getItem('favourites')
-        if (favourites) {
-            const slugs = JSON.parse(favourites)
-            const isFavourite = slugs.find(
-                (x: PostInterface) => x.slug === slug,
-            )
-            if (isFavourite) {
-                setFavourite(true)
-            }
-        } else {
-            localStorage.setItem('favourites', JSON.stringify([]))
-        }
-    }, [slug])
+        const isLiked = favourites.find(x => x.id === id)
+        setFavourite(!!isLiked)
+    }, [favourites, id])
 
     return (
         <>
