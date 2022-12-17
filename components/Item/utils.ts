@@ -8,7 +8,7 @@ export const errors = {
     noCase: 'Нет таких значений',
 }
 
-export enum ModalText {
+export enum ItemModalText {
     edit = 'Редактировать объявление?',
     republish = 'Опубликовать повторно объявление в канале и поднять его на сайте?',
     delete = 'Удалить объявление?',

@@ -14,6 +14,16 @@ export const titles = {
     edit: 'Редактировать объявление',
     auth: 'На страницу авторизации',
     blog: 'Блог',
+    favourites: 'Избранное'
+}
+
+export const descriptions = {
+    profile: 'Личный кабинет',
+    add: 'Добавить объявление',
+    edit: 'Редактировать объявление',
+    auth: 'На страницу авторизации',
+    blog: 'Блог',
+    favourites: 'Страница с объяалениями, которые вам понравилисб'
 }
 
 export const tgLink = 'https://t.me'

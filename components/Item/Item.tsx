@@ -2,12 +2,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import cn from 'classnames'
 import dayjs from 'dayjs'
 import { useAuth } from 'hooks/useAuth'
 import { PostInterface } from 'interfaces'
+import useLocalStorageState from 'use-local-storage-state'
 import { NO_IMAGE, Routes } from 'utils/constants'
 
 import Button from 'components/Button/Button'
@@ -15,9 +16,7 @@ import Modal from 'components/Modal/Modal'
 import modal from 'components/Modal/Modal.module.scss'
 import Price from 'components/Price/Price'
 
-import { useLocalStorage } from '../../hooks/useLocalStorage'
-
-import { errors, ModalText, success } from './utils'
+import { errors, ItemModalText, success } from './utils'
 
 import classes from './Item.module.scss'
 
@@ -26,33 +25,37 @@ interface ItemInterface {
     edit?: boolean
 }
 
+const sevenDays = 1000 * 60 * 60 * 24 * 7
+
 const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
-    const [favourite, setFavourite] = useState(false)
-    const [favourites, setFavourites] = useLocalStorage()
-    const { id, slug, title, preview, price } = post
+    const [favourites, setFavourites] = useLocalStorageState<PostInterface[]>('favourites', {
+        defaultValue: [],
+    })
+    const { id, slug, title, preview, price, updatedAt } = post
     const { t } = useTranslation('profile')
     const router = useRouter()
     const { token } = useAuth()
+    const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id])
 
     const [visible, setVisible] = useState(false)
-    const showModal = useCallback(() => setVisible(true), [])
     const hideModal = useCallback(() => setVisible(false), [])
 
-    const [modalText, setModalText] = useState<ModalText | undefined>()
+    const showModal = (text: ItemModalText) => {
+        setModalText(text)
+        setVisible(true)
+    }
+
+    const [modalText, setModalText] = useState<ItemModalText | undefined>()
 
     const handleFunction = useCallback(async () => {
-        switch (modalText) {
-            case ModalText.edit: {
-                try {
+        hideModal()
+        try {
+            switch (modalText) {
+                case ItemModalText.edit: {
                     await router.push(Routes.edit + '/' + slug)
-                } catch (e) {
-                    alert(errors.wentWrong)
-                    console.log(e)
+                    break
                 }
-                break
-            }
-            case ModalText.delete: {
-                try {
+                case ItemModalText.delete: {
                     await axios.delete(
                         `${process.env.NEXT_PUBLIC_API_URL}/post/${id}`,
                         {
@@ -62,27 +65,19 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         },
                     )
                     alert(success.deleted)
-                    hideModal()
-                } catch (e) {
-                    alert(errors.wentWrong)
-                    console.log(e)
+                    break
                 }
-                break
-            }
-            case ModalText.republish: {
-                const now = new Date().getTime()
-                const created = new Date(post.createdAt).getTime()
-                const sevenDays = 1000 * 60 * 60 * 24 * 7
+                case ItemModalText.republish: {
+                    const now = new Date().getTime()
+                    const updated = new Date(updatedAt).getTime()
 
-                if (now - created < sevenDays) {
-                    await alert(
-                        `Объявление можно публиковать повторно не чаще раз в неделю! Можно подать повторно ${dayjs(
-                            created + sevenDays,
-                        ).format('DD.MM.YYYY')}`,
-                    )
-                    hideModal()
-                } else {
-                    try {
+                    if (now - updated < sevenDays) {
+                        alert(
+                            `Объявление можно публиковать повторно не чаще раз в неделю! Можно подать повторно ${dayjs(
+                                updated + sevenDays,
+                            ).format('DD.MM.YYYY')}`,
+                        )
+                    } else {
                         await axios.post(
                             `${process.env.NEXT_PUBLIC_API_URL}/telegram/post`,
                             post,
@@ -94,10 +89,9 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         )
 
                         await axios.put(
-                            `${process.env.NEXT_PUBLIC_API_URL}/post/${post.id}`,
+                            `${process.env.NEXT_PUBLIC_API_URL}/post/${id}`,
                             {
                                 ...post,
-                                createdAt: new Date(),
                                 updatedAt: new Date(),
                             },
                             {
@@ -107,45 +101,26 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             },
                         )
                         alert(success.updated)
-                        hideModal()
-                    } catch (e) {
-                        hideModal()
-                        alert(errors.wentWrong)
-                        console.log(e)
                     }
+                    break
                 }
-
-                break
+                default:
+                    alert(errors.noCase)
             }
-            default:
-                alert(errors.noCase)
+        } catch (e) {
+            console.log(e)
+            alert(errors.wentWrong)
         }
     }, [modalText, post, router, token, hideModal, id, slug])
-
-    useEffect(() => {
-        if (modalText) {
-            showModal()
-        }
-    }, [modalText, showModal])
 
     const handleFavourite = useCallback(
         (e: React.SyntheticEvent) => {
             e.preventDefault()
-            const liked = favourites.find(x => x.id === id)
-            setFavourite(false)
-            const res = liked
-                ? favourites.filter(x => x.id !== id)
-                : [...favourites, post]
-            localStorage.setItem('favourites', JSON.stringify(res))
-            setFavourites(res)
+            const currentList = liked ? favourites.filter(x => x.id !== id) : [...favourites, post]
+            setFavourites(currentList)
         },
-        [id, post, favourites, setFavourites],
+        [id, favourites],
     )
-
-    useEffect(() => {
-        const isLiked = favourites.find(x => x.id === id)
-        setFavourite(!!isLiked)
-    }, [favourites, id])
 
     return (
         <>
@@ -164,15 +139,13 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                 {edit && (
                     <>
                         <Button
-                            title={t('delete') as string}
                             className={cn(
                                 classes.itemBtn,
                                 classes.itemBtnDelete,
                             )}
-                            transparent
+                            transparent={true}
                             onClick={() => {
-                                setModalText(ModalText.delete)
-                                showModal()
+                                showModal(ItemModalText.delete)
                             }}
                         >
                             &#10008;
@@ -181,8 +154,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             title={t('edit') as string}
                             className={cn(classes.itemBtn, classes.itemBtnEdit)}
                             onClick={() => {
-                                setModalText(ModalText.edit)
-                                showModal()
+                                showModal(ItemModalText.edit)
                             }}
                             transparent
                         >
@@ -196,8 +168,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             )}
                             transparent
                             onClick={() => {
-                                setModalText(ModalText.republish)
-                                showModal()
+                                showModal(ItemModalText.republish)
                             }}
                         >
                             &#8679;
@@ -225,7 +196,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                             width={24}
                             height={24}
                             alt='favourite'
-                            src={favourite ? '/svg/heart-red.svg' : '/svg/heart.svg'}
+                            src={liked ? '/svg/heart-red.svg' : '/svg/heart.svg'}
                             onClick={handleFavourite}
                             className={classes.itemFavourite}
                         />
