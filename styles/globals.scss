@@ -75,8 +75,11 @@ a {
 }
 
 dialog {
-  min-height: 200px;
+  position: relative;
   min-width: 300px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 32px 64px rgb(17 17 17 / 12%);
 }
 
 *[dir="rtl"] .select-css,

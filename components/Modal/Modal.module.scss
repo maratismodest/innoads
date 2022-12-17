@@ -1,0 +1,14 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+
+  &Buttons {
+    margin-top: 48px;
+    display: flex;
+    justify-content: space-around;
+
+    button {
+      min-width: 64px;
+    }
+  }
+}

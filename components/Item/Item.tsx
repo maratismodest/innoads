@@ -11,9 +11,9 @@ import { PostInterface } from 'interfaces'
 import { NO_IMAGE, Routes } from 'utils/constants'
 
 import Button from 'components/Button/Button'
-
-import Modal from '../Modal/Modal'
-import Price from '../Price/Price'
+import Modal from 'components/Modal/Modal'
+import modal from 'components/Modal/Modal.module.scss'
+import Price from 'components/Price/Price'
 
 import { errors, ModalText, success } from './utils'
 
@@ -168,10 +168,10 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
     return (
         <>
             <Modal visible={visible}>
-                <div>
-                    <p>{modalText}</p>
+                <div className={modal.modal}>
+                    <h4>{modalText}</h4>
                     <hr />
-                    <div className={classes.modal}>
+                    <div className={modal.modalButtons}>
                         <Button onClick={handleFunction}>Да</Button>
                         <Button onClick={hideModal}>Нет</Button>
                     </div>

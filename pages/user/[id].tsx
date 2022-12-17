@@ -29,9 +29,7 @@ const Person: NextPage<PersonProps> = ({ posts }) => {
             </p>
             <div className={classes.mt40} />
             <ul className={classes.items}>
-                {posts.map((post: PostInterface) => {
-                    return <Item post={post} key={post.slug} />
-                })}
+                {posts.map((post: PostInterface) => <Item post={post} key={post.slug} />)}
             </ul>
             <div className={classes.mt40} />
             <Link href={tgLink + '/' + posts[0].telegram} passHref>
