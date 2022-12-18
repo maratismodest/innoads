@@ -34,16 +34,7 @@ export default function SearchPage() {
     )
     const debouncedValue = useDebounce<string>(input, 500)
 
-    const translatedOptions = useMemo(
-        () =>
-            options.map((option) => {
-                return {
-                    ...option,
-                    label: t(option.label),
-                }
-            }),
-        [t],
-    )
+    console.log('category',category)
 
     const loadFunc = useCallback(
         async (currentPage: number = page) => {
@@ -81,6 +72,7 @@ export default function SearchPage() {
             <h1 className={classes.title}>{t('search')}</h1>
             <hr />
             <select className={cn(selectStyles.select, 'select-css')}
+                    defaultValue={category}
                     onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                         setCategory(Number(event.target.value))
                     }}>

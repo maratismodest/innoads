@@ -33,20 +33,10 @@ import selectStyles from 'styles/select.module.scss'
 export default function Edit({ post }: { post: PostInterface }) {
     const { t } = useTranslation()
     const ref = useRef<HTMLInputElement>(null)
-    const { title, body, categoryId, price, id, slug, telegram, tgId } = post
+    const { title, body, categoryId, price, id } = post
     const router = useRouter()
     const [images, setImages] = useState<string[]>(() => post.images.split('||'))
     const [error, setError] = useState('')
-    const translatedOptions = useMemo(
-        () =>
-            options.map((option) => {
-                return {
-                    ...option,
-                    label: t(option.label),
-                }
-            }),
-        [t],
-    )
     const defaultValues = {
         category: options.find((x) => x.value === categoryId)?.value,
         title,
@@ -59,7 +49,7 @@ export default function Edit({ post }: { post: PostInterface }) {
         handleSubmit,
         formState: { errors },
     } = useForm({ defaultValues })
-    const { user, token } = useAuth()
+    const { user } = useAuth()
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
@@ -82,19 +72,15 @@ export default function Edit({ post }: { post: PostInterface }) {
             categoryId: category,
         }
 
-        console.log('formData', formData)
-        // return
-
         if (antimat.containsMat(title) || antimat.containsMat(body)) {
             return alert('Есть запрещенные слова!')
         }
         setSending(true)
 
-
         try {
             const token = localStorage.getItem('token')
             const res = await axios.put(
-                `${process.env.NEXT_PUBLIC_API_URL}/post/${id}`,
+                `${process.env.NEXT_PUBLIC_NODE_ENV}/post/${id}`,
                 formData,
                 {
                     headers: {
@@ -161,7 +147,6 @@ export default function Edit({ post }: { post: PostInterface }) {
 
     const ErrorBlock = ({ name }: ErrorProps) => <span
         style={{ color: 'red', fontSize: 14, marginBottom: 10 }}>{errors[name] ? t('required') : null}</span>
-    console.log('categoryId', categoryId)
 
     return (
         <>
@@ -178,8 +163,8 @@ export default function Edit({ post }: { post: PostInterface }) {
                         className={cn(selectStyles.select, 'select-css')}
                         {...register('category', { required: true })}
                     >
-                        {translatedOptions.map(({ value, label }) => <option key={value}
-                                                                             value={value}>{t(label)}</option>)}
+                        {options.map(({ value, label }) => <option key={value}
+                                                                   value={value}>{t(label)}</option>)}
                     </select>
                     <ErrorBlock name={'category'} />
                     <div style={{ marginBottom: 10 }}></div>
