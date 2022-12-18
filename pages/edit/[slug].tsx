@@ -3,14 +3,14 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { isDesktop } from 'react-device-detect'
 import { useForm } from 'react-hook-form'
 import axios, { AxiosError } from 'axios'
 import cn from 'classnames'
 import { useAuth } from 'hooks/useAuth'
 import { HTMLInputEvent, PostInterface } from 'interfaces'
-import { ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE, Routes, titles } from 'utils/constants'
+import { ACCEPTED_IMAGE_FORMAT, FormValues, NO_IMAGE, Routes, titles } from 'utils/constants'
 import antimat from 'utils/functions/antimat'
 import { handleDeleteImage } from 'utils/functions/handleDeleteImage'
 import handleImageUpload from 'utils/functions/handleImageUpload'
@@ -19,6 +19,7 @@ import { MoveImage, moveImage } from 'utils/functions/moveImage'
 import { options } from 'utils/options'
 
 import Button from 'components/Button/Button'
+import ErrorBlock from 'components/ErrorBlock/ErrorBlock'
 import GoToProfile from 'components/GoToProfile/GoToProfile'
 import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
@@ -36,8 +37,8 @@ export default function Edit({ post }: { post: PostInterface }) {
     const router = useRouter()
     const [images, setImages] = useState<string[]>(() => post.images.split('||'))
     const [error, setError] = useState('')
-    const defaultValues = {
-        category: options.find((x) => x.value === categoryId)?.value,
+    const defaultValues: FormValues = {
+        category: options.find((x) => x.value === categoryId)?.value || 1,
         title,
         price,
         body,
@@ -47,7 +48,7 @@ export default function Edit({ post }: { post: PostInterface }) {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm({ defaultValues })
+    } = useForm<FormValues>({ defaultValues })
     const { user } = useAuth()
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
@@ -56,20 +57,25 @@ export default function Edit({ post }: { post: PostInterface }) {
         return <GoToProfile />
     }
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (data: FormValues) => {
         if (images.length === 0) {
             return setError('Добавить хотя бы одно фото!')
         }
 
         const { title, body, price, category } = data
 
+
         const formData = {
             ...post,
-            price: Number(price),
-            preview: images[0],
-            images: images.join('||'),
             categoryId: category,
+            price: Number(price),
+            title,
+            body,
+            images: images.join('||'),
+            preview: images[0],
         }
+
+        console.log('formData', formData)
 
         if (antimat.containsMat(title) || antimat.containsMat(body)) {
             return alert('Есть запрещенные слова!')
@@ -144,9 +150,6 @@ export default function Edit({ post }: { post: PostInterface }) {
         return await handleDeleteImage(current)
     }
 
-    const ErrorBlock = ({ name }: ErrorProps) => <span
-        style={{ color: 'red', fontSize: 14, marginBottom: 10 }}>{errors[name] ? t('required') : null}</span>
-
     return (
         <>
             <Modal visible={sending}>
@@ -162,11 +165,9 @@ export default function Edit({ post }: { post: PostInterface }) {
                         className={cn(selectStyles.select, 'select-css')}
                         {...register('category', { required: true })}
                     >
-                        {options.map(({ value, label }) => <option key={value}
-                                                                   value={value}>{t(label)}</option>)}
+                        {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
                     </select>
-                    <ErrorBlock name={'category'} />
-                    <div style={{ marginBottom: 10 }}></div>
+                    <ErrorBlock name={'category'} errors={errors} />
                     <Input
                         type='number'
                         placeholder={t('price') as string}
@@ -174,7 +175,7 @@ export default function Edit({ post }: { post: PostInterface }) {
                         required={true}
                         name='price'
                     />
-                    <ErrorBlock name={'price'} />
+                    <ErrorBlock name={'price'} errors={errors} />
                     <Input
                         type='text'
                         placeholder={t('header') as string}
@@ -182,7 +183,7 @@ export default function Edit({ post }: { post: PostInterface }) {
                         required={true}
                         name='title'
                     />
-                    <ErrorBlock name={'title'} />
+                    <ErrorBlock name={'title'} errors={errors} />
                     <textarea
                         rows={5}
                         cols={5}
@@ -190,7 +191,7 @@ export default function Edit({ post }: { post: PostInterface }) {
                         {...register('body', { required: true })}
                         className={classes.textArea}
                     />
-                    <ErrorBlock name={'body'} />
+                    <ErrorBlock name={'body'} errors={errors} />
                     <div>
                         <div>
                             <h4>{t('addPhoto')}</h4>

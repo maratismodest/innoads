@@ -111,7 +111,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
             console.log(e)
             alert(errors.wentWrong)
         }
-    }, [modalText, post, router, token, hideModal, id, slug])
+    }, [modalText, post, router, token, hideModal, id, slug, updatedAt])
 
     const handleFavourite = useCallback(
         (e: React.SyntheticEvent) => {
@@ -119,7 +119,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
             const currentList = liked ? favourites.filter(x => x.id !== id) : [...favourites, post]
             setFavourites(currentList)
         },
-        [id, favourites],
+        [id, favourites, liked, post, setFavourites],
     )
 
     return (

@@ -1,3 +1,5 @@
+import { FieldErrors } from 'react-hook-form'
+
 export enum Routes {
     add = '/add',
     profile = '/profile',
@@ -39,5 +41,20 @@ export const ACCEPTED_IMAGE_FORMAT = '.jpg, .jpeg, .png'
 export type InputType = 'category' | 'price' | 'title' | 'body'
 
 export interface ErrorProps {
-    name: InputType
+    name: InputType,
+    errors?: FieldErrors,
+    text?: string
+}
+export type FormValues = {
+    title: string,
+    body: string,
+    price: number | null,
+    category: number
+}
+
+export const defaultValues = {
+    category: 1,
+    title: '',
+    price: null,
+    body: '',
 }

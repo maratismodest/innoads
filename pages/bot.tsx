@@ -3,7 +3,7 @@ import { GetStaticProps } from 'next/types'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 
-import BotForm from 'components/BotForm'
+import BotForm from 'components/BotForm/BotForm'
 
 export default function Bot() {
     const [tg, setTg] = useState()

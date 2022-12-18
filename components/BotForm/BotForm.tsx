@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import cn from 'classnames'
 import { HTMLInputEvent } from 'interfaces'
-import { ACCEPTED_IMAGE_FORMAT, ErrorProps, NO_IMAGE } from 'utils/constants'
+import { ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, NO_IMAGE } from 'utils/constants'
 import { convertLinksToMedia } from 'utils/functions/convertLinksToMedia'
 import { handleDeleteImage } from 'utils/functions/handleDeleteImage'
 import handleImageUpload from 'utils/functions/handleImageUpload'
@@ -16,6 +16,7 @@ import { MoveImage, moveImage } from 'utils/functions/moveImage'
 import { translatedOptions } from 'utils/translatedOptions'
 
 import Button from 'components/Button/Button'
+import ErrorBlock from 'components/ErrorBlock/ErrorBlock'
 import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
 
@@ -42,7 +43,9 @@ export default function BotForm({ tg }: { tg: any }) {
         handleSubmit,
         formState: { errors },
         reset,
-    } = useForm()
+    } = useForm<FormValues>({
+        defaultValues,
+    })
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
@@ -77,7 +80,7 @@ export default function BotForm({ tg }: { tg: any }) {
     }, [onSendData, tg])
 
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (data: FormValues) => {
         if (images.length === 0) {
             return setError('Добавить хотя бы одно фото!')
         }
@@ -150,9 +153,6 @@ export default function BotForm({ tg }: { tg: any }) {
         return await handleDeleteImage(current)
     }
 
-    const ErrorBlock = ({ name }: ErrorProps) => <span
-        style={{ color: 'red', fontSize: 14, marginBottom: 10 }}>{errors[name] ? t('required') : null}</span>
-
     if (!alias) {
         return (
             <h1 style={{ padding: 16 }} className={classes.title}>Что-то пошло не так - я не знаю вашего алиаса</h1>
@@ -174,8 +174,7 @@ export default function BotForm({ tg }: { tg: any }) {
                         {translatedOptions.map(({ value, label }) => <option key={value}
                                                                              value={value}>{t(label)}</option>)}
                     </select>
-                    <ErrorBlock name={'category'} />
-                    <div style={{ marginBottom: 10 }}></div>
+                    <ErrorBlock name={'category'} errors={errors} />
                     <Input
                         type='number'
                         placeholder={t('price') as string}
@@ -183,7 +182,7 @@ export default function BotForm({ tg }: { tg: any }) {
                         required={true}
                         name='price'
                     />
-                    <ErrorBlock name={'price'} />
+                    <ErrorBlock name={'price'} errors={errors} />
                     <Input
                         type='text'
                         placeholder={t('header') as string}
@@ -191,7 +190,7 @@ export default function BotForm({ tg }: { tg: any }) {
                         required={true}
                         name='title'
                     />
-                    <ErrorBlock name={'title'} />
+                    <ErrorBlock name={'title'} errors={errors} />
                     <textarea
                         rows={5}
                         cols={5}
@@ -199,7 +198,7 @@ export default function BotForm({ tg }: { tg: any }) {
                         {...register('body', { required: true })}
                         className={classes.textArea}
                     />
-                    <ErrorBlock name={'body'} />
+                    <ErrorBlock name={'body'} errors={errors} />
                     <div>
                         <div>
                             <h4>{t('addPhoto')}</h4>
