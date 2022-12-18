@@ -23,9 +23,8 @@ import GoToProfile from 'components/GoToProfile/GoToProfile'
 import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
 import MainLayout from 'components/Layout/Layout'
+import Modal from 'components/Modal/Modal'
 import Spinner from 'components/Spinner/Spinner'
-
-import Modal from '../../components/Modal/Modal'
 
 import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
@@ -80,7 +79,7 @@ export default function Edit({ post }: { post: PostInterface }) {
         try {
             const token = localStorage.getItem('token')
             const res = await axios.put(
-                `${process.env.NEXT_PUBLIC_NODE_ENV}/post/${id}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/post/${id}`,
                 formData,
                 {
                     headers: {
