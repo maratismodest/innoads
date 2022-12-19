@@ -16,7 +16,7 @@ export const titles = {
     edit: 'Редактировать объявление',
     auth: 'На страницу авторизации',
     blog: 'Блог',
-    favourites: 'Избранное'
+    favourites: 'Избранное',
 }
 
 export const descriptions = {
@@ -25,7 +25,7 @@ export const descriptions = {
     edit: 'Редактировать объявление',
     auth: 'На страницу авторизации',
     blog: 'Блог',
-    favourites: 'Страница с объяалениями, которые вам понравилисб'
+    favourites: 'Страница с объяалениями, которые вам понравилисб',
 }
 
 export const tgLink = 'https://t.me'
@@ -38,22 +38,23 @@ export const SEO_DESCRIPTION =
 export const SEO_IMAGE = '/icons/icon-192x192.png'
 export const ACCEPTED_IMAGE_FORMAT = '.jpg, .jpeg, .png'
 
-export type InputType = 'category' | 'price' | 'title' | 'body'
+export type InputType = 'categoryId' | 'price' | 'title' | 'body'
 
 export interface ErrorProps {
     name: InputType,
     errors?: FieldErrors,
     text?: string
 }
+
 export type FormValues = {
     title: string,
     body: string,
     price: number | null,
-    category: number
+    categoryId: number
 }
 
 export const defaultValues = {
-    category: 1,
+    categoryId: 1,
     title: '',
     price: null,
     body: '',

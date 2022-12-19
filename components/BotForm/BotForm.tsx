@@ -91,7 +91,7 @@ export default function BotForm({ tg }: { tg: any }) {
             body: data.body,
             price: Number(data.price),
             images,
-            category: translatedOptions.find(x => x.value === Number(data.category))?.label,
+            category: translatedOptions.find(x => x.value === Number(data.categoryId))?.label,
         }
 
         try {
@@ -169,12 +169,12 @@ export default function BotForm({ tg }: { tg: any }) {
                     <h1 className={classes.title}>Новое объявление</h1>
                     <select
                         className={cn(selectStyles.select, 'select-css')}
-                        {...register('category', { required: true })}
+                        {...register('categoryId', { required: true })}
                     >
                         {translatedOptions.map(({ value, label }) => <option key={value}
                                                                              value={value}>{t(label)}</option>)}
                     </select>
-                    <ErrorBlock name={'category'} errors={errors} />
+                    <ErrorBlock name={'categoryId'} errors={errors} />
                     <Input
                         type='number'
                         placeholder={t('price') as string}
@@ -315,7 +315,7 @@ export default function BotForm({ tg }: { tg: any }) {
                     <Button
                         className={classes.mt40}
                         type='submit'
-                        disabled={sending || loading ? true : false}
+                        disabled={sending || loading}
                     >
                         {t('addAd')}
                     </Button>

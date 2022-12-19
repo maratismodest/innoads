@@ -10,8 +10,8 @@ import axios, { AxiosError } from 'axios'
 import cn from 'classnames'
 import { useAuth } from 'hooks/useAuth'
 import { HTMLInputEvent, PostInterface } from 'interfaces'
-import { ACCEPTED_IMAGE_FORMAT, FormValues, NO_IMAGE, Routes, titles } from 'utils/constants'
-import antimat from 'utils/functions/antimat'
+import { ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, NO_IMAGE, Routes, titles } from 'utils/constants'
+import curseWords from 'utils/functions/antimat'
 import { handleDeleteImage } from 'utils/functions/handleDeleteImage'
 import handleImageUpload from 'utils/functions/handleImageUpload'
 import { handlePostImage } from 'utils/functions/handlePostImage'
@@ -30,25 +30,45 @@ import Spinner from 'components/Spinner/Spinner'
 import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
 
+const hasCurseWords = ({ title, body }: FormValues) => curseWords.containsMat(title) || curseWords.containsMat(body)
+
+const putPost = async (formData: PostInterface) => {
+    const token = localStorage.getItem('token')
+    try {
+        const res = await axios.put(
+            `${process.env.NEXT_PUBLIC_API_URL}/post/${formData.id}`,
+            formData,
+            {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+            },
+        )
+    } catch (e) {
+        console.log('e', e)
+    }
+}
+
+enum ImageError {
+    noImages = 'Добавить хотя бы одно фото!',
+    manyImages = 'Не больше 4 фотографий!'
+}
+
 export default function Edit({ post }: { post: PostInterface }) {
     const { t } = useTranslation()
     const ref = useRef<HTMLInputElement>(null)
-    const { title, body, categoryId, price, id } = post
+    const { categoryId, id, title, body, price } = post
     const router = useRouter()
     const [images, setImages] = useState<string[]>(() => post.images.split('||'))
-    const [error, setError] = useState('')
-    const defaultValues: FormValues = {
-        category: options.find((x) => x.value === categoryId)?.value || 1,
-        title,
-        price,
-        body,
+    const [error, setError] = useState<ImageError | undefined>()
+    const editValues: FormValues = {
+        ...defaultValues, categoryId: options.find((x) => x.value === categoryId)?.value || 1, body, title, price,
     }
     const {
-        control,
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<FormValues>({ defaultValues })
+    } = useForm<FormValues>({ defaultValues: editValues })
     const { user } = useAuth()
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
@@ -59,15 +79,18 @@ export default function Edit({ post }: { post: PostInterface }) {
 
     const onSubmit = async (data: FormValues) => {
         if (images.length === 0) {
-            return setError('Добавить хотя бы одно фото!')
+            return setError(ImageError.noImages)
         }
 
-        const { title, body, price, category } = data
+        if (hasCurseWords(data)) {
+            return alert('Есть запрещенные слова!')
+        }
 
+        const { title, body, price, categoryId } = data
 
         const formData = {
             ...post,
-            categoryId: category,
+            categoryId,
             price: Number(price),
             title,
             body,
@@ -75,36 +98,16 @@ export default function Edit({ post }: { post: PostInterface }) {
             preview: images[0],
         }
 
-        console.log('formData', formData)
-
-        if (antimat.containsMat(title) || antimat.containsMat(body)) {
-            return alert('Есть запрещенные слова!')
-        }
-        setSending(true)
-
         try {
-            const token = localStorage.getItem('token')
-            const res = await axios.put(
-                `${process.env.NEXT_PUBLIC_API_URL}/post/${id}`,
-                formData,
-                {
-                    headers: {
-                        authorization: `Bearer ${token}`,
-                    },
-                },
-            )
-
-            console.log('res', res)
-
+            setSending(true)
+            await putPost(formData)
             alert('Ваше объявление изменено!')
-
             return router.push(Routes.profile)
         } catch (e) {
             console.log(e)
             if (e instanceof AxiosError) {
                 return alert(e.response?.data)
             }
-            return
         } finally {
             setSending(false)
         }
@@ -121,11 +124,11 @@ export default function Edit({ post }: { post: PostInterface }) {
                 const { status, value } = link
                 if (status === 'ok') {
                     setImages((prevState: string[]) => [...prevState, value])
-                    setError('')
+                    setError(undefined)
                 }
-                if (status === 'error') {
-                    setError(value)
-                }
+                // if (status === 'error') {
+                //     setError(value)
+                // }
             }
         }
     }
@@ -135,7 +138,7 @@ export default function Edit({ post }: { post: PostInterface }) {
             const imagesFromInput = e.target.files
             const length = imagesFromInput.length + images.length
             if (length > 4) {
-                return setError('Не больше 4 фотографий!')
+                return setError(ImageError.manyImages)
             }
             setLoading(true)
             await getCompressedImagesLinks(imagesFromInput)
@@ -163,11 +166,11 @@ export default function Edit({ post }: { post: PostInterface }) {
                     <h1 className={classes.title}>Новое объявление</h1>
                     <select
                         className={cn(selectStyles.select, 'select-css')}
-                        {...register('category', { required: true })}
+                        {...register('categoryId', { required: true })}
                     >
                         {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
                     </select>
-                    <ErrorBlock name={'category'} errors={errors} />
+                    <ErrorBlock name={'categoryId'} errors={errors} />
                     <Input
                         type='number'
                         placeholder={t('price') as string}

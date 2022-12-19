@@ -12,8 +12,8 @@ import { useAuth } from 'hooks/useAuth'
 import { HTMLInputEvent } from 'interfaces'
 // @ts-ignore
 import slug from 'slug'
-import { ACCEPTED_IMAGE_FORMAT, FormValues, NO_IMAGE, Routes, titles } from 'utils/constants'
-import antimat from 'utils/functions/antimat'
+import { ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, NO_IMAGE, Routes, titles } from 'utils/constants'
+import curseWords from 'utils/functions/antimat'
 import { handleDeleteImage } from 'utils/functions/handleDeleteImage'
 import handleImageUpload from 'utils/functions/handleImageUpload'
 import { handlePostImage } from 'utils/functions/handlePostImage'
@@ -38,14 +38,7 @@ export default function Add() {
     const { t } = useTranslation()
     const [images, setImages] = useState<string[]>([])
     const [error, setError] = useState<string>('')
-    const defaultValues = {
-        category: 1,
-        title: '',
-        price: null,
-        body: '',
-    }
     const {
-        control,
         register,
         handleSubmit,
         formState: { errors },
@@ -59,15 +52,15 @@ export default function Add() {
         return <GoToProfile />
     }
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (data: FormValues) => {
 
         if (images.length === 0) {
             return setError('Добавить хотя бы одно фото!')
         }
 
-        const { title, body, price, category } = data
+        const { title, body, price, categoryId } = data
 
-        if (antimat.containsMat(title) || antimat.containsMat(body)) {
+        if (curseWords.containsMat(title) || curseWords.containsMat(body)) {
             return alert('Есть запрещенные слова!')
         }
         setSending(true)
@@ -82,7 +75,7 @@ export default function Add() {
             slug: slugTitle,
             telegram: user?.username,
             tgId: user?.id,
-            categoryId: category,
+            categoryId,
         }
 
         try {
@@ -175,12 +168,12 @@ export default function Add() {
                     <h1 className={classes.title}>Новое объявление</h1>
                     <select
                         className={cn(selectStyles.select, 'select-css')}
-                        {...register('category', { required: true })}
+                        {...register('categoryId', { required: true })}
                     >
                         {options.map(({ value, label }) => <option key={value}
                                                                    value={value}>{t(label)}</option>)}
                     </select>
-                    <ErrorBlock name={'category'} errors={errors} />
+                    <ErrorBlock name={'categoryId'} errors={errors} />
                     <Input
                         type='number'
                         placeholder={t('price') as string}
@@ -321,7 +314,7 @@ export default function Add() {
                     <Button
                         className={classes.mt40}
                         type='submit'
-                        disabled={sending || loading ? true : false}
+                        disabled={sending || loading}
                     >
                         {t('addAd')}
                     </Button>
