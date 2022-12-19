@@ -15,7 +15,7 @@ class MyDocument extends Document<Props> {
         return (
             <Html lang={currentLocale}>
                 <Head>
-                    <meta charSet='utf-8' content="noindex,nofollow"/>
+                    <meta charSet='utf-8' />
                     <meta name='robots' />
                     <link rel='icon' href='/favicon.ico' />
                     <link rel='manifest' href='/manifest.json' />
