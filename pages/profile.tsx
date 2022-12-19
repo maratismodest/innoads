@@ -12,7 +12,7 @@ import { useAuth } from 'hooks/useAuth'
 import { PostInterface } from 'interfaces'
 import jwt from 'jsonwebtoken'
 import { Routes, titles } from 'utils/constants'
-import { getUserPosts } from 'utils/functions/getUserPosts'
+import { getUserPosts } from 'utils/getUserPosts'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'

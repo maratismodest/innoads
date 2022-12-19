@@ -6,8 +6,8 @@ import React from 'react'
 import axios from 'axios'
 import { PostInterface } from 'interfaces'
 import { tgLink } from 'utils/constants'
-import { getUrl } from 'utils/functions/getUrl'
-import { sortByUpdatedAt } from 'utils/sortByUpdatedAt'
+import { getUrl } from 'utils/getUrl'
+import {sortByCreatedAt, sortByUpdatedAt} from 'utils/sortByUpdatedAt'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
@@ -53,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async ({
             notFound: true,
         }
     }
-    const posts: PostInterface[] = sortByUpdatedAt(data.content)
+    const posts: PostInterface[] = sortByCreatedAt(data.content)
     return {
         props: {
             posts,

@@ -9,7 +9,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import axios from 'axios'
 import { PostInterface } from 'interfaces'
 import { Routes } from 'utils/constants'
-import { getUrl } from 'utils/functions/getUrl'
+import { getUrl } from 'utils/getUrl'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'

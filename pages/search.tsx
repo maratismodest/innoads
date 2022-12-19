@@ -9,9 +9,9 @@ import axios from 'axios'
 import cn from 'classnames'
 import useDebounce from 'hooks/useDebounce'
 import { PostInterface } from 'interfaces'
-import { getUrl } from 'utils/functions/getUrl'
+import { getUrl } from 'utils/getUrl'
 import { options } from 'utils/options'
-import { sortByUpdatedAt } from 'utils/sortByUpdatedAt'
+import {sortByCreatedAt, sortByUpdatedAt} from 'utils/sortByUpdatedAt'
 
 import Input from 'components/Input/Input'
 import Item from 'components/Item/Item'
@@ -41,7 +41,7 @@ export default function SearchPage() {
             const response = await axios.get(
                 getUrl(category, currentPage, isMobile ? 8 : 15, debouncedValue),
             )
-            const posts: PostInterface[] = sortByUpdatedAt(response.data.content)
+            const posts: PostInterface[] = sortByCreatedAt(response.data.content)
             setPage((prevState) => prevState + 1)
             // @ts-ignore
             setInfinite((prevState: PostInterface[]) =>

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { PostInterface } from 'interfaces'
-import { getDynamicPaths } from 'utils/functions/getDynamicPaths'
+import { getDynamicPaths } from 'utils/getDynamicPaths'
 
 const { SitemapStream, streamToPromise } = require('sitemap')
 const { Readable } = require('stream')

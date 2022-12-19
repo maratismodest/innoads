@@ -9,7 +9,7 @@ import cn from 'classnames'
 import dayjs from 'dayjs'
 import { PostInterface } from 'interfaces'
 import { Routes, tgLink } from 'utils/constants'
-import { getUrl } from 'utils/functions/getUrl'
+import { getUrl } from 'utils/getUrl'
 import { options } from 'utils/options'
 
 import Button from 'components/Button/Button'
