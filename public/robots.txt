@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
-Disallow: /_next
+Disallow: /item/
+Disallow: /prodam/
+Disallow: /uslugi/
+Disallow: /user/
+Disallow: /*.php$
 
 Sitemap: https://innoads.ru/api/sitemap
