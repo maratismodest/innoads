@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import cn from 'classnames'
 import { HTMLInputEvent } from 'interfaces'
-import { ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, NO_IMAGE } from 'utils/constants'
+import { ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, messages, NO_IMAGE } from 'utils/constants'
 import { convertLinksToMedia } from 'utils/convertLinksToMedia'
 import { handleDeleteImage } from 'utils/handleDeleteImage'
 import handleImageUpload from 'utils/handleImageUpload'
@@ -19,6 +19,8 @@ import Button from 'components/Button/Button'
 import ErrorBlock from 'components/ErrorBlock/ErrorBlock'
 import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
+
+import getCompressedImagesLinks from '../../utils/getCompressedImagesLinks'
 
 import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
@@ -48,6 +50,11 @@ export default function BotForm({ tg }: { tg: any }) {
     })
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
+    const handleAddPhoto = useCallback(() => {
+        if (ref.current) {
+            ref.current.click()
+        }
+    }, [ref.current])
 
     useEffect(() => {
         if (tg) {
@@ -82,7 +89,7 @@ export default function BotForm({ tg }: { tg: any }) {
 
     const onSubmit = async (data: FormValues) => {
         if (images.length === 0) {
-            return setError('Добавить хотя бы одно фото!')
+            return setError(messages.noImages)
         }
 
         setSending(true)
@@ -107,29 +114,9 @@ export default function BotForm({ tg }: { tg: any }) {
             setPublished(true)
         } catch (e) {
             console.log(e)
-            alert('Что-то пошло не так. Попробуйте перезапустить бота')
+            alert(messages.somethingWentWrong)
         } finally {
             setSending(false)
-        }
-    }
-
-    const getCompressedImagesLinks = async (imagesFromInput: any) => {
-        for (let i = 0; i < imagesFromInput.length; i++) {
-            const initialImage = imagesFromInput[i]
-            const resizedImage = await handleImageUpload(initialImage)
-            if (resizedImage) {
-                const formData = new FormData()
-                formData.append('image', resizedImage, `${Date.now()}.jpg`)
-                const link = await handlePostImage(formData)
-                const { status, value } = link
-                if (status === 'ok') {
-                    setImages((prevState: string[]) => [...prevState, value])
-                    setError('')
-                }
-                if (status === 'error') {
-                    setError(value)
-                }
-            }
         }
     }
 
@@ -138,10 +125,10 @@ export default function BotForm({ tg }: { tg: any }) {
             const imagesFromInput = event.target.files
             const length = imagesFromInput.length + images.length
             if (length > 4) {
-                return setError('Не больше 4 фотографий!')
+                return setError(messages.manyImages)
             }
             setLoading(true)
-            await getCompressedImagesLinks(imagesFromInput)
+            await getCompressedImagesLinks(imagesFromInput, setImages)
             setLoading(false)
         }
         return
@@ -207,11 +194,7 @@ export default function BotForm({ tg }: { tg: any }) {
                                     [classes.image]: isDesktop,
                                     [classes.imageMobile]: !isDesktop,
                                 })}
-                                onClick={() => {
-                                    if (ref.current) {
-                                        ref.current.click()
-                                    }
-                                }}
+                                onClick={handleAddPhoto}
                             >
                                 <Image
                                     alt='image'

@@ -1,7 +1,7 @@
 import axios from "axios";
-import {PostInterface} from "interfaces";
+import { InitialPostInterface } from 'interfaces'
 
-export const postTelegram = async (formData: PostInterface) => {
+export const postTelegram = async (formData: InitialPostInterface) => {
   const token = localStorage.getItem('token')
   try {
     const res = await axios.post(

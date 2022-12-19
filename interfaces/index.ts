@@ -1,5 +1,11 @@
-export interface PostInterface {
+export interface PostInterface extends InitialPostInterface {
     id: number;
+    createdAt: string;
+    updatedAt: string;
+    vector?: any;
+}
+
+export interface InitialPostInterface {
     title: string;
     body: string;
     price: number;
@@ -9,9 +15,6 @@ export interface PostInterface {
     slug: string;
     categoryId: number;
     telegram: string;
-    createdAt: string;
-    updatedAt: string;
-    vector?: any;
 }
 
 export interface HTMLInputEvent extends Event {

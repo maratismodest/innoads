@@ -1,18 +1,11 @@
-import imageCompression from 'browser-image-compression';
+import imageCompression from 'browser-image-compression'
 
 const options = {
-  maxSizeMB: 1,
-  maxWidthOrHeight: 800,
-  useWebWorker: true
+    maxSizeMB: 1,
+    maxWidthOrHeight: 800,
+    useWebWorker: true,
 }
 
-const handleImageUpload = async (imageFile: File) => {
-  try {
-    return await imageCompression(imageFile, options);
-  } catch (error) {
-    console.log(error);
-  }
+const handleImageResize = async (imageFile: File) => await imageCompression(imageFile, options)
 
-}
-
-export default handleImageUpload
+export default handleImageResize

@@ -11,7 +11,7 @@ import useDebounce from 'hooks/useDebounce'
 import { PostInterface } from 'interfaces'
 import { getUrl } from 'utils/getUrl'
 import { options } from 'utils/options'
-import {sortByCreatedAt, sortByUpdatedAt} from 'utils/sortByUpdatedAt'
+import { sortByCreatedAt } from 'utils/sortByUpdatedAt'
 
 import Input from 'components/Input/Input'
 import Item from 'components/Item/Item'
@@ -34,7 +34,7 @@ export default function SearchPage() {
     )
     const debouncedValue = useDebounce<string>(input, 500)
 
-    console.log('category',category)
+    console.log('category', category)
 
     const loadFunc = useCallback(
         async (currentPage: number = page) => {

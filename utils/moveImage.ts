@@ -1,27 +1,25 @@
 export enum MoveImage {
-    left = "left",
-    right = "right"
+    left = 'left',
+    right = 'right'
 }
 
 export const moveImage = (e: MouseEvent, images: string[], index: number, where: MoveImage, setImages: (value: string[]) => void) => {
     e.preventDefault()
+    console.log('images', images)
     if (images.length < 2 || (index === 0 && where === MoveImage.left) || (index === images.length - 1 && where === MoveImage.right)) {
         return
     }
 
-    const arr = [...images];
-    const current = arr[index];
+    const arr = [...images]
 
     if (where === MoveImage.left) {
-        const previous = arr[index - 1];
-        arr[index] = previous;
-        arr[index - 1] = current;
+        arr[index] = images[index - 1]
+        arr[index - 1] = images[index]
     }
     if (where === MoveImage.right) {
-        const next = arr[index + 1];
-        arr[index] = next;
-        arr[index + 1] = current;
+        arr[index] = images[index + 1]
+        arr[index + 1] = images[index]
     }
 
     setImages(arr)
-};
+}
