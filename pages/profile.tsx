@@ -21,8 +21,6 @@ import MainLayout from 'components/Layout/Layout'
 import classes from 'styles/classes.module.scss'
 import profile from 'styles/Profile.module.scss'
 
-// import Script from 'next/script'
-
 const error =
     'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
 

@@ -15,8 +15,7 @@ import { options } from 'utils/options'
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
 import MainLayout from 'components/Layout/Layout'
-
-import Price from '../../components/Price/Price'
+import Price from 'components/Price/Price'
 
 import classes from 'styles/classes.module.scss'
 import item from 'styles/Post.module.scss'
@@ -28,10 +27,6 @@ interface PostProps {
 }
 
 export default function Post({ post, related, isMobile }: PostProps) {
-    console.log('post', post)
-    // console.log('related', related)
-    // console.log('isMobile', isMobile)
-
     const { t } = useTranslation()
     const [current, setCurrent] = useState(0)
     const [mounted, setMounted] = useState(false)

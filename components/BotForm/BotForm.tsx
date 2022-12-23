@@ -7,11 +7,11 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import cn from 'classnames'
 import { HTMLInputEvent } from 'interfaces'
+import jwt from 'jsonwebtoken'
 import { ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, messages, NO_IMAGE } from 'utils/constants'
 import { convertLinksToMedia } from 'utils/convertLinksToMedia'
+import getCompressedImagesLinks from 'utils/getCompressedImagesLinks'
 import { handleDeleteImage } from 'utils/handleDeleteImage'
-import handleImageUpload from 'utils/handleImageUpload'
-import { handlePostImage } from 'utils/handlePostImage'
 import { MoveImage, moveImage } from 'utils/moveImage'
 import { translatedOptions } from 'utils/translatedOptions'
 
@@ -20,18 +20,31 @@ import ErrorBlock from 'components/ErrorBlock/ErrorBlock'
 import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
 
-import getCompressedImagesLinks from '../../utils/getCompressedImagesLinks'
-
 import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
 
+type Decoded = {
+    id: number
+    username: string
+}
 export default function BotForm({ tg }: { tg: any }) {
+    const [decoded, setDecoded] = useState<Decoded | undefined>(undefined)
     const { t } = useTranslation()
     const router = useRouter()
-    const { alias } = router.query
+    const { alias, token } = router.query
+    useEffect(() => {
+        if (token) {
+            const current = jwt.verify(token as string, `${process.env.NEXT_PUBLIC_JWT_SECRET}`)
+
+            if (current) {
+                setDecoded(current as Decoded)
+            }
+        }
+    }, [])
 
     useEffect(() => {
         if (tg) {
+            console.log('tg', tg)
             tg.ready()
         }
     }, [tg])
@@ -85,7 +98,6 @@ export default function BotForm({ tg }: { tg: any }) {
         }
 
     }, [onSendData, tg])
-
 
     const onSubmit = async (data: FormValues) => {
         if (images.length === 0) {
@@ -153,7 +165,9 @@ export default function BotForm({ tg }: { tg: any }) {
                     onSubmit={handleSubmit(onSubmit)}
                     className={classes.form}
                 >
-                    <h1 className={classes.title}>Новое объявление</h1>
+                    <h1 className={cn(classes.title, {
+                        [classes.titleDark]: tg.colorScheme === 'dark',
+                    })}>Новое объявление</h1>
                     <select
                         className={cn(selectStyles.select, 'select-css')}
                         {...register('categoryId', { required: true })}
@@ -188,7 +202,7 @@ export default function BotForm({ tg }: { tg: any }) {
                     <ErrorBlock name={'body'} errors={errors} />
                     <div>
                         <div>
-                            <h4>{t('addPhoto')}</h4>
+                            <h4 className={tg.colorScheme === 'dark' ? classes.titleDark : undefined}>{t('addPhoto')}</h4>
                             <div
                                 className={cn({
                                     [classes.image]: isDesktop,
@@ -216,7 +230,7 @@ export default function BotForm({ tg }: { tg: any }) {
                             ref={ref}
                         />
                     </div>
-                    <h4>{t('preview')}</h4>
+                    <h4 className={tg.colorScheme === 'dark' ? classes.titleDark : undefined}>{t('preview')}</h4>
                     <ul
                         className={cn({
                             [classes.images]: isDesktop,
@@ -308,6 +322,8 @@ export default function BotForm({ tg }: { tg: any }) {
     }
 
     return (
-        <h1 style={{ padding: 16 }} className={classes.title}>Объявление подано! Можно закрыть окно</h1>
+        <h1 style={{ padding: 16 }} className={cn(classes.title, {
+            [classes.titleDark]: tg.colorScheme === 'dark',
+        })}>Объявление подано! Можно закрыть окно</h1>
     )
 }

@@ -7,9 +7,9 @@ import isBrowser from './isBrowser'
 export function useTelegram() {
     const [tg, setTg] = useState({})
 
-    if (typeof window !== "undefined" && window.Telegram.WebApp) {
+    if (typeof window !== 'undefined' && window.Telegram.WebApp) {
         //This code is executed in the browser
-        console.log('www',window.Telegram.WebApp)
+        console.log('www', window.Telegram.WebApp)
     }
 
     useEffect(() => {
@@ -22,7 +22,7 @@ export function useTelegram() {
     }, [])
 
     if (!tg) {
-        return  null
+        return null
     }
 
 
@@ -44,5 +44,6 @@ export function useTelegram() {
         tg,
         user: tg.initDataUnsafe?.user,
         queryId: tg.initDataUnsafe?.query_id,
+        theme: tg.initDataUnsafe?.theme,
     }
 }

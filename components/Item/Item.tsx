@@ -9,15 +9,14 @@ import dayjs from 'dayjs'
 import { useAuth } from 'hooks/useAuth'
 import { PostInterface } from 'interfaces'
 import useLocalStorageState from 'use-local-storage-state'
+import postTelegram from 'utils/api/postTelegram'
+import putPost from 'utils/api/putPost'
 import { NO_IMAGE, Routes } from 'utils/constants'
 
 import Button from 'components/Button/Button'
 import Modal from 'components/Modal/Modal'
 import modal from 'components/Modal/Modal.module.scss'
 import Price from 'components/Price/Price'
-
-import postTelegram from '../../utils/api/postTelegram'
-import putPost from '../../utils/api/putPost'
 
 import { errors, ItemModalText, success } from './utils'
 

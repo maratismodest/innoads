@@ -5,6 +5,10 @@
   font-size: 18px;
   line-height: 28px;
   color: $black;
+
+  &Dark {
+    color: $white;
+  }
 }
 
 .items {

@@ -7,7 +7,7 @@ import axios from 'axios'
 import { PostInterface } from 'interfaces'
 import { tgLink } from 'utils/constants'
 import { getUrl } from 'utils/getUrl'
-import {sortByCreatedAt, sortByUpdatedAt} from 'utils/sortByUpdatedAt'
+import { sortByCreatedAt } from 'utils/sortByUpdatedAt'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
