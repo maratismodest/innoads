@@ -7,12 +7,12 @@ import React, { useEffect, useState } from 'react'
 import TelegramLoginButton from 'react-telegram-login'
 import axios from 'axios'
 import cn from 'classnames'
-import { UserProps } from 'context/AuthContext'
 import { useAuth } from 'hooks/useAuth'
 import { PostInterface } from 'interfaces'
-import jwt from 'jsonwebtoken'
+import * as jose from 'jose'
 import { Routes, titles } from 'utils/constants'
 import { getUserPosts } from 'utils/getUserPosts'
+import { secret } from 'utils/secret'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
@@ -40,14 +40,15 @@ export default function Profile() {
                 `${process.env.NEXT_PUBLIC_API_URL}/telegram`,
                 response,
             )
-            const decoded = jwt.verify(
+            const decoded = await jose.jwtVerify(
                 data.token,
-                `${process.env.NEXT_PUBLIC_JWT_SECRET}`,
+                secret,
             )
 
             if (decoded) {
                 localStorage.setItem('token', data.token)
-                login(decoded as UserProps)
+                // @ts-ignore
+                login(decoded.payload)
             }
             return
         } catch (e) {

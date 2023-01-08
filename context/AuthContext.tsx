@@ -1,15 +1,15 @@
-import {createContext, ReactNode, useState} from "react";
-import useEffectOnce from "hooks/useEffectOnce";
-import jwt from 'jsonwebtoken'
+import { createContext, ReactNode, useState } from 'react'
+import useEffectOnce from 'hooks/useEffectOnce'
+import * as jose from 'jose'
+
+import { secret } from '../utils/secret'
 
 export interface UserProps {
     id: number,
     username: string
-    auth_date?: string,
-    first_name?: string,
-    hash?: string,
-    last_name?: string,
-    photo_url?: string,
+    first_name: string | null,
+    last_name: string | null,
+    photo_url: string | null,
 }
 
 type authContextType = {
@@ -26,51 +26,57 @@ const authContextDefaultValues: authContextType = {
     },
     logout: () => {
     },
-};
-export const AuthContext = createContext<authContextType>(authContextDefaultValues);
+}
+export const AuthContext = createContext<authContextType>(authContextDefaultValues)
 
 
 type Props = {
     children: ReactNode;
 };
 
-export function AuthProvider({children}: Props) {
-    const [user, setUser] = useState<UserProps | undefined>(undefined);
-    const [token, setToken] = useState('');
+export function AuthProvider({ children }: Props) {
+    const [user, setUser] = useState<UserProps | undefined>(undefined)
+    const [token, setToken] = useState('')
 
-    const checkToken = () => {
+    const checkToken = async () => {
         const token = localStorage.getItem('token')
         if (token) {
-            const decoded = jwt.verify(token, `${process.env.NEXT_PUBLIC_JWT_SECRET}`);
-            if (decoded) {
-                setUser(decoded as UserProps)
+            try {
+                const { payload } = await jose.jwtVerify(token, secret)
+                // @ts-ignore
+                setUser(payload)
                 setToken(token)
+            } catch
+                (e) {
+                console.log('e', e)
             }
         }
     }
+
+// @ts-ignore
     useEffectOnce(() => {
         checkToken()
         return () => checkToken()
-    });
+    })
 
     const login = (user: UserProps) => {
-        setUser(user);
-    };
+        setUser(user)
+    }
 
     const logout = () => {
         localStorage.removeItem('token')
-        setUser(undefined);
-    };
+        setUser(undefined)
+    }
 
     const value = {
         user,
         token,
         login,
         logout,
-    };
+    }
     return (
         <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
-    );
+    )
 }
