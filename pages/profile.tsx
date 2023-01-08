@@ -30,13 +30,14 @@ export default function Profile() {
     const { t } = useTranslation('profile')
 
     const handleTelegramResponse = async (response: any) => {
-        console.log(response)
+        console.log('response', response)
         const { username } = response
         if (!username) {
             return alert({ error })
         }
         try {
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response)
+            console.log('data', data)
             const decoded = await jose.jwtVerify(data.token, secret)
             console.log('decoded', decoded)
             if (decoded) {
