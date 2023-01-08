@@ -36,15 +36,9 @@ export default function Profile() {
             return alert({ error })
         }
         try {
-            const { data } = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/telegram`,
-                response,
-            )
-            const decoded = await jose.jwtVerify(
-                data.token,
-                secret,
-            )
-
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/telegram`, response)
+            const decoded = await jose.jwtVerify(data.token, secret)
+            console.log('decoded', decoded)
             if (decoded) {
                 localStorage.setItem('token', data.token)
                 // @ts-ignore
