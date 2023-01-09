@@ -7,7 +7,7 @@ interface Props {
     title?: string
     description?: string
     image?: string
-    category?: string
+    categoryId?: string
     price?: string
     children: ReactNode
     className?: string
@@ -22,7 +22,7 @@ const Layout: React.FC<Props> = ({
     title = 'Доска объявлений города Иннополис',
     description = 'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи.',
     image = '/icons/icon-192x192.png',
-    category,
+    categoryId,
     price,
     className,
     author = 'InnoAds',

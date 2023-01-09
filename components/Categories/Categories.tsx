@@ -25,7 +25,7 @@ const Categories = (): JSX.Element | null => {
                         <Link
                             href={{
                                 pathname: '/search',
-                                query: { category: value },
+                                query: { categoryId: value },
                             }}
                             className={cn(styles.category, {
                                 [styles.categoryIsMobile]: isMobile,

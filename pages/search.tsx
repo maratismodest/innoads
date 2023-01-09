@@ -29,17 +29,16 @@ export default function SearchPage() {
     const [hasMore, setHasMore] = useState(true)
     const [infinite, setInfinite] = useState([])
     const [input, setInput] = useState('')
-    const [category, setCategory] = useState(
+    const [categoryId, setCategoryId] = useState(
         Number(router.query['category']) || 1,
     )
     const debouncedValue = useDebounce<string>(input, 500)
 
-    console.log('category', category)
 
     const loadFunc = useCallback(
         async (currentPage: number = page) => {
             const response = await axios.get(
-                getUrl(category, currentPage, isMobile ? 8 : 15, debouncedValue),
+                getUrl(categoryId, currentPage, isMobile ? 8 : 15, debouncedValue),
             )
             const posts: PostInterface[] = sortByCreatedAt(response.data.content)
             setPage((prevState) => prevState + 1)
@@ -49,12 +48,12 @@ export default function SearchPage() {
             )
             setHasMore(currentPage + 1 < response.data.totalPages)
         },
-        [page, category, debouncedValue],
+        [page, categoryId, debouncedValue],
     )
 
     useEffect(() => {
         loadFunc(0)
-    }, [debouncedValue, category])
+    }, [debouncedValue, categoryId])
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInput(event.target.value)
@@ -72,9 +71,9 @@ export default function SearchPage() {
             <h1 className={classes.title}>{t('search')}</h1>
             <hr />
             <select className={cn(selectStyles.select, 'select-css')}
-                    defaultValue={category}
+                    defaultValue={categoryId}
                     onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                        setCategory(Number(event.target.value))
+                        setCategoryId(Number(event.target.value))
                     }}>
                 {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
             </select>
