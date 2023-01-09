@@ -59,7 +59,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                 }
                 case ItemModalText.delete: {
                     await axios.delete(
-                        `${process.env.NEXT_PUBLIC_API_URL}/post/${id}`,
+                        `${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`,
                         {
                             headers: {
                                 authorization: `Bearer ${token}`,

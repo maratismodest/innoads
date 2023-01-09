@@ -196,7 +196,7 @@ export const getServerSideProps: GetServerSideProps = async ({
         )
     )
     const { data: post } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/post/${query.slug}`
+        `${process.env.NEXT_PUBLIC_API_URL}/posts/${query.slug}`
     )
 
     if (!post) {
@@ -205,22 +205,23 @@ export const getServerSideProps: GetServerSideProps = async ({
         }
     }
 
-    const related = await axios.get(
-        getUrl(
-            post.categoryId,
-            0,
-            5,
-            encodeURIComponent(post.title.split(' ')[0])
-        )
-    )
+    // const related = await axios.get(
+    //     getUrl(
+    //         post.categoryId,
+    //         0,
+    //         5,
+    //         encodeURIComponent(post.title.split(' ')[0])
+    //     )
+    // )
 
     return {
         props: {
             post,
             isMobile,
-            related: related.data.content.filter(
-                (x: PostInterface) => x.id !== post.id
-            ),
+            related: [],
+            // related: related.data.content.filter(
+            //     (x: PostInterface) => x.id !== post.id
+            // ),
             ...(await serverSideTranslations(locale as string, [
                 'common',
                 'post',

@@ -53,7 +53,8 @@ export const getServerSideProps: GetServerSideProps = async ({
             notFound: true,
         }
     }
-    const posts: PostInterface[] = sortByCreatedAt(data.content)
+    // const posts: PostInterface[] = sortByCreatedAt(data.content)
+    const posts: PostInterface[] = sortByCreatedAt(data)
     return {
         props: {
             posts,

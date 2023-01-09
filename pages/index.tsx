@@ -70,17 +70,17 @@ export default function Home({ posts, totalPages }: HomeProps) {
 
     return (
         <Layout>
-            <form className={home.search} onSubmit={handleSubmit(onSubmit)}>
-                <Search
-                    type='text'
-                    placeholder={t('search') as string}
-                    name='search'
-                    required={true}
-                    register={register}
-                    className={home.searchInput}
-                />
-                <Button type='submit'>{t('search')}</Button>
-            </form>
+            {/*<form className={home.search} onSubmit={handleSubmit(onSubmit)}>*/}
+            {/*    <Search*/}
+            {/*        type='text'*/}
+            {/*        placeholder={t('search') as string}*/}
+            {/*        name='search'*/}
+            {/*        required={true}*/}
+            {/*        register={register}*/}
+            {/*        className={home.searchInput}*/}
+            {/*    />*/}
+            {/*    <Button type='submit'>{t('search')}</Button>*/}
+            {/*</form>*/}
             <Categories />
             <div className={home.header}>
                 <h1 className={classes.title}>{t('lastAds')}</h1>
@@ -113,9 +113,9 @@ export default function Home({ posts, totalPages }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    const { data: posts } = await axios.get(getUrl(0, 0, 10))
+    const { data } = await axios.get(getUrl(0, 0, 10))
 
-    // const { content: posts, totalPages } = data
+    const { content: posts, totalPages } = data
 
     if (!posts) {
         return {
@@ -126,7 +126,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
             posts,
-            totalPages: 1,
+            totalPages,
             ...(await serverSideTranslations(locale ?? 'ru', ['common'])),
         },
         revalidate: 180,
