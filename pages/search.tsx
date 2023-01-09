@@ -78,16 +78,16 @@ export default function SearchPage() {
                     }}>
                 {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
             </select>
-            <Input
-                type='text'
-                placeholder={'Например, ноутбук'}
-                name='search'
-                required={true}
-                defaultValue={router.query.keyword}
-                value={input}
-                onChange={handleChange}
-                className={search.searchInput}
-            />
+            {/*<Input*/}
+            {/*    type='text'*/}
+            {/*    placeholder={'Например, ноутбук'}*/}
+            {/*    name='search'*/}
+            {/*    required={true}*/}
+            {/*    defaultValue={router.query.keyword}*/}
+            {/*    value={input}*/}
+            {/*    onChange={handleChange}*/}
+            {/*    className={search.searchInput}*/}
+            {/*/>*/}
             <hr />
             <div className={classes.magicWrapper}>
                 <InfiniteScroll

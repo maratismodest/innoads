@@ -62,11 +62,11 @@ export default function Home({ posts, totalPages }: HomeProps) {
         }
     }, [page])
 
-    const onSubmit = async ({ search }: SearchSubmitForm) =>
-        router.push({
-            pathname: Routes.search,
-            query: { keyword: search },
-        })
+    // const onSubmit = async ({ search }: SearchSubmitForm) =>
+    //     router.push({
+    //         pathname: Routes.search,
+    //         query: { keyword: search },
+    //     })
 
     return (
         <Layout>
@@ -113,7 +113,7 @@ export default function Home({ posts, totalPages }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    const { data } = await axios.get(getUrl(0, 0, 10))
+    const {data} = await axios.get(getUrl(0, 0, 10))
 
     const { content: posts, totalPages } = data
 
