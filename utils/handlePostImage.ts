@@ -10,7 +10,7 @@ export const handlePostImage = async (
 ): Promise<PostImageProps> => {
     try {
         const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/upload`,
+            `${process.env.NEXT_PUBLIC_API_URL}/uploads`,
             formData,
             {
                 headers: {

@@ -92,7 +92,7 @@ export default function Home({ posts, totalPages }: HomeProps) {
                 <InfiniteScroll
                     pageStart={page}
                     loadMore={loadFunc}
-                    hasMore={hasMore}
+                    hasMore={false}
                     initialLoad={false}
                     threshold={100}
                     loader={
@@ -113,9 +113,9 @@ export default function Home({ posts, totalPages }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    const { data } = await axios.get(getUrl(0, 0, 10))
+    const { data: posts } = await axios.get(getUrl(0, 0, 10))
 
-    const { content: posts, totalPages } = data
+    // const { content: posts, totalPages } = data
 
     if (!posts) {
         return {
@@ -126,7 +126,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
             posts,
-            totalPages,
+            totalPages: 1,
             ...(await serverSideTranslations(locale ?? 'ru', ['common'])),
         },
         revalidate: 180,
