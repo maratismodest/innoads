@@ -5,7 +5,7 @@ export const postTelegram = async (formData: InitialPostInterface) => {
   const token = localStorage.getItem('token')
   try {
     const res = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/telegram`,
+      `${process.env.NEXT_PUBLIC_API_URL}/telegrams`,
       formData,
       {
         headers: {
