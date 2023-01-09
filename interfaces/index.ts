@@ -9,7 +9,7 @@ export interface InitialPostInterface {
     title: string;
     body: string;
     price: number;
-    tgId: number;
+    userId: number;
     preview: string;
     images: string;
     slug: string;

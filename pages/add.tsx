@@ -73,7 +73,7 @@ export default function Add() {
             images: images.join('||'),
             slug: slug(title) + '-' + Math.floor(Math.random() * 100),
             telegram: user?.username,
-            tgId: user?.id,
+            userId: user?.id,
             categoryId,
         }
         try {

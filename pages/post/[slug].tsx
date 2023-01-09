@@ -156,7 +156,7 @@ export default function Post({ post, related, isMobile }: PostProps) {
                 </div>
 
                 <div className={classes.mt40}>
-                    <Link href={`/user/${post.tgId}`} passHref>
+                    <Link href={`/user/${post.userId}`} passHref>
                         <Button>{t('userAds', { ns: 'post' })}</Button>
                     </Link>
                 </div>

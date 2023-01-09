@@ -51,6 +51,29 @@ export default function Profile() {
         }
     }
 
+    const handleClick = async () => {
+        try {
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, {
+                'first_name': 'Marat',
+                'last_name': 'Marat',
+                'id': 71233480,
+                'photo_url': 'https://t.me/i/userpic/320/QbIbY59Btv3iqvpPSZigwX2LUDfQt39ptyEablKRsgw.jpg',
+                'username': 'maratfaizer',
+            })
+            console.log('data', data)
+            const decoded = await jose.decodeJwt(data.token)
+            console.log('decoded', decoded)
+            if (decoded) {
+                localStorage.setItem('token', data.token)
+                // @ts-ignore
+                login(decoded)
+            }
+            return
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     useEffect(() => {
         if (user) {
             getUserPosts(user.id).then((res) => setPosts(res))
@@ -73,6 +96,7 @@ export default function Profile() {
                         dataOnauth={handleTelegramResponse}
                         botName='InnoAdsPostBot'
                     />
+                    {/*<button onClick={handleClick}>Ok</button>*/}
                 </div>
             </MainLayout>
         )

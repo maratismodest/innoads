@@ -42,9 +42,9 @@ export function AuthProvider({ children }: Props) {
         const token = localStorage.getItem('token')
         if (token) {
             try {
-                const { payload } = await jose.jwtVerify(token, secret)
+                const decoded = await jose.decodeJwt(token)
                 // @ts-ignore
-                setUser(payload)
+                setUser(decoded)
                 setToken(token)
             } catch
                 (e) {
