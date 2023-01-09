@@ -17,7 +17,7 @@ const withMDX = require('@next/mdx')()
 const nextConfig = {
     reactStrictMode: true,
     images: {
-        domains: [process.env.NEXT_PUBLIC_IMAGES_DOMAIN],
+        domains: [process.env.NEXT_PUBLIC_IMAGES_DOMAIN, 'localhost'],
     },
     formats: ['image/avif', 'image/webp'],
     i18n,

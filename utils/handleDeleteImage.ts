@@ -1,13 +1,10 @@
 import axios from 'axios'
 
-export const handleDeleteImage = async (link: string) => {
+export const handleDeleteImage = async (filename: string) => {
+    console.log('filename', filename)
     try {
-        const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
-            data: {
-                link,
-            },
-        })
-        return res.data
+        const { data } = await axios.delete(filename)
+        return data
     } catch (e) {
         console.log(e)
     }

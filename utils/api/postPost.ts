@@ -3,6 +3,7 @@ import { InitialPostInterface } from 'interfaces'
 
 const postPost = async (formData: InitialPostInterface) => {
     const token = localStorage.getItem('token')
+    console.log('token',token)
     try {
         const res = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/posts`,

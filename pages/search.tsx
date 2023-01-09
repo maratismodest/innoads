@@ -30,7 +30,7 @@ export default function SearchPage() {
     const [infinite, setInfinite] = useState([])
     const [input, setInput] = useState('')
     const [categoryId, setCategoryId] = useState(
-        Number(router.query['category']) || 1,
+        Number(router.query['categoryId']) || 1,
     )
     const debouncedValue = useDebounce<string>(input, 500)
 
