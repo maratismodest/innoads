@@ -36,7 +36,7 @@ export default function Profile() {
             return alert({ error })
         }
         try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, response)
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, response)
             console.log('data', data)
             const decoded = await jose.jwtVerify(data.token, secret)
             console.log('decoded', decoded)
