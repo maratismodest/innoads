@@ -4,7 +4,8 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
 import axios from 'axios'
-import { PostInterface } from 'interfaces'
+import { PostInterface, UserType } from 'interfaces'
+import * as process from 'process'
 import { tgLink } from 'utils/constants'
 import { getUrl } from 'utils/getUrl'
 import { sortByCreatedAt } from 'utils/sortByUpdatedAt'
@@ -17,9 +18,10 @@ import classes from 'styles/classes.module.scss'
 
 interface PersonProps {
     posts: PostInterface[]
+    user: UserType
 }
 
-const Person: NextPage<PersonProps> = ({ posts }) => {
+const Person: NextPage<PersonProps> = ({ posts, user }) => {
     const { t } = useTranslation('post')
     return (
         <MainLayout>
@@ -32,7 +34,7 @@ const Person: NextPage<PersonProps> = ({ posts }) => {
                 {posts.map((post: PostInterface) => <Item post={post} key={post.slug} />)}
             </ul>
             <div className={classes.mt40} />
-            <Link href={tgLink + '/' + posts[0].telegram} passHref>
+            <Link href={tgLink + '/' + user.username} passHref>
                 <Button>{t('textAuthor')}</Button>
             </Link>
         </MainLayout>
@@ -48,16 +50,18 @@ export const getServerSideProps: GetServerSideProps = async ({
     const { data } = await axios.get(
         getUrl(0, 0, 10, '', +(query.id as string)),
     )
+    const {data: user} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/${query.id as string}`)
     if (!data) {
         return {
             notFound: true,
         }
     }
-    // const posts: PostInterface[] = sortByCreatedAt(data.content)
-    const posts: PostInterface[] = sortByCreatedAt(data)
+    const posts: PostInterface[] = sortByCreatedAt(data.content)
+    // const posts: PostInterface[] = sortByCreatedAt(data)
     return {
         props: {
             posts,
+            user,
             ...(await serverSideTranslations(locale as string, [
                 'common',
                 'post',

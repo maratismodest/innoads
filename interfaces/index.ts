@@ -3,6 +3,11 @@ export interface PostInterface extends InitialPostInterface {
     createdAt: string;
     updatedAt: string;
     vector?: any;
+    user?: UserType
+}
+export type UserType = {
+    id: number,
+    username: string
 }
 
 export interface InitialPostInterface {
@@ -14,7 +19,6 @@ export interface InitialPostInterface {
     images: string;
     slug: string;
     categoryId: number;
-    telegram: string;
 }
 
 export interface HTMLInputEvent extends Event {

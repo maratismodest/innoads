@@ -40,7 +40,7 @@ export default function Post({ post, related, isMobile }: PostProps) {
         categoryId,
         price,
         createdAt,
-        telegram,
+        user,
         slug,
     } = post
 
@@ -89,7 +89,7 @@ export default function Post({ post, related, isMobile }: PostProps) {
             canonical={canonical}
             keywords={seoKeywords}
             image={seoImage}
-            author={`https://t.me/${telegram}`}
+            author={`https://t.me/${user?.username}`}
         >
             <div className={item.post}>
                 <div style={{ position: 'relative' }}>
@@ -150,7 +150,7 @@ export default function Post({ post, related, isMobile }: PostProps) {
                     {dayjs(createdAt).format('DD.MM.YYYY')}
                 </p>
                 <div className={classes.mt40}>
-                    <Link href={tgLink + '/' + telegram} passHref={true}>
+                    <Link href={tgLink + '/' + user?.username} passHref={true}>
                         <Button>{t('textAuthor', { ns: 'post' })}</Button>
                     </Link>
                 </div>
