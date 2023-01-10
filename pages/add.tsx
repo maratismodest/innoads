@@ -74,7 +74,7 @@ export default function Add() {
             slug: slug(title) + '-' + Math.floor(Math.random() * 100),
             telegram: user?.username,
             userId: user?.id,
-            categoryId,
+            categoryId: Number(categoryId),
         }
         try {
             setSending(true)
