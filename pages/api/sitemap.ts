@@ -10,7 +10,7 @@ const Sitemap = async (req: NextApiRequest, res: NextApiResponse) => {
     const posts: PostInterface[] = await getDynamicPaths(5000)
 
     const links = posts.map((post) => {
-        return { url: `/post/${post.slug}`, changefreq: 'daily', priority: 0.3 }
+        return { url: `/posts/${post.slug}`, changefreq: 'daily', priority: 0.3 }
     })
 
     // Create a stream to write to

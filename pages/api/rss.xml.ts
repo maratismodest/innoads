@@ -40,7 +40,7 @@ const RSS = async (req: NextApiRequest, res: NextApiResponse) => {
             preview,
             // meta: { date, description, title },
         } = post
-        const url = `${baseUrl}/post/${slug}`
+        const url = `${baseUrl}/posts/${slug}`
 
         feed.addItem({
             title,
