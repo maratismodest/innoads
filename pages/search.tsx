@@ -2,7 +2,7 @@ import type { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import InfiniteScroll from 'react-infinite-scroller'
 import cn from 'classnames'
@@ -51,9 +51,9 @@ export default function SearchPage() {
         loadFunc(0)
     }, [debouncedValue, categoryId])
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setInput(event.target.value)
-    }
+    // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //     setInput(event.target.value)
+    // }
 
     useEffect(() => {
         const res = router.query['keyword']
@@ -63,7 +63,10 @@ export default function SearchPage() {
     }, [router.query])
 
     return (
-        <MainLayout>
+        <MainLayout
+            title='Поиск в InnoAds'
+            description='Ищите объявления города Иннополис в бесплатной доске InnoAds'
+        >
             <h1 className={classes.title}>{t('search')}</h1>
             <hr />
             <select className={cn(selectStyles.select, 'select-css')}
