@@ -43,11 +43,12 @@ export function AuthProvider({ children }: Props) {
             try {
                 const decoded = await jose.decodeJwt(token)
                 const response = await fetchUser(decoded.id as number)
-                if (response.user) {
+                if (response) {
                     // @ts-ignore
                     setUser(decoded)
                     setToken(token)
                 } else {
+                    localStorage.removeItem('token')
                     alert('Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново')
                     return
                 }
