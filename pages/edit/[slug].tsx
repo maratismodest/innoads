@@ -9,14 +9,15 @@ import { useForm } from 'react-hook-form'
 import cn from 'classnames'
 import { useAuth } from 'hooks/useAuth'
 import { HTMLInputEvent, PostInterface } from 'interfaces'
-import getPostBySlug from 'utils/api/getPostBySlug'
-import putPost from 'utils/api/putPost'
-import { ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, messages, NO_IMAGE, Routes, titles } from 'utils/constants'
-import getCompressedImagesLinks from 'utils/getCompressedImagesLinks'
-import { handleDeleteImage } from 'utils/handleDeleteImage'
-import hasCurseWords from 'utils/hasCurseWords'
-import { MoveImage, moveImage } from 'utils/moveImage'
+import getPostBySlug from 'utils/api/fetchPost'
+import updatePost from 'utils/api/updatePost'
+import { ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, messages, NO_IMAGE, titles } from 'utils/constants'
+import hasCurseWords from 'utils/curseWords'
+import getCompressedImagesLinks from 'utils/image/getCompressedImagesLinks'
+import { handleDeleteImage } from 'utils/image/handleDeleteImage'
+import { MoveImage, moveImage } from 'utils/image/moveImage'
 import { options } from 'utils/options'
+import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import ErrorBlock from 'components/ErrorBlock/ErrorBlock'
@@ -55,7 +56,7 @@ export default function Edit({ post }: { post: PostInterface }) {
         }
     }, [ref.current])
 
-    if (!user || !user.username) {
+    if (!user) {
         return <GoToProfile />
     }
 
@@ -82,7 +83,7 @@ export default function Edit({ post }: { post: PostInterface }) {
 
         try {
             setLoading(true)
-            await putPost(formData)
+            await updatePost(formData)
             alert(messages.postUpdated)
             return router.push(Routes.profile)
         } catch (e) {

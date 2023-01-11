@@ -5,10 +5,10 @@ import React from 'react'
 import MainLayout from 'components/Layout/Layout'
 import MDX from 'components/MDX/blog.mdx'
 
+const seoTitle = 'Как выгодно продать на досках объявлений'
+const seoDescription =
+    'Для начала, постарайтесь сделать хорошое фото вашего товара. Найдите все аксесуары, чеки и упаковку.'
 const Blog = () => {
-    const seoTitle = 'Как выгодно продать на досках объявлений'
-    const seoDescription =
-        'Для начала, постарайтесь сделать хорошое фото вашего товара. Найдите все аксесуары, чеки и упаковку.'
     const canonical = `${process.env.NEXT_PUBLIC_NODE_ENV}/blog`
     return (
         <MainLayout

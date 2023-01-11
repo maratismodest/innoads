@@ -1,20 +1,14 @@
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
-import { GetStaticProps } from 'next/types'
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useCallback, useMemo, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import InfiniteScroll from 'react-infinite-scroller'
-import axios from 'axios'
 import { PostInterface } from 'interfaces'
-import { Routes } from 'utils/constants'
-import { getUrl } from 'utils/getUrl'
+import fetchPosts from 'utils/api/fetchPosts'
 
-import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
 import Layout from 'components/Layout/Layout'
-import Search from 'components/Search/Search'
 import Spinner from 'components/Spinner/Spinner'
 
 import classes from 'styles/classes.module.scss'
@@ -24,38 +18,32 @@ const Categories = dynamic(() => import('components/Categories/Categories'), {
     ssr: true,
 })
 
-interface HomeProps {
-    posts: PostInterface[]
-    totalPages: number
-}
+// type SearchSubmitForm = {
+//     search: string
+// }
 
-type SearchSubmitForm = {
-    search: string
-}
-
-export default function Home({ posts, totalPages }: HomeProps) {
-    const router = useRouter()
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts, totalPages }) => {
+    // const router = useRouter()
     const { t } = useTranslation()
     const [page, setPage] = useState(0)
-    const [hasMore, setHasMore] = useState(true)
-    const { handleSubmit, register } = useForm<SearchSubmitForm>({
-        defaultValues: {
-            search: '',
-        },
-    })
+    const [hasMore, setHasMore] = useState(false)
+    // const { handleSubmit, register } = useForm<SearchSubmitForm>({
+    //     defaultValues: {
+    //         search: '',
+    //     },
+    // })
     const [infinite, setInfinite] = useState<PostInterface[]>(posts)
     const count = useMemo(() => totalPages * 10, [totalPages])
 
     const loadFunc = useCallback(async () => {
         try {
-            const response = await axios.get(getUrl(0, page + 1, 10))
-            const posts = response.data.content
+            const { content: posts, totalPages } = await fetchPosts(0, page + 1, 10)
             setPage((prevState: number) => prevState + 1)
             setInfinite((prevState: PostInterface[]) => [
                 ...prevState,
                 ...posts,
             ])
-            setHasMore(page + 1 < response.data.totalPages)
+            setHasMore(page + 1 < totalPages)
             return posts
         } catch (e) {
             console.log(e)
@@ -92,7 +80,7 @@ export default function Home({ posts, totalPages }: HomeProps) {
                 <InfiniteScroll
                     pageStart={page}
                     loadMore={loadFunc}
-                    hasMore={false}
+                    hasMore={hasMore}
                     initialLoad={false}
                     threshold={100}
                     loader={
@@ -112,10 +100,9 @@ export default function Home({ posts, totalPages }: HomeProps) {
     )
 }
 
+export default Home
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    const {data} = await axios.get(getUrl(0, 0, 10))
-
-    const { content: posts, totalPages } = data
+    const { content: posts, totalPages } = await fetchPosts(0, 0, 10, 0)
 
     if (!posts) {
         return {

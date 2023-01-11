@@ -18,51 +18,10 @@
     display: flex;
     justify-content: space-between;
   }
-
-  &Button {
-    margin-left: 24px;
-
-    @media (max-width: 1024px) {
-      margin-left: 12px;
-    }
-  }
-
-  &Header {
-    display: flex;
-    align-items: center;
-  }
-
-  &Title {
-    font-weight: 600;
-    font-size: 20px;
-    text-transform: uppercase;
-    margin-right: 24px;
-
-    @media (max-width: 1024px) {
-      margin-right: 12px;
-    }
-  }
-
-  &Description {
-    margin-left: 24px;
-  }
 }
 
 .buttons {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.switch {
-  margin-right: 8px;
-
-  &Icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: $white;
-    height: 100%;
-    font-size: 15px;
-  }
 }

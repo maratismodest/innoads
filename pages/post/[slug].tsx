@@ -1,16 +1,18 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { GetServerSideProps } from 'next/types'
+import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import axios from 'axios'
+import React, { useMemo, useRef, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import cn from 'classnames'
 import dayjs from 'dayjs'
 import { PostInterface } from 'interfaces'
-import { Routes, tgLink } from 'utils/constants'
-import { getUrl } from 'utils/getUrl'
+import fetchPost from 'utils/api/fetchPost'
+import fetchPosts from 'utils/api/fetchPosts'
+import { tgLink } from 'utils/constants'
 import { options } from 'utils/options'
+import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
@@ -20,16 +22,9 @@ import Price from 'components/Price/Price'
 import classes from 'styles/classes.module.scss'
 import item from 'styles/Post.module.scss'
 
-interface PostProps {
-    post: PostInterface
-    related: PostInterface[]
-    isMobile: boolean
-}
-
-export default function Post({ post, related, isMobile }: PostProps) {
+const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ post, related }) => {
     const { t } = useTranslation()
     const [current, setCurrent] = useState(0)
-    const [mounted, setMounted] = useState(false)
     const ul = useRef<HTMLUListElement>(null)
     const li = useRef<HTMLLIElement>(null)
 
@@ -48,25 +43,19 @@ export default function Post({ post, related, isMobile }: PostProps) {
     const category = useMemo(
         () =>
             options.find((option) => option.value === categoryId) || options[0],
-        [categoryId]
+        [categoryId],
     )
     const seoTitle = useMemo(
         () => `${t(category.label)} ${title.slice(0, 50)} в городе Иннополис`,
-        [category.label, title, t]
+        [category.label, title, t],
     )
     const seoDescription = useMemo(() => body.slice(0, 320), [body])
     const seoImage = useMemo(() => preview, [preview])
     const seoKeywords = useMemo(
         () => `innoads, Иннополис, доска объявлений, ${category.label}`,
-        [category.label]
+        [category.label],
     )
-    const canonical = useMemo(() => `https://innoads.ru/post/${slug}`, [slug])
-
-    useEffect(() => setMounted(true), [])
-
-    if (!mounted) {
-        return null
-    }
+    const canonical = useMemo(() => `${process.env.NEXT_PUBLIC_NODE_ENV}/post/${slug}`, [slug])
 
     const shareData = {
         title: 'InnoAds',
@@ -89,7 +78,7 @@ export default function Post({ post, related, isMobile }: PostProps) {
             canonical={canonical}
             keywords={seoKeywords}
             image={seoImage}
-            author={`https://t.me/${user?.username}`}
+            author={`${tgLink}/${user?.username}`}
         >
             <div className={item.post}>
                 <div style={{ position: 'relative' }}>
@@ -103,7 +92,7 @@ export default function Post({ post, related, isMobile }: PostProps) {
                                 >
                                     <Image
                                         src={image}
-                                        alt="image"
+                                        alt='image'
                                         title={title}
                                         width={300}
                                         height={300}
@@ -130,19 +119,13 @@ export default function Post({ post, related, isMobile }: PostProps) {
                     </button>
                 </div>
 
-                <Link
-                    href={`${Routes.main}search?category=${categoryId}`}
-                    passHref
-                >
-                    <p>
-                        {t('category', { ns: 'post' })}:{' '}
-                        <span>{t(category.label)}</span>
-                    </p>
+                <Link href={`${Routes.main}search?categoryId=${categoryId}`}>
+                    {t('category', { ns: 'post' })}:{' '}
+                    <span>{t(category.label)}</span>
                 </Link>
+
                 <h1>{title}</h1>
-                <p className={item.price}>
-                    <Price price={price} />
-                </p>
+                <Price price={price} className={item.price} />
                 <hr />
                 <pre className={classes.paragraph}>{body}</pre>
                 <p className={classes.mt20}>
@@ -184,20 +167,12 @@ export default function Post({ post, related, isMobile }: PostProps) {
     )
 }
 
+export default Post
 export const getServerSideProps: GetServerSideProps = async ({
-    locale,
-    query,
-    req,
-}) => {
-    const UA = req.headers['user-agent']
-    const isMobile = Boolean(
-        UA?.match(
-            /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
-        )
-    )
-    const { data: post } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/posts/${query.slug}`
-    )
+                                                                 locale,
+                                                                 query,
+                                                             }) => {
+    const post = await fetchPost(query.slug as string)
 
     if (!post) {
         return {
@@ -205,23 +180,20 @@ export const getServerSideProps: GetServerSideProps = async ({
         }
     }
 
-    // const related = await axios.get(
-    //     getUrl(
-    //         post.categoryId,
-    //         0,
-    //         5,
-    //         encodeURIComponent(post.title.split(' ')[0])
-    //     )
-    // )
+    const response = await fetchPosts(post.categoryId, 0, 5)
+
+    if (!response) {
+        return {
+            notFound: true,
+        }
+    }
+
 
     return {
         props: {
             post,
             isMobile,
-            related: [],
-            // related: related.data.content.filter(
-            //     (x: PostInterface) => x.id !== post.id
-            // ),
+            related: response.content.filter(x => x.id !== post.id),
             ...(await serverSideTranslations(locale as string, [
                 'common',
                 'post',

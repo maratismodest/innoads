@@ -10,8 +10,9 @@ import { useAuth } from 'hooks/useAuth'
 import { PostInterface } from 'interfaces'
 import useLocalStorageState from 'use-local-storage-state'
 import postTelegram from 'utils/api/postTelegram'
-import putPost from 'utils/api/putPost'
-import { NO_IMAGE, Routes } from 'utils/constants'
+import updatePost from 'utils/api/updatePost'
+import { NO_IMAGE } from 'utils/constants'
+import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Modal from 'components/Modal/Modal'
@@ -81,7 +82,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         )
                     } else {
                         await postTelegram(post)
-                        await putPost({ ...post, createdAt: new Date().toString() })
+                        await updatePost({ ...post, createdAt: new Date().toString() })
                         alert(success.updated)
                     }
                     break

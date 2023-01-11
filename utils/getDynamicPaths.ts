@@ -1,5 +1,5 @@
-import axios from "axios";
-import {PostInterface} from "interfaces";
+import axios from 'axios'
+import { PostInterface } from 'interfaces'
 
 export const getDynamicPaths = async (count: number = 12) => {
     try {
@@ -10,5 +10,4 @@ export const getDynamicPaths = async (count: number = 12) => {
         console.log(e)
         return []
     }
-
 }

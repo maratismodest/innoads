@@ -28,8 +28,7 @@ p {
 }
 
 main {
-  margin: 0 auto;
-  margin-top: 66px;
+  margin: 66px auto 0;
   padding: 1rem;
   max-width: 1100px;
   position: relative;
@@ -87,4 +86,11 @@ dialog {
 :root:lang(iw) .select-css {
   background-position: left 0.7em top 50%, 0 0;
   padding: 0.6em 0.8em 0.5em 1.4em;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
 }

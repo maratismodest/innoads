@@ -1,15 +1,14 @@
 import { createContext, ReactNode, useState } from 'react'
 import useEffectOnce from 'hooks/useEffectOnce'
 import * as jose from 'jose'
-
-import { secret } from '../utils/secret'
+import fetchUser from 'utils/api/fetchUser'
 
 export interface UserProps {
     id: number,
     username: string
-    first_name: string | null,
-    last_name: string | null,
-    photo_url: string | null,
+    first_name?: string | null,
+    last_name?: string | null,
+    photo_url?: string | null,
 }
 
 type authContextType = {
@@ -43,9 +42,16 @@ export function AuthProvider({ children }: Props) {
         if (token) {
             try {
                 const decoded = await jose.decodeJwt(token)
-                // @ts-ignore
-                setUser(decoded)
-                setToken(token)
+                const response = await fetchUser(decoded.id as number)
+                if (response.user) {
+                    // @ts-ignore
+                    setUser(decoded)
+                    setToken(token)
+                } else {
+                    alert('Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново')
+                    return
+                }
+
             } catch
                 (e) {
                 console.log('e', e)

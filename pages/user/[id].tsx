@@ -1,14 +1,13 @@
 import Link from 'next/link'
-import { GetServerSideProps, NextPage } from 'next/types'
+import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
-import axios from 'axios'
-import { PostInterface, UserType } from 'interfaces'
-import * as process from 'process'
+import { PostInterface } from 'interfaces'
+import fetchPosts from 'utils/api/fetchPosts'
+import fetchUser from 'utils/api/fetchUser'
 import { tgLink } from 'utils/constants'
-import { getUrl } from 'utils/getUrl'
-import { sortByCreatedAt } from 'utils/sortByUpdatedAt'
+import sortByCreatedAt from 'utils/sortByUpdatedAt'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
@@ -16,12 +15,7 @@ import MainLayout from 'components/Layout/Layout'
 
 import classes from 'styles/classes.module.scss'
 
-interface PersonProps {
-    posts: PostInterface[]
-    user: UserType
-}
-
-const Person: NextPage<PersonProps> = ({ posts, user }) => {
+const PublicProfile: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ posts, user }) => {
     const { t } = useTranslation('post')
     return (
         <MainLayout>
@@ -41,26 +35,25 @@ const Person: NextPage<PersonProps> = ({ posts, user }) => {
     )
 }
 
-export default Person
+export default PublicProfile
 
 export const getServerSideProps: GetServerSideProps = async ({
                                                                  locale,
                                                                  query,
                                                              }) => {
-    const { data } = await axios.get(
-        getUrl(0, 0, 10, '', +(query.id as string)),
-    )
-    const {data: user} = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/${query.id as string}`)
-    if (!data) {
+    const userId = Number(query.id)
+    const user = await fetchUser(userId)
+    const { content: posts } = await fetchPosts(0, 0, 10, userId)
+
+    if (!posts || !user) {
         return {
             notFound: true,
         }
     }
-    const posts: PostInterface[] = sortByCreatedAt(data.content)
-    // const posts: PostInterface[] = sortByCreatedAt(data)
+
     return {
         props: {
-            posts,
+            posts: sortByCreatedAt(posts),
             user,
             ...(await serverSideTranslations(locale as string, [
                 'common',

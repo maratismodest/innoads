@@ -1,17 +1,18 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { PostInterface } from 'interfaces'
+import { SEO_DESCRIPTION, SEO_TITLE } from 'utils/constants'
 import { getDynamicPaths } from 'utils/getDynamicPaths'
 
 const { Feed } = require('feed')
 const dayjs = require('dayjs')
 
-const baseUrl = 'https://innoads.ru'
+const baseUrl = process.env.NEXT_PUBLIC_NODE_ENV
+
 const author = {
     name: 'Marat Faizer',
     email: 'maratismodest@gmail.com',
     link: 'https://t.me/maratfaizer',
 }
-
 
 const RSS = async (req: NextApiRequest, res: NextApiResponse) => {
     // An array with your links
@@ -19,8 +20,8 @@ const RSS = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Construct a new Feed object
     const feed = new Feed({
-        title: 'Доска объявлений города Иннополиса',
-        description: 'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи',
+        title: SEO_TITLE,
+        description: SEO_DESCRIPTION,
         id: baseUrl,
         link: baseUrl,
         language: 'ru',

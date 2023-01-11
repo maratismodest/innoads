@@ -7,12 +7,13 @@ import React, { useEffect, useState } from 'react'
 import TelegramLoginButton from 'react-telegram-login'
 import axios from 'axios'
 import cn from 'classnames'
+import { UserProps } from 'context/AuthContext'
 import { useAuth } from 'hooks/useAuth'
 import { PostInterface } from 'interfaces'
 import * as jose from 'jose'
-import { Routes, titles } from 'utils/constants'
-import { getUserPosts } from 'utils/getUserPosts'
-import { secret } from 'utils/secret'
+import fetchPosts from 'utils/api/fetchPosts'
+import { titles } from 'utils/constants'
+import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
@@ -29,21 +30,18 @@ export default function Profile() {
     const { user, login, logout } = useAuth()
     const { t } = useTranslation('profile')
 
-    const handleTelegramResponse = async (response: any) => {
-        console.log('response', response)
+    const handleTelegramResponse = async (response: UserProps) => {
         const { username } = response
         if (!username) {
             return alert({ error })
         }
         try {
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, response)
-            console.log('data', data)
             const decoded = await jose.decodeJwt(data.token)
             console.log('decoded', decoded)
             if (decoded) {
                 localStorage.setItem('token', data.token)
-                // @ts-ignore
-                login(decoded)
+                login(response)
             }
             return
         } catch (e) {
@@ -76,7 +74,7 @@ export default function Profile() {
 
     useEffect(() => {
         if (user) {
-            getUserPosts(user.id).then((res) => setPosts(res))
+            fetchPosts(0, 0, 10, user.id).then((res) => setPosts(res?.content || []))
         }
     }, [user])
 

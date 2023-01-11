@@ -2,18 +2,16 @@ import type { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import InfiniteScroll from 'react-infinite-scroller'
-import axios from 'axios'
 import cn from 'classnames'
 import useDebounce from 'hooks/useDebounce'
 import { PostInterface } from 'interfaces'
-import { getUrl } from 'utils/getUrl'
+import fetchPosts from 'utils/api/fetchPosts'
 import { options } from 'utils/options'
-import { sortByCreatedAt } from 'utils/sortByUpdatedAt'
+import sortByCreatedAt from 'utils/sortByUpdatedAt'
 
-import Input from 'components/Input/Input'
 import Item from 'components/Item/Item'
 import MainLayout from 'components/Layout/Layout'
 import Spinner from 'components/Spinner/Spinner'
@@ -37,16 +35,14 @@ export default function SearchPage() {
 
     const loadFunc = useCallback(
         async (currentPage: number = page) => {
-            const response = await axios.get(
-                getUrl(categoryId, currentPage, isMobile ? 8 : 15, debouncedValue),
-            )
-            const posts: PostInterface[] = sortByCreatedAt(response.data.content)
+            const response = await fetchPosts(categoryId, currentPage, isMobile ? 8 : 15)
+            const posts: PostInterface[] = sortByCreatedAt(response.content)
             setPage((prevState) => prevState + 1)
             // @ts-ignore
             setInfinite((prevState: PostInterface[]) =>
                 currentPage === 0 ? posts : [...prevState, ...posts],
             )
-            setHasMore(currentPage + 1 < response.data.totalPages)
+            setHasMore(currentPage + 1 < response.totalPages)
         },
         [page, categoryId, debouncedValue],
     )

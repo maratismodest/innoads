@@ -1,38 +1,71 @@
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useAuth } from 'hooks/useAuth'
 import useOnClickOutsideRef from 'hooks/useOnClickOutsideRef'
-import { Routes } from 'utils/constants'
+import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Dropdown from 'components/Dropdown/Dropdown'
-
-import Switcher from './switcher'
+import Switcher from 'components/Switcher/Switcher'
 
 import classes from './Header.module.scss'
 
 const Header = (): JSX.Element | null => {
+    const [mounted, setMounted] = useState(false)
     const { t } = useTranslation()
     const { user } = useAuth()
-    const [mounted, setMounted] = useState(false)
     const [menu, setMenu] = useState(false)
 
     const ref = useOnClickOutsideRef(() => setMenu(false))
 
+    const mobileMenu = useMemo(() => [
+        {
+            id: 1,
+            href: Routes.profile,
+            text: t(user ? 'profile' : 'login'),
+        },
+        {
+            id: 2,
+            href: Routes.add,
+            text: t('addAd'),
+        },
+        {
+            id: 3,
+            href: Routes.favourites,
+            text: t('favourite'),
+        },
+    ], [user, t])
+
+    const desktopMenu = useMemo(() => [
+        {
+            id: 1,
+            href: Routes.favourites,
+            text: t('favourite'),
+        },
+        {
+            id: 2,
+            href: Routes.profile,
+            text: t(user ? 'profile' : 'login'),
+        },
+    ], [user, t])
+
     useEffect(() => setMounted(true), [])
-    if (!mounted) return null
+
+    if (!mounted) {
+        return null
+    }
 
     if (isMobile) {
         return (
-            <nav data-testid='nav' className={classes.header}>
+            <nav className={classes.header}>
                 <div className={classes.headerMain}>
                     <Link
                         href={Routes.main}
-                        className={classes.headerHeader}
+                        className={'flex'}
                     >
-                        <span className={classes.headerTitle}>INNOADS</span>
+                        INNOADS
                     </Link>
                     <div ref={ref}>
                         <Button
@@ -45,26 +78,10 @@ const Header = (): JSX.Element | null => {
                         {menu && (
                             <Dropdown closeToggle={() => setMenu(true)}>
                                 <ul>
-                                    <li>
-                                        <Link
-                                            href={Routes.profile}
-                                        >{t(user ? 'profile' : 'login')}
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href={Routes.add}
-                                        >
-                                            {t('addAd')}
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            href={Routes.favourites}
-                                        >
-                                            {t('favourite')}
-                                        </Link>
-                                    </li>
+                                    {mobileMenu.map(({ id, href, text }) =>
+                                        <li key={id}>
+                                            <Link href={href}>{text}</Link>
+                                        </li>)}
                                 </ul>
                                 <Switcher />
                             </Dropdown>
@@ -76,38 +93,26 @@ const Header = (): JSX.Element | null => {
     }
 
     return (
-        <nav data-testid='nav' className={classes.header}>
+        <nav className={classes.header}>
             <div className={classes.headerMain}>
                 <Link
                     href={Routes.main}
-                    className={classes.headerHeader}
+                    className={'flex'}
                 >
-                    <span className={classes.headerTitle}>INNOADS</span>
-                    <span>&nbsp;|&nbsp;</span>
-                    <span className={classes.headerDescription}>
-                        {t('innopolisClassified')}
-                    </span>
+                    <span>INNOADS</span>
+                    <span>|</span>
+                    <span>{t('innopolisClassified')}</span>
                 </Link>
                 <div className={classes.buttons}>
-                    <div className={classes.switch}>
-                        <Switcher />
-                    </div>
-                    <Link
-                        href={Routes.favourites}
-                    >
-                        {t('favourite')}
-                    </Link>
-                    <Link
-                        href={Routes.profile}
-                        className={classes.headerUser}
-                    >
-                        {user
-                            ? t('profile')
-                            : `${t('login')} | ${t('registration')}`}
-                    </Link>
-
+                    <Switcher />
+                    <ul className={'flex'}>
+                        {desktopMenu.map(({ id, href, text }) =>
+                            <li key={id}>
+                                <Link href={href}>{text}</Link>
+                            </li>)}
+                    </ul>
                     <Link href={Routes.add}>
-                        <Button className={classes.headerButton}>
+                        <Button>
                             {t('addAd')}
                         </Button>
                     </Link>

@@ -28,7 +28,7 @@ class MyDocument extends Document<Props> {
                 <NextScript />
                 <Script
                     id='yandex-metrika'
-                    strategy='lazyOnload'
+                    strategy='afterInteractive'
                     dangerouslySetInnerHTML={{
                         __html: `
                     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};

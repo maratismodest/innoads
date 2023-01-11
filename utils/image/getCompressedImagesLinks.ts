@@ -9,7 +9,7 @@ const getCompressedImagesLinks = async (imagesFromInput: FileList, setImages: Di
         const resizedImage = await handleImageResize(initialImage)
         if (resizedImage) {
             const formData = new FormData()
-            formData.append('image', resizedImage, `${Date.now()}.jpg`)
+            formData.append('image', resizedImage, resizedImage.name)
             const { status, value } = await handlePostImage(formData)
             if (status === 'ok') {
                 setImages((prevState: string[]) => [...prevState, value])

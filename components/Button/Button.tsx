@@ -11,7 +11,7 @@ const Button = ({
                     children,
                     className,
                     type,
-                    transparent,
+                    transparent = false,
                     ...props
                 }: ButtonProps): JSX.Element => {
     return (
