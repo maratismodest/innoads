@@ -10,7 +10,7 @@
   color: $black;
   background: $grey;
 
-  &Main {
+  &Wrap {
     width: 100%;
     max-width: 1100px;
     padding: 12px;
@@ -18,10 +18,4 @@
     display: flex;
     justify-content: space-between;
   }
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }

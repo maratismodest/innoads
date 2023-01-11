@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useAuth } from 'hooks/useAuth'
 import useOnClickOutsideRef from 'hooks/useOnClickOutsideRef'
@@ -12,44 +12,48 @@ import Switcher from 'components/Switcher/Switcher'
 
 import classes from './Header.module.scss'
 
+const Buttons = ({ className }: { className?: string }) => {
+    const { user } = useAuth()
+    const { t } = useTranslation()
+    const menu = useMemo(() => [
+        {
+            id: 'user',
+            href: Routes.profile,
+            children: t(user ? 'profile' : 'login'),
+        },
+        {
+            id: 'favourite',
+            href: Routes.favourites,
+            children: t('favourite'),
+        },
+        {
+            id: 'add',
+            href: Routes.add,
+            children: <Button>{t('addAd')}</Button>,
+        },
+    ], [user, t])
+
+    return (
+        <ul className={className}>
+            {menu.map(({ id, href, children }) =>
+                <li key={id}>
+                    <Link href={href}>{children}</Link>
+                </li>)
+            }
+        </ul>
+    )
+}
+
 const Header = (): JSX.Element | null => {
     const [mounted, setMounted] = useState(false)
     const { t } = useTranslation()
-    const { user } = useAuth()
-    const [menu, setMenu] = useState(false)
 
-    const ref = useOnClickOutsideRef(() => setMenu(false))
+    const [dropdown, setDropdown] = useState(false)
 
-    const mobileMenu = useMemo(() => [
-        {
-            id: 1,
-            href: Routes.profile,
-            text: t(user ? 'profile' : 'login'),
-        },
-        {
-            id: 2,
-            href: Routes.add,
-            text: t('addAd'),
-        },
-        {
-            id: 3,
-            href: Routes.favourites,
-            text: t('favourite'),
-        },
-    ], [user, t])
+    const openDropdown = useCallback(() => setDropdown(true), [])
+    const closeDropdown = useCallback(() => setDropdown(false), [])
 
-    const desktopMenu = useMemo(() => [
-        {
-            id: 1,
-            href: Routes.favourites,
-            text: t('favourite'),
-        },
-        {
-            id: 2,
-            href: Routes.profile,
-            text: t(user ? 'profile' : 'login'),
-        },
-    ], [user, t])
+    const ref = useOnClickOutsideRef(closeDropdown)
 
     useEffect(() => setMounted(true), [])
 
@@ -57,66 +61,38 @@ const Header = (): JSX.Element | null => {
         return null
     }
 
-    if (isMobile) {
-        return (
-            <nav className={classes.header}>
-                <div className={classes.headerMain}>
-                    <Link
-                        href={Routes.main}
-                        className={'flex'}
-                    >
-                        INNOADS
-                    </Link>
+    return (
+        <nav className={classes.header}>
+            <div className={classes.headerWrap}>
+                <Link
+                    href={Routes.main}
+                    className='flex'
+                >
+                    <span style={{ fontSize: 20 }}>INNOADS</span>
+                    <span hidden={isMobile}>|</span>
+                    <span hidden={isMobile}>{t('innopolisClassified')}</span>
+                </Link>
+                {isMobile ?
                     <div ref={ref}>
                         <Button
-                            onClick={() => setMenu(true)}
+                            onClick={openDropdown}
                             className={classes.menu}
                         >
                             &#8801;
                         </Button>
 
-                        {menu && (
-                            <Dropdown closeToggle={() => setMenu(true)}>
-                                <ul>
-                                    {mobileMenu.map(({ id, href, text }) =>
-                                        <li key={id}>
-                                            <Link href={href}>{text}</Link>
-                                        </li>)}
-                                </ul>
+                        {dropdown && (
+                            <Dropdown closeToggle={() => openDropdown}>
+                                <Buttons />
                                 <Switcher />
                             </Dropdown>
                         )}
+                    </div> :
+                    <div className='flex'>
+                        <Switcher />
+                        <Buttons className={'flex'} />
                     </div>
-                </div>
-            </nav>
-        )
-    }
-
-    return (
-        <nav className={classes.header}>
-            <div className={classes.headerMain}>
-                <Link
-                    href={Routes.main}
-                    className={'flex'}
-                >
-                    <span>INNOADS</span>
-                    <span>|</span>
-                    <span>{t('innopolisClassified')}</span>
-                </Link>
-                <div className={classes.buttons}>
-                    <Switcher />
-                    <ul className={'flex'}>
-                        {desktopMenu.map(({ id, href, text }) =>
-                            <li key={id}>
-                                <Link href={href}>{text}</Link>
-                            </li>)}
-                    </ul>
-                    <Link href={Routes.add}>
-                        <Button>
-                            {t('addAd')}
-                        </Button>
-                    </Link>
-                </div>
+                }
             </div>
         </nav>
     )

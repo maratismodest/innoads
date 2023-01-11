@@ -19,6 +19,7 @@ import getCompressedImagesLinks from 'utils/image/getCompressedImagesLinks'
 import { handleDeleteImage } from 'utils/image/handleDeleteImage'
 import { MoveImage, moveImage } from 'utils/image/moveImage'
 import { options } from 'utils/options'
+import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import ErrorBlock from 'components/ErrorBlock/ErrorBlock'
@@ -28,8 +29,6 @@ import Input from 'components/Input/Input'
 import MainLayout from 'components/Layout/Layout'
 import Modal from 'components/Modal/Modal'
 import Spinner from 'components/Spinner/Spinner'
-
-import { Routes } from '../utils/routes'
 
 import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
@@ -51,7 +50,7 @@ export default function Add() {
     const [loading, setLoading] = useState(false)
     const [sending, setSending] = useState(false)
 
-    if (!user || !user.username) {
+    if (!user) {
         return <GoToProfile />
     }
 
@@ -69,7 +68,7 @@ export default function Add() {
 
         const formData = {
             title,
-            body,
+            body: body.length > 800 ? body.substring(0, 800) + "..." : body,
             price: Number(price),
             preview: images[0],
             images: images.join('||'),
