@@ -68,7 +68,7 @@ const Header = (): JSX.Element | null => {
                     href={Routes.main}
                     className='flex'
                 >
-                    <span style={{ fontSize: 20 }}>INNOADS</span>
+                    <span style={{ fontSize: 24 }}>INNOADS</span>
                     <span hidden={isMobile}>|</span>
                     <span hidden={isMobile}>{t('innopolisClassified')}</span>
                 </Link>
