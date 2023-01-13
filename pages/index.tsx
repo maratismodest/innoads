@@ -29,14 +29,10 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({posts, 
     const loadMore = useCallback(async () => {
         if (hasMore) {
             try {
-                const {content: posts, totalPages} = await fetchPosts(0, page + 1, 10)
-                setPage((prevState: number) => prevState + 1)
-                setInfinite((prevState: PostInterface[]) => [
-                    ...prevState,
-                    ...posts,
-                ])
+                const {content, totalPages} = await fetchPosts(0, page + 1, 10)
+                setPage(prevState => prevState + 1)
+                setInfinite(prevState => [...prevState, ...content])
                 setHasMore(page + 1 < totalPages - 1)
-                return posts
             } catch (e) {
                 console.log(e)
             }

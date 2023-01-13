@@ -1,20 +1,21 @@
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { isMobile } from 'react-device-detect'
-import { useAuth } from 'hooks/useAuth'
+import {useTranslation} from 'next-i18next'
+import React, {useCallback, useEffect, useMemo, useState} from 'react'
+import {isMobile} from 'react-device-detect'
+import {useAuth} from 'hooks/useAuth'
 import useOnClickOutsideRef from 'hooks/useOnClickOutsideRef'
-import { Routes } from 'utils/routes'
+import {Routes} from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Dropdown from 'components/Dropdown/Dropdown'
-import Switcher from 'components/Switcher/Switcher'
+
+import LanguageSwitcher from "./LanguageSwitcher/LanguageSwitcher";
 
 import classes from './Header.module.scss'
 
-const Buttons = ({ className }: { className?: string }) => {
-    const { user } = useAuth()
-    const { t } = useTranslation()
+const Buttons = ({className}: { className?: string }) => {
+    const {user} = useAuth()
+    const {t} = useTranslation()
     const menu = useMemo(() => [
         {
             id: 'user',
@@ -35,7 +36,7 @@ const Buttons = ({ className }: { className?: string }) => {
 
     return (
         <ul className={className}>
-            {menu.map(({ id, href, children }) =>
+            {menu.map(({id, href, children}) =>
                 <li key={id}>
                     <Link href={href}>{children}</Link>
                 </li>)
@@ -46,7 +47,7 @@ const Buttons = ({ className }: { className?: string }) => {
 
 const Header = (): JSX.Element | null => {
     const [mounted, setMounted] = useState(false)
-    const { t } = useTranslation()
+    const {t} = useTranslation()
 
     const [dropdown, setDropdown] = useState(false)
 
@@ -68,7 +69,7 @@ const Header = (): JSX.Element | null => {
                     href={Routes.main}
                     className='flex'
                 >
-                    <span style={{ fontSize: 24 }}>INNOADS</span>
+                    <span style={{fontSize: 24}}>INNOADS</span>
                     <span hidden={isMobile}>|</span>
                     <span hidden={isMobile}>{t('innopolisClassified')}</span>
                 </Link>
@@ -83,14 +84,14 @@ const Header = (): JSX.Element | null => {
 
                         {dropdown && (
                             <Dropdown closeToggle={() => openDropdown}>
-                                <Buttons />
-                                <Switcher />
+                                <Buttons/>
+                                <LanguageSwitcher/>
                             </Dropdown>
                         )}
                     </div> :
                     <div className='flex'>
-                        <Switcher />
-                        <Buttons className={'flex'} />
+                        <LanguageSwitcher/>
+                        <Buttons className={'flex'}/>
                     </div>
                 }
             </div>
