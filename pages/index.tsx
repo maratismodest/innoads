@@ -1,10 +1,10 @@
 import dynamic from 'next/dynamic'
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useCallback, useMemo, useState } from 'react'
+import {GetStaticProps, InferGetStaticPropsType, NextPage} from 'next/types'
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import React, {useCallback, useMemo, useState} from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
-import { PostInterface } from 'interfaces'
+import {PostInterface} from 'interfaces'
 import fetchPosts from 'utils/api/fetchPosts'
 
 import Item from 'components/Item/Item'
@@ -18,80 +18,58 @@ const Categories = dynamic(() => import('components/Categories/Categories'), {
     ssr: true,
 })
 
-// type SearchSubmitForm = {
-//     search: string
-// }
 
-const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts, totalPages }) => {
-    // const router = useRouter()
-    const { t } = useTranslation()
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({posts, totalPages}) => {
+    const {t} = useTranslation()
     const [page, setPage] = useState(0)
-    const [hasMore, setHasMore] = useState(false)
-    // const { handleSubmit, register } = useForm<SearchSubmitForm>({
-    //     defaultValues: {
-    //         search: '',
-    //     },
-    // })
+    const [hasMore, setHasMore] = useState(() => totalPages > 1)
     const [infinite, setInfinite] = useState<PostInterface[]>(posts)
     const count = useMemo(() => totalPages * 10, [totalPages])
 
-    const loadFunc = useCallback(async () => {
-        try {
-            const { content: posts, totalPages } = await fetchPosts(0, page + 1, 10)
-            setPage((prevState: number) => prevState + 1)
-            setInfinite((prevState: PostInterface[]) => [
-                ...prevState,
-                ...posts,
-            ])
-            setHasMore(page + 1 < totalPages)
-            return posts
-        } catch (e) {
-            console.log(e)
+    const loadMore = useCallback(async () => {
+        if (hasMore) {
+            try {
+                const {content: posts, totalPages} = await fetchPosts(0, page + 1, 10)
+                setPage((prevState: number) => prevState + 1)
+                setInfinite((prevState: PostInterface[]) => [
+                    ...prevState,
+                    ...posts,
+                ])
+                setHasMore(page + 1 < totalPages - 1)
+                return posts
+            } catch (e) {
+                console.log(e)
+            }
         }
-    }, [page])
 
-    // const onSubmit = async ({ search }: SearchSubmitForm) =>
-    //     router.push({
-    //         pathname: Routes.search,
-    //         query: { keyword: search },
-    //     })
+    }, [page, hasMore, totalPages])
+
 
     return (
         <Layout>
-            {/*<form className={home.search} onSubmit={handleSubmit(onSubmit)}>*/}
-            {/*    <Search*/}
-            {/*        type='text'*/}
-            {/*        placeholder={t('search') as string}*/}
-            {/*        name='search'*/}
-            {/*        required={true}*/}
-            {/*        register={register}*/}
-            {/*        className={home.searchInput}*/}
-            {/*    />*/}
-            {/*    <Button type='submit'>{t('search')}</Button>*/}
-            {/*</form>*/}
-            <Categories />
+            <Categories/>
             <div className={home.header}>
                 <h1 className={classes.title}>{t('lastAds')}</h1>
                 <span>
                     {count} {t('ads')}
                 </span>
             </div>
-            <div className={classes.magicWrapper}>
+            <div style={{height: 'calc(100vh-66px-68px)'}}>
                 <InfiniteScroll
                     pageStart={page}
-                    loadMore={loadFunc}
+                    loadMore={loadMore}
                     hasMore={hasMore}
                     initialLoad={false}
                     threshold={100}
                     loader={
                         <div key={0}>
-                            <Spinner />
+                            <Spinner/>
                         </div>
                     }
                 >
                     <ul className={classes.items}>
                         {infinite.map((post: PostInterface) => (
-                            <Item post={post} key={post.slug} />
+                            <Item post={post} key={post.slug}/>
                         ))}
                     </ul>
                 </InfiniteScroll>
@@ -101,8 +79,8 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts,
 }
 
 export default Home
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    const { content: posts, totalPages } = await fetchPosts(0, 0, 10, 0)
+export const getStaticProps: GetStaticProps = async ({locale}) => {
+    const {content: posts, totalPages} = await fetchPosts(0, 0, 10, 0)
 
     if (!posts) {
         return {
