@@ -71,3 +71,15 @@ dialog {
   align-items: center;
   gap: 8px;
 }
+
+.mdx {
+  &H1 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  &Ul {
+    padding: inherit;
+    list-style-type: disc;
+  }
+}

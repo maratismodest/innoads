@@ -47,9 +47,7 @@ const Layout: React.FC<Props> = ({
             </Head>
             <Header />
             <main className={className}>{children}</main>
-            <footer>
-                <div>{/*<Button onClick={scrollToTop}>Навeрх</Button>*/}</div>
-            </footer>
+            <footer />
         </>
     )
 }

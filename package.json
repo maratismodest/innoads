@@ -11,10 +11,9 @@
   },
   "dependencies": {
     "@mdx-js/loader": "^2.2.1",
-    "@mdx-js/mdx": "^2.2.1",
     "@mdx-js/react": "^2.2.1",
     "@next/bundle-analyzer": "^13.1.1",
-    "@next/mdx": "^13.1.1",
+    "@next/mdx": "^13.1.2",
     "axios": "^1.2.2",
     "browser-image-compression": "^2.0.0",
     "classnames": "^2.3.2",
@@ -36,7 +35,6 @@
     "sharp": "^0.31.3",
     "sitemap": "^7.1.1",
     "slug": "^8.2.2",
-    "turbo-rss": "^2.0.1",
     "use-local-storage-state": "^18.1.2"
   },
   "devDependencies": {

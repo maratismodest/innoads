@@ -1014,7 +1014,7 @@
 
 "@mdx-js/loader@^2.2.1":
   version "2.2.1"
-  resolved "https://registry.npmjs.org/@mdx-js/loader/-/loader-2.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/@mdx-js/loader/-/loader-2.2.1.tgz#71634e87659cd29240933d174a151a4d4ab3b70c"
   integrity sha512-J4E8A5H+xtk4otZiEZ5AXl61Tj04Avm5MqLQazITdI3+puVXVnTTuZUKM1oNHTtfDIfOl0uMt+o/Ij+x6Fvf+g==
   dependencies:
     "@mdx-js/mdx" "^2.0.0"
@@ -1043,32 +1043,9 @@
     unist-util-visit "^4.0.0"
     vfile "^5.0.0"
 
-"@mdx-js/mdx@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/@mdx-js/mdx/-/mdx-2.2.1.tgz"
-  integrity sha512-hZ3ex7exYLJn6FfReq8yTvA6TE53uW9UHJQM9IlSauOuS55J9y8RtA7W+dzp6Yrzr00/U1sd7q+Wf61q6SfiTQ==
-  dependencies:
-    "@types/estree-jsx" "^1.0.0"
-    "@types/mdx" "^2.0.0"
-    estree-util-build-jsx "^2.0.0"
-    estree-util-is-identifier-name "^2.0.0"
-    estree-util-to-js "^1.1.0"
-    estree-walker "^3.0.0"
-    hast-util-to-estree "^2.0.0"
-    markdown-extensions "^1.0.0"
-    periscopic "^3.0.0"
-    remark-mdx "^2.0.0"
-    remark-parse "^10.0.0"
-    remark-rehype "^10.0.0"
-    unified "^10.0.0"
-    unist-util-position-from-estree "^1.0.0"
-    unist-util-stringify-position "^3.0.0"
-    unist-util-visit "^4.0.0"
-    vfile "^5.0.0"
-
 "@mdx-js/react@^2.2.1":
   version "2.2.1"
-  resolved "https://registry.npmjs.org/@mdx-js/react/-/react-2.2.1.tgz"
+  resolved "https://registry.yarnpkg.com/@mdx-js/react/-/react-2.2.1.tgz#5a70592418d52b1b01538c37e795034601c96ec5"
   integrity sha512-YdXcMcEnqZhzql98RNrqYo9cEhTTesBiCclEtoiQUbJwx87q9453GTapYU6kJ8ZZ2ek1Vp25SiAXEFy5O/eAPw==
   dependencies:
     "@types/mdx" "^2.0.0"
@@ -1093,10 +1070,10 @@
   dependencies:
     glob "7.1.7"
 
-"@next/mdx@^13.1.1":
-  version "13.1.1"
-  resolved "https://registry.npmjs.org/@next/mdx/-/mdx-13.1.1.tgz"
-  integrity sha512-a588olt++s7vcuhlgrNOBpZUqlbr9vr94NjA3ixM9AgL8fnwJ/GgxEMsrcsp2gPw91lzBlumBfjK6Lc3k3m23Q==
+"@next/mdx@^13.1.2":
+  version "13.1.2"
+  resolved "https://registry.yarnpkg.com/@next/mdx/-/mdx-13.1.2.tgz#f53d2eeb203019862e32dff274c538b3be33eaef"
+  integrity sha512-7SDyXOqTUHeklV2aJOTWEIW6x8E8i4agKwQVXrPtpZiTkIjR9v7155oMCV48fpwxjQCoH/5ek3EwzbXwO0qzHw==
   dependencies:
     source-map "^0.7.0"
 
@@ -5580,13 +5557,6 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-turbo-rss@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/turbo-rss/-/turbo-rss-2.0.1.tgz"
-  integrity sha512-C4ELcyaCkr5fzkVR4UYmd2gJEJNzx3WkbfKkJMMeiYZuxqaa3YjUELDwg1jyjWcQMA/a7BvBv28rIrv4P9fU3A==
-  dependencies:
-    xml "1.0.1"
-
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
   resolved "https://registry.npmjs.org/type-check/-/type-check-0.4.0.tgz"
@@ -6099,11 +6069,6 @@ xml-js@^1.6.11:
   integrity sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==
   dependencies:
     sax "^1.2.4"
-
-xml@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/xml/-/xml-1.0.1.tgz"
-  integrity sha512-huCv9IH9Tcf95zuYCsQraZtWnJvBtLVE0QHMOs8bWyZAFZNDcYjsPq1nEx8jKA9y+Beo9v+7OBPRisQTjinQMw==
 
 yallist@^3.0.2:
   version "3.1.1"
