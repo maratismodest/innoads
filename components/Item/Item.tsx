@@ -35,6 +35,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
         defaultValue: [],
     })
     const { id, slug, title, preview, price, updatedAt } = post
+    console.log('post',post)
     const { t } = useTranslation('profile')
     const router = useRouter()
     const { token } = useAuth()
@@ -174,7 +175,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
 
                     <div className={classes.itemPrice}>
                         <Price price={price} />
-                        <h2 className={classes.itemTitle}>{title}</h2>
+                        <h2 className={cn(classes.itemTitle, 'font-normal')}>{title}</h2>
                         <Image
                             width={24}
                             height={24}
