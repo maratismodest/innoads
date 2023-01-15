@@ -41,5 +41,6 @@ const nextConfig = {
         })
         return config
     },
+    output: 'standalone',
 }
 module.exports = withPWA(withBundleAnalyzer(withMDX(nextConfig)))
