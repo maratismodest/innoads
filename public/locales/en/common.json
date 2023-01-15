@@ -28,5 +28,7 @@
   "blog": "Blog",
   "rules": "Rules",
   "agreement": "Agreement",
-  "delete": "Delete"
+  "delete": "Delete",
+  "addPost": "Add Post",
+  "editPost": "Edit Post"
 }

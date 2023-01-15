@@ -11,7 +11,7 @@ import Layout from 'components/Layout/Layout'
 const Blog = () => {
     const {pathname} = useRouter()
     const {t} = useTranslation()
-    const canonical = `${process.env.NEXT_PUBLIC_NODE_ENV}/blog`
+    const canonical = `${process.env.NEXT_PUBLIC_APP_URL}/blog`
     const links = [
         {
             title: "Как выгодно продать на досках объявлений",

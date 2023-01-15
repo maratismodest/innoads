@@ -6,7 +6,7 @@ import { getDynamicPaths } from 'utils/getDynamicPaths'
 const { Feed } = require('feed')
 const dayjs = require('dayjs')
 
-const baseUrl = process.env.NEXT_PUBLIC_NODE_ENV
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
 const author = {
     name: 'Marat Faizer',

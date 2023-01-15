@@ -55,12 +55,12 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
         () => `innoads, Иннополис, доска объявлений, ${category.label}`,
         [category.label],
     )
-    const canonical = useMemo(() => `${process.env.NEXT_PUBLIC_NODE_ENV}/post/${slug}`, [slug])
+    const canonical = useMemo(() => `${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`, [slug])
 
     const shareData = {
         title: 'InnoAds',
         text: 'Поделиться ссылкой:',
-        url: process.env.NEXT_PUBLIC_NODE_ENV + '/post/' + slug,
+        url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug,
     }
 
     const handleClick = (direction: 'left' | 'right') => {

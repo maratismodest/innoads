@@ -35,7 +35,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
         defaultValue: [],
     })
     const { id, slug, title, preview, price, updatedAt } = post
-    console.log('post',post)
+ 
     const { t } = useTranslation('profile')
     const router = useRouter()
     const { token } = useAuth()

@@ -38,7 +38,7 @@ export default function Profile() {
         try {
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, response)
             const decoded = await jose.decodeJwt(data.token)
-            console.log('decoded', decoded)
+            // console.log('decoded', decoded)
             if (decoded) {
                 localStorage.setItem('token', data.token)
                 login(response)
@@ -60,7 +60,7 @@ export default function Profile() {
             })
             console.log('data', data)
             const decoded = await jose.decodeJwt(data.token)
-            console.log('decoded', decoded)
+            // console.log('decoded', decoded)
             if (decoded) {
                 localStorage.setItem('token', data.token)
                 // @ts-ignore
@@ -94,7 +94,7 @@ export default function Profile() {
                         dataOnauth={handleTelegramResponse}
                         botName='InnoAdsPostBot'
                     />
-                    {/*<button onClick={handleClick}>Ok</button>*/}
+                    {process.env.NEXT_PUBLIC_NODE_ENV == 'development' && <Button onClick={handleClick}>Ok</Button>}
                 </div>
             </MainLayout>
         )

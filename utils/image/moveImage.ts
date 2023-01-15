@@ -5,7 +5,7 @@ export enum MoveImage {
 
 export const moveImage = (e: MouseEvent, images: string[], index: number, where: MoveImage, setImages: (value: string[]) => void) => {
     e.preventDefault()
-    console.log('images', images)
+    // console.log('images', images)
     if (images.length < 2 || (index === 0 && where === MoveImage.left) || (index === images.length - 1 && where === MoveImage.right)) {
         return
     }

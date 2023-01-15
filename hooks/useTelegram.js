@@ -9,11 +9,11 @@ export function useTelegram() {
 
     if (typeof window !== 'undefined' && window.Telegram.WebApp) {
         //This code is executed in the browser
-        console.log('www', window.Telegram.WebApp)
+        // console.log('www', window.Telegram.WebApp)
     }
 
     useEffect(() => {
-        console.log(window)
+        // console.log(window)
         if (window.Telegram.WebApp) {
             const currentTg = window.Telegram.WebApp
             setTg(currentTg)

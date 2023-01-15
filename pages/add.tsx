@@ -125,7 +125,7 @@ export default function Add() {
                     onSubmit={handleSubmit(onSubmit)}
                     className={classes.form}
                 >
-                    <h1>Новое объявление</h1>
+                    <h1>{t('addPost')}</h1>
                     <select
                         className={cn(selectStyles.select, 'select-css')}
                         {...register('categoryId', { required: true })}
