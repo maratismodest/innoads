@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { PostInterface } from 'interfaces'
+import { PostInterface } from 'types'
 import { SEO_DESCRIPTION, SEO_TITLE } from 'utils/constants'
 import { getDynamicPaths } from 'utils/getDynamicPaths'
 

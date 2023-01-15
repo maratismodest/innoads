@@ -1,19 +1,18 @@
 import Link from 'next/link'
-import { GetStaticProps } from 'next/types'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useEffect, useState } from 'react'
+import {GetStaticProps} from 'next/types'
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import React, {useEffect, useState} from 'react'
 // @ts-ignore
 import TelegramLoginButton from 'react-telegram-login'
 import axios from 'axios'
 import cn from 'classnames'
-import { UserProps } from 'context/AuthContext'
-import { useAuth } from 'hooks/useAuth'
-import { PostInterface } from 'interfaces'
+import {useAuth} from 'hooks/useAuth'
 import * as jose from 'jose'
+import {PostInterface, TelegramUserProps} from 'types'
 import fetchPosts from 'utils/api/fetchPosts'
-import { titles } from 'utils/constants'
-import { Routes } from 'utils/routes'
+import {titles} from 'utils/constants'
+import {Routes} from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
@@ -27,21 +26,21 @@ const error =
 
 export default function Profile() {
     const [posts, setPosts] = useState<PostInterface[]>([])
-    const { user, login, logout } = useAuth()
-    const { t } = useTranslation('profile')
+    const {user, login, logout} = useAuth()
+    const {t} = useTranslation('profile')
 
-    const handleTelegramResponse = async (response: UserProps) => {
-        const { username } = response
+    const handleTelegramResponse = async ({username, id}: TelegramUserProps) => {
         if (!username) {
-            return alert({ error })
+            return alert({error})
         }
         try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, response)
+            const user = {id, username}
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, user)
             const decoded = await jose.decodeJwt(data.token)
             // console.log('decoded', decoded)
             if (decoded) {
                 localStorage.setItem('token', data.token)
-                login(response)
+                login(user)
             }
             return
         } catch (e) {
@@ -50,21 +49,24 @@ export default function Profile() {
     }
 
     const handleClick = async () => {
+        const userTemplate: TelegramUserProps = {
+            first_name: 'Marat',
+            last_name: 'Faizerakhmanov',
+            id: 71233480,
+            photo_url: 'https://t.me/i/userpic/320/QbIbY59Btv3iqvpPSZigwX2LUDfQt39ptyEablKRsgw.jpg',
+            username: 'maratfaizer',
+        };
+        const {id, username} = userTemplate
         try {
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, {
-                'first_name': 'Marat',
-                'last_name': 'Marat',
-                'id': 71233480,
-                'photo_url': 'https://t.me/i/userpic/320/QbIbY59Btv3iqvpPSZigwX2LUDfQt39ptyEablKRsgw.jpg',
-                'username': 'maratfaizer',
-            })
+            const user = {id, username}
+            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, user)
             console.log('data', data)
             const decoded = await jose.decodeJwt(data.token)
             // console.log('decoded', decoded)
             if (decoded) {
                 localStorage.setItem('token', data.token)
                 // @ts-ignore
-                login(decoded)
+                login(user)
             }
             return
         } catch (e) {
@@ -83,13 +85,6 @@ export default function Profile() {
             <MainLayout title={titles.profile}>
                 <div className={classes.center}>
                     <h2>{t('authorization')}</h2>
-
-                    {/*<Script async={true}*/}
-                    {/*        src={'https://telegram.org/js/telegram-widget.js?21'}*/}
-                    {/*        data-telegram-login='InnoAdsPostBot'*/}
-                    {/*        data-size='large'*/}
-                    {/*        data-onauth="han"*/}
-                    {/*        data-request-access='write' />*/}
                     <TelegramLoginButton
                         dataOnauth={handleTelegramResponse}
                         botName='InnoAdsPostBot'
@@ -110,14 +105,14 @@ export default function Profile() {
             {posts.length > 0 ? (
                 <ul className={cn(classes.mt40, classes.items)}>
                     {posts.map((post: PostInterface) => (
-                        <Item post={post} key={post.id} edit={true} />
+                        <Item post={post} key={post.id} edit={true}/>
                     ))}
                 </ul>
             ) : (
                 <div className={profile.addBlock}>
                     <Link href={Routes.add}>
                         <Button
-                            title={t('addAd', { ns: 'common' }) as string}
+                            title={t('addAd', {ns: 'common'}) as string}
                             className={cn(classes.centerBtn, classes.mt20)}
                         >
                             &#43;
@@ -129,10 +124,10 @@ export default function Profile() {
                     </p>
                     <Link href={Routes.add}>
                         <Button
-                            title={t('addAd', { ns: 'common' }) as string}
+                            title={t('addAd', {ns: 'common'}) as string}
                             className={cn(classes.centerBtn, classes.mt20)}
                         >
-                            {t('addAd', { ns: 'common' })}
+                            {t('addAd', {ns: 'common'})}
                         </Button>
                     </Link>
                 </div>
@@ -144,7 +139,7 @@ export default function Profile() {
     )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
             ...(await serverSideTranslations(locale as string, [

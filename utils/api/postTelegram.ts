@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { InitialPostInterface } from 'interfaces'
+import {PostFormInterface} from 'types'
 
-export const postTelegram = async (formData: InitialPostInterface) => {
+export const postTelegram = async (formData: PostFormInterface) => {
     const token = localStorage.getItem('token')
     const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/telegrams`,

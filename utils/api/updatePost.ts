@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { PostInterface } from 'interfaces'
+import { PostInterface } from 'types'
 
 export const updatePost = async (formData: PostInterface) => {
     const token = localStorage.getItem('token')

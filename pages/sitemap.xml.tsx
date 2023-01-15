@@ -1,7 +1,7 @@
 // const EXTERNAL_DATA_URL = 'https://jsonplaceholder.typicode.com/posts';
 
 import {NextApiResponse} from "next";
-import {PostInterface} from "interfaces";
+import {PostInterface} from "types";
 import {getDynamicPaths} from "utils/getDynamicPaths";
 
 function generateSiteMap(posts: PostInterface[]) {

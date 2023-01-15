@@ -1,10 +1,10 @@
 import axios from 'axios'
-import { InitialPostInterface } from 'interfaces'
+import {PostFormInterface} from 'types'
 
-const postPost = async (formData: InitialPostInterface) => {
+const postPost = async (formData: PostFormInterface) => {
     const token = localStorage.getItem('token')
 
-    const { data } = await axios.post(
+    const {data} = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/posts`,
         formData,
         {

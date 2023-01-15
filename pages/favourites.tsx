@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
-import { PostInterface } from 'interfaces'
+import { PostInterface } from 'types'
 import useLocalStorageState from 'use-local-storage-state'
 import { descriptions, titles } from 'utils/constants'
 

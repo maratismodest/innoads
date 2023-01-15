@@ -3,7 +3,7 @@ import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next/
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
-import { PostInterface } from 'interfaces'
+import { PostInterface } from 'types'
 import fetchPosts from 'utils/api/fetchPosts'
 import fetchUser from 'utils/api/fetchUser'
 import { tgLink } from 'utils/constants'

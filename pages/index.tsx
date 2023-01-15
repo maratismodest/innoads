@@ -4,7 +4,7 @@ import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React, {useCallback, useMemo, useState} from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
-import {PostInterface} from 'interfaces'
+import {PostInterface} from 'types'
 import fetchPosts from 'utils/api/fetchPosts'
 
 import Item from 'components/Item/Item'

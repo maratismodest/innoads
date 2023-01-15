@@ -1,15 +1,8 @@
 import { createContext, ReactNode, useState } from 'react'
 import useEffectOnce from 'hooks/useEffectOnce'
 import * as jose from 'jose'
+import {UserProps} from "types";
 import fetchUser from 'utils/api/fetchUser'
-
-export interface UserProps {
-    id: number,
-    username: string
-    first_name?: string | null,
-    last_name?: string | null,
-    photo_url?: string | null,
-}
 
 type authContextType = {
     user: UserProps | undefined;

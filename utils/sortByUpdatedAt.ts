@@ -1,4 +1,4 @@
-import { PostInterface } from 'interfaces'
+import { PostInterface } from 'types'
 
 export default function sortByCreatedAt(posts: PostInterface[]) {
     return posts.sort(function(a, b) {
