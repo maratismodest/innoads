@@ -1,16 +1,5 @@
 @import "variables";
 
-.title {
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 28px;
-  color: $black;
-
-  &Dark {
-    color: $white;
-  }
-}
-
 .items {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;

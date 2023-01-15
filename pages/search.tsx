@@ -67,7 +67,7 @@ export default function SearchPage() {
             title='Поиск в InnoAds'
             description='Ищите объявления города Иннополис в бесплатной доске InnoAds'
         >
-            <h1 className={classes.title}>{t('search')}</h1>
+            <h1>{t('search')}</h1>
             <hr />
             <select className={cn(selectStyles.select, 'select-css')}
                     defaultValue={categoryId}

@@ -45,7 +45,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({posts, 
         <Layout>
             <Categories/>
             <div className={home.header}>
-                <h1 className={classes.title}>{t('lastAds')}</h1>
+                <h1>{t('lastAds')}</h1>
                 <span>
                     {count} {t('ads')}
                 </span>

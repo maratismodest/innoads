@@ -1,18 +1,18 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next/types'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useMemo, useRef, useState } from 'react'
-import { isMobile } from 'react-device-detect'
+import {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next/types'
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import React, {useMemo, useRef, useState} from 'react'
+import {isMobile} from 'react-device-detect'
 import cn from 'classnames'
 import dayjs from 'dayjs'
-import { PostInterface } from 'interfaces'
+import {PostInterface} from 'interfaces'
 import fetchPost from 'utils/api/fetchPost'
 import fetchPosts from 'utils/api/fetchPosts'
-import { tgLink } from 'utils/constants'
-import { options } from 'utils/options'
-import { Routes } from 'utils/routes'
+import {tgLink} from 'utils/constants'
+import {options} from 'utils/options'
+import {Routes} from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
@@ -22,8 +22,8 @@ import Price from 'components/Price/Price'
 import classes from 'styles/classes.module.scss'
 import item from 'styles/Post.module.scss'
 
-const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ post, related }) => {
-    const { t } = useTranslation()
+const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({post, related}) => {
+    const {t} = useTranslation()
     const [current, setCurrent] = useState(0)
     const ul = useRef<HTMLUListElement>(null)
     const li = useRef<HTMLLIElement>(null)
@@ -81,7 +81,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
             author={`${tgLink}/${user?.username}`}
         >
             <div className={item.post}>
-                <div style={{ position: 'relative' }}>
+                <div style={{position: 'relative'}}>
                     <ul className={item.carousel} ref={ul}>
                         {images.map((image: string, index: number) => {
                             return (
@@ -120,27 +120,27 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                 </div>
 
                 <Link href={`${Routes.main}search?categoryId=${categoryId}`}>
-                    {t('category', { ns: 'post' })}:{' '}
+                    {t('category', {ns: 'post'})}:{' '}
                     <span>{t(category.label)}</span>
                 </Link>
 
                 <h1>{title}</h1>
-                <Price price={price} className={item.price} />
-                <hr />
+                <Price price={price}/>
+                <hr/>
                 <pre className={classes.paragraph}>{body}</pre>
                 <p className={classes.mt20}>
-                    {t('published', { ns: 'post' })}:{' '}
+                    {t('published', {ns: 'post'})}:{' '}
                     {dayjs(createdAt).format('DD.MM.YYYY')}
                 </p>
                 <div className={classes.mt40}>
                     <Link href={tgLink + '/' + user?.username} passHref={true}>
-                        <Button>{t('textAuthor', { ns: 'post' })}</Button>
+                        <Button>{t('textAuthor', {ns: 'post'})}</Button>
                     </Link>
                 </div>
 
                 <div className={classes.mt40}>
                     <Link href={`/user/${post.userId}`} passHref>
-                        <Button>{t('userAds', { ns: 'post' })}</Button>
+                        <Button>{t('userAds', {ns: 'post'})}</Button>
                     </Link>
                 </div>
 
@@ -149,7 +149,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                         className={cn(classes.mt40, item.share)}
                         onClick={async () => await navigator.share(shareData)}
                     >
-                        {t('share', { ns: 'post' })}
+                        {t('share', {ns: 'post'})}
                     </Button>
                 )}
                 {related.length > 0 && (
@@ -157,7 +157,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                         <h2>Похожие объявления</h2>
                         <ul className={classes.related}>
                             {related.map((post: PostInterface) => {
-                                return <Item post={post} key={post.slug} />
+                                return <Item post={post} key={post.slug}/>
                             })}
                         </ul>
                     </div>

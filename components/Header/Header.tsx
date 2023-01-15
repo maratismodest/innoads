@@ -28,6 +28,11 @@ const Buttons = ({className}: { className?: string }) => {
             children: t('favourite'),
         },
         {
+            id: 'blog',
+            href: Routes.blog,
+            children: t('blog'),
+        },
+        {
             id: 'add',
             href: Routes.add,
             children: <Button>{t('addAd')}</Button>,

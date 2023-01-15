@@ -106,7 +106,7 @@ export default function Profile() {
             description={titles.profile}
             className={profile.main}
         >
-            <h1 className={cn(classes.title)}>{t('cabinet')}</h1>
+            <h1>{t('cabinet')}</h1>
             {posts.length > 0 ? (
                 <ul className={cn(classes.mt40, classes.items)}>
                     {posts.map((post: PostInterface) => (

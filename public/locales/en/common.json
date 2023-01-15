@@ -24,5 +24,9 @@
   "notAuthorized": "You are not authorized",
   "goToAuth": "Go to authorization page",
   "favourite": "Favourite",
-  "onMain": "On main"
+  "onMain": "On main",
+  "blog": "Blog",
+  "rules": "Rules",
+  "agreement": "Agreement",
+  "delete": "Delete"
 }

@@ -36,7 +36,7 @@ const Categories = (): JSX.Element | null => {
                                 />
                             </div>
 
-                            <h6>{t(label)}</h6>
+                            <h5>{t(label)}</h5>
                         </Link>
                     </li>
                 )
