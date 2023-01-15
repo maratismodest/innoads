@@ -30,5 +30,6 @@
   "agreement": "Agreement",
   "delete": "Delete",
   "addPost": "Add Post",
-  "editPost": "Edit Post"
+  "editPost": "Edit Post",
+  "pageNotFound": "Page Not Found"
 }

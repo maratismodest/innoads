@@ -18,15 +18,15 @@ const Blog = () => {
             href: pathname + '/post'
         },
         {
-            title: t('rules'),
+            title: 'Правила',
             href: pathname + '/rules'
         },
         {
-            title: t('agreement'),
+            title: 'Пользовательское соглашение',
             href: pathname + '/agreement'
         },
         {
-            title: t('delete'),
+            title: 'Удалить пользователя',
             href: pathname + '/delete'
         }
     ]
@@ -36,8 +36,9 @@ const Blog = () => {
             description='В этом разделе публикуется важная информация'
             canonical={canonical}
         >
+            <h1>Блог</h1>
             <ul>
-                {links.map(x => <li key={x.href}><Link href={x.href}>{x.title}</Link></li>)}
+                {links.map(x => <li key={x.href} style={{marginBottom:8}}><Link href={x.href}>{x.title}</Link></li>)}
             </ul>
         </Layout>
     )

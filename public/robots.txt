@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /_next
 
-Sitemap: https://innoads.ru/api/sitemap
+Sitemap: https://innoads.ru/sitemap.xml
