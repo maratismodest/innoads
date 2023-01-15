@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { PostInterface } from 'types'
+import {EditPostInterface} from 'types'
 
-export const updatePost = async (formData: PostInterface) => {
+export const updatePost = async (formData: EditPostInterface) => {
     const token = localStorage.getItem('token')
     const res = await axios.put(
         `${process.env.NEXT_PUBLIC_API_URL}/posts/${formData.id}`,

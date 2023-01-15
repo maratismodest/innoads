@@ -23,6 +23,7 @@ export type PostInterface = {
     updatedAt: string;
 }
 export type PostFormInterface = Omit<PostInterface, 'id' | 'createdAt' | 'updatedAt' | 'user'>
+export type EditPostInterface = Omit<PostInterface, 'updatedAt' | 'user'>
 
 export interface HTMLInputEvent extends Event {
     target: HTMLInputElement & EventTarget;

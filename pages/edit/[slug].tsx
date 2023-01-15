@@ -1,23 +1,24 @@
-import type { GetServerSideProps } from 'next'
+import type {GetServerSideProps} from 'next'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useCallback, useRef, useState } from 'react'
-import { isDesktop } from 'react-device-detect'
-import { useForm } from 'react-hook-form'
+import {useRouter} from 'next/router'
+import {InferGetServerSidePropsType, NextPage} from "next/types";
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import React, {useCallback, useRef, useState} from 'react'
+import {isDesktop} from 'react-device-detect'
+import {useForm} from 'react-hook-form'
 import cn from 'classnames'
-import { useAuth } from 'hooks/useAuth'
-import { HTMLInputEvent, PostInterface } from 'types'
+import {useAuth} from 'hooks/useAuth'
+import {EditPostInterface, HTMLInputEvent} from 'types'
 import getPostBySlug from 'utils/api/fetchPost'
 import updatePost from 'utils/api/updatePost'
-import { ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, messages, NO_IMAGE, titles } from 'utils/constants'
+import {ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, messages, NO_IMAGE, titles} from 'utils/constants'
 import hasCurseWords from 'utils/curseWords'
 import getCompressedImagesLinks from 'utils/image/getCompressedImagesLinks'
-import { handleDeleteImage } from 'utils/image/handleDeleteImage'
-import { MoveImage, moveImage } from 'utils/image/moveImage'
-import { options } from 'utils/options'
-import { Routes } from 'utils/routes'
+import {handleDeleteImage} from 'utils/image/handleDeleteImage'
+import {MoveImage, moveImage} from 'utils/image/moveImage'
+import {options} from 'utils/options'
+import {Routes} from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import ErrorBlock from 'components/ErrorBlock/ErrorBlock'
@@ -32,12 +33,12 @@ import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
 
 
-export default function Edit({ post }: { post: PostInterface }) {
-    const { t } = useTranslation()
+const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({post}) => {
+    const {t} = useTranslation()
     const ref = useRef<HTMLInputElement>(null)
-    const { categoryId, id, title, body, price } = post
+    const {categoryId, userId, title, body, price, id, slug, createdAt} = post
     const router = useRouter()
-    const { user } = useAuth()
+    const {user} = useAuth()
     const [images, setImages] = useState<string[]>(() => post.images.split('||'))
     const [error, setError] = useState<string | undefined>()
     const editValues: FormValues = {
@@ -46,8 +47,8 @@ export default function Edit({ post }: { post: PostInterface }) {
     const {
         register,
         handleSubmit,
-        formState: { errors },
-    } = useForm<FormValues>({ defaultValues: editValues })
+        formState: {errors},
+    } = useForm<FormValues>({defaultValues: editValues})
     const [loading, setLoading] = useState(false)
 
     const handleAddPhoto = useCallback(() => {
@@ -57,7 +58,7 @@ export default function Edit({ post }: { post: PostInterface }) {
     }, [ref.current])
 
     if (!user) {
-        return <GoToProfile />
+        return <GoToProfile/>
     }
 
     const onSubmit = async (data: FormValues) => {
@@ -69,16 +70,19 @@ export default function Edit({ post }: { post: PostInterface }) {
             return alert(messages.forbiddenWords)
         }
 
-        const { title, body, price, categoryId } = data
+        const {title, body, price, categoryId} = data
 
-        const formData = {
-            ...post,
-            categoryId,
+        const formData: EditPostInterface = {
+            id,
+            categoryId: Number(categoryId),
             price: Number(price),
             title,
-            body,
-            images: images.join('||'),
+            body: body.length > 800 ? body.substring(0, 800) + "..." : body,
             preview: images[0],
+            images: images.join('||'),
+            userId,
+            slug,
+            createdAt
         }
 
         try {
@@ -112,7 +116,7 @@ export default function Edit({ post }: { post: PostInterface }) {
     return (
         <>
             <Modal visible={loading}>
-                <Spinner />
+                <Spinner/>
             </Modal>
             <MainLayout title={titles.edit}>
                 <form
@@ -122,11 +126,11 @@ export default function Edit({ post }: { post: PostInterface }) {
                     <h1>{t('editPost')}</h1>
                     <select
                         className={cn(selectStyles.select, 'select-css')}
-                        {...register('categoryId', { required: true })}
+                        {...register('categoryId', {required: true})}
                     >
-                        {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
+                        {options.map(({value, label}) => <option key={value} value={value}>{t(label)}</option>)}
                     </select>
-                    <ErrorBlock name={'categoryId'} errors={errors} />
+                    <ErrorBlock name={'categoryId'} errors={errors}/>
                     <Input
                         type='number'
                         placeholder={t('price') as string}
@@ -134,7 +138,7 @@ export default function Edit({ post }: { post: PostInterface }) {
                         required={true}
                         name='price'
                     />
-                    <ErrorBlock name={'price'} errors={errors} />
+                    <ErrorBlock name={'price'} errors={errors}/>
                     <Input
                         type='text'
                         placeholder={t('header') as string}
@@ -142,15 +146,15 @@ export default function Edit({ post }: { post: PostInterface }) {
                         required={true}
                         name='title'
                     />
-                    <ErrorBlock name={'title'} errors={errors} />
+                    <ErrorBlock name={'title'} errors={errors}/>
                     <textarea
                         rows={5}
                         cols={5}
                         placeholder={t('description') as string}
-                        {...register('body', { required: true })}
+                        {...register('body', {required: true})}
                         className={classes.textArea}
                     />
-                    <ErrorBlock name={'body'} errors={errors} />
+                    <ErrorBlock name={'body'} errors={errors}/>
                     <div>
                         <div>
                             <h4>{t('addPhoto')}</h4>
@@ -257,7 +261,7 @@ export default function Edit({ post }: { post: PostInterface }) {
                             </li>
                         )}
                     </ul>
-                    <span style={{ color: 'red' }}>{error}</span>
+                    <span style={{color: 'red'}}>{error}</span>
                     <Button
                         className={classes.mt40}
                         type='submit'
@@ -270,19 +274,21 @@ export default function Edit({ post }: { post: PostInterface }) {
     )
 }
 
+export default Edit;
+
 export const getServerSideProps: GetServerSideProps = async ({
                                                                  locale,
                                                                  query,
                                                              }) => {
-    const response = await getPostBySlug(query.slug as string)
-    if (!response) {
+    const post = await getPostBySlug(query.slug as string)
+    if (!post) {
         return {
             notFound: true,
         }
     }
     return {
         props: {
-            post: response.data,
+            post,
             ...(await serverSideTranslations(locale as string, ['common'])),
         },
     }
