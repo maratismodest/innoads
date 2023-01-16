@@ -35,7 +35,11 @@ export default function SearchPage() {
 
     const loadFunc = useCallback(
         async (currentPage: number = page) => {
-            const response = await fetchPosts(categoryId, currentPage, isMobile ? 8 : 15)
+            const response = await fetchPosts({
+                categoryId,
+                currentPage,
+                size: isMobile ? 8 : 15,
+            })
             const posts: PostInterface[] = sortByCreatedAt(response.content)
             setPage((prevState) => prevState + 1)
             // @ts-ignore

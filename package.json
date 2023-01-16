@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "ngrok": "ngrok http 3000 --authtoken 2G0DGfZVVn1ONsk6O7ocixyBPl0_3VxKJmi7iX8XaRpzZ9rFH"
+    "lint": "next lint"
   },
   "dependencies": {
     "@mdx-js/loader": "^2.2.1",

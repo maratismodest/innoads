@@ -43,7 +43,9 @@ export const getServerSideProps: GetServerSideProps = async ({
                                                              }) => {
     const userId = Number(query.id)
     const user = await fetchUser(userId)
-    const { content: posts } = await fetchPosts(0, 0, 10, userId)
+    const { content: posts } = await fetchPosts({
+        size: 10, userId,
+    })
 
     if (!posts || !user) {
         return {
