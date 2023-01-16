@@ -1,18 +1,18 @@
 import Link from 'next/link'
-import {GetStaticProps} from 'next/types'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React, {useEffect, useState} from 'react'
+import { GetStaticProps } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import TelegramLoginButton from 'react-telegram-login'
 import axios from 'axios'
 import cn from 'classnames'
-import {useAuth} from 'hooks/useAuth'
+import { useAuth } from 'hooks/useAuth'
 import * as jose from 'jose'
-import {PostInterface, TelegramUserProps} from 'types'
+import { PostInterface, TelegramUserProps } from 'types'
 import fetchPosts from 'utils/api/fetchPosts'
-import {titles} from 'utils/constants'
-import {Routes} from 'utils/routes'
+import { titles } from 'utils/constants'
+import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
@@ -26,16 +26,16 @@ const error =
 
 export default function Profile() {
     const [posts, setPosts] = useState<PostInterface[]>([])
-    const {user, login, logout} = useAuth()
-    const {t} = useTranslation('profile')
+    const { user, login, logout } = useAuth()
+    const { t } = useTranslation('profile')
 
-    const handleTelegramResponse = async ({username, id}: TelegramUserProps) => {
+    const handleTelegramResponse = async ({ username, id }: TelegramUserProps) => {
         if (!username) {
-            return alert({error})
+            return alert({ error })
         }
         try {
-            const user = {id, username}
-            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, user)
+            const user = { id, username }
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, user)
             const decoded = await jose.decodeJwt(data.token)
             // console.log('decoded', decoded)
             if (decoded) {
@@ -55,11 +55,11 @@ export default function Profile() {
             id: 71233480,
             photo_url: 'https://t.me/i/userpic/320/QbIbY59Btv3iqvpPSZigwX2LUDfQt39ptyEablKRsgw.jpg',
             username: 'maratfaizer',
-        };
-        const {id, username} = userTemplate
+        }
+        const { id, username } = userTemplate
         try {
-            const user = {id, username}
-            const {data} = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, user)
+            const user = { id, username }
+            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, user)
             console.log('data', data)
             const decoded = await jose.decodeJwt(data.token)
             // console.log('decoded', decoded)
@@ -76,7 +76,10 @@ export default function Profile() {
 
     useEffect(() => {
         if (user) {
-            fetchPosts(0, 0, 10, user.id).then((res) => setPosts(res?.content || []))
+            fetchPosts({
+                size: 10,
+                userId: user.id,
+            }).then((res) => setPosts(res?.content || []))
         }
     }, [user])
 
@@ -105,14 +108,14 @@ export default function Profile() {
             {posts.length > 0 ? (
                 <ul className={cn(classes.mt40, classes.items)}>
                     {posts.map((post: PostInterface) => (
-                        <Item post={post} key={post.id} edit={true}/>
+                        <Item post={post} key={post.id} edit={true} />
                     ))}
                 </ul>
             ) : (
                 <div className={profile.addBlock}>
                     <Link href={Routes.add}>
                         <Button
-                            title={t('addAd', {ns: 'common'}) as string}
+                            title={t('addAd', { ns: 'common' }) as string}
                             className={cn(classes.centerBtn, classes.mt20)}
                         >
                             &#43;
@@ -124,10 +127,10 @@ export default function Profile() {
                     </p>
                     <Link href={Routes.add}>
                         <Button
-                            title={t('addAd', {ns: 'common'}) as string}
+                            title={t('addAd', { ns: 'common' }) as string}
                             className={cn(classes.centerBtn, classes.mt20)}
                         >
-                            {t('addAd', {ns: 'common'})}
+                            {t('addAd', { ns: 'common' })}
                         </Button>
                     </Link>
                 </div>
@@ -139,7 +142,7 @@ export default function Profile() {
     )
 }
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
             ...(await serverSideTranslations(locale as string, [
