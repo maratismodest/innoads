@@ -37,7 +37,7 @@ export default function SearchPage() {
         async (currentPage: number = page) => {
             const response = await fetchPosts({
                 categoryId,
-                currentPage,
+                page: currentPage,
                 size: isMobile ? 8 : 15,
             })
             const posts: PostInterface[] = sortByCreatedAt(response.content)
