@@ -26,7 +26,6 @@ function useEffectOnce(effect: EffectCallback) {
                 destroyFunc.current()
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 }
 

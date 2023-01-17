@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { GetStaticProps } from 'next/types'
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useRef, useState } from 'react'
@@ -34,7 +34,7 @@ import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
 
 
-export default function Add() {
+const Add: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
     const ref = useRef<HTMLInputElement>(null)
     const router = useRouter()
     const { t } = useTranslation()
@@ -68,7 +68,7 @@ export default function Add() {
 
         const formData = {
             title,
-            body: body.length > 800 ? body.substring(0, 800) + "..." : body,
+            body: body.length > 800 ? body.substring(0, 800) + '...' : body,
             price: Number(price),
             preview: images[0],
             images: images.join('||'),
@@ -283,6 +283,7 @@ export default function Add() {
         </>
     )
 }
+export default Add;
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {

@@ -1,5 +1,6 @@
 import type { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
+import { InferGetStaticPropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -20,7 +21,7 @@ import classes from 'styles/classes.module.scss'
 import search from 'styles/Search.module.scss'
 import selectStyles from 'styles/select.module.scss'
 
-export default function SearchPage() {
+const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
     const { t } = useTranslation()
     const router = useRouter()
     const [page, setPage] = useState(0)
@@ -114,6 +115,8 @@ export default function SearchPage() {
         </MainLayout>
     )
 }
+
+export default SearchPage
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {

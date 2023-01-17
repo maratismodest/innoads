@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next/types'
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
@@ -11,7 +11,8 @@ import MainLayout from 'components/Layout/Layout'
 
 import classes from 'styles/classes.module.scss'
 
-export default function Favourites() {
+
+const Favourites: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
     const { t } = useTranslation()
     const [favourites] = useLocalStorageState<PostInterface[]>('favourites', {
         defaultValue: [],
@@ -26,8 +27,9 @@ export default function Favourites() {
         </MainLayout>
     )
 }
+export default Favourites
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
             ...(await serverSideTranslations(locale as string, ['common'])),

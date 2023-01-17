@@ -9,7 +9,7 @@ import {Routes} from 'utils/routes'
 import Button from 'components/Button/Button'
 import Dropdown from 'components/Dropdown/Dropdown'
 
-import LanguageSwitcher from "./LanguageSwitcher/LanguageSwitcher";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 import classes from './Header.module.scss'
 

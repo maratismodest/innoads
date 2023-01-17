@@ -1,8 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { isMobile } from 'react-device-detect'
-import cn from 'classnames'
 import { categories } from 'utils/options'
 
 import styles from './Categories.module.scss'
@@ -10,11 +8,7 @@ import styles from './Categories.module.scss'
 const Categories = (): JSX.Element | null => {
     const { t } = useTranslation()
     return (
-        <ul
-            className={cn(styles.categories, {
-                [styles.categoriesIsMobile]: isMobile,
-            })}
-        >
+        <ul className={styles.categories}>
             {categories.map(({ value, image, label }, index) => {
                 return (
                     <li key={value} tabIndex={index}>
@@ -23,16 +17,13 @@ const Categories = (): JSX.Element | null => {
                                 pathname: '/search',
                                 query: { categoryId: value },
                             }}
-                            className={cn(styles.category, {
-                                [styles.categoryIsMobile]: isMobile,
-                            })}
+                            className={styles.category}
                         >
                             <div className={styles.categoryImg}>
                                 <Image
                                     src={image}
                                     alt={label}
                                     fill={true}
-                                    style={{ objectFit: 'contain', padding: 8 }}
                                 />
                             </div>
 

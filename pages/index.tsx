@@ -76,8 +76,8 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts,
         </Layout>
     )
 }
-
 export default Home
+
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const { content: posts, totalPages } = await fetchPosts({
         size: 10,

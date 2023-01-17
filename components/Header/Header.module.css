@@ -3,7 +3,7 @@
  * 1 | @import "variables";
  *   |         ^^^^^^^^^^^
  *   '
- *   Header.module.scss 1:9  root stylesheet */
+ *   Index.module.scss 1:9  root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",

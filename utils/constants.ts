@@ -1,5 +1,3 @@
-import { FieldErrors } from 'react-hook-form'
-
 export const titles = {
     profile: 'Личный кабинет',
     add: 'Добавить объявление',
@@ -27,14 +25,6 @@ export const SEO_DESCRIPTION =
     'Доска объявлений – объявления города Иннополис о продаже и покупке товаров всех категорий. Самый простой способ продать или купить вещи.'
 export const SEO_IMAGE = '/icons/icon-192x192.png'
 export const ACCEPTED_IMAGE_FORMAT = '.jpg, .jpeg, .png'
-
-export type InputType = 'categoryId' | 'price' | 'title' | 'body'
-
-export interface ErrorProps {
-    name: InputType,
-    errors?: FieldErrors,
-    text?: string
-}
 
 export type FormValues = {
     title: string,

@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react'
 import useEffectOnce from 'hooks/useEffectOnce'
 import * as jose from 'jose'
 import {UserProps} from "types";
@@ -9,6 +9,7 @@ type authContextType = {
     login: (a: UserProps) => void;
     logout: () => void;
     token: string
+    setToken: Dispatch<SetStateAction<string>>
 };
 
 const authContextDefaultValues: authContextType = {
@@ -18,6 +19,7 @@ const authContextDefaultValues: authContextType = {
     },
     logout: () => {
     },
+    setToken: () => {}
 }
 export const AuthContext = createContext<authContextType>(authContextDefaultValues)
 
@@ -71,6 +73,7 @@ export function AuthProvider({ children }: Props) {
     const value = {
         user,
         token,
+        setToken,
         login,
         logout,
     }

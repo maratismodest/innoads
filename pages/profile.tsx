@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { GetStaticProps } from 'next/types'
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useEffect, useState } from 'react'
@@ -24,7 +24,7 @@ import profile from 'styles/Profile.module.scss'
 const error =
     'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
 
-export default function Profile() {
+const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
     const [posts, setPosts] = useState<PostInterface[]>([])
     const { user, login, logout } = useAuth()
     const { t } = useTranslation('profile')
@@ -86,7 +86,7 @@ export default function Profile() {
     if (!user) {
         return (
             <MainLayout title={titles.profile}>
-                <div className={classes.center}>
+                <div className={'center'}>
                     <h2>{t('authorization')}</h2>
                     <TelegramLoginButton
                         dataOnauth={handleTelegramResponse}
@@ -141,6 +141,7 @@ export default function Profile() {
         </MainLayout>
     )
 }
+export default Profile;
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
