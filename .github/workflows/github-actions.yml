@@ -20,3 +20,5 @@ jobs:
         run: yarn
       - name: build project
         run: yarn build
+        env:
+          NEXT_PUBLIC_CHAT_NAME: '@innoads'
