@@ -29,7 +29,7 @@ const withMDX = require('@next/mdx')({
 const nextConfig = {
     reactStrictMode: true,
     images: {
-        domains: [process.env.NEXT_PUBLIC_IMAGES_DOMAIN, 'localhost'],
+        domains: [process.env.NEXT_PUBLIC_IMAGES_DOMAIN || 'chamala.tatar'],
     },
     formats: ['image/avif', 'image/webp'],
     i18n,
