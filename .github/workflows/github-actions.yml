@@ -20,6 +20,3 @@ jobs:
         run: yarn
       - name: build project
         run: yarn build
-        env:
-          NEXT_PUBLIC_IMAGES_DOMAIN: [chamala.tatar]
-          NEXT_PUBLIC_APP_URL: 'https://innoads.ru'
