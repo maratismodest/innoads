@@ -21,5 +21,12 @@ jobs:
       - name: build project
         run: yarn build
         env:
-          NEXT_PUBLIC_CHAT_NAME: '@innoads'
+          NEXT_PUBLIC_JWT_SECRET: 'Kazan2022!'
+          NEXT_PUBLIC_SECRET: 'secret'
           NEXT_PUBLIC_IMAGES_DOMAIN: 'chamala.tatar'
+          NEXT_PUBLIC_BOT_TOKEN: '5396704177:AAFhWyE9yyM7iTfQ-AJQuSpHTEEyaQm6tfk'
+          NEXT_PUBLIC_APP_URL: 'https://innoads.ru'
+          NEXT_PUBLIC_API_URL: 'https://chamala.tatar'
+          NEXT_PUBLIC_NODE_ENV: 'development'
+          NEXT_PUBLIC_CHAT_NAME: '@innoads'
+          NEXT_PUBLIC_TEST_TOKEN: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzEyMzM0ODAsInVzZXJuYW1lIjoibWFyYXRmYWl6ZXIiLCJpYXQiOjE2NzMyODIxODcsImV4cCI6MTcwNDgxODE4N30.W2-jzWy3-3On2JrKm-jNoW2kvvw3I_t9tCY5nZuoLkk'

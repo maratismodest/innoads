@@ -27,7 +27,7 @@ const Layout: React.FC<Props> = ({
     className,
     author = 'InnoAds',
     keywords = 'innoads, Иннополис, доска объявлений',
-    canonical = process.env.NEXT_PUBLIC_NODE_ENV,
+    canonical = process.env.NEXT_PUBLIC_APP_URL,
 }) => {
     return (
         <>
