@@ -22,4 +22,4 @@ jobs:
         run: yarn build
         env:
           NEXT_PUBLIC_CHAT_NAME: '@innoads'
-          NEXT_PUBLIC_IMAGES_DOMAIN: ['chamala.tatar']
+          NEXT_PUBLIC_IMAGES_DOMAIN: 'chamala.tatar'
