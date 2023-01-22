@@ -11,6 +11,8 @@ import Item from 'components/Item/Item'
 import Layout from 'components/Layout/Layout'
 import Spinner from 'components/Spinner/Spinner'
 
+import InfinitePosts from '../modules/InfinitePosts'
+
 import classes from 'styles/classes.module.scss'
 import home from 'styles/Home.module.scss'
 
@@ -21,29 +23,7 @@ const Categories = dynamic(() => import('components/Categories/Categories'), {
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts, totalPages }) => {
     const { t } = useTranslation()
-    const [page, setPage] = useState(0)
-    const [hasMore, setHasMore] = useState(() => totalPages > 1)
-    const [infinite, setInfinite] = useState<PostInterface[]>(posts)
     const count = useMemo(() => totalPages * 10, [totalPages])
-
-    const loadMore = useCallback(async () => {
-        if (hasMore) {
-            try {
-                const { content, totalPages } = await fetchPosts({
-                    page: page + 1,
-                    size: 10,
-                })
-                setPage(prevState => prevState + 1)
-                setInfinite(prevState => [...prevState, ...content])
-                setHasMore(page + 1 < totalPages - 1)
-            } catch (e) {
-                console.log(e)
-            }
-        }
-
-    }, [page, hasMore, totalPages])
-
-
     return (
         <Layout>
             <Categories />
@@ -53,26 +33,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts,
                     {count} {t('ads')}
                 </span>
             </div>
-            <div style={{ height: 'calc(100vh-66px-68px)' }}>
-                <InfiniteScroll
-                    pageStart={page}
-                    loadMore={loadMore}
-                    hasMore={hasMore}
-                    initialLoad={false}
-                    threshold={100}
-                    loader={
-                        <div key={0}>
-                            <Spinner />
-                        </div>
-                    }
-                >
-                    <ul className={classes.items}>
-                        {infinite.map((post: PostInterface) => (
-                            <Item post={post} key={post.slug} />
-                        ))}
-                    </ul>
-                </InfiniteScroll>
-            </div>
+           <InfinitePosts posts={posts} totalPages={totalPages} options={{}}/>
         </Layout>
     )
 }
