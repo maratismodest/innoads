@@ -1,46 +1,39 @@
 import dynamic from 'next/dynamic'
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useCallback, useMemo, useState } from 'react'
-import InfiniteScroll from 'react-infinite-scroller'
-import { PostInterface } from 'types'
+import {GetStaticProps, InferGetStaticPropsType, NextPage} from 'next/types'
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import React, {useMemo} from 'react'
+import InfinitePosts from 'modules/InfinitePosts'
 import fetchPosts from 'utils/api/fetchPosts'
 
-import Item from 'components/Item/Item'
 import Layout from 'components/Layout/Layout'
-import Spinner from 'components/Spinner/Spinner'
 
-import InfinitePosts from '../modules/InfinitePosts'
-
-import classes from 'styles/classes.module.scss'
 import home from 'styles/Home.module.scss'
 
 const Categories = dynamic(() => import('components/Categories/Categories'), {
     ssr: true,
 })
 
-
-const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ posts, totalPages }) => {
-    const { t } = useTranslation()
+const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({posts, totalPages}) => {
+    const {t} = useTranslation()
     const count = useMemo(() => totalPages * 10, [totalPages])
     return (
         <Layout>
-            <Categories />
+            <Categories/>
             <div className={home.header}>
                 <h1>{t('lastAds')}</h1>
                 <span>
                     {count} {t('ads')}
                 </span>
             </div>
-           <InfinitePosts posts={posts} totalPages={totalPages} options={{}}/>
+            <InfinitePosts options={{}}/>
         </Layout>
     )
 }
 export default Home
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
-    const { content: posts, totalPages } = await fetchPosts({
+export const getStaticProps: GetStaticProps = async ({locale}) => {
+    const {content: posts, totalPages} = await fetchPosts({
         size: 10,
     })
 

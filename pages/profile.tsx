@@ -60,7 +60,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
         try {
             const user = { id, username }
             const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, user)
-            console.log('data', data)
+            // console.log('data', data)
             const decoded = await jose.decodeJwt(data.token)
             // console.log('decoded', decoded)
             if (decoded) {
