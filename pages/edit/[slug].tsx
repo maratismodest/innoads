@@ -1,29 +1,24 @@
-import type {GetServerSideProps} from 'next'
-import Image from 'next/image'
-import {useRouter} from 'next/router'
-import {InferGetServerSidePropsType, NextPage} from "next/types";
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React, {useCallback, useRef, useState} from 'react'
-import {isDesktop} from 'react-device-detect'
-import {useForm} from 'react-hook-form'
+import type { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
+import { InferGetServerSidePropsType, NextPage } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import cn from 'classnames'
-import {useAuth} from 'hooks/useAuth'
-import {EditPostInterface, HTMLInputEvent} from 'types'
+import { useAuth } from 'hooks/useAuth'
+import PostFormImages from 'modules/PostForm/PostFormImages'
+import { EditPostInterface } from 'types'
 import getPostBySlug from 'utils/api/fetchPost'
 import updatePost from 'utils/api/updatePost'
-import {ACCEPTED_IMAGE_FORMAT, defaultValues, FormValues, messages, NO_IMAGE, titles} from 'utils/constants'
+import { defaultValues, FormValues, messages, titles } from 'utils/constants'
 import hasCurseWords from 'utils/curseWords'
-import getCompressedImagesLinks from 'utils/image/getCompressedImagesLinks'
-import {handleDeleteImage} from 'utils/image/handleDeleteImage'
-import {MoveImage, moveImage} from 'utils/image/moveImage'
-import {options} from 'utils/options'
-import {Routes} from 'utils/routes'
+import { options } from 'utils/options'
+import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import ErrorBlock from 'components/ErrorBlock/ErrorBlock'
 import GoToProfile from 'components/GoToProfile/GoToProfile'
-import Icon from 'components/Icon/Icon'
 import Input from 'components/Input/Input'
 import MainLayout from 'components/Layout/Layout'
 import Modal from 'components/Modal/Modal'
@@ -33,56 +28,49 @@ import classes from 'styles/classes.module.scss'
 import selectStyles from 'styles/select.module.scss'
 
 
-const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({post}) => {
-    const {t} = useTranslation()
-    const ref = useRef<HTMLInputElement>(null)
-    const {categoryId, userId, title, body, price, id, slug, createdAt} = post
+const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ post }) => {
+    const { t } = useTranslation()
+    const { categoryId, userId, title, body, price, id, slug, createdAt } = post
     const router = useRouter()
-    const {user} = useAuth()
+    const { user } = useAuth()
     const [images, setImages] = useState<string[]>(() => post.images.split('||'))
-    const [error, setError] = useState<string | undefined>()
     const editValues: FormValues = {
         ...defaultValues, categoryId: options.find((x) => x.value === categoryId)?.value || 1, body, title, price,
     }
     const {
         register,
         handleSubmit,
-        formState: {errors},
-    } = useForm<FormValues>({defaultValues: editValues})
+        formState: { errors },
+    } = useForm<FormValues>({ defaultValues: editValues })
     const [loading, setLoading] = useState(false)
 
-    const handleAddPhoto = useCallback(() => {
-        if (ref.current) {
-            ref.current.click()
-        }
-    }, [ref.current])
 
     if (!user) {
-        return <GoToProfile/>
+        return <GoToProfile />
     }
 
     const onSubmit = async (data: FormValues) => {
         if (images.length === 0) {
-            return setError(messages.noImages)
+            return
         }
 
         if (hasCurseWords(data)) {
             return alert(messages.forbiddenWords)
         }
 
-        const {title, body, price, categoryId} = data
+        const { title, body, price, categoryId } = data
 
         const formData: EditPostInterface = {
             id,
             categoryId: Number(categoryId),
             price: Number(price),
             title,
-            body: body.length > 800 ? body.substring(0, 800) + "..." : body,
+            body: body.length > 800 ? body.substring(0, 800) + '...' : body,
             preview: images[0],
             images: images.join('||'),
             userId,
             slug,
-            createdAt
+            createdAt,
         }
 
         try {
@@ -98,25 +86,11 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
         }
     }
 
-    const imageHandler = async (e: HTMLInputEvent) => {
-        if (e.target.files) {
-            const imagesFromInput: FileList = e.target.files
-            const length = imagesFromInput.length + images.length
-            if (length > 4) {
-                return setError(messages.manyImages)
-            }
-            setLoading(true)
-            await getCompressedImagesLinks(imagesFromInput, setImages)
-            setLoading(false)
-        }
-    }
-
-    const deleteImage = (image: string) => handleDeleteImage(image).then(() => setImages(images.filter((x) => x !== image)))
 
     return (
         <>
             <Modal visible={loading}>
-                <Spinner/>
+                <Spinner />
             </Modal>
             <MainLayout title={titles.edit}>
                 <form
@@ -126,11 +100,11 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                     <h1>{t('editPost')}</h1>
                     <select
                         className={cn(selectStyles.select, 'select-css')}
-                        {...register('categoryId', {required: true})}
+                        {...register('categoryId', { required: true })}
                     >
-                        {options.map(({value, label}) => <option key={value} value={value}>{t(label)}</option>)}
+                        {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
                     </select>
-                    <ErrorBlock name={'categoryId'} errors={errors}/>
+                    <ErrorBlock name={'categoryId'} errors={errors} />
                     <Input
                         type='number'
                         placeholder={t('price') as string}
@@ -138,7 +112,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                         required={true}
                         name='price'
                     />
-                    <ErrorBlock name={'price'} errors={errors}/>
+                    <ErrorBlock name={'price'} errors={errors} />
                     <Input
                         type='text'
                         placeholder={t('header') as string}
@@ -146,122 +120,16 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                         required={true}
                         name='title'
                     />
-                    <ErrorBlock name={'title'} errors={errors}/>
+                    <ErrorBlock name={'title'} errors={errors} />
                     <textarea
                         rows={5}
                         cols={5}
                         placeholder={t('description') as string}
-                        {...register('body', {required: true})}
+                        {...register('body', { required: true })}
                         className={classes.textArea}
                     />
-                    <ErrorBlock name={'body'} errors={errors}/>
-                    <div>
-                        <div>
-                            <h4>{t('addPhoto')}</h4>
-                            <div
-                                className={cn({
-                                    [classes.image]: isDesktop,
-                                    [classes.imageMobile]: !isDesktop,
-                                })}
-                                onClick={handleAddPhoto}
-                            >
-                                <Image
-                                    alt='image'
-                                    src={NO_IMAGE}
-                                    fill={true}
-                                    style={{
-                                        objectFit: 'cover',
-                                    }}
-                                />
-                            </div>
-                        </div>
-                        <Input
-                            id='upload'
-                            type='file'
-                            onChange={imageHandler}
-                            hidden
-                            multiple
-                            accept={ACCEPTED_IMAGE_FORMAT}
-                            ref={ref}
-                        />
-                    </div>
-                    <h4>{t('preview')}</h4>
-                    <ul
-                        className={cn({
-                            [classes.images]: isDesktop,
-                            [classes.imagesMobile]: !isDesktop,
-                        })}
-                    >
-                        {images.map((image: string, index: number) => {
-                            return (
-                                <li
-                                    key={image}
-                                    className={cn({
-                                        [classes.image]: isDesktop,
-                                        [classes.imageMobile]: !isDesktop,
-                                    })}
-                                >
-                                    <Image
-                                        alt={image}
-                                        src={image}
-                                        style={{
-                                            objectFit: 'cover',
-                                        }}
-                                        fill={true}
-                                        placeholder='blur'
-                                        blurDataURL={NO_IMAGE}
-                                    />
-                                    <Icon
-                                        className={classes.leftArrow}
-                                        onClick={(e: MouseEvent) => {
-                                            moveImage(
-                                                e,
-                                                images,
-                                                index,
-                                                MoveImage.left,
-                                                setImages,
-                                            )
-                                        }}
-                                    >
-                                        &larr;
-                                    </Icon>
-                                    <Icon
-                                        className={classes.rightArrow}
-                                        onClick={(e: MouseEvent) => {
-                                            moveImage(
-                                                e,
-                                                images,
-                                                index,
-                                                MoveImage.right,
-                                                setImages,
-                                            )
-                                        }}
-                                    >
-                                        &rarr;
-                                    </Icon>
-                                    <Icon
-                                        className={classes.deleteIcon}
-                                        onClick={() => deleteImage(image)}
-                                    >
-                                        &times;
-                                    </Icon>
-                                </li>
-                            )
-                        })}
-                        {loading && (
-                            <li
-                                className={cn({
-                                    [classes.image]: isDesktop,
-                                    [classes.imageMobile]: !isDesktop,
-                                })}
-                            >
-                                <p className={classes.loadingImage}>
-                                    Загружаем изображение
-                                </p>
-                            </li>
-                        )}
-                    </ul>
-                    <span style={{color: 'red'}}>{error}</span>
+                    <ErrorBlock name={'body'} errors={errors} />
+                    <PostFormImages images={images} setImages={setImages} />
                     <Button
                         className={classes.mt40}
                         type='submit'
@@ -274,7 +142,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
     )
 }
 
-export default Edit;
+export default Edit
 
 export const getServerSideProps: GetServerSideProps = async ({
                                                                  locale,

@@ -42,8 +42,11 @@ export const defaultValues = {
 
 export const messages = {
     forbiddenWords: 'Есть запрещенные слова!',
-    noImages: 'Добавить хотя бы одно фото!',
-    manyImages: 'Не больше 4 фотографий!',
     postUpdated: 'Ваше объявление изменено!',
     somethingWentWrong: "Что-то пошло не так!"
+}
+
+export const imageErrors = {
+    noImages: 'Добавить хотя бы одно фото!',
+    manyImages: 'Не больше 4 фотографий!',
 }
