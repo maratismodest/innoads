@@ -18,7 +18,7 @@ const withMDX = require('@next/mdx')({
         remarkPlugins: [],
         rehypePlugins: [],
         // If you use `MDXProvider`, uncomment the following line.
-        providerImportSource: "@mdx-js/react",
+        providerImportSource: '@mdx-js/react',
     },
     reactStrictMode: true,
 })
@@ -41,6 +41,5 @@ const nextConfig = {
         })
         return config
     },
-    output: 'standalone',
 }
 module.exports = withPWA(withBundleAnalyzer(withMDX(nextConfig)))
