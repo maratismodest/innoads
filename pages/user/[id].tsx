@@ -1,11 +1,12 @@
 import Link from 'next/link'
-import { GetServerSideProps, GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage } from 'next/types'
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
-import { PostInterface } from 'types'
+import { GetStaticPath, PostInterface } from 'types'
 import fetchPosts from 'utils/api/fetchPosts'
 import fetchUser from 'utils/api/fetchUser'
+import fetchUsers from 'utils/api/fetchUsers'
 import { tgLink } from 'utils/constants'
 import sortByCreatedAt from 'utils/sortByUpdatedAt'
 
@@ -13,11 +14,9 @@ import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
 import MainLayout from 'components/Layout/Layout'
 
-import fetchUsers from '../../utils/api/fetchUsers'
-
 import classes from 'styles/classes.module.scss'
 
-const PublicProfile: NextPage = ({ posts, user }: any) => {
+const PublicProfile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ user, posts }) => {
     const { t } = useTranslation('post')
     return (
         <MainLayout>
@@ -39,17 +38,13 @@ const PublicProfile: NextPage = ({ posts, user }: any) => {
 
 export default PublicProfile
 
-interface Path {
-    params: { id: string },
-    locale: string
-}
-
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
     const users = await fetchUsers()
-    const paths: Path[] = users.flatMap(user => locales.map(locale => ({
-        params: { id: user.id.toString() },
-        locale,
-    })))
+    const paths: GetStaticPath[] = users.flatMap(user =>
+        locales.map(locale => ({
+            params: { id: user.id.toString() },
+            locale,
+        })))
     return {
         paths,
         fallback: false,

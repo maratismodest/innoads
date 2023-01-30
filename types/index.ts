@@ -28,3 +28,8 @@ export type EditPostInterface = Omit<PostInterface, 'updatedAt' | 'user'>
 export interface HTMLInputEvent extends Event {
     target: HTMLInputElement & EventTarget;
 }
+
+export interface GetStaticPath {
+    params: { id: string },
+    locale: string
+}
