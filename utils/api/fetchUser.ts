@@ -1,5 +1,3 @@
-import axios from 'axios'
-import process from 'process'
 import { UserProps } from 'types'
 
 import client from './createRequest'

@@ -6,10 +6,11 @@ import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import TelegramLoginButton from 'react-telegram-login'
 import axios from 'axios'
-import {clsx} from 'clsx'
+import { clsx } from 'clsx'
 import { useAuth } from 'hooks/useAuth'
 import * as jose from 'jose'
 import { PostInterface, TelegramUserProps } from 'types'
+import client from 'utils/api/createRequest'
 import fetchPosts from 'utils/api/fetchPosts'
 import { titles } from 'utils/constants'
 import { Routes } from 'utils/routes'
@@ -40,6 +41,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
             // console.log('decoded', decoded)
             if (decoded) {
                 localStorage.setItem('token', data.token)
+                client.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
                 login(user)
             }
             return
@@ -65,6 +67,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
             // console.log('decoded', decoded)
             if (decoded) {
                 localStorage.setItem('token', data.token)
+                client.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
                 // @ts-ignore
                 login(user)
             }
@@ -141,7 +144,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
         </MainLayout>
     )
 }
-export default Profile;
+export default Profile
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
