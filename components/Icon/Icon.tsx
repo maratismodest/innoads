@@ -1,5 +1,5 @@
 import React, {ReactNode} from "react";
-import cn from 'classnames'
+import {clsx} from 'clsx'
 
 import classes from "./Icon.module.scss";
 
@@ -11,7 +11,7 @@ interface IconProps {
 
 const Icon = ({children, className, onClick, ...props}: IconProps): JSX.Element => {
     return (
-        <button className={cn(classes.button, className)} onClick={onClick} {...props}>
+        <button className={clsx(classes.button, className)} onClick={onClick} {...props}>
             {children}
         </button>
     );

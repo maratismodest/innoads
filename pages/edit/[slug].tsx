@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import cn from 'classnames'
+import {clsx} from 'clsx'
 import { useAuth } from 'hooks/useAuth'
 import PostFormImages from 'modules/PostForm/PostFormImages'
 import { EditPostInterface } from 'types'
@@ -99,7 +99,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                 >
                     <h1>{t('editPost')}</h1>
                     <select
-                        className={cn(selectStyles.select, 'select-css')}
+                        className={clsx(selectStyles.select, 'select-css')}
                         {...register('categoryId', { required: true })}
                     >
                         {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}

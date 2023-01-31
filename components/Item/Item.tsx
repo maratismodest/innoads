@@ -1,25 +1,25 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import React, { useCallback, useMemo, useState } from 'react'
+import {useRouter} from 'next/router'
+import {useTranslation} from 'next-i18next'
+import React, {useCallback, useMemo, useState} from 'react'
 import axios from 'axios'
-import cn from 'classnames'
+import {clsx} from 'clsx';
 import dayjs from 'dayjs'
-import { useAuth } from 'hooks/useAuth'
-import { PostInterface } from 'types'
+import {useAuth} from 'hooks/useAuth'
+import {PostInterface} from 'types'
 import useLocalStorageState from 'use-local-storage-state'
 import postTelegram from 'utils/api/postTelegram'
 import updatePost from 'utils/api/updatePost'
-import { NO_IMAGE } from 'utils/constants'
-import { Routes } from 'utils/routes'
+import {NO_IMAGE} from 'utils/constants'
+import {Routes} from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Modal from 'components/Modal/Modal'
 import modal from 'components/Modal/Modal.module.scss'
 import Price from 'components/Price/Price'
 
-import { errors, ItemModalText, success } from './utils'
+import {errors, ItemModalText, success} from './utils'
 
 import classes from './Item.module.scss'
 
@@ -30,15 +30,15 @@ interface ItemInterface {
 
 const sevenDays = 1000 * 60 * 60 * 24 * 7
 
-const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
+const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
     const [favourites, setFavourites] = useLocalStorageState<PostInterface[]>('favourites', {
         defaultValue: [],
     })
-    const { id, slug, title, preview, price, updatedAt } = post
- 
-    const { t } = useTranslation('profile')
+    const {id, slug, title, preview, price, updatedAt} = post
+
+    const {t} = useTranslation('profile')
     const router = useRouter()
-    const { token } = useAuth()
+    const {token} = useAuth()
     const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id])
 
     const [visible, setVisible] = useState(false)
@@ -83,7 +83,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         )
                     } else {
                         await postTelegram(post)
-                        await updatePost({ ...post, createdAt: new Date().toString() })
+                        await updatePost({...post, createdAt: new Date().toString()})
                         alert(success.updated)
                     }
                     break
@@ -111,7 +111,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
             <Modal visible={visible}>
                 <div className={modal.modal}>
                     <h4>{modalText}</h4>
-                    <hr />
+                    <hr/>
                     <div className={modal.modalButtons}>
                         <Button onClick={handleFunction}>Да</Button>
                         <Button onClick={hideModal}>Нет</Button>
@@ -123,7 +123,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                 {edit && (
                     <>
                         <Button
-                            className={cn(
+                            className={clsx(
                                 classes.itemBtn,
                                 classes.itemBtnDelete,
                             )}
@@ -136,7 +136,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         </Button>
                         <Button
                             title={t('edit') as string}
-                            className={cn(classes.itemBtn, classes.itemBtnEdit)}
+                            className={clsx(classes.itemBtn, classes.itemBtnEdit)}
                             onClick={() => {
                                 showModal(ItemModalText.edit)
                             }}
@@ -146,7 +146,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         </Button>
                         <Button
                             title={t('publishAgain') as string}
-                            className={cn(
+                            className={clsx(
                                 classes.itemBtn,
                                 classes.itemBtnPromote,
                             )}
@@ -163,7 +163,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                     <div className={classes.itemImage}>
                         <Image
                             fill={true}
-                            style={{ objectFit: 'cover' }}
+                            style={{objectFit: 'cover'}}
                             sizes={'(max-width: 768px) 50vw,(max-width: 1024px) 25vw, 200px'}
                             alt={title}
                             src={preview || NO_IMAGE}
@@ -174,8 +174,8 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                     </div>
 
                     <div className={classes.itemPrice}>
-                        <Price price={price} />
-                        <h2 className={cn(classes.itemTitle, 'font-normal')}>{title}</h2>
+                        <Price price={price}/>
+                        <h2 className={clsx(classes.itemTitle, 'font-normal')}>{title}</h2>
                         <Image
                             width={24}
                             height={24}

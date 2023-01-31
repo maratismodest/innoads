@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import TelegramLoginButton from 'react-telegram-login'
 import axios from 'axios'
-import cn from 'classnames'
+import {clsx} from 'clsx'
 import { useAuth } from 'hooks/useAuth'
 import * as jose from 'jose'
 import { PostInterface, TelegramUserProps } from 'types'
@@ -106,7 +106,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
         >
             <h1>{t('cabinet')}</h1>
             {posts.length > 0 ? (
-                <ul className={cn(classes.mt40, classes.items)}>
+                <ul className={clsx(classes.mt40, classes.items)}>
                     {posts.map((post: PostInterface) => (
                         <Item post={post} key={post.id} edit={true} />
                     ))}
@@ -116,7 +116,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
                     <Link href={Routes.add}>
                         <Button
                             title={t('addAd', { ns: 'common' }) as string}
-                            className={cn(classes.centerBtn, classes.mt20)}
+                            className={clsx(classes.centerBtn, classes.mt20)}
                         >
                             &#43;
                         </Button>
@@ -128,14 +128,14 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
                     <Link href={Routes.add}>
                         <Button
                             title={t('addAd', { ns: 'common' }) as string}
-                            className={cn(classes.centerBtn, classes.mt20)}
+                            className={clsx(classes.centerBtn, classes.mt20)}
                         >
                             {t('addAd', { ns: 'common' })}
                         </Button>
                     </Link>
                 </div>
             )}
-            <div className={cn(classes.center, profile.exit)}>
+            <div className={clsx(classes.center, profile.exit)}>
                 <Button onClick={logout}>{t('exit')}</Button>
             </div>
         </MainLayout>

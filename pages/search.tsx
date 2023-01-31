@@ -4,7 +4,7 @@ import {InferGetStaticPropsType, NextPage} from 'next/types'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React, {useState} from 'react'
-import cn from 'classnames'
+import {clsx} from 'clsx'
 import InfinitePosts from "modules/InfinitePosts";
 import {options} from 'utils/options'
 
@@ -26,7 +26,7 @@ const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () 
         >
             <h1>{t('search')}</h1>
             <hr/>
-            <select className={cn(selectStyles.select, 'select-css')}
+            <select className={clsx(selectStyles.select, 'select-css')}
                     defaultValue={categoryId}
                     onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                         setCategoryId(Number(event.target.value))

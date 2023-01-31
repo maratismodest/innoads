@@ -1,5 +1,5 @@
 import React from 'react'
-import cn from 'classnames'
+import {clsx} from 'clsx'
 
 import classes from './Search.module.scss'
 
@@ -22,7 +22,7 @@ const Search = ({
     const formRegister = register ? register(name, { required }) : null
     return (
         <input type={type} defaultValue={defaultValue} placeholder={placeholder}
-               className={cn(classes.input, className)} {...formRegister} {...props}>
+               className={clsx(classes.input, className)} {...formRegister} {...props}>
             {children}
         </input>
     )

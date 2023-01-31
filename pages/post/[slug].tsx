@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useMemo, useRef, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import cn from 'classnames'
+import {clsx} from 'clsx'
 import dayjs from 'dayjs'
 import { PostInterface } from 'types'
 import fetchPost from 'utils/api/fetchPost'
@@ -102,14 +102,14 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                         })}
                     </ul>
                     <button
-                        className={cn(item.button, item.buttonLeft)}
+                        className={clsx(item.button, item.buttonLeft)}
                         disabled={isMobile ? false : current < 1}
                         onClick={() => handleClick('left')}
                     >
                         &larr;
                     </button>
                     <button
-                        className={cn(item.button, item.buttonRight)}
+                        className={clsx(item.button, item.buttonRight)}
                         disabled={
                             isMobile ? false : current + 1 >= images.length
                         }
@@ -146,7 +146,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 
                 {isMobile && (
                     <Button
-                        className={cn(classes.mt40, item.share)}
+                        className={clsx(classes.mt40, item.share)}
                         onClick={async () => await navigator.share(shareData)}
                     >
                         {t('share', { ns: 'post' })}

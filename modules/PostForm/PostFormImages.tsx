@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { isDesktop } from 'react-device-detect'
-import cn from 'classnames'
+import {clsx} from 'clsx'
 import { HTMLInputEvent } from 'types'
 import { ACCEPTED_IMAGE_FORMAT, imageErrors, NO_IMAGE } from 'utils/constants'
 import getCompressedImagesLinks from 'utils/image/getCompressedImagesLinks'
@@ -79,7 +79,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                 <div>
                     <h4>{t('addPhoto')}</h4>
                     <div
-                        className={cn({
+                        className={clsx({
                             [classes.image]: isDesktop,
                             [classes.imageMobile]: !isDesktop,
                         })}
@@ -111,7 +111,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
             </div>
             <h4>{t('preview')}</h4>
             <ul
-                className={cn({
+                className={clsx({
                     [classes.images]: isDesktop,
                     [classes.imagesMobile]: !isDesktop,
                 })}
@@ -120,7 +120,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                     return (
                         <li
                             key={image}
-                            className={cn({
+                            className={clsx({
                                 [classes.image]: isDesktop,
                                 [classes.imageMobile]: !isDesktop,
                             })}
@@ -176,7 +176,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                 })}
                 {loading && (
                     <li
-                        className={cn({
+                        className={clsx({
                             [classes.image]: isDesktop,
                             [classes.imageMobile]: !isDesktop,
                         })}

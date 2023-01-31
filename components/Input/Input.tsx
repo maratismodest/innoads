@@ -1,5 +1,5 @@
 import React, { ChangeEventHandler, forwardRef } from 'react'
-import cn from 'classnames'
+import {clsx} from 'clsx'
 
 import classes from './Input.module.scss'
 
@@ -25,7 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProp>(({
         <input
             ref={ref}
             onChange={onChange}
-            className={cn(classes.input, className)}
+            className={clsx(classes.input, className)}
             {...formRegister}
             {...props}
 
