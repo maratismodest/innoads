@@ -1,16 +1,17 @@
-import axios from 'axios'
-import {EditPostInterface} from 'types'
+import { EditPostInterface } from 'types'
+
+import client from './createRequest'
 
 export const updatePost = async (formData: EditPostInterface) => {
-    const token = localStorage.getItem('token')
-    const res = await axios.put(
-        `${process.env.NEXT_PUBLIC_API_URL}/posts/${formData.id}`,
+    // const token = localStorage.getItem('token')
+    const res = await client.put(
+        `/posts/` + formData.id,
         formData,
-        {
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-        },
+        // {
+        //     headers: {
+        //         authorization: `Bearer ${token}`,
+        //     },
+        // },
     )
     return res
 }

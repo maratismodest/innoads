@@ -1,16 +1,17 @@
-import axios from 'axios'
-import {PostFormInterface} from 'types'
+import { PostFormInterface } from 'types'
+
+import client from './createRequest'
 
 export const postTelegram = async (formData: PostFormInterface) => {
-    const token = localStorage.getItem('token')
-    const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/telegrams`,
+    // const token = localStorage.getItem('token')
+    const res = await client.post(
+        `/telegrams`,
         formData,
-        {
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-        },
+        // {
+        //     headers: {
+        //         authorization: `Bearer ${token}`,
+        //     },
+        // },
     )
     return res
 }

@@ -1,13 +1,9 @@
-import axios from 'axios'
-import process from 'process'
 import { UserProps } from 'types'
 
-// type FetchUsersProps = {
-//     users: UserProps[]
-// }
+import client from './createRequest'
 
 const fetchUsers = async (): Promise<UserProps[]> => {
-    const { data } = await axios.get<UserProps[]>(`${process.env.NEXT_PUBLIC_API_URL}/users`)
+    const { data } = await client.get<UserProps[]>(`/users`)
     return data
 }
 export default fetchUsers

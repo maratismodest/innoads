@@ -1,17 +1,18 @@
-import axios from 'axios'
-import {PostFormInterface} from 'types'
+import { PostFormInterface } from 'types'
+
+import client from './createRequest'
 
 const postPost = async (formData: PostFormInterface) => {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
 
-    const {data} = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/posts`,
+    const { data } = await client.post(
+        `/posts`,
         formData,
-        {
-            headers: {
-                authorization: `Bearer ${token}`,
-            },
-        },
+        // {
+        //     headers: {
+        //         authorization: `Bearer ${token}`,
+        //     },
+        // },
     )
     return data
 }
