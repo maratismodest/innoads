@@ -33,3 +33,11 @@ export interface GetStaticPath {
     params: { id: string },
     locale: string
 }
+
+export type BlogPost = {
+    id: string,
+    date: string,
+    title: string,
+    description: string
+    contentHtml? : string
+}

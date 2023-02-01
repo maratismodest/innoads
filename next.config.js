@@ -1,7 +1,7 @@
-const { i18n } = require('./next-i18next.config')
+const {i18n} = require('./next-i18next.config')
 
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
-    enabled: process.env.ANALYZE === 'true',
+    enabled: process.env.ANALYZE === 'true'
 })
 
 const withPWA = require('next-pwa')({
@@ -9,19 +9,19 @@ const withPWA = require('next-pwa')({
     disable: process.env.NODE_ENV === 'development',
 })
 
-const withMDX = require('@next/mdx')({
-    extension: /\.mdx?$/,
-    options: {
-        // If you use remark-gfm, you'll need to use next.config.mjs
-        // as the package is ESM only
-        // https://github.com/remarkjs/remark-gfm#install
-        remarkPlugins: [],
-        rehypePlugins: [],
-        // If you use `MDXProvider`, uncomment the following line.
-        providerImportSource: '@mdx-js/react',
-    },
-    reactStrictMode: true,
-})
+// const withMDX = require('@next/mdx')({
+//     extension: /\.mdx?$/,
+//     options: {
+//         // If you use remark-gfm, you'll need to use next.config.mjs
+//         // as the package is ESM only
+//         // https://github.com/remarkjs/remark-gfm#install
+//         remarkPlugins: [],
+//         rehypePlugins: [],
+//         // If you use `MDXProvider`, uncomment the following line.
+//         providerImportSource: '@mdx-js/react',
+//     },
+//     reactStrictMode: true,
+// })
 
 /**
  * @type {import('next').NextConfig}
@@ -42,4 +42,4 @@ const nextConfig = {
         return config
     },
 }
-module.exports = withBundleAnalyzer(withPWA(withMDX(nextConfig)))
+module.exports = withBundleAnalyzer(withPWA(nextConfig))

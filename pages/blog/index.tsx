@@ -1,44 +1,37 @@
 import Link from "next/link";
-import {useRouter} from "next/router";
 import {GetStaticProps} from 'next/types'
 import {useTranslation} from "next-i18next";
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React from 'react'
+import {getSortedPostsData} from "utils/blogParse";
+import {Routes} from "utils/routes";
 
 import Layout from 'components/Layout/Layout'
 
+export type BlogPost = {
+    id: string, date: string, title: string
+}
 
-const Blog = () => {
-    const {pathname} = useRouter()
+export type Props = {
+    blogPosts: BlogPost[]
+}
+
+const Blog = ({blogPosts}: Props) => {
     const {t} = useTranslation()
     const canonical = `${process.env.NEXT_PUBLIC_APP_URL}/blog`
-    const links = [
-        {
-            title: "Как выгодно продать на досках объявлений",
-            href: pathname + '/post'
-        },
-        {
-            title: 'Правила',
-            href: pathname + '/rules'
-        },
-        {
-            title: 'Пользовательское соглашение',
-            href: pathname + '/agreement'
-        },
-        {
-            title: 'Удалить пользователя',
-            href: pathname + '/delete'
-        }
-    ]
     return (
         <Layout
             title='Блог сайта InnoAds'
             description='В этом разделе публикуется важная информация'
             canonical={canonical}
         >
-            <h1>Блог</h1>
+            <h1>{t('blog')}</h1>
             <ul>
-                {links.map(x => <li key={x.href} style={{marginBottom:8}}><Link href={x.href}>{x.title}</Link></li>)}
+                {blogPosts.map((post) =>
+                    <li key={post.id} style={{marginBottom: 8}}>
+                        <Link href={Routes.blog + '/' + post.id}>{post.title}</Link>
+                    </li>
+                )}
             </ul>
         </Layout>
     )
@@ -47,8 +40,10 @@ const Blog = () => {
 export default Blog
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
+    const blogPosts = getSortedPostsData();
     return {
         props: {
+            blogPosts,
             ...(await serverSideTranslations(locale as string, ['common'])),
         },
     }

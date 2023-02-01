@@ -79,11 +79,11 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 //                                                              }) => {
 //     const userId = Number(query.id)
 //     const user = await fetchUser(userId)
-//     const { content: posts } = await fetchPosts({
+//     const { content: blog } = await fetchPosts({
 //         size: 10, userId,
 //     })
 //
-//     if (!posts || !user) {
+//     if (!blog || !user) {
 //         return {
 //             notFound: true,
 //         }
@@ -91,7 +91,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 //
 //     return {
 //         props: {
-//             posts: sortByCreatedAt(posts),
+//             blog: sortByCreatedAt(blog),
 //             user,
 //             ...(await serverSideTranslations(locale as string, [
 //                 'common',
