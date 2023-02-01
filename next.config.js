@@ -42,4 +42,4 @@ const nextConfig = {
         return config
     },
 }
-module.exports = withPWA(withBundleAnalyzer(withMDX(nextConfig)))
+module.exports = withBundleAnalyzer(withPWA(withMDX(nextConfig)))

@@ -16,7 +16,7 @@ import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
-import MainLayout from 'components/Layout/Layout'
+import Layout from 'components/Layout/Layout'
 import Price from 'components/Price/Price'
 
 import classes from 'styles/classes.module.scss'
@@ -72,7 +72,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
     }
 
     return (
-        <MainLayout
+        <Layout
             title={seoTitle}
             description={seoDescription}
             canonical={canonical}
@@ -163,7 +163,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                     </div>
                 )}
             </div>
-        </MainLayout>
+        </Layout>
     )
 }
 

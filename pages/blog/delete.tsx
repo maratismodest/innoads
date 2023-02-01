@@ -2,14 +2,14 @@ import { GetStaticProps } from 'next/types'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
 
-import MainLayout from 'components/Layout/Layout'
+import Layout from 'components/Layout/Layout'
 import MDX from 'components/MDX/delete.mdx'
 
 export default function Delete() {
     return (
-        <MainLayout title="Чтобы удалить свои данные, напишие к нам запрос">
+        <Layout title="Чтобы удалить свои данные, напишие к нам запрос">
             <MDX />
-        </MainLayout>
+        </Layout>
     )
 }
 

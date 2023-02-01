@@ -2,7 +2,7 @@ import {GetStaticProps} from 'next/types'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React from 'react'
 
-import MainLayout from 'components/Layout/Layout'
+import Layout from 'components/Layout/Layout'
 import MDX from 'components/MDX/post.mdx'
 
 const seoTitle = 'Как выгодно продать на досках объявлений'
@@ -11,9 +11,9 @@ const seoDescription =
 
 export default function Post() {
     return (
-        <MainLayout title={seoTitle} description={seoDescription}>
+        <Layout title={seoTitle} description={seoDescription}>
             <MDX/>
-        </MainLayout>
+        </Layout>
     )
 }
 

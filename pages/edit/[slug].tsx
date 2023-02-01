@@ -20,7 +20,7 @@ import Button from 'components/Button/Button'
 import ErrorBlock from 'components/ErrorBlock/ErrorBlock'
 import GoToProfile from 'components/GoToProfile/GoToProfile'
 import Input from 'components/Input/Input'
-import MainLayout from 'components/Layout/Layout'
+import Layout from 'components/Layout/Layout'
 import Modal from 'components/Modal/Modal'
 import Spinner from 'components/Spinner/Spinner'
 
@@ -92,7 +92,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
             <Modal visible={loading}>
                 <Spinner />
             </Modal>
-            <MainLayout title={titles.edit}>
+            <Layout title={titles.edit}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className={classes.form}
@@ -137,7 +137,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                     >Сохранить изменения
                     </Button>
                 </form>
-            </MainLayout>
+            </Layout>
         </>
     )
 }

@@ -17,7 +17,7 @@ import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
 import Item from 'components/Item/Item'
-import MainLayout from 'components/Layout/Layout'
+import Layout from 'components/Layout/Layout'
 
 import classes from 'styles/classes.module.scss'
 import profile from 'styles/Profile.module.scss'
@@ -88,7 +88,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
 
     if (!user) {
         return (
-            <MainLayout title={titles.profile}>
+            <Layout title={titles.profile}>
                 <div className={'center'}>
                     <h2>{t('authorization')}</h2>
                     <TelegramLoginButton
@@ -97,12 +97,12 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
                     />
                     {process.env.NEXT_PUBLIC_NODE_ENV == 'development' && <Button onClick={handleClick}>Ok</Button>}
                 </div>
-            </MainLayout>
+            </Layout>
         )
     }
 
     return (
-        <MainLayout
+        <Layout
             title={titles.profile}
             description={titles.profile}
             className={profile.main}
@@ -141,7 +141,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
             <div className={clsx(classes.center, profile.exit)}>
                 <Button onClick={logout}>{t('exit')}</Button>
             </div>
-        </MainLayout>
+        </Layout>
     )
 }
 export default Profile

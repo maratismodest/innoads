@@ -7,7 +7,7 @@ import useLocalStorageState from 'use-local-storage-state'
 import { descriptions, titles } from 'utils/constants'
 
 import Item from 'components/Item/Item'
-import MainLayout from 'components/Layout/Layout'
+import Layout from 'components/Layout/Layout'
 
 import classes from 'styles/classes.module.scss'
 
@@ -19,12 +19,12 @@ const Favourites: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () 
     })
 
     return (
-        <MainLayout title={titles.favourites} description={descriptions.favourites}>
+        <Layout title={titles.favourites} description={descriptions.favourites}>
             <h1>{t('favourite')}</h1>
             <ul className={classes.items}>
                 {favourites.map((post: PostInterface) => <Item post={post} key={post.slug} />)}
             </ul>
-        </MainLayout>
+        </Layout>
     )
 }
 export default Favourites

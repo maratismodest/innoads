@@ -4,16 +4,16 @@ import React from 'react'
 import PostForm from 'modules/PostForm/PostForm'
 import { defaultValues, titles } from 'utils/constants'
 
-import MainLayout from 'components/Layout/Layout'
+import Layout from 'components/Layout/Layout'
 
 const Add: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
 
     return (
-        <MainLayout title={titles.add}>
+        <Layout title={titles.add}>
             <PostForm
                 defaultValues={defaultValues}
             />
-        </MainLayout>
+        </Layout>
     )
 }
 export default Add
