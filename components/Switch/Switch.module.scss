@@ -1,3 +1,5 @@
+@import "variables";
+
 .switch {
   display: flex;
   align-items: flex-start;
@@ -8,21 +10,44 @@
     min-width: 48px;
     min-height: 22px;
     margin: 0;
-
     position: relative;
-    background-color: #A1A1A1;
+    background-color: $blue;
     border-radius: 32px;
-    border: 1px solid #A1A1A1;
-
+    border: 1px solid $grey;
     cursor: pointer;
     user-select: none;
-    transition: background-color 0.3s,
-    border-color 0.3s;
+    transition: background-color 0.3s;
+
+    &::before {
+      content: "";
+      position: absolute;
+      height: 16px;
+      width: 16px;
+      top: 2px;
+      left: 2px;
+      bottom: 2px;
+      background-color: $white;
+      transition: all 0.3s;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    &::after {
+      content: attr(data-off);
+      color: $white;
+      display: block;
+      position: absolute;
+      font-size: 10px;
+      line-height: 1;
+      right: 0.4em;
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
     &:checked {
-      //background-color: #222222;
-      background-color: rgb(0, 136, 0);
-      border-color: #222222;
+      background-color: $green;
+      border-color: $black;
 
       &::before {
         left: unset;
@@ -36,37 +61,8 @@
       }
     }
 
-    &::before {
-      content: '';
-      position: absolute;
-      height: 16px;
-      width: 16px;
-      top: 2px;
-      left: 2px;
-      bottom: 2px;
-      background-color: white;
-      transition: all 0.3s;
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 1;
-    }
-
-    &::after {
-      content: attr(data-off);
-      color: white;
-      display: block;
-      position: absolute;
-      font-size: 10px;
-      line-height: 1;
-      //top: 0.5em;
-      right: 0.4em;
-      //bottom: 0.5em;
-      top: 50%;
-      transform: translateY(-50%)
-    }
-
     &:focus {
-      outline: 2px solid #222222;
+      outline: 2px solid $black;
       outline-offset: 2px;
     }
   }
@@ -88,7 +84,7 @@
       letter-spacing: 0.4px;
       line-height: 1.3;
       margin: 0;
-      color: #555555;
+      color: #555;
     }
   }
 }

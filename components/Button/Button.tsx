@@ -1,5 +1,5 @@
 import React from 'react'
-import {clsx} from 'clsx'
+import { clsx } from 'clsx'
 
 import classes from './Button.module.scss'
 
@@ -13,10 +13,10 @@ const Button = ({
                     type,
                     transparent = false,
                     ...props
-                }: ButtonProps): JSX.Element => {
+                }: ButtonProps) => {
     return (
         <button
-            className={clsx(classes.button, className, {[classes.buttonTransparent]: transparent})}
+            className={clsx(classes.button, className, { [classes.buttonTransparent]: transparent })}
             {...props}
         >
             {children}
