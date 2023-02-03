@@ -4,8 +4,8 @@ Innopolis City Classified
 ## Instruction:
 - Install Docker on your machine
 - Clone the repository
-- Build your container: docker build -t nextjs-docker .
-- Run your container: docker run -p 3000:3000 nextjs-docker
+- Build your container: docker build -t innoads-frontend-docker .
+- Run your container: docker run -p 3000:3000 innoads-frontend-docker
 
 or just
 
