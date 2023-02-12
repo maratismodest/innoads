@@ -3,6 +3,7 @@ import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
+import revalidate from 'utils/revalidate'
 import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
@@ -31,5 +32,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
                 'common',
             ])),
         },
+        revalidate:revalidate
     }
 }

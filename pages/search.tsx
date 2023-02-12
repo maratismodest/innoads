@@ -1,12 +1,13 @@
-import type {GetStaticProps} from 'next'
-import {useRouter} from 'next/router'
-import {InferGetStaticPropsType, NextPage} from 'next/types'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React, {useState} from 'react'
-import {clsx} from 'clsx'
-import InfinitePosts from "modules/InfinitePosts";
-import {options} from 'utils/options'
+import type { GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
+import { InferGetStaticPropsType, NextPage } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useState } from 'react'
+import { clsx } from 'clsx'
+import InfinitePosts from 'modules/InfinitePosts'
+import { options } from 'utils/options'
+import revalidate from 'utils/revalidate'
 
 import MainLayout from 'components/Layout/Layout'
 
@@ -14,7 +15,7 @@ import search from 'styles/Search.module.scss'
 import selectStyles from 'styles/select.module.scss'
 
 const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const router = useRouter()
     const [categoryId, setCategoryId] = useState(
         Number(router.query['categoryId']) || 1,
@@ -25,23 +26,23 @@ const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () 
             description='Ищите объявления города Иннополис в бесплатной доске InnoAds'
         >
             <h1>{t('search')}</h1>
-            <hr/>
+            <hr />
             <select className={clsx(selectStyles.select, 'select-css')}
                     defaultValue={categoryId}
                     onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                         setCategoryId(Number(event.target.value))
                     }}>
-                {options.map(({value, label}) => <option key={value} value={value}>{t(label)}</option>)}
+                {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
             </select>
-            <hr/>
-            <InfinitePosts options={{categoryId}}/>
+            <hr />
+            <InfinitePosts initPage={0} initPosts={[]} options={{ categoryId }} />
         </MainLayout>
     )
 }
 
 export default SearchPage
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
             ...(await serverSideTranslations(locale as string, [
@@ -49,5 +50,6 @@ export const getStaticProps: GetStaticProps = async ({locale}) => {
                 'search',
             ])),
         },
+        revalidate: revalidate
     }
 }

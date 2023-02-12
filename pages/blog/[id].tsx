@@ -2,6 +2,7 @@ import {GetStaticPaths, GetStaticProps} from "next/types";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {BlogPost, GetStaticPath} from "types";
 import {getAllPostIds, getPostData} from 'utils/blogParse'
+import revalidate from 'utils/revalidate'
 
 import Layout from "components/Layout/Layout";
 
@@ -41,5 +42,6 @@ export const getStaticProps: GetStaticProps = async ({params, locale}) => {
             postData,
             ...(await serverSideTranslations(locale as string, ['common'])),
         },
+        revalidate:revalidate
     };
 }

@@ -1,7 +1,6 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react'
-import useEffectOnce from 'hooks/useEffectOnce'
+import { createContext, Dispatch, ReactNode, SetStateAction, useEffect,useState } from 'react'
 import * as jose from 'jose'
-import {UserProps} from "types";
+import { UserProps } from 'types'
 import fetchUser from 'utils/api/fetchUser'
 
 type authContextType = {
@@ -19,7 +18,8 @@ const authContextDefaultValues: authContextType = {
     },
     logout: () => {
     },
-    setToken: () => {}
+    setToken: () => {
+    },
 }
 export const AuthContext = createContext<authContextType>(authContextDefaultValues)
 
@@ -56,7 +56,7 @@ export function AuthProvider({ children }: Props) {
     }
 
 // @ts-ignore
-    useEffectOnce(() => {
+    useEffect(() => {
         checkToken()
         return () => checkToken()
     })

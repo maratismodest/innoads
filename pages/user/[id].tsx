@@ -8,6 +8,7 @@ import fetchPosts from 'utils/api/fetchPosts'
 import fetchUser from 'utils/api/fetchUser'
 import fetchUsers from 'utils/api/fetchUsers'
 import { tgLink } from 'utils/constants'
+import revalidate from 'utils/revalidate'
 import sortByCreatedAt from 'utils/sortByUpdatedAt'
 
 import Button from 'components/Button/Button'
@@ -70,6 +71,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
                 'post',
             ])),
         },
+        revalidate:revalidate
     }
 }
 

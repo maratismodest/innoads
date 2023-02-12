@@ -1,10 +1,11 @@
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { FavouriteContext } from 'context/FavouritesContext'
 import { PostInterface } from 'types'
 import { descriptions, titles } from 'utils/constants'
+import revalidate from 'utils/revalidate'
 
 import Item from 'components/Item/Item'
 import Layout from 'components/Layout/Layout'
@@ -32,5 +33,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
         props: {
             ...(await serverSideTranslations(locale as string, ['common'])),
         },
+        revalidate:revalidate
     }
 }

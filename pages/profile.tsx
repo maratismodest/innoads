@@ -13,6 +13,7 @@ import { PostInterface, TelegramUserProps } from 'types'
 import client from 'utils/api/createRequest'
 import fetchPosts from 'utils/api/fetchPosts'
 import { titles } from 'utils/constants'
+import revalidate from 'utils/revalidate'
 import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
@@ -154,5 +155,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
                 'profile',
             ])),
         },
+        revalidate: revalidate,
     }
 }

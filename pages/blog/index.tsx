@@ -1,10 +1,11 @@
-import Link from "next/link";
-import {GetStaticProps} from 'next/types'
-import {useTranslation} from "next-i18next";
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import Link from 'next/link'
+import { GetStaticProps } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
-import {getSortedPostsData} from "utils/blogParse";
-import {Routes} from "utils/routes";
+import { getSortedPostsData } from 'utils/blogParse'
+import revalidate from 'utils/revalidate'
+import { Routes } from 'utils/routes'
 
 import Layout from 'components/Layout/Layout'
 
@@ -16,8 +17,8 @@ export type Props = {
     blogPosts: BlogPost[]
 }
 
-const Blog = ({blogPosts}: Props) => {
-    const {t} = useTranslation()
+const Blog = ({ blogPosts }: Props) => {
+    const { t } = useTranslation()
     const canonical = `${process.env.NEXT_PUBLIC_APP_URL}/blog`
     return (
         <Layout
@@ -28,9 +29,9 @@ const Blog = ({blogPosts}: Props) => {
             <h1>{t('blog')}</h1>
             <ul>
                 {blogPosts.map((post) =>
-                    <li key={post.id} style={{marginBottom: 8}}>
+                    <li key={post.id} style={{ marginBottom: 8 }}>
                         <Link href={Routes.blog + '/' + post.id}>{post.title}</Link>
-                    </li>
+                    </li>,
                 )}
             </ul>
         </Layout>
@@ -39,12 +40,13 @@ const Blog = ({blogPosts}: Props) => {
 
 export default Blog
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
-    const blogPosts = getSortedPostsData();
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+    const blogPosts = getSortedPostsData()
     return {
         props: {
             blogPosts,
             ...(await serverSideTranslations(locale as string, ['common'])),
         },
+        revalidate: revalidate,
     }
 }

@@ -1,17 +1,20 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next/types'
+import { GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useMemo, useRef, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import {clsx} from 'clsx'
+import { clsx } from 'clsx'
 import dayjs from 'dayjs'
-import { PostInterface } from 'types'
+import * as process from 'process'
+import { GetStaticPostPath, PostInterface } from 'types'
 import fetchPost from 'utils/api/fetchPost'
 import fetchPosts from 'utils/api/fetchPosts'
 import { tgLink } from 'utils/constants'
+import { getDynamicPaths } from 'utils/getDynamicPaths'
 import { options } from 'utils/options'
+import revalidate from 'utils/revalidate'
 import { Routes } from 'utils/routes'
 
 import Button from 'components/Button/Button'
@@ -22,7 +25,7 @@ import Price from 'components/Price/Price'
 import classes from 'styles/classes.module.scss'
 import item from 'styles/Post.module.scss'
 
-const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ post, related }) => {
+const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ post, related }) => {
     const { t } = useTranslation()
     const [current, setCurrent] = useState(0)
     const ul = useRef<HTMLUListElement>(null)
@@ -168,11 +171,23 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 }
 
 export default Post
-export const getServerSideProps: GetServerSideProps = async ({
-                                                                 locale,
-                                                                 query,
-                                                             }) => {
-    const post = await fetchPost(query.slug as string)
+
+export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
+    const posts = await getDynamicPaths(1000)
+    const paths: GetStaticPostPath[] = posts.flatMap(post =>
+        locales.map(locale => ({
+            params: { slug: post.slug },
+            locale,
+        })))
+    return {
+        paths,
+        fallback: false,
+    }
+}
+
+
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+    const post = await fetchPost(params?.slug as string)
 
     if (!post) {
         return {
@@ -180,27 +195,28 @@ export const getServerSideProps: GetServerSideProps = async ({
         }
     }
 
-    const response = await fetchPosts({
+    const related = await fetchPosts({
         categoryId: post.categoryId,
         size: 5,
     })
 
-    if (!response) {
+    if (!related) {
         return {
             notFound: true,
         }
     }
 
-
     return {
         props: {
             post,
             isMobile,
-            related: response.content.filter(x => x.id !== post.id),
+            related: related.content.filter(x => x.id !== post.id),
             ...(await serverSideTranslations(locale as string, [
                 'common',
                 'post',
             ])),
         },
+        revalidate: revalidate,
     }
 }
+

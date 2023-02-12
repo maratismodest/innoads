@@ -2,7 +2,7 @@ import { PostInterface } from 'types'
 
 import client from './createRequest'
 
-type FetchPostsProps = {
+export type FetchPostsProps = {
     content: PostInterface[]
     totalPages: number
 }
