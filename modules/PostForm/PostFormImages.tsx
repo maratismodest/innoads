@@ -1,7 +1,7 @@
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import { isDesktop } from 'react-device-detect'
+import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react'
 import {clsx} from 'clsx'
 import { HTMLInputEvent } from 'types'
 import { ACCEPTED_IMAGE_FORMAT, imageErrors, NO_IMAGE } from 'utils/constants'
@@ -20,6 +20,8 @@ interface PostFormImagesProps {
 }
 
 const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
+    const router = useRouter()
+    const isMobile = useMemo(() => router.query['viewport'] === 'mobile', [router.query])
     const ref = useRef<HTMLInputElement>(null)
     const [error, setError] = useState('')
     const { t } = useTranslation()
@@ -80,8 +82,8 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                     <h4>{t('addPhoto')}</h4>
                     <div
                         className={clsx({
-                            [classes.image]: isDesktop,
-                            [classes.imageMobile]: !isDesktop,
+                            [classes.image]: !isMobile,
+                            [classes.imageMobile]: isMobile,
                         })}
                         onClick={() => {
                             if (ref.current) {
@@ -112,8 +114,8 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
             <h4>{t('preview')}</h4>
             <ul
                 className={clsx({
-                    [classes.images]: isDesktop,
-                    [classes.imagesMobile]: !isDesktop,
+                    [classes.images]: !isMobile,
+                    [classes.imagesMobile]: isMobile,
                 })}
             >
                 {images.map((image: string, index: number) => {
@@ -121,8 +123,8 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                         <li
                             key={image}
                             className={clsx({
-                                [classes.image]: isDesktop,
-                                [classes.imageMobile]: !isDesktop,
+                                [classes.image]: !isMobile,
+                                [classes.imageMobile]: isMobile,
                             })}
                         >
                             <Image
@@ -177,8 +179,8 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                 {loading && (
                     <li
                         className={clsx({
-                            [classes.image]: isDesktop,
-                            [classes.imageMobile]: !isDesktop,
+                            [classes.image]: !isMobile,
+                            [classes.imageMobile]: isMobile,
                         })}
                     >
                         <p className={classes.loadingImage}>

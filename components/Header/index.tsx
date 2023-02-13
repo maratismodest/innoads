@@ -1,7 +1,7 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import {useTranslation} from 'next-i18next'
 import React, {useCallback, useEffect, useMemo, useState} from 'react'
-import {isMobile} from 'react-device-detect'
 import {useAuth} from 'hooks/useAuth'
 import useOnClickOutsideRef from 'hooks/useOnClickOutsideRef'
 import {Routes} from 'utils/routes'
@@ -52,6 +52,8 @@ const Buttons = ({className}: { className?: string }) => {
 
 const Header = (): JSX.Element | null => {
     const [mounted, setMounted] = useState(false)
+    const router = useRouter()
+    const isMobile = useMemo(() => router.query['viewport'] === 'mobile', [router.query])
     const {t} = useTranslation()
 
     const [dropdown, setDropdown] = useState(false)

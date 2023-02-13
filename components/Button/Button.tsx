@@ -16,7 +16,7 @@ const Button = ({
                 }: ButtonProps) => {
     return (
         <button
-            className={clsx(classes.button, className, { [classes.buttonTransparent]: transparent })}
+            className={clsx(classes.button, className, transparent && classes.buttonTransparent)}
             {...props}
         >
             {children}

@@ -6,7 +6,6 @@ import React, { useMemo } from 'react'
 import InfinitePosts from 'modules/InfinitePosts'
 import { PostInterface } from 'types'
 import fetchPosts from 'utils/api/fetchPosts'
-import revalidate from 'utils/revalidate'
 
 import Layout from 'components/Layout/Layout'
 
@@ -56,7 +55,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
             totalPages,
             ...(await serverSideTranslations(locale ?? 'ru', ['common'])),
         },
-        revalidate: revalidate,
+        revalidate: 60 * 60,
     }
 }
 

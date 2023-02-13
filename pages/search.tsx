@@ -50,6 +50,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
                 'search',
             ])),
         },
-        revalidate: revalidate
+        revalidate: revalidate,
     }
 }

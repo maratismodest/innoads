@@ -1,13 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useMemo, useRef, useState } from 'react'
-import { isMobile } from 'react-device-detect'
 import { clsx } from 'clsx'
 import dayjs from 'dayjs'
-import * as process from 'process'
 import { GetStaticPostPath, PostInterface } from 'types'
 import fetchPost from 'utils/api/fetchPost'
 import fetchPosts from 'utils/api/fetchPosts'
@@ -26,6 +25,8 @@ import classes from 'styles/classes.module.scss'
 import item from 'styles/Post.module.scss'
 
 const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ post, related }) => {
+    const router = useRouter()
+    const isMobile = useMemo(() => router.query['viewport'] === 'mobile', [router.query])
     const { t } = useTranslation()
     const [current, setCurrent] = useState(0)
     const ul = useRef<HTMLUListElement>(null)
@@ -209,14 +210,14 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     return {
         props: {
             post,
-            isMobile,
+            // isMobile,
             related: related.content.filter(x => x.id !== post.id),
             ...(await serverSideTranslations(locale as string, [
                 'common',
                 'post',
             ])),
         },
-        revalidate: revalidate,
+        revalidate: 60 * 60,
     }
 }
 
