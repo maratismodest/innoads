@@ -1,7 +1,5 @@
 import React, { ChangeEventHandler, forwardRef } from 'react'
-import {clsx} from 'clsx'
-
-import classes from './Input.module.scss'
+import { clsx } from 'clsx'
 
 interface InputProp extends React.ComponentPropsWithoutRef<'input'> {
     register?: any,
@@ -25,7 +23,7 @@ const Input = forwardRef<HTMLInputElement, InputProp>(({
         <input
             ref={ref}
             onChange={onChange}
-            className={clsx(classes.input, className)}
+            className={clsx('rounded h-12 px-4', className)}
             {...formRegister}
             {...props}
 
@@ -35,3 +33,14 @@ const Input = forwardRef<HTMLInputElement, InputProp>(({
     )
 })
 export default Input
+
+//     .input {
+//     border-radius: 4px;
+//     height: 48px;
+//     padding: 0 16px;
+//     border: 1px solid hsl(0deg 0% 80%);
+//
+// &:focus {
+//         outline: none;
+//     }
+// }

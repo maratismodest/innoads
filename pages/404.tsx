@@ -6,8 +6,8 @@ import React from 'react'
 import revalidate from 'utils/revalidate'
 import { Routes } from 'utils/routes'
 
-import Button from 'components/Button/Button'
-import Layout from 'components/Layout/Layout'
+import Button from 'components/Button'
+import Layout from 'components/Layout'
 
 const ErrorPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
     const { t } = useTranslation()

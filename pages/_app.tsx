@@ -4,7 +4,7 @@ import React from 'react'
 import { AuthProvider } from 'context/AuthContext'
 import { FavouriteProvider } from 'context/FavouritesContext'
 
-import 'styles/globals.scss'
+import 'styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (

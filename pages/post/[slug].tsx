@@ -16,13 +16,13 @@ import { options } from 'utils/options'
 import revalidate from 'utils/revalidate'
 import { Routes } from 'utils/routes'
 
-import Button from 'components/Button/Button'
+import Button from 'components/Button'
 import Item from 'components/Item/Item'
-import Layout from 'components/Layout/Layout'
-import Price from 'components/Price/Price'
+import Layout from 'components/Layout'
+import Price from 'components/Price'
 
-import classes from 'styles/classes.module.scss'
-import item from 'styles/Post.module.scss'
+import classes from 'styles/classes.module.css'
+import item from 'styles/post.module.css'
 
 const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ post, related }) => {
     const router = useRouter()

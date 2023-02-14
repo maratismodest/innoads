@@ -11,11 +11,11 @@ import { tgLink } from 'utils/constants'
 import revalidate from 'utils/revalidate'
 import sortByCreatedAt from 'utils/sortByUpdatedAt'
 
-import Button from 'components/Button/Button'
+import Button from 'components/Button'
 import Item from 'components/Item/Item'
-import MainLayout from 'components/Layout/Layout'
+import MainLayout from 'components/Layout'
 
-import classes from 'styles/classes.module.scss'
+import classes from 'styles/classes.module.css'
 
 const PublicProfile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ user, posts }) => {
     const { t } = useTranslation('post')

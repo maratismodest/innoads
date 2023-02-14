@@ -16,12 +16,12 @@ import { titles } from 'utils/constants'
 import revalidate from 'utils/revalidate'
 import { Routes } from 'utils/routes'
 
-import Button from 'components/Button/Button'
+import Button from 'components/Button'
 import Item from 'components/Item/Item'
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 
-import classes from 'styles/classes.module.scss'
-import profile from 'styles/Profile.module.scss'
+import classes from 'styles/classes.module.css'
+import profile from 'styles/profile.module.css'
 
 const error =
     'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'

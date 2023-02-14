@@ -4,8 +4,8 @@ import React from 'react'
 import { titles } from 'utils/constants'
 import { Routes } from 'utils/routes'
 
-import Button from 'components/Button/Button'
-import Layout from 'components/Layout/Layout'
+import Button from 'components/Button'
+import Layout from 'components/Layout'
 
 const GoToProfile = (): JSX.Element => {
     const { t } = useTranslation()

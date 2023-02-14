@@ -1,17 +1,42 @@
-/* Error: Can't find stylesheet to import.
- *   ,
- * 1 | @import "variables";
- *   |         ^^^^^^^^^^^
- *   '
- *   Spinner.module.scss 1:9  root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @import \"variables\";\a   \2502          ^^^^^^^^^^^\a   \2575 \a   Spinner.module.scss 1:9  root stylesheet";
+.loader {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+    margin: 60px auto;
+    font-size: 10px;
+    position: relative;
+    text-indent: -9999em;
+    border-top: 1.1em solid blue;
+    border-right: 1.1em solid blue;
+    border-bottom: 1.1em solid blue;
+    border-left: 1.1em solid white;
+    transform: translateZ(0);
+    animation: load8 1.1s infinite linear;
 }
+
+.loader::after {
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+}
+
+@keyframes load8 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load8 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+

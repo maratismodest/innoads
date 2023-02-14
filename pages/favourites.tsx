@@ -8,9 +8,9 @@ import { descriptions, titles } from 'utils/constants'
 import revalidate from 'utils/revalidate'
 
 import Item from 'components/Item/Item'
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 
-import classes from 'styles/classes.module.scss'
+import classes from 'styles/classes.module.css'
 
 
 const Favourites: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {

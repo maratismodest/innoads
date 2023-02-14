@@ -1,17 +1,116 @@
-/* Error: Can't find stylesheet to import.
- *   ,
- * 1 | @import "variables";
- *   |         ^^^^^^^^^^^
- *   '
- *   globals.scss 1:9  root stylesheet */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @import \"variables\";\a   \2502          ^^^^^^^^^^^\a   \2575 \a   globals.scss 1:9  root stylesheet";
+@layer base {
+    * {
+        scroll-behavior: smooth;
+
+    }
+
+    ul::-webkit-scrollbar {
+        display: none;
+    }
+
+    html,
+    body {
+        font-family: Roboto, sans-serif;
+        color: black;
+    }
+
+    main {
+        margin: 66px auto 0;
+        padding: 12px;
+        max-width: 1100px;
+        position: relative;
+        min-height: calc(100vh - 66px);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-bottom: 4px;
+    }
+
+    h1 {
+        @apply text-2xl;
+    }
+
+    h2 {
+        @apply text-xl;
+    }
+
+    h3 {
+        @apply text-lg;
+    }
+
+    h4 {
+        @apply text-base;
+    }
+
+    h5 {
+        @apply text-sm;
+    }
+
+    h6 {
+        @apply text-xs
+    }
+
+    dialog {
+        position: relative;
+        min-width: 300px;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 32px 64px rgb(17 17 17 / 12%);
+    }
+
+    *[dir="rtl"] .select-css,
+    :root:lang(ar) .select-css,
+    :root:lang(iw) .select-css {
+        background-position: left 0.7em top 50%, 0 0;
+        padding: 0.6em 0.8em 0.5em 1.4em;
+    }
+
+    input {
+        border: 1px solid hsl(0deg 0% 80%);
+    }
+
+    hr {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        color: #f9f8f9;
+    }
+
 }
+
+@layer components {
+    .flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .block-center {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+
+
+
+
+

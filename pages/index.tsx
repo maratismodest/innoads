@@ -7,11 +7,9 @@ import InfinitePosts from 'modules/InfinitePosts'
 import { PostInterface } from 'types'
 import fetchPosts from 'utils/api/fetchPosts'
 
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 
-import home from 'styles/Home.module.scss'
-
-const Categories = dynamic(() => import('components/Categories/Categories'), {
+const Categories = dynamic(() => import('components/Categories'), {
     ssr: true,
 })
 
@@ -21,7 +19,7 @@ const Home: NextPage<Props> = ({ posts, totalPages }) => {
     return (
         <Layout>
             <Categories />
-            <div className={home.header}>
+            <div className='flex justify-between align-baseline'>
                 <h1>{t('lastAds')}</h1>
                 <span>
                     {count} {t('ads')}

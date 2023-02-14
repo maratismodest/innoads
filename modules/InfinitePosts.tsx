@@ -6,7 +6,7 @@ import fetchPosts from 'utils/api/fetchPosts'
 import Item from 'components/Item/Item'
 import Spinner from 'components/Spinner/Spinner'
 
-import classes from 'styles/classes.module.scss'
+import classes from 'styles/classes.module.css'
 
 const InfinitePosts = ({
                            options,

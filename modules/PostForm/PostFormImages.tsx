@@ -9,10 +9,10 @@ import getCompressedImagesLinks from 'utils/image/getCompressedImagesLinks'
 import { handleDeleteImage } from 'utils/image/handleDeleteImage'
 import { MoveImage, moveImage } from 'utils/image/moveImage'
 
-import Icon from 'components/Icon/Icon'
-import Input from 'components/Input/Input'
+import Icon from 'components/Icon'
+import Input from 'components/Input'
 
-import classes from 'styles/classes.module.scss'
+import classes from 'styles/classes.module.css'
 
 interface PostFormImagesProps {
     images: string[]

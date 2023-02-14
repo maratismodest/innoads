@@ -1,17 +1,89 @@
-/* Error: Can't find stylesheet to import.
- *   ,
- * 1 | @import "variables";
- *   |         ^^^^^^^^^^^
- *   '
- *   Switch.module.scss 1:9  root stylesheet */
+.switch {
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+}
 
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @import \"variables\";\a   \2502          ^^^^^^^^^^^\a   \2575 \a   Switch.module.scss 1:9  root stylesheet";
+.switch input {
+    appearance: none;
+    min-width: 48px;
+    min-height: 22px;
+    margin: 0;
+    position: relative;
+    background-color: blue;
+    border-radius: 32px;
+    border: 1px solid grey;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+}
+
+.switch input::before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: all 0.3s;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.switch input::after {
+    content: attr(data-off);
+    color: white;
+    display: block;
+    position: absolute;
+    font-size: 10px;
+    line-height: 1;
+    right: 0.4em;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.switch input:checked {
+    background-color: green;
+    border-color: black;
+}
+
+.switch input:checked::before {
+    left: unset;
+    transform: translateX(calc(100% + 12px));
+}
+
+.switch input:checked::after {
+    content: attr(data-on);
+    left: 0.4em;
+    right: unset;
+}
+
+
+.switch input:focus {
+    outline: 2px solid black;
+    outline-offset: 2px;
+}
+
+.switch-labels {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.switch-labels span {
+    cursor: pointer;
+    line-height: 1.4;
+    font-size: 16px;
+    user-select: none;
+}
+
+.switch-labels p {
+    font-size: 12px;
+    letter-spacing: 0.4px;
+    line-height: 1.3;
+    margin: 0;
+    color: #555;
 }

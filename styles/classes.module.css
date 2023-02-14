@@ -1,17 +1,149 @@
-/* Error: Can't find stylesheet to import.
- *   ,
- * 1 | @import "variables";
- *   |         ^^^^^^^^^^^
- *   '
- *   classes.module.scss 1:9  root stylesheet */
+.items {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
 
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a   \2577 \a 1 \2502  @import \"variables\";\a   \2502          ^^^^^^^^^^^\a   \2575 \a   classes.module.scss 1:9  root stylesheet";
+@media (max-width: 1024px) {
+    .items {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .items {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.related {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.image {
+    width: 150px;
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+}
+
+.image:hover {
+    box-shadow: rgb(149 157 165 / 20%) 0 8px 24px;
+}
+
+.imageMobile {
+    position: relative;
+    width: 48%;
+    margin-bottom: 10px;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+}
+
+.imageMobile:hover {
+    box-shadow: rgb(149 157 165 / 20%) 0 8px 24px;
+}
+
+.images {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.imagesMobile {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.center {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.centerBtn {
+    margin: 0 auto;
+}
+
+.loading Image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    border: 1px solid grey;
+    border-radius: 4px;
+}
+
+.textArea {
+    border-radius: 4px;
+    padding: 16px;
+    border: 1px solid hsl(0deg 0% 80%);
+}
+
+.textArea::placeholder {
+    font-family: Arial, serif;
+}
+
+.leftArrow {
+    position: absolute;
+    top: 40%;
+    left: 0;
+}
+
+
+.rightArrow {
+    position: absolute;
+    top: 40%;
+    right: 0;
+}
+
+.deleteIcon {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.sending {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background: grey;
+    opacity: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.mt40 {
+    margin-top: 40px;
+}
+
+.paragraph {
+    font-family: Roboto, sans-serif;
+    white-space: break-spaces;
+    word-break: break-word;
 }

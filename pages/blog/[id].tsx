@@ -4,7 +4,7 @@ import {BlogPost, GetStaticPath} from "types";
 import {getAllPostIds, getPostData} from 'utils/blogParse'
 import revalidate from 'utils/revalidate'
 
-import Layout from "components/Layout/Layout";
+import Layout from "components/Layout";
 
 type Props = {
     postData: BlogPost

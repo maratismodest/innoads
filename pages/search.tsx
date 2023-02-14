@@ -9,10 +9,9 @@ import InfinitePosts from 'modules/InfinitePosts'
 import { options } from 'utils/options'
 import revalidate from 'utils/revalidate'
 
-import MainLayout from 'components/Layout/Layout'
+import MainLayout from 'components/Layout'
 
-import search from 'styles/Search.module.scss'
-import selectStyles from 'styles/select.module.scss'
+import selectStyles from 'styles/select.module.css'
 
 const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
     const { t } = useTranslation()

@@ -7,7 +7,7 @@ import { getSortedPostsData } from 'utils/blogParse'
 import revalidate from 'utils/revalidate'
 import { Routes } from 'utils/routes'
 
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 
 export type BlogPost = {
     id: string, date: string, title: string

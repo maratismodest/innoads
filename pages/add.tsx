@@ -5,7 +5,7 @@ import PostForm from 'modules/PostForm/PostForm'
 import { defaultValues, titles } from 'utils/constants'
 import revalidate from 'utils/revalidate'
 
-import Layout from 'components/Layout/Layout'
+import Layout from 'components/Layout'
 
 const Add: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
 

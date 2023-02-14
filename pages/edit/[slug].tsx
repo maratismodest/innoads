@@ -16,16 +16,16 @@ import hasCurseWords from 'utils/curseWords'
 import { options } from 'utils/options'
 import { Routes } from 'utils/routes'
 
-import Button from 'components/Button/Button'
-import ErrorBlock from 'components/ErrorBlock/ErrorBlock'
-import GoToProfile from 'components/GoToProfile/GoToProfile'
-import Input from 'components/Input/Input'
-import Layout from 'components/Layout/Layout'
-import Modal from 'components/Modal/Modal'
+import Button from 'components/Button'
+import ErrorBlock from 'components/ErrorBlock'
+import GoToProfile from 'components/GoToProfile'
+import Input from 'components/Input'
+import Layout from 'components/Layout'
+import Modal from 'components/Modal'
 import Spinner from 'components/Spinner/Spinner'
 
-import classes from 'styles/classes.module.scss'
-import selectStyles from 'styles/select.module.scss'
+import classes from 'styles/classes.module.css'
+import selectStyles from 'styles/select.module.css'
 
 
 const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ post }) => {

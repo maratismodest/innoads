@@ -14,14 +14,12 @@ import updatePost from 'utils/api/updatePost'
 import { NO_IMAGE } from 'utils/constants'
 import { Routes } from 'utils/routes'
 
-import Button from 'components/Button/Button'
-import Modal from 'components/Modal/Modal'
-import modal from 'components/Modal/Modal.module.scss'
-import Price from 'components/Price/Price'
+import Button from 'components/Button'
+import Modal from 'components/Modal'
+import modal from 'components/Modal/Modal.module.css'
+import Price from 'components/Price'
 
 import { errors, ItemModalText, success } from './utils'
-
-import classes from './Item.module.scss'
 
 interface ItemInterface {
     post: PostInterface
@@ -106,26 +104,27 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
         [id, favourites, liked, post, setFavourites],
     )
 
+    const buttonStyle = 'absolute z-10 p-2 w-8 h-8 flex justify-center align-middle'
+
     return (
         <>
             <Modal visible={visible}>
-                <div className={modal.modal}>
+                <div className='flex flex-col'>
                     <h4>{modalText}</h4>
                     <hr />
-                    <div className={modal.modalButtons}>
-                        <Button onClick={handleFunction}>Да</Button>
-                        <Button onClick={hideModal}>Нет</Button>
+                    <div className='mt-12 flex justify-around'>
+                        <Button onClick={handleFunction} className='min-w-[64px]'>Да</Button>
+                        <Button onClick={hideModal} className='min-w-[64px]'>Нет</Button>
                     </div>
                 </div>
             </Modal>
 
-            <li key={slug} className={classes.item}>
+            <li key={slug} className='relative rounded-2xl flex-col overflow-hidden shadow'>
                 {edit && (
                     <>
                         <Button
                             className={clsx(
-                                classes.itemBtn,
-                                classes.itemBtnDelete,
+                                buttonStyle, 'right-1 top-1',
                             )}
                             transparent={true}
                             onClick={() => {
@@ -136,7 +135,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         </Button>
                         <Button
                             title={t('edit') as string}
-                            className={clsx(classes.itemBtn, classes.itemBtnEdit)}
+                            className={clsx(buttonStyle, 'left-1 top-1')}
                             onClick={() => {
                                 showModal(ItemModalText.edit)
                             }}
@@ -146,10 +145,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         </Button>
                         <Button
                             title={t('publishAgain') as string}
-                            className={clsx(
-                                classes.itemBtn,
-                                classes.itemBtnPromote,
-                            )}
+                            className={clsx(buttonStyle, 'right-1 bottom-1')}
                             transparent
                             onClick={() => {
                                 showModal(ItemModalText.republish)
@@ -160,7 +156,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                     </>
                 )}
                 <Link href={`${Routes.post}/${slug}`} title={title}>
-                    <div className={classes.itemImage}>
+                    <div className='relative aspect-square transition-all hover:scale-105'>
                         <Image
                             fill={true}
                             style={{ objectFit: 'cover' }}
@@ -173,16 +169,16 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         />
                     </div>
 
-                    <div className={classes.itemPrice}>
+                    <div className='relative font-bold whitespace-nowrap overflow-hidden mx-3 my-1 lg:mx-4 lg:my-2'>
                         <Price price={price} />
-                        <h2 className={clsx(classes.itemTitle, 'font-normal')}>{title}</h2>
+                        <h2 className={clsx('mt-auto overflow-ellipsis whitespace-nowrap font-normal')}>{title}</h2>
                         <Image
                             width={24}
                             height={24}
                             alt='favourite'
                             src={liked ? '/svg/heart-red.svg' : '/svg/heart.svg'}
                             onClick={handleFavourite}
-                            className={classes.itemFavourite}
+                            className='absolute z-10 top-0 right-0 cursor-pointer'
                         />
                     </div>
 
