@@ -11,13 +11,15 @@ export default function useOnScreen(ref: RefObject<HTMLElement>) {
     }, [])
 
     useEffect(() => {
-        // @ts-ignore
-        observerRef.current.observe(ref.current)
-
-        return () => {
-            // @ts-ignore
-            observerRef.current.disconnect()
+        if (observerRef.current && ref.current) {
+            observerRef.current.observe(ref.current)
+            return () => {
+                if (observerRef.current) {
+                    observerRef.current.disconnect()
+                }
+            }
         }
+
     }, [ref])
 
     return isOnScreen

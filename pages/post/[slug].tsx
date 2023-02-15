@@ -3,9 +3,10 @@ import Link from 'next/link'
 import { GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { clsx } from 'clsx'
 import dayjs from 'dayjs'
+import useOnScreen from 'hooks/useOnScreen'
 import { GetStaticPostPath, PostInterface } from 'types'
 import fetchPost from 'utils/api/fetchPost'
 import fetchPosts from 'utils/api/fetchPosts'
@@ -21,9 +22,11 @@ import Price from 'components/Price'
 
 const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ post, related }) => {
     const { t } = useTranslation()
-    const [current, setCurrent] = useState(0)
     const ul = useRef<HTMLUListElement>(null)
-    const li = useRef<HTMLLIElement>(null)
+    const refFirst = useRef<HTMLLIElement>(null)
+    const refLast = useRef<HTMLLIElement>(null)
+    const firstInView = useOnScreen(refFirst)
+    const lastInVew = useOnScreen(refLast)
 
     const {
         title,
@@ -62,9 +65,8 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
 
     const handleClick = (direction: 'left' | 'right') => {
         const res = direction === 'right' ? 1 : -1
-        if (ul.current && li.current) {
+        if (ul.current && refFirst.current && refLast.current) {
             ul.current.scrollLeft = ul.current.scrollLeft + 300 * res
-            setCurrent((prevState) => prevState + res)
         }
     }
 
@@ -79,23 +81,21 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
         >
             <div className='mx-auto max-w-[400px]'>
                 <div className='relative'>
-                    <ul className='relative flex flex-nowrap overflow-x-scroll snap-mandatory snap-x aspect-square'
+                    <ul className='relative flex flex-nowrap overflow-x-scroll snap-mandatory snap-x aspect-square gap-2'
                         ref={ul}>
                         {images.map((image: string, index: number) => {
                             return (
                                 <li
                                     key={image}
                                     className='flex-none snap-center h-full aspect-square relative overflow-y-hidden'
-                                    ref={index === 0 ? li : undefined}
+                                    ref={index === 0 ? refFirst : index === images.length - 1 ? refLast : undefined}
                                 >
                                     <Image
                                         src={image}
                                         alt='image'
                                         title={title}
-                                        width={300}
-                                        height={300}
-                                        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-
+                                        fill={true}
+                                        style={{ objectFit: 'cover' }}
                                     />
                                 </li>
                             )
@@ -103,20 +103,21 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
                     </ul>
                     <button
                         className={clsx('absolute top-1/2 w-fit cursor-pointer rounded bg-blue border-none transition-all text-white p-2', 'left-0')}
-                        // disabled={isMobile ? false : current < 1}
                         onClick={() => handleClick('left')}
+                        hidden={firstInView}
                     >
                         &larr;
                     </button>
                     <button
                         className={clsx('absolute top-1/2 w-fit cursor-pointer rounded bg-blue border-none transition-all text-white p-2', 'right-0')}
-                        // disabled={
-                        //     isMobile ? false : current + 1 >= images.length
-                        // }
                         onClick={() => handleClick('right')}
+                        hidden={lastInVew}
                     >
                         &rarr;
                     </button>
+                    <dialog>
+
+                    </dialog>
                 </div>
 
                 <Link href={`${Routes.main}search?categoryId=${categoryId}`}>

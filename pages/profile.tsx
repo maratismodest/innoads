@@ -20,8 +20,7 @@ import Button from 'components/Button'
 import Item from 'components/Item/Item'
 import Layout from 'components/Layout'
 
-const error =
-    'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
+const error = 'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
 
 const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
     const [posts, setPosts] = useState<PostInterface[]>([])

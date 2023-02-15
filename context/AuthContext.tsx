@@ -1,4 +1,4 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useEffect,useState } from 'react'
+import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react'
 import * as jose from 'jose'
 import { UserProps } from 'types'
 import fetchUser from 'utils/api/fetchUser'
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: Props) {
     useEffect(() => {
         checkToken()
         return () => checkToken()
-    })
+    }, [])
 
     const login = (user: UserProps) => {
         setUser(user)
