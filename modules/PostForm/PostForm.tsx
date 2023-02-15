@@ -18,7 +18,7 @@ import ErrorBlock from 'components/ErrorBlock'
 import GoToProfile from 'components/GoToProfile'
 import Input from 'components/Input'
 import Modal from 'components/Modal'
-import Spinner from 'components/Spinner/Spinner'
+import Spinner from 'components/Spinner'
 
 import PostFormImages from './PostFormImages'
 

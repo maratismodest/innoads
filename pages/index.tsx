@@ -9,6 +9,7 @@ import fetchPosts from 'utils/api/fetchPosts'
 
 import Layout from 'components/Layout'
 
+
 const Categories = dynamic(() => import('components/Categories'), {
     ssr: true,
 })

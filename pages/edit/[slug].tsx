@@ -22,7 +22,7 @@ import GoToProfile from 'components/GoToProfile'
 import Input from 'components/Input'
 import Layout from 'components/Layout'
 import Modal from 'components/Modal'
-import Spinner from 'components/Spinner/Spinner'
+import Spinner from 'components/Spinner'
 
 // import selectStyles from 'styles/select.module.css'
 

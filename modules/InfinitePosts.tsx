@@ -3,8 +3,8 @@ import useOnScreen from 'hooks/useOnScreen'
 import { PostInterface } from 'types'
 import fetchPosts from 'utils/api/fetchPosts'
 
-import Item from 'components/Item/Item'
-import Spinner from 'components/Spinner/Spinner'
+import Item from 'components/Item'
+import Spinner from 'components/Spinner'
 
 const InfinitePosts = ({
                            options,

@@ -16,7 +16,7 @@ import { options } from 'utils/options'
 import { Routes } from 'utils/routes'
 
 import Button from 'components/Button'
-import Item from 'components/Item/Item'
+import Item from 'components/Item'
 import Layout from 'components/Layout'
 import Price from 'components/Price'
 

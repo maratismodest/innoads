@@ -8,6 +8,8 @@ import { clsx } from 'clsx'
 import { FavouriteContext } from 'context/FavouritesContext'
 import dayjs from 'dayjs'
 import { useAuth } from 'hooks/useAuth'
+import TransparentHeart from 'public/svg/heart.svg'
+import RedHeart from 'public/svg/heart-red.svg'
 import { PostInterface } from 'types'
 import postTelegram from 'utils/api/postTelegram'
 import updatePost from 'utils/api/updatePost'
@@ -16,10 +18,7 @@ import { Routes } from 'utils/routes'
 
 import Button from 'components/Button'
 import Modal from 'components/Modal'
-import modal from 'components/Modal/Modal.module.css'
 import Price from 'components/Price'
-
-import { errors, ItemModalText, success } from './utils'
 
 interface ItemInterface {
     post: PostInterface
@@ -172,14 +171,9 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                     <div className='relative font-bold whitespace-nowrap overflow-hidden mx-3 my-1 lg:mx-4 lg:my-2'>
                         <Price price={price} />
                         <h2 className={clsx('mt-auto overflow-ellipsis whitespace-nowrap font-normal')}>{title}</h2>
-                        <Image
-                            width={24}
-                            height={24}
-                            alt='favourite'
-                            src={liked ? '/svg/heart-red.svg' : '/svg/heart.svg'}
-                            onClick={handleFavourite}
-                            className='absolute z-10 top-0 right-0 cursor-pointer'
-                        />
+                        <div className='absolute z-10 top-0 right-0 cursor-pointer' onClick={handleFavourite}>
+                            {liked ? <RedHeart /> : <TransparentHeart />}
+                        </div>
                     </div>
 
                 </Link>
@@ -187,4 +181,20 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
         </>
     )
 }
+
+const success = {
+    updated: 'Объявление поднято в поиске!',
+    deleted: 'Объявление удалено! Перезагрузите страницу, чтобы вы увидели изменения',
+}
+const errors = {
+    wentWrong: 'Что-то пошло не так!',
+    noCase: 'Нет таких значений',
+}
+
+enum ItemModalText {
+    edit = 'Редактировать объявление?',
+    republish = 'Опубликовать повторно объявление в канале и поднять его на сайте?',
+    delete = 'Удалить объявление?',
+}
+
 export default Item

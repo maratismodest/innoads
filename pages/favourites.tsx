@@ -7,7 +7,7 @@ import { PostInterface } from 'types'
 import { descriptions, titles } from 'utils/constants'
 import revalidate from 'utils/revalidate'
 
-import Item from 'components/Item/Item'
+import Item from 'components/Item'
 import Layout from 'components/Layout'
 
 const Favourites: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {

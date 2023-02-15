@@ -12,7 +12,7 @@ import revalidate from 'utils/revalidate'
 import sortByCreatedAt from 'utils/sortByUpdatedAt'
 
 import Button from 'components/Button'
-import Item from 'components/Item/Item'
+import Item from 'components/Item'
 import MainLayout from 'components/Layout'
 
 const PublicProfile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ user, posts }) => {
