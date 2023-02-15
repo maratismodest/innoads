@@ -6,8 +6,6 @@ import fetchPosts from 'utils/api/fetchPosts'
 import Item from 'components/Item/Item'
 import Spinner from 'components/Spinner/Spinner'
 
-import classes from 'styles/classes.module.css'
-
 const InfinitePosts = ({
                            options,
                            initPosts,
@@ -29,7 +27,7 @@ const InfinitePosts = ({
             const { content, totalPages } = await fetchPosts({
                 ...options,
                 page,
-                size: 10,
+                size: 20,
             })
             setPosts([...posts, ...content])
             setPage(prev => prev + 1)
@@ -59,7 +57,7 @@ const InfinitePosts = ({
 
     return (
         <>
-            <ul className={classes.items}>
+            <ul className='items'>
                 {posts.map((post: PostInterface) => (
                     <Item post={post} key={post.slug} />
                 ))}

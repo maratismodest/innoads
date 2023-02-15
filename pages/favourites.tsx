@@ -10,9 +10,6 @@ import revalidate from 'utils/revalidate'
 import Item from 'components/Item/Item'
 import Layout from 'components/Layout'
 
-import classes from 'styles/classes.module.css'
-
-
 const Favourites: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
     const { t } = useTranslation()
     const { favourites } = useContext(FavouriteContext)
@@ -20,7 +17,7 @@ const Favourites: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () 
     return (
         <Layout title={titles.favourites} description={descriptions.favourites}>
             <h1>{t('favourite')}</h1>
-            <ul className={classes.items}>
+            <ul className='items'>
                 {favourites.map((post: PostInterface) => <Item post={post} key={post.slug} />)}
             </ul>
         </Layout>

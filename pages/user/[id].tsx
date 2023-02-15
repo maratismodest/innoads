@@ -15,8 +15,6 @@ import Button from 'components/Button'
 import Item from 'components/Item/Item'
 import MainLayout from 'components/Layout'
 
-import classes from 'styles/classes.module.css'
-
 const PublicProfile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ user, posts }) => {
     const { t } = useTranslation('post')
     return (
@@ -25,11 +23,11 @@ const PublicProfile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = 
             <p>
                 {t('adsCount')}: <span>{posts.length}</span>
             </p>
-            <div className={classes.mt40} />
-            <ul className={classes.items}>
+            <div className='mt-10' />
+            <ul className='items'>
                 {posts.map((post: PostInterface) => <Item post={post} key={post.slug} />)}
             </ul>
-            <div className={classes.mt40} />
+            <div className='mt-10' />
             <Link href={tgLink + '/' + user.username} passHref>
                 <Button>{t('textAuthor')}</Button>
             </Link>
@@ -71,7 +69,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
                 'post',
             ])),
         },
-        revalidate:revalidate
+        revalidate: revalidate,
     }
 }
 

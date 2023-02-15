@@ -11,7 +11,7 @@ import revalidate from 'utils/revalidate'
 
 import MainLayout from 'components/Layout'
 
-import selectStyles from 'styles/select.module.css'
+// import selectStyles from 'styles/select.module.css'
 
 const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
     const { t } = useTranslation()
@@ -26,11 +26,12 @@ const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () 
         >
             <h1>{t('search')}</h1>
             <hr />
-            <select className={clsx(selectStyles.select, 'select-css')}
-                    defaultValue={categoryId}
-                    onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                        setCategoryId(Number(event.target.value))
-                    }}>
+            <select
+                className={clsx('select-css')}
+                defaultValue={categoryId}
+                onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+                    setCategoryId(Number(event.target.value))
+                }}>
                 {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
             </select>
             <hr />

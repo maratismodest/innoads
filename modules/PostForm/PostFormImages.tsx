@@ -1,8 +1,6 @@
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import React, { Dispatch, SetStateAction, useEffect, useMemo, useRef, useState } from 'react'
-import {clsx} from 'clsx'
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { HTMLInputEvent } from 'types'
 import { ACCEPTED_IMAGE_FORMAT, imageErrors, NO_IMAGE } from 'utils/constants'
 import getCompressedImagesLinks from 'utils/image/getCompressedImagesLinks'
@@ -12,7 +10,6 @@ import { MoveImage, moveImage } from 'utils/image/moveImage'
 import Icon from 'components/Icon'
 import Input from 'components/Input'
 
-import classes from 'styles/classes.module.css'
 
 interface PostFormImagesProps {
     images: string[]
@@ -20,8 +17,6 @@ interface PostFormImagesProps {
 }
 
 const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
-    const router = useRouter()
-    const isMobile = useMemo(() => router.query['viewport'] === 'mobile', [router.query])
     const ref = useRef<HTMLInputElement>(null)
     const [error, setError] = useState('')
     const { t } = useTranslation()
@@ -81,10 +76,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                 <div>
                     <h4>{t('addPhoto')}</h4>
                     <div
-                        className={clsx({
-                            [classes.image]: !isMobile,
-                            [classes.imageMobile]: isMobile,
-                        })}
+                        className='relative w-[48px] mb-2 aspect-square cursor-pointer hover:shadow lg:w-[150px] lg:mr-2'
                         onClick={() => {
                             if (ref.current) {
                                 ref.current.click()
@@ -113,19 +105,13 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
             </div>
             <h4>{t('preview')}</h4>
             <ul
-                className={clsx({
-                    [classes.images]: !isMobile,
-                    [classes.imagesMobile]: isMobile,
-                })}
+                className='grid grid-cols-2 gap-4'
             >
                 {images.map((image: string, index: number) => {
                     return (
                         <li
                             key={image}
-                            className={clsx({
-                                [classes.image]: !isMobile,
-                                [classes.imageMobile]: isMobile,
-                            })}
+                            className='relative aspect-square cursor-pointer hover:shadow'
                         >
                             <Image
                                 alt={image}
@@ -138,7 +124,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                                 blurDataURL={NO_IMAGE}
                             />
                             <Icon
-                                className={classes.leftArrow}
+                                className='absolute top-[40%] left-0'
                                 onClick={(e: MouseEvent) => {
                                     moveImage(
                                         e,
@@ -152,7 +138,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                                 &larr;
                             </Icon>
                             <Icon
-                                className={classes.rightArrow}
+                                className='absolute top-[40%] right-0'
                                 onClick={(e: MouseEvent) => {
                                     moveImage(
                                         e,
@@ -166,7 +152,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                                 &rarr;
                             </Icon>
                             <Icon
-                                className={classes.deleteIcon}
+                                className='absolute top-0 right-0'
                                 onClick={async () => {
                                     await deleteImage(image)
                                 }}
@@ -178,21 +164,16 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                 })}
                 {loading && (
                     <li
-                        className={clsx({
-                            [classes.image]: !isMobile,
-                            [classes.imageMobile]: isMobile,
-                        })}
+                        className='relative w-[48] mb-2 aspect-square cursor-pointer hover:shadow lg:w-[150px] lg:mr-2'
                     >
-                        <p className={classes.loadingImage}>
+                        <p className='flex items-center justify-center text-red h-full w-full text-center rounded'
+                        >
                             Загружаем изображение
                         </p>
                     </li>
                 )}
             </ul>
-            {!loading && <span style={{
-                color: 'red',
-                fontSize: 14,
-            }}>{error}</span>}
+            {!loading && <span className='red'>{error}</span>}
         </>
     )
 }

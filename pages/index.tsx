@@ -15,7 +15,7 @@ const Categories = dynamic(() => import('components/Categories'), {
 
 const Home: NextPage<Props> = ({ posts, totalPages }) => {
     const { t } = useTranslation()
-    const count = useMemo(() => totalPages * 10, [totalPages])
+    const count = useMemo(() => totalPages * 20, [totalPages])
     return (
         <Layout>
             <Categories />
@@ -38,7 +38,7 @@ type Props = {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const { content: posts, totalPages } = await fetchPosts({
-        size: 10,
+        size: 20,
     })
 
     if (!posts) {

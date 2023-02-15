@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import {clsx} from 'clsx'
+import { clsx } from 'clsx'
 import { useAuth } from 'hooks/useAuth'
 import PostFormImages from 'modules/PostForm/PostFormImages'
 import { EditPostInterface } from 'types'
@@ -24,8 +24,7 @@ import Layout from 'components/Layout'
 import Modal from 'components/Modal'
 import Spinner from 'components/Spinner/Spinner'
 
-import classes from 'styles/classes.module.css'
-import selectStyles from 'styles/select.module.css'
+// import selectStyles from 'styles/select.module.css'
 
 
 const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ post }) => {
@@ -95,11 +94,11 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
             <Layout title={titles.edit}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className={classes.form}
+                    className='form'
                 >
                     <h1>{t('editPost')}</h1>
                     <select
-                        className={clsx(selectStyles.select, 'select-css')}
+                        className={clsx('select-css')}
                         {...register('categoryId', { required: true })}
                     >
                         {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
@@ -126,15 +125,15 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                         cols={5}
                         placeholder={t('description') as string}
                         {...register('body', { required: true })}
-                        className={classes.textArea}
+                        className='rounded p-4'
                     />
                     <ErrorBlock name={'body'} errors={errors} />
                     <PostFormImages images={images} setImages={setImages} />
                     <Button
-                        className={classes.mt40}
+                        className='mt-10'
                         type='submit'
                         disabled={loading}
-                    >Сохранить изменения
+                    > {t('editAd')}
                     </Button>
                 </form>
             </Layout>

@@ -62,7 +62,7 @@ const Header = (): JSX.Element | null => {
             <div className='w-full max-w-[1100px] p-3 mx-auto flex justify-between'>
                 <Link
                     href={Routes.main}
-                    className='flex'
+                    className='flex gap-2 items-center'
                 >
                     <span className='text-2xl'>INNOADS</span>
                     <span className='hidden lg:inline'>|</span>
@@ -82,9 +82,9 @@ const Header = (): JSX.Element | null => {
                         </Dropdown>
                     )}
                 </div>
-                <div className='hidden lg:flex'>
+                <div className='hidden lg:flex gap-2 items-center'>
                     <LanguageSwitcher />
-                    <Buttons className='flex' />
+                    <Buttons className='flex gap-2 items-center' />
                 </div>
             </div>
         </nav>

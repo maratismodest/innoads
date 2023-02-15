@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AxiosError } from 'axios'
-import {clsx} from 'clsx'
+import { clsx } from 'clsx'
 import { useAuth } from 'hooks/useAuth'
 import slug from 'slug'
 import postPost from 'utils/api/postPost'
@@ -21,9 +21,6 @@ import Modal from 'components/Modal'
 import Spinner from 'components/Spinner/Spinner'
 
 import PostFormImages from './PostFormImages'
-
-import classes from 'styles/classes.module.css'
-import selectStyles from 'styles/select.module.css'
 
 interface PostFormProps {
     defaultValues: FormValues
@@ -95,11 +92,11 @@ const PostForm = ({ defaultValues }: PostFormProps) => {
             </Modal>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className={classes.form}
+                className='form'
             >
                 <h1>{t('addPost')}</h1>
                 <select
-                    className={clsx(selectStyles.select, 'select-css')}
+                    className={clsx('select-css')}
                     {...register('categoryId', { required: true })}
                 >
                     {options.map(({ value, label }) => <option key={value}
@@ -127,7 +124,7 @@ const PostForm = ({ defaultValues }: PostFormProps) => {
                     cols={5}
                     placeholder={t('description') as string}
                     {...register('body', { required: true })}
-                    className={classes.textArea}
+                    className='rounded p-4'
                 />
                 <ErrorBlock name={'body'} errors={errors} />
 
@@ -137,7 +134,7 @@ const PostForm = ({ defaultValues }: PostFormProps) => {
                 />
 
                 <Button
-                    className={classes.mt40}
+                    className='mt-10'
                     type='submit'
                     disabled={sending}
                 >

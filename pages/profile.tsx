@@ -20,9 +20,6 @@ import Button from 'components/Button'
 import Item from 'components/Item/Item'
 import Layout from 'components/Layout'
 
-import classes from 'styles/classes.module.css'
-import profile from 'styles/profile.module.css'
-
 const error =
     'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
 
@@ -106,21 +103,21 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
         <Layout
             title={titles.profile}
             description={titles.profile}
-            className={profile.main}
+            className='min-h-[calc(100vh-66px)] text-center'
         >
             <h1>{t('cabinet')}</h1>
             {posts.length > 0 ? (
-                <ul className={clsx(classes.mt40, classes.items)}>
+                <ul className={clsx('mt-10', 'items')}>
                     {posts.map((post: PostInterface) => (
                         <Item post={post} key={post.id} edit={true} />
                     ))}
                 </ul>
             ) : (
-                <div className={profile.addBlock}>
+                <div className='flex mx-auto flex-col justify-center max-w-[432px] gap-4'>
                     <Link href={Routes.add}>
                         <Button
                             title={t('addAd', { ns: 'common' }) as string}
-                            className={clsx(classes.centerBtn, classes.mt20)}
+                            className={clsx('mx-auto', 'mt-5')}
                         >
                             &#43;
                         </Button>
@@ -132,14 +129,14 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
                     <Link href={Routes.add}>
                         <Button
                             title={t('addAd', { ns: 'common' }) as string}
-                            className={clsx(classes.centerBtn, classes.mt20)}
+                            className={clsx('mx-auto', 'mt-5')}
                         >
                             {t('addAd', { ns: 'common' })}
                         </Button>
                     </Link>
                 </div>
             )}
-            <div className={clsx(classes.center, profile.exit)}>
+            <div className={clsx('flex justify-center align-middle')}>
                 <Button onClick={logout}>{t('exit')}</Button>
             </div>
         </Layout>
