@@ -76,7 +76,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                 <div>
                     <h4>{t('addPhoto')}</h4>
                     <div
-                        className='relative w-[48px] mb-2 aspect-square cursor-pointer hover:shadow lg:w-[150px] lg:mr-2'
+                        className='relative w-[48%] mb-2 aspect-square cursor-pointer hover:shadow lg:w-[150px] lg:mr-2'
                         onClick={() => {
                             if (ref.current) {
                                 ref.current.click()
@@ -164,7 +164,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                 })}
                 {loading && (
                     <li
-                        className='relative w-[48] mb-2 aspect-square cursor-pointer hover:shadow lg:w-[150px] lg:mr-2'
+                        className='relative w-[48%] mb-2 aspect-square cursor-pointer hover:shadow lg:w-[150px] lg:mr-2'
                     >
                         <p className='flex items-center justify-center text-red h-full w-full text-center rounded'
                         >

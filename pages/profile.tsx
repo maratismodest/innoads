@@ -2,11 +2,9 @@ import Link from 'next/link'
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 // @ts-ignore
 import TelegramLoginButton from 'react-telegram-login'
-import axios from 'axios'
-import { clsx } from 'clsx'
 import { useAuth } from 'hooks/useAuth'
 import * as jose from 'jose'
 import { PostInterface, TelegramUserProps } from 'types'
@@ -19,23 +17,24 @@ import { Routes } from 'utils/routes'
 import Button from 'components/Button'
 import Item from 'components/Item'
 import Layout from 'components/Layout'
+import Spinner from 'components/Spinner'
 
-const error = 'Вам надо Указать Алиас в Телеграм, иначе вы не сможете подавать объявления! Добавьте алиас у себя в аккаунте, перезагрузите страницу и попробуйте авторизоваться у нас снова'
+const error = 'Добавьте алиас у себя в аккаунте / Add alias into your account!'
 
 const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
     const [posts, setPosts] = useState<PostInterface[]>([])
+    const [fetching, setFetching] = useState(false)
     const { user, login, logout } = useAuth()
     const { t } = useTranslation('profile')
 
-    const handleTelegramResponse = async ({ username, id }: TelegramUserProps) => {
+    const handleTelegram = async ({ username, id }: TelegramUserProps) => {
         if (!username) {
             return alert({ error })
         }
         try {
             const user = { id, username }
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, user)
-            const decoded = await jose.decodeJwt(data.token)
-            // console.log('decoded', decoded)
+            const { data } = await client.post('/users/login', user)
+            const decoded = jose.decodeJwt(data.token)
             if (decoded) {
                 localStorage.setItem('token', data.token)
                 client.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
@@ -47,52 +46,47 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
         }
     }
 
-    const handleClick = async () => {
+    const handleTelegramImitate = useCallback(async () => {
         const userTemplate: TelegramUserProps = {
-            first_name: 'Marat',
-            last_name: 'Faizerakhmanov',
-            id: 71233480,
-            photo_url: 'https://t.me/i/userpic/320/QbIbY59Btv3iqvpPSZigwX2LUDfQt39ptyEablKRsgw.jpg',
-            username: 'maratfaizer',
+            first_name: process.env.NEXT_PUBLIC_FIRST_NAME as string,
+            last_name: process.env.NEXT_PUBLIC_LAST_NAME as string,
+            id: Number(process.env.NEXT_PUBLIC_ID),
+            photo_url: process.env.NEXT_PUBLIC_PHOTO_URL as string,
+            username: process.env.NEXT_PUBLIC_USERNAME as string,
         }
-        const { id, username } = userTemplate
         try {
-            const user = { id, username }
-            const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, user)
-            // console.log('data', data)
+            const user = { id: userTemplate.id, username: userTemplate.username }
+            const { data } = await client.post('/users/login', user)
             const decoded = await jose.decodeJwt(data.token)
-            // console.log('decoded', decoded)
             if (decoded) {
                 localStorage.setItem('token', data.token)
                 client.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
                 // @ts-ignore
                 login(user)
             }
-            return
         } catch (e) {
             console.log(e)
         }
-    }
+    }, [])
 
     useEffect(() => {
         if (user) {
-            fetchPosts({
-                size: 10,
-                userId: user.id,
-            }).then((res) => setPosts(res?.content || []))
+            setFetching(true)
+            fetchPosts({ userId: user.id }).then(({ content }) => setPosts(content)).catch(e => alert(e.message)).finally(() => setFetching(false))
         }
     }, [user])
 
     if (!user) {
         return (
             <Layout title={titles.profile}>
-                <div className={'center'}>
+                <div className='flex flex-col items-center'>
                     <h2>{t('authorization')}</h2>
                     <TelegramLoginButton
-                        dataOnauth={handleTelegramResponse}
+                        dataOnauth={handleTelegram}
                         botName='InnoAdsPostBot'
                     />
-                    {process.env.NEXT_PUBLIC_NODE_ENV == 'development' && <Button onClick={handleClick}>Ok</Button>}
+                    {process.env.NEXT_PUBLIC_NODE_ENV == 'development' &&
+                        <Button onClick={handleTelegramImitate}>Imitate</Button>}
                 </div>
             </Layout>
         )
@@ -102,42 +96,24 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
         <Layout
             title={titles.profile}
             description={titles.profile}
-            className='min-h-[calc(100vh-66px)] text-center'
+            className='flex flex-col items-center gap-8'
         >
-            <h1>{t('cabinet')}</h1>
-            {posts.length > 0 ? (
-                <ul className={clsx('mt-10', 'items')}>
+            <div className='text-center'>
+                <h1>{t('cabinet')}</h1>
+                <p>{t('addAds')}</p>
+            </div>
+            <Link href={Routes.add}>
+                <Button>&#43;</Button>
+            </Link>
+            {fetching && <Spinner />}
+            {posts.length > 0 && !fetching &&
+                <ul className='items'>
                     {posts.map((post: PostInterface) => (
                         <Item post={post} key={post.id} edit={true} />
                     ))}
                 </ul>
-            ) : (
-                <div className='flex mx-auto flex-col justify-center max-w-[432px] gap-4'>
-                    <Link href={Routes.add}>
-                        <Button
-                            title={t('addAd', { ns: 'common' }) as string}
-                            className={clsx('mx-auto', 'mt-5')}
-                        >
-                            &#43;
-                        </Button>
-                    </Link>
-                    <p>
-                        Опубликуйте объявление, и его увидят потенциальные
-                        покупатели
-                    </p>
-                    <Link href={Routes.add}>
-                        <Button
-                            title={t('addAd', { ns: 'common' }) as string}
-                            className={clsx('mx-auto', 'mt-5')}
-                        >
-                            {t('addAd', { ns: 'common' })}
-                        </Button>
-                    </Link>
-                </div>
-            )}
-            <div className={clsx('flex justify-center align-middle')}>
-                <Button onClick={logout}>{t('exit')}</Button>
-            </div>
+            }
+            <Button onClick={logout}>{t('exit')}</Button>
         </Layout>
     )
 }

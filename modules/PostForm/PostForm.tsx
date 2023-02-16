@@ -99,8 +99,8 @@ const PostForm = ({ defaultValues }: PostFormProps) => {
                     className={clsx('select-css')}
                     {...register('categoryId', { required: true })}
                 >
-                    {options.map(({ value, label }) => <option key={value}
-                                                               value={value}>{t(label)}</option>)}
+                    {options.map(({ value, label }) =>
+                        <option key={value} value={value}>{t(label)}</option>)}
                 </select>
                 <ErrorBlock name={'categoryId'} errors={errors} />
                 <Input

@@ -104,14 +104,14 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
                     <button
                         className={clsx('absolute top-1/2 w-fit cursor-pointer rounded bg-blue border-none transition-all text-white p-2', 'left-0')}
                         onClick={() => handleClick('left')}
-                        hidden={firstInView}
+                        hidden={firstInView || images.length < 2}
                     >
                         &larr;
                     </button>
                     <button
                         className={clsx('absolute top-1/2 w-fit cursor-pointer rounded bg-blue border-none transition-all text-white p-2', 'right-0')}
                         onClick={() => handleClick('right')}
-                        hidden={lastInVew}
+                        hidden={lastInVew || images.length < 2}
                     >
                         &rarr;
                     </button>
@@ -211,7 +211,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
                 'post',
             ])),
         },
-        revalidate: 60 * 60,
+        revalidate: 3600,
     }
 }
 
