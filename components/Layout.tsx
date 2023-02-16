@@ -7,8 +7,6 @@ interface Props {
     title?: string
     description?: string
     image?: string
-    categoryId?: string
-    price?: string
     children: ReactNode
     className?: string
     canonical?: string
@@ -22,8 +20,6 @@ const Layout: React.FC<Props> = ({
                                      title = 'Доска объявлений города Иннополис',
                                      description = 'Здесь вы можете найти объяления о продаже и покупке товаров и об услугах города Иннополис. Бесплатно подать объявление.',
                                      image = '/icons/icon-192x192.png',
-                                     categoryId,
-                                     price,
                                      className,
                                      author = 'InnoAds',
                                      keywords = 'innoads, Иннополис, доска объявлений',

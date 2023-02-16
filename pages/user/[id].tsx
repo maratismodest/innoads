@@ -14,21 +14,16 @@ import sortByCreatedAt from 'utils/sortByUpdatedAt'
 import Button from 'components/Button'
 import Item from 'components/Item'
 import MainLayout from 'components/Layout'
+import Posts from 'components/Posts'
 
 const PublicProfile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ user, posts }) => {
     const { t } = useTranslation('post')
     return (
         <MainLayout>
             <h1>{t('userProfile')}</h1>
-            <p>
-                {t('adsCount')}: <span>{posts.length}</span>
-            </p>
-            <div className='mt-10' />
-            <ul className='items'>
-                {posts.map((post: PostInterface) => <Item post={post} key={post.slug} />)}
-            </ul>
-            <div className='mt-10' />
-            <Link href={tgLink + '/' + user.username} passHref>
+            <p>{t('adsCount')}: <span>{posts.length}</span></p>
+            <Posts posts={posts} className='mt-10' />
+            <Link href={tgLink + '/' + user.username} passHref className='mt-10'>
                 <Button>{t('textAuthor')}</Button>
             </Link>
         </MainLayout>

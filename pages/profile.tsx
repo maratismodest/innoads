@@ -15,8 +15,8 @@ import revalidate from 'utils/revalidate'
 import { Routes } from 'utils/routes'
 
 import Button from 'components/Button'
-import Item from 'components/Item'
 import Layout from 'components/Layout'
+import Posts from 'components/Posts'
 import Spinner from 'components/Spinner'
 
 const error = 'Добавьте алиас у себя в аккаунте / Add alias into your account!'
@@ -106,13 +106,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => 
                 <Button>&#43;</Button>
             </Link>
             {fetching && <Spinner />}
-            {posts.length > 0 && !fetching &&
-                <ul className='items'>
-                    {posts.map((post: PostInterface) => (
-                        <Item post={post} key={post.id} edit={true} />
-                    ))}
-                </ul>
-            }
+            {posts.length > 0 && !fetching && <Posts posts={posts} edit={true} />}
             <Button onClick={logout}>{t('exit')}</Button>
         </Layout>
     )

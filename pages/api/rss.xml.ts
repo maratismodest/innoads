@@ -1,12 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import dayjs from 'dayjs'
+import { Feed } from 'feed'
 import { PostInterface } from 'types'
 import { SEO_DESCRIPTION, SEO_TITLE } from 'utils/constants'
 import { getDynamicPaths } from 'utils/getDynamicPaths'
 
-const { Feed } = require('feed')
-const dayjs = require('dayjs')
-
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+const baseUrl = `${process.env.NEXT_PUBLIC_APP_URL}`
 
 const author = {
     name: 'Marat Faizer',
@@ -20,6 +19,7 @@ const RSS = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Construct a new Feed object
     const feed = new Feed({
+        copyright: 'InnoAds',
         title: SEO_TITLE,
         description: SEO_DESCRIPTION,
         id: baseUrl,
@@ -28,7 +28,7 @@ const RSS = async (req: NextApiRequest, res: NextApiResponse) => {
         feedLinks: {
             rss2: `${baseUrl}/api/rss.xml`,
         },
-        author,
+        author
     })
 
     // Add each article to the feed

@@ -146,7 +146,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
                 </div>
 
                 <Button
-                    className={clsx('mt-10 lg:hidden', 'inline-flex items-center px-4 py-2')}
+                    className='mt-10 lg:hidden inline-flex items-center px-4 py-2'
                     onClick={async () => await navigator.share(shareData)}
                 >
                     {t('share', { ns: 'post' })}

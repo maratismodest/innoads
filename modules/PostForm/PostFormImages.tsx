@@ -124,7 +124,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                                 blurDataURL={NO_IMAGE}
                             />
                             <Icon
-                                className='absolute top-[40%] left-0'
+                                className='absolute top-1/2 left-0 -translate-y-1/2'
                                 onClick={(e: MouseEvent) => {
                                     moveImage(
                                         e,
@@ -138,7 +138,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                                 &larr;
                             </Icon>
                             <Icon
-                                className='absolute top-[40%] right-0'
+                                className='absolute top-1/2 right-0 -translate-y-1/2	'
                                 onClick={(e: MouseEvent) => {
                                     moveImage(
                                         e,

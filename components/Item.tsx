@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import React, { useCallback, useContext, useMemo, useState } from 'react'
-import axios from 'axios'
 import { clsx } from 'clsx'
 import { FavouriteContext } from 'context/FavouritesContext'
 import dayjs from 'dayjs'
@@ -11,6 +10,7 @@ import { useAuth } from 'hooks/useAuth'
 import TransparentHeart from 'public/svg/heart.svg'
 import RedHeart from 'public/svg/heart-red.svg'
 import { PostInterface } from 'types'
+import client from 'utils/api/createRequest'
 import postTelegram from 'utils/api/postTelegram'
 import updatePost from 'utils/api/updatePost'
 import { NO_IMAGE } from 'utils/constants'
@@ -20,12 +20,13 @@ import Button from 'components/Button'
 import Modal from 'components/Modal'
 import Price from 'components/Price'
 
+const sevenDays = 1000 * 60 * 60 * 24 * 7
+const buttonStyle = 'absolute z-10 p-2 w-8 h-8 flex justify-center items-center'
+
 interface ItemInterface {
     post: PostInterface
     edit?: boolean
 }
-
-const sevenDays = 1000 * 60 * 60 * 24 * 7
 
 const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
 
@@ -56,14 +57,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                     break
                 }
                 case ItemModalText.delete: {
-                    await axios.delete(
-                        `${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`,
-                        {
-                            headers: {
-                                authorization: `Bearer ${token}`,
-                            },
-                        },
-                    )
+                    await client.delete(`/posts/${id}`)
                     alert(success.deleted)
                     break
                 }
@@ -103,8 +97,6 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
         [id, favourites, liked, post, setFavourites],
     )
 
-    const buttonStyle = 'absolute z-10 p-2 w-8 h-8 flex justify-center align-middle'
-
     return (
         <>
             <Modal visible={visible}>
@@ -123,7 +115,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                     <>
                         <Button
                             className={clsx(
-                                buttonStyle, 'right-1 top-1',
+                                buttonStyle, 'right-0 top-0',
                             )}
                             transparent={true}
                             onClick={() => {
@@ -134,7 +126,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         </Button>
                         <Button
                             title={t('edit') as string}
-                            className={clsx(buttonStyle, 'left-1 top-1')}
+                            className={clsx(buttonStyle, 'left-0 top-0')}
                             onClick={() => {
                                 showModal(ItemModalText.edit)
                             }}
@@ -144,7 +136,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         </Button>
                         <Button
                             title={t('publishAgain') as string}
-                            className={clsx(buttonStyle, 'right-1 bottom-1')}
+                            className={clsx(buttonStyle, 'right-0 bottom-0')}
                             transparent
                             onClick={() => {
                                 showModal(ItemModalText.republish)
@@ -170,7 +162,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
 
                     <div className='relative font-bold whitespace-nowrap overflow-hidden mx-3 my-1 lg:mx-4 lg:my-2'>
                         <Price price={price} />
-                        <h2 className={clsx('mt-auto overflow-ellipsis whitespace-nowrap font-normal')}>{title}</h2>
+                        <h2 className='mt-auto overflow-ellipsis whitespace-nowrap font-normal'>{title}</h2>
                         <div className='absolute z-10 top-0 right-0 cursor-pointer' onClick={handleFavourite}>
                             {liked ? <RedHeart /> : <TransparentHeart />}
                         </div>

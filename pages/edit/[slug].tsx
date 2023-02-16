@@ -5,7 +5,6 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { clsx } from 'clsx'
 import { useAuth } from 'hooks/useAuth'
 import PostFormImages from 'modules/PostForm/PostFormImages'
 import { EditPostInterface } from 'types'
@@ -98,12 +97,12 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                 >
                     <h1>{t('editPost')}</h1>
                     <select
-                        className={clsx('select-css')}
+                        className='select-css'
                         {...register('categoryId', { required: true })}
                     >
                         {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
                     </select>
-                    <ErrorBlock name={'categoryId'} errors={errors} />
+                    <ErrorBlock name='categoryId' errors={errors} />
                     <Input
                         type='number'
                         placeholder={t('price') as string}
@@ -111,7 +110,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                         required={true}
                         name='price'
                     />
-                    <ErrorBlock name={'price'} errors={errors} />
+                    <ErrorBlock name='price' errors={errors} />
                     <Input
                         type='text'
                         placeholder={t('header') as string}
@@ -119,7 +118,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                         required={true}
                         name='title'
                     />
-                    <ErrorBlock name={'title'} errors={errors} />
+                    <ErrorBlock name='title' errors={errors} />
                     <textarea
                         rows={5}
                         cols={5}
@@ -127,7 +126,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                         {...register('body', { required: true })}
                         className='rounded p-4'
                     />
-                    <ErrorBlock name={'body'} errors={errors} />
+                    <ErrorBlock name='body' errors={errors} />
                     <PostFormImages images={images} setImages={setImages} />
                     <Button
                         className='mt-10'

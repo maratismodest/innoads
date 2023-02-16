@@ -3,7 +3,6 @@ import { useTranslation } from 'next-i18next'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AxiosError } from 'axios'
-import { clsx } from 'clsx'
 import { useAuth } from 'hooks/useAuth'
 import slug from 'slug'
 import postPost from 'utils/api/postPost'
@@ -96,7 +95,7 @@ const PostForm = ({ defaultValues }: PostFormProps) => {
             >
                 <h1>{t('addPost')}</h1>
                 <select
-                    className={clsx('select-css')}
+                    className='select-css'
                     {...register('categoryId', { required: true })}
                 >
                     {options.map(({ value, label }) =>

@@ -3,7 +3,7 @@ import useOnScreen from 'hooks/useOnScreen'
 import { PostInterface } from 'types'
 import fetchPosts from 'utils/api/fetchPosts'
 
-import Item from 'components/Item'
+import Posts from 'components/Posts'
 import Spinner from 'components/Spinner'
 
 const InfinitePosts = ({
@@ -57,11 +57,7 @@ const InfinitePosts = ({
 
     return (
         <>
-            <ul className='items'>
-                {posts.map((post: PostInterface) => (
-                    <Item post={post} key={post.slug} />
-                ))}
-            </ul>
+            <Posts posts={posts} />
             {fetching && <Spinner />}
             <div ref={elementRef} />
         </>
