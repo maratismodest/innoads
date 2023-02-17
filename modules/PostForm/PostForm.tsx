@@ -1,21 +1,18 @@
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { AxiosError } from 'axios'
-import { useAuth } from 'hooks/useAuth'
+import {useRouter} from 'next/router'
+import {useTranslation} from 'next-i18next'
+import React, {useEffect, useState} from 'react'
+import {useForm} from 'react-hook-form'
+import {AxiosError} from 'axios'
+import {useAuth} from 'hooks/useAuth'
 import slug from 'slug'
 import postPost from 'utils/api/postPost'
 import postTelegram from 'utils/api/postTelegram'
-import { FormValues, messages } from 'utils/constants'
+import {FormValues, messages} from 'utils/constants'
 import hasCurseWords from 'utils/curseWords'
-import { options } from 'utils/options'
-import { Routes } from 'utils/routes'
+import {options} from 'utils/options'
+import {Routes} from 'utils/routes'
 
-import Button from 'components/Button'
 import ErrorBlock from 'components/ErrorBlock'
-import GoToProfile from 'components/GoToProfile'
-import Input from 'components/Input'
 import Modal from 'components/Modal'
 import Spinner from 'components/Spinner'
 
@@ -25,23 +22,26 @@ interface PostFormProps {
     defaultValues: FormValues
 }
 
-const PostForm = ({ defaultValues }: PostFormProps) => {
+const PostForm = ({defaultValues}: PostFormProps) => {
     const [images, setImages] = useState<string[]>([])
     const router = useRouter()
-    const { t } = useTranslation()
+    const {t} = useTranslation()
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
-    } = useForm<FormValues>({ defaultValues })
+        formState: {errors},
+    } = useForm<FormValues>({defaultValues})
 
-    const { user } = useAuth()
+    const {user} = useAuth()
     const [sending, setSending] = useState(false)
 
-    if (!user) {
-        return <GoToProfile />
-    }
+    useEffect(() => {
+        if (!user) {
+            router.push(Routes.profile)
+            return
+        }
+    }, [])
 
     const onSubmit = async (data: FormValues) => {
 
@@ -53,7 +53,7 @@ const PostForm = ({ defaultValues }: PostFormProps) => {
             return alert(messages.forbiddenWords)
         }
 
-        const { title, body, price, categoryId } = data
+        const {title, body, price, categoryId} = data
 
         const formData = {
             title,
@@ -62,8 +62,8 @@ const PostForm = ({ defaultValues }: PostFormProps) => {
             preview: images[0],
             images: images.join('||'),
             slug: slug(title) + '-' + Math.floor(Math.random() * 100),
-            telegram: user?.username,
-            userId: user?.id,
+            telegram: user?.username as string,
+            userId: user?.id as number,
             categoryId: Number(categoryId),
         }
         try {
@@ -83,11 +83,14 @@ const PostForm = ({ defaultValues }: PostFormProps) => {
         }
     }
 
+    if (!user) {
+        return null
+    }
 
     return (
         <>
             <Modal visible={sending}>
-                <Spinner />
+                <Spinner/>
             </Modal>
             <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -95,50 +98,48 @@ const PostForm = ({ defaultValues }: PostFormProps) => {
             >
                 <h1>{t('addPost')}</h1>
                 <select
-                    className='select-css'
-                    {...register('categoryId', { required: true })}
+                    className='select'
+                    {...register('categoryId', {required: true})}
                 >
-                    {options.map(({ value, label }) =>
+                    {options.map(({value, label}) =>
                         <option key={value} value={value}>{t(label)}</option>)}
                 </select>
-                <ErrorBlock name={'categoryId'} errors={errors} />
-                <Input
+                <ErrorBlock name='categoryId' errors={errors}/>
+                <input
+                    className='input'
                     type='number'
                     placeholder={t('price') as string}
-                    register={register}
-                    required={true}
-                    name='price'
+                    {...register('price', {required: true})}
                 />
-                <ErrorBlock name={'price'} errors={errors} />
-                <Input
+                <ErrorBlock name='price' errors={errors}/>
+                <input
+                    className='input'
                     type='text'
                     placeholder={t('header') as string}
-                    register={register}
-                    required={true}
-                    name='title'
+                    {...register('title', {required: true})}
                 />
-                <ErrorBlock name={'title'} errors={errors} />
+                <ErrorBlock name='title' errors={errors}/>
                 <textarea
                     rows={5}
                     cols={5}
                     placeholder={t('description') as string}
-                    {...register('body', { required: true })}
+                    {...register('body', {required: true})}
                     className='rounded p-4'
                 />
-                <ErrorBlock name={'body'} errors={errors} />
+                <ErrorBlock name='body' errors={errors}/>
 
                 <PostFormImages
                     images={images}
                     setImages={setImages}
                 />
 
-                <Button
-                    className='mt-10'
+                <button
+                    className='button mt-10'
                     type='submit'
                     disabled={sending}
                 >
                     {t('addAd')}
-                </Button>
+                </button>
             </form>
         </>
     )

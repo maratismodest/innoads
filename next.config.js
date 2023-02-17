@@ -17,6 +17,7 @@ const nextConfig = {
     images: {
         domains: [process.env.NEXT_PUBLIC_IMAGES_DOMAIN],
     },
+    trailingSlash: true,
     formats: ['image/avif', 'image/webp'],
     i18n,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md'],

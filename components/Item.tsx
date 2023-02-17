@@ -1,22 +1,21 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import React, { useCallback, useContext, useMemo, useState } from 'react'
-import { clsx } from 'clsx'
-import { FavouriteContext } from 'context/FavouritesContext'
+import {useRouter} from 'next/router'
+import {useTranslation} from 'next-i18next'
+import React, {useCallback, useContext, useMemo, useState} from 'react'
+import {clsx} from 'clsx'
+import {FavouriteContext} from 'context/FavouritesContext'
 import dayjs from 'dayjs'
-import { useAuth } from 'hooks/useAuth'
+import {useAuth} from 'hooks/useAuth'
 import TransparentHeart from 'public/svg/heart.svg'
 import RedHeart from 'public/svg/heart-red.svg'
-import { PostInterface } from 'types'
+import {PostInterface} from 'types'
 import client from 'utils/api/createRequest'
 import postTelegram from 'utils/api/postTelegram'
 import updatePost from 'utils/api/updatePost'
-import { NO_IMAGE } from 'utils/constants'
-import { Routes } from 'utils/routes'
+import {NO_IMAGE} from 'utils/constants'
+import {Routes} from 'utils/routes'
 
-import Button from 'components/Button'
 import Modal from 'components/Modal'
 import Price from 'components/Price'
 
@@ -28,14 +27,14 @@ interface ItemInterface {
     edit?: boolean
 }
 
-const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
+const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
 
-    const { favourites, setFavourites } = useContext(FavouriteContext)
-    const { id, slug, title, preview, price, updatedAt } = post
+    const {favourites, setFavourites} = useContext(FavouriteContext)
+    const {id, slug, title, preview, price, updatedAt} = post
 
-    const { t } = useTranslation('profile')
+    const {t} = useTranslation('profile')
     const router = useRouter()
-    const { token } = useAuth()
+    const {token} = useAuth()
     const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id])
 
     const [visible, setVisible] = useState(false)
@@ -73,7 +72,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         )
                     } else {
                         await postTelegram(post)
-                        await updatePost({ ...post, createdAt: new Date().toString() })
+                        await updatePost({...post, createdAt: new Date().toString()})
                         alert(success.updated)
                     }
                     break
@@ -102,55 +101,52 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
             <Modal visible={visible}>
                 <div className='flex flex-col'>
                     <h4>{modalText}</h4>
-                    <hr />
+                    <hr/>
                     <div className='mt-12 flex justify-around'>
-                        <Button onClick={handleFunction} className='min-w-[64px]'>Да</Button>
-                        <Button onClick={hideModal} className='min-w-[64px]'>Нет</Button>
+                        <button onClick={handleFunction} className='button min-w-[64px]'>Да</button>
+                        <button onClick={hideModal} className='button min-w-[64px]'>Нет</button>
                     </div>
                 </div>
             </Modal>
 
-            <li key={slug} className='relative rounded-2xl flex-col overflow-hidden shadow'>
+            <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow'>
                 {edit && (
                     <>
-                        <Button
+                        <button
                             className={clsx(
-                                buttonStyle, 'right-0 top-0',
+                                'button', buttonStyle, 'right-0 top-0 bg-none',
                             )}
-                            transparent={true}
                             onClick={() => {
                                 showModal(ItemModalText.delete)
                             }}
                         >
                             &#10008;
-                        </Button>
-                        <Button
+                        </button>
+                        <button
                             title={t('edit') as string}
-                            className={clsx(buttonStyle, 'left-0 top-0')}
+                            className={clsx('button', buttonStyle, 'left-0 top-0 bg-none')}
                             onClick={() => {
                                 showModal(ItemModalText.edit)
                             }}
-                            transparent
                         >
                             &#10000;
-                        </Button>
-                        <Button
+                        </button>
+                        <button
                             title={t('publishAgain') as string}
-                            className={clsx(buttonStyle, 'right-0 bottom-0')}
-                            transparent
+                            className={clsx('button', buttonStyle, 'right-0 bottom-0 bg-none')}
                             onClick={() => {
                                 showModal(ItemModalText.republish)
                             }}
                         >
                             &#8679;
-                        </Button>
+                        </button>
                     </>
                 )}
                 <Link href={`${Routes.post}/${slug}`} title={title}>
                     <div className='relative aspect-square transition-all hover:scale-105'>
                         <Image
                             fill={true}
-                            style={{ objectFit: 'cover' }}
+                            style={{objectFit: 'cover'}}
                             sizes={'(max-width: 768px) 50vw,(max-width: 1024px) 25vw, 200px'}
                             alt={title}
                             src={preview || NO_IMAGE}
@@ -160,11 +156,11 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                         />
                     </div>
 
-                    <div className='relative font-bold whitespace-nowrap overflow-hidden mx-3 my-1 lg:mx-4 lg:my-2'>
-                        <Price price={price} />
-                        <h2 className='mt-auto overflow-ellipsis whitespace-nowrap font-normal'>{title}</h2>
-                        <div className='absolute z-10 top-0 right-0 cursor-pointer' onClick={handleFavourite}>
-                            {liked ? <RedHeart /> : <TransparentHeart />}
+                    <div className='relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2'>
+                        <Price price={price}/>
+                        <h2 className='mt-auto text-ellipsis whitespace-nowrap font-normal'>{title}</h2>
+                        <div className='absolute top-0 right-0 z-10 cursor-pointer' onClick={handleFavourite}>
+                            {liked ? <RedHeart/> : <TransparentHeart/>}
                         </div>
                     </div>
 

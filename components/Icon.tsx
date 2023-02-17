@@ -1,13 +1,10 @@
-import React, { ReactNode } from 'react'
-import { clsx } from 'clsx'
+import React from 'react'
+import {clsx} from 'clsx'
 
-interface IconProps {
-    children: ReactNode,
-    className?: string,
-    onClick?: any,
+interface IconProps extends React.HTMLProps<HTMLButtonElement> {
 }
 
-const Icon = ({ children, className, onClick, ...props }: IconProps): JSX.Element => {
+const Icon = ({children, className, onClick, type = 'button', ...props}: IconProps): JSX.Element => {
     return (
         <button
             className={clsx('h-9 w-9 cursor-pointer rounded bg-green text-white shadow hover:hover:shadow-lg', className)}

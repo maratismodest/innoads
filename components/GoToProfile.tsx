@@ -1,23 +1,17 @@
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
+import {useTranslation} from 'next-i18next'
 import React from 'react'
-import { titles } from 'utils/constants'
-import { Routes } from 'utils/routes'
-
-import Button from 'components/Button'
-import Layout from 'components/Layout'
+import {Routes} from 'utils/routes'
 
 const GoToProfile = (): JSX.Element => {
-    const { t } = useTranslation()
+    const {t} = useTranslation()
     return (
-        <Layout title={titles.auth}>
-            <div className='center'>
-                <h2>{t('notAuthorized')}</h2>
-                <Link href={Routes.profile}>
-                    <Button>{t('goToAuth')}</Button>
-                </Link>
-            </div>
-        </Layout>
+        <div className='flex w-full flex-col items-center justify-center'>
+            <h1>{t('notAuthorized')}</h1>
+            <Link href={Routes.profile}>
+                <button className='button'>{t('goToAuth')}</button>
+            </Link>
+        </div>
     )
 }
 

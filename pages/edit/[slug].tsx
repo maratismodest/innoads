@@ -1,36 +1,31 @@
-import type { GetServerSideProps } from 'next'
-import { useRouter } from 'next/router'
-import { InferGetServerSidePropsType, NextPage } from 'next/types'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { useAuth } from 'hooks/useAuth'
+import type {GetServerSideProps} from 'next'
+import {useRouter} from 'next/router'
+import {InferGetServerSidePropsType, NextPage} from 'next/types'
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import React, {useEffect, useState} from 'react'
+import {useForm} from 'react-hook-form'
+import {useAuth} from 'hooks/useAuth'
 import PostFormImages from 'modules/PostForm/PostFormImages'
-import { EditPostInterface } from 'types'
+import {EditPostInterface} from 'types'
 import getPostBySlug from 'utils/api/fetchPost'
 import updatePost from 'utils/api/updatePost'
-import { defaultValues, FormValues, messages, titles } from 'utils/constants'
+import {defaultValues, FormValues, messages, seo} from 'utils/constants'
 import hasCurseWords from 'utils/curseWords'
-import { options } from 'utils/options'
-import { Routes } from 'utils/routes'
+import {options} from 'utils/options'
+import {Routes} from 'utils/routes'
 
-import Button from 'components/Button'
 import ErrorBlock from 'components/ErrorBlock'
-import GoToProfile from 'components/GoToProfile'
-import Input from 'components/Input'
 import Layout from 'components/Layout'
 import Modal from 'components/Modal'
 import Spinner from 'components/Spinner'
 
-// import selectStyles from 'styles/select.module.css'
 
-
-const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ post }) => {
-    const { t } = useTranslation()
-    const { categoryId, userId, title, body, price, id, slug, createdAt } = post
+const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({post, seo}) => {
+    const {t} = useTranslation()
+    const {categoryId, userId, title, body, price, id, slug, createdAt} = post
     const router = useRouter()
-    const { user } = useAuth()
+    const {user} = useAuth()
     const [images, setImages] = useState<string[]>(() => post.images.split('||'))
     const editValues: FormValues = {
         ...defaultValues, categoryId: options.find((x) => x.value === categoryId)?.value || 1, body, title, price,
@@ -38,13 +33,19 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
     const {
         register,
         handleSubmit,
-        formState: { errors },
-    } = useForm<FormValues>({ defaultValues: editValues })
+        formState: {errors},
+    } = useForm<FormValues>({defaultValues: editValues})
     const [loading, setLoading] = useState(false)
 
+    useEffect(() => {
+        if (!user) {
+            router.push(Routes.profile)
+            return
+        }
+    }, [])
 
     if (!user) {
-        return <GoToProfile />
+        return null
     }
 
     const onSubmit = async (data: FormValues) => {
@@ -56,7 +57,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
             return alert(messages.forbiddenWords)
         }
 
-        const { title, body, price, categoryId } = data
+        const {title, body, price, categoryId} = data
 
         const formData: EditPostInterface = {
             id,
@@ -86,57 +87,53 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
 
 
     return (
-        <>
+        <Layout {...seo}>
             <Modal visible={loading}>
-                <Spinner />
+                <Spinner/>
             </Modal>
-            <Layout title={titles.edit}>
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className='form'
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className='form'
+            >
+                <h1>{t('editPost')}</h1>
+                <select
+                    className='select'
+                    {...register('categoryId', {required: true})}
                 >
-                    <h1>{t('editPost')}</h1>
-                    <select
-                        className='select-css'
-                        {...register('categoryId', { required: true })}
-                    >
-                        {options.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
-                    </select>
-                    <ErrorBlock name='categoryId' errors={errors} />
-                    <Input
-                        type='number'
-                        placeholder={t('price') as string}
-                        register={register}
-                        required={true}
-                        name='price'
-                    />
-                    <ErrorBlock name='price' errors={errors} />
-                    <Input
-                        type='text'
-                        placeholder={t('header') as string}
-                        register={register}
-                        required={true}
-                        name='title'
-                    />
-                    <ErrorBlock name='title' errors={errors} />
-                    <textarea
-                        rows={5}
-                        cols={5}
-                        placeholder={t('description') as string}
-                        {...register('body', { required: true })}
-                        className='rounded p-4'
-                    />
-                    <ErrorBlock name='body' errors={errors} />
-                    <PostFormImages images={images} setImages={setImages} />
-                    <Button
-                        className='mt-10'
-                        type='submit'
-                        disabled={loading}
-                    > {t('editAd')}
-                    </Button>
-                </form>
-            </Layout>
-        </>
+                    {options.map(({value, label}) => <option key={value} value={value}>{t(label)}</option>)}
+                </select>
+                <ErrorBlock name='categoryId' errors={errors}/>
+                <input
+                    className='input'
+                    type='number'
+                    placeholder={t('price') as string}
+                    {...register('price', {required: true})}
+                />
+                <ErrorBlock name='price' errors={errors}/>
+                <input
+                    className='input'
+                    type='text'
+                    placeholder={t('header') as string}
+                    {...register('title', {required: true})}
+                />
+                <ErrorBlock name='title' errors={errors}/>
+                <textarea
+                    rows={5}
+                    cols={5}
+                    placeholder={t('description') as string}
+                    {...register('body', {required: true})}
+                    className='rounded p-4'
+                />
+                <ErrorBlock name='body' errors={errors}/>
+                <PostFormImages images={images} setImages={setImages}/>
+                <button
+                    className='button mt-10'
+                    type='submit'
+                    disabled={loading}
+                >{t('editAd')}
+                </button>
+            </form>
+        </Layout>
     )
 }
 
@@ -155,6 +152,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     return {
         props: {
             post,
+            seo: seo.edit,
             ...(await serverSideTranslations(locale as string, ['common'])),
         },
     }

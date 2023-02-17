@@ -1,29 +1,25 @@
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next/types'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import {GetStaticProps, InferGetStaticPropsType, NextPage} from 'next/types'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React from 'react'
 import PostForm from 'modules/PostForm/PostForm'
-import { defaultValues, titles } from 'utils/constants'
-import revalidate from 'utils/revalidate'
+import {defaultValues, seo} from 'utils/constants'
 
 import Layout from 'components/Layout'
 
-const Add: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = () => {
-
+const Add: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}) => {
     return (
-        <Layout title={titles.add}>
-            <PostForm
-                defaultValues={defaultValues}
-            />
+        <Layout {...seo}>
+            <PostForm defaultValues={defaultValues}/>
         </Layout>
     )
 }
 export default Add
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => {
+export const getStaticProps: GetStaticProps = async ({locale}) => {
     return {
         props: {
+            seo: seo.add,
             ...(await serverSideTranslations(locale as string, ['common'])),
         },
-        revalidate:revalidate
     }
 }

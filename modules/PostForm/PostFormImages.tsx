@@ -1,25 +1,27 @@
 import Image from 'next/image'
-import { useTranslation } from 'next-i18next'
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import { HTMLInputEvent } from 'types'
-import { ACCEPTED_IMAGE_FORMAT, imageErrors, NO_IMAGE } from 'utils/constants'
+import {useTranslation} from 'next-i18next'
+import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react'
+import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE} from 'utils/constants'
 import getCompressedImagesLinks from 'utils/image/getCompressedImagesLinks'
-import { handleDeleteImage } from 'utils/image/handleDeleteImage'
-import { MoveImage, moveImage } from 'utils/image/moveImage'
+import {handleDeleteImage} from 'utils/image/handleDeleteImage'
+import {MoveImage, moveImage} from 'utils/image/moveImage'
 
 import Icon from 'components/Icon'
-import Input from 'components/Input'
-
 
 interface PostFormImagesProps {
     images: string[]
     setImages: Dispatch<SetStateAction<string[]>>
 }
 
-const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
+const imageErrors = {
+    noImages: 'Добавить хотя бы одно фото!',
+    manyImages: 'Не больше 4 фотографий!',
+}
+
+const PostFormImages = ({images, setImages}: PostFormImagesProps) => {
     const ref = useRef<HTMLInputElement>(null)
     const [error, setError] = useState('')
-    const { t } = useTranslation()
+    const {t} = useTranslation()
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -38,7 +40,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
         }
     }
 
-    const imageHandler = async (event: HTMLInputEvent) => {
+    const imageHandler = async (event: any) => {
         setLoading(true)
         try {
             if (event.target.files) {
@@ -76,7 +78,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                 <div>
                     <h4>{t('addPhoto')}</h4>
                     <div
-                        className='relative w-[48%] mb-2 aspect-square cursor-pointer hover:shadow lg:w-[150px] lg:mr-2'
+                        className='relative mb-2 aspect-square w-[48%] cursor-pointer hover:shadow lg:mr-2 lg:w-[150px]'
                         onClick={() => {
                             if (ref.current) {
                                 ref.current.click()
@@ -93,7 +95,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                         />
                     </div>
                 </div>
-                <Input
+                <input
                     id='upload'
                     type='file'
                     onChange={imageHandler}
@@ -103,6 +105,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                     ref={ref}
                 />
             </div>
+            {!loading && error && <span className='text-red'>{error}</span>}
             <h4>{t('preview')}</h4>
             <ul
                 className='grid grid-cols-2 gap-4'
@@ -125,7 +128,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                             />
                             <Icon
                                 className='absolute top-1/2 left-0 -translate-y-1/2'
-                                onClick={(e: MouseEvent) => {
+                                onClick={(e) => {
                                     moveImage(
                                         e,
                                         images,
@@ -139,7 +142,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                             </Icon>
                             <Icon
                                 className='absolute top-1/2 right-0 -translate-y-1/2	'
-                                onClick={(e: MouseEvent) => {
+                                onClick={(e) => {
                                     moveImage(
                                         e,
                                         images,
@@ -164,16 +167,15 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                 })}
                 {loading && (
                     <li
-                        className='relative w-[48%] mb-2 aspect-square cursor-pointer hover:shadow lg:w-[150px] lg:mr-2'
+                        className='relative mb-2 aspect-square w-[48%] cursor-pointer hover:shadow lg:mr-2 lg:w-[150px]'
                     >
-                        <p className='flex items-center justify-center text-red h-full w-full text-center rounded'
+                        <p className='flex h-full w-full items-center justify-center rounded text-center text-red'
                         >
                             Загружаем изображение
                         </p>
                     </li>
                 )}
             </ul>
-            {!loading && <span className='red'>{error}</span>}
         </>
     )
 }

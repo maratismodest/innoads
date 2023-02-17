@@ -1,27 +1,26 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage } from 'next/types'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useMemo, useRef } from 'react'
-import { clsx } from 'clsx'
+import {GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage} from 'next/types'
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import React, {useMemo, useRef} from 'react'
+import {clsx} from 'clsx'
 import dayjs from 'dayjs'
 import useOnScreen from 'hooks/useOnScreen'
-import { GetStaticPostPath, PostInterface } from 'types'
+import {GetStaticPostPath, PostInterface} from 'types'
 import fetchPost from 'utils/api/fetchPost'
 import fetchPosts from 'utils/api/fetchPosts'
-import { tgLink } from 'utils/constants'
-import { getDynamicPaths } from 'utils/getDynamicPaths'
-import { options } from 'utils/options'
-import { Routes } from 'utils/routes'
+import {tgLink} from 'utils/constants'
+import {getDynamicPaths} from 'utils/getDynamicPaths'
+import {options} from 'utils/options'
+import {Routes} from 'utils/routes'
 
-import Button from 'components/Button'
 import Item from 'components/Item'
 import Layout from 'components/Layout'
 import Price from 'components/Price'
 
-const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ post, related }) => {
-    const { t } = useTranslation()
+const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({post, related}) => {
+    const {t} = useTranslation()
     const ul = useRef<HTMLUListElement>(null)
     const refFirst = useRef<HTMLLIElement>(null)
     const refLast = useRef<HTMLLIElement>(null)
@@ -81,13 +80,13 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
         >
             <div className='mx-auto max-w-[400px]'>
                 <div className='relative'>
-                    <ul className='relative flex flex-nowrap overflow-x-scroll snap-mandatory snap-x aspect-square gap-2'
+                    <ul className='relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll'
                         ref={ul}>
                         {images.map((image: string, index: number) => {
                             return (
                                 <li
                                     key={image}
-                                    className='flex-none snap-center h-full aspect-square relative overflow-y-hidden'
+                                    className='relative aspect-square h-full flex-none snap-center overflow-y-hidden'
                                     ref={index === 0 ? refFirst : index === images.length - 1 ? refLast : undefined}
                                 >
                                     <Image
@@ -95,21 +94,21 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
                                         alt='image'
                                         title={title}
                                         fill={true}
-                                        style={{ objectFit: 'cover' }}
+                                        style={{objectFit: 'cover'}}
                                     />
                                 </li>
                             )
                         })}
                     </ul>
                     <button
-                        className={clsx('absolute top-1/2 w-fit cursor-pointer rounded bg-blue border-none transition-all text-white p-2', 'left-0')}
+                        className={clsx('button absolute top-1/2 w-fit -translate-y-1/2 cursor-pointer rounded border-none bg-blue p-2 text-white transition-all', 'left-0')}
                         onClick={() => handleClick('left')}
                         hidden={firstInView || images.length < 2}
                     >
                         &larr;
                     </button>
                     <button
-                        className={clsx('absolute top-1/2 w-fit cursor-pointer rounded bg-blue border-none transition-all text-white p-2', 'right-0')}
+                        className={clsx('button absolute top-1/2 w-fit -translate-y-1/2 cursor-pointer rounded border-none bg-blue p-2 text-white transition-all', 'right-0')}
                         onClick={() => handleClick('right')}
                         hidden={lastInVew || images.length < 2}
                     >
@@ -121,42 +120,42 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
                 </div>
 
                 <Link href={`${Routes.main}search?categoryId=${categoryId}`}>
-                    {t('category', { ns: 'post' })}:{' '}
+                    {t('category', {ns: 'post'})}:{' '}
                     <span>{t(category.label)}</span>
                 </Link>
 
                 <h1>{title}</h1>
-                <Price price={price} />
-                <hr />
+                <Price price={price}/>
+                <hr/>
                 <pre className='whitespace-pre-wrap break-words'>{body}</pre>
                 <p className='mt-5'>
-                    {t('published', { ns: 'post' })}:{' '}
+                    {t('published', {ns: 'post'})}:{' '}
                     {dayjs(createdAt).format('DD.MM.YYYY')}
                 </p>
                 <div className='mt-10'>
                     <Link href={tgLink + '/' + user?.username} passHref={true}>
-                        <Button>{t('textAuthor', { ns: 'post' })}</Button>
+                        <button className='button'>{t('textAuthor', {ns: 'post'})}</button>
                     </Link>
                 </div>
 
                 <div className='mt-10'>
                     <Link href={`/user/${post.userId}`} passHref>
-                        <Button>{t('userAds', { ns: 'post' })}</Button>
+                        <button className='button'>{t('userAds', {ns: 'post'})}</button>
                     </Link>
                 </div>
 
-                <Button
-                    className='mt-10 lg:hidden inline-flex items-center px-4 py-2'
+                <button
+                    className='button mt-10 inline-flex items-center px-4 py-2 lg:hidden'
                     onClick={async () => await navigator.share(shareData)}
                 >
-                    {t('share', { ns: 'post' })}
-                </Button>
+                    {t('share', {ns: 'post'})}
+                </button>
                 {related.length > 0 && (
                     <div className='mt-10'>
                         <h2>Похожие объявления</h2>
-                        <ul className='grid gap-4 grid-cols-2'>
+                        <ul className='grid grid-cols-2 gap-4'>
                             {related.map((post: PostInterface) => {
-                                return <Item post={post} key={post.slug} />
+                                return <Item post={post} key={post.slug}/>
                             })}
                         </ul>
                     </div>
@@ -168,11 +167,11 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
 
 export default Post
 
-export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
+export const getStaticPaths: GetStaticPaths = async ({locales = []}) => {
     const posts = await getDynamicPaths(1000)
     const paths: GetStaticPostPath[] = posts.flatMap(post =>
         locales.map(locale => ({
-            params: { slug: post.slug },
+            params: {slug: post.slug},
             locale,
         })))
     return {
@@ -182,7 +181,7 @@ export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
 }
 
 
-export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+export const getStaticProps: GetStaticProps = async ({params, locale}) => {
     const post = await fetchPost(params?.slug as string)
 
     if (!post) {

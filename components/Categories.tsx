@@ -1,31 +1,30 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
-import { categories } from 'utils/options'
+import Image from "next/image";
+import Link from "next/link";
+import {useTranslation} from "next-i18next";
+import {categories} from "utils/options";
 
-const Categories = (): JSX.Element | null => {
-    const { t } = useTranslation()
+const Categories = (): JSX.Element => {
+    const {t} = useTranslation();
     return (
-        <ul className='mb-1 flex justify-between gap-12 bg-grey rounded-2xl overflow-scroll snap-mandatory snap-x px-8 py-2'>
-            {categories.map(({ value, image, label }, index) => {
+        <ul className="mb-1 flex snap-x snap-mandatory justify-between gap-12 overflow-scroll rounded-2xl bg-grey px-4 py-2">
+            {categories.map(({value, image, label}, index) => {
                 return (
                     <li key={value} tabIndex={index}>
                         <Link
                             href={{
-                                pathname: '/search',
-                                query: { categoryId: value },
+                                pathname: "/search",
+                                query: {categoryId: value},
                             }}
-                            className='w-10 flex flex-col items-center justify-between snap-center'
+                            className="flex w-10 snap-center flex-col items-center justify-between"
                         >
-
                             <div
-                                className='relative bg-white w-full aspect-square rounded-[50%] p-2 overflow-hidden shadow transition-all hover:scale-110'>
+                                className="relative aspect-square w-full overflow-hidden rounded-[50%] bg-white p-2 shadow transition-all hover:scale-110">
                                 <Image
                                     src={image}
                                     alt={label}
                                     fill={true}
                                     style={{
-                                        objectFit: 'contain',
+                                        objectFit: "contain",
                                         padding: 8,
                                     }}
                                 />
@@ -34,10 +33,10 @@ const Categories = (): JSX.Element | null => {
                             <h5>{t(label)}</h5>
                         </Link>
                     </li>
-                )
+                );
             })}
         </ul>
-    )
-}
+    );
+};
 
-export default Categories
+export default Categories;

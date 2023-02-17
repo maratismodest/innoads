@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import React, { ReactNode } from 'react'
+import React, {ReactNode} from 'react'
+import {seo} from "utils/constants";
 
 import Header from 'components/Header'
 
@@ -17,8 +18,8 @@ interface Props {
 
 const Layout: React.FC<Props> = ({
                                      children,
-                                     title = 'Доска объявлений города Иннополис',
-                                     description = 'Здесь вы можете найти объяления о продаже и покупке товаров и об услугах города Иннополис. Бесплатно подать объявление.',
+                                     title = seo.default.title,
+                                     description = seo.default.description,
                                      image = '/icons/icon-192x192.png',
                                      className,
                                      author = 'InnoAds',
@@ -29,21 +30,21 @@ const Layout: React.FC<Props> = ({
         <>
             <Head>
                 <title>{title}</title>
-                <link rel='canonical' href={canonical} />
-                <meta name='keywords' content={keywords} />
-                <meta name='description' content={description} />
-                <meta name='image' content={image} />
-                <meta property='og:title' content={title} />
-                <meta property='og:description' content={description} />
-                <meta property='og:type' content='website' />
-                <meta property='og:url' content='https://innoads.ru/' />
-                <meta property='og:image' content={image} />
-                <meta name='author' content={author} />
-                <link rel='image_src' href={image} />
+                <link rel='canonical' href={canonical}/>
+                <meta name='keywords' content={keywords}/>
+                <meta name='description' content={description}/>
+                <meta name='image' content={image}/>
+                <meta property='og:title' content={title}/>
+                <meta property='og:description' content={description}/>
+                <meta property='og:type' content='website'/>
+                <meta property='og:url' content='https://innoads.ru/'/>
+                <meta property='og:image' content={image}/>
+                <meta name='author' content={author}/>
+                <link rel='image_src' href={image}/>
             </Head>
-            <Header />
+            <Header/>
             <main className={className}>{children}</main>
-            <footer />
+            <footer/>
         </>
     )
 }

@@ -5,11 +5,11 @@ interface DropdownProps extends React.HTMLProps<HTMLDivElement> {
     closeToggle: (e: Event) => void
 }
 
-const Dropdown = ({ closeToggle, children }: DropdownProps): JSX.Element => {
+const Dropdown = ({closeToggle, children}: DropdownProps): JSX.Element => {
     const modalRef = useOnClickOutsideRef(() => closeToggle)
 
     return (
-        <div className='absolute right-0 top-0 min-w-[50vw] min-h-[100vh] bg-white rounded-l-md shadow px-6 py-10'
+        <div className='absolute right-0 top-0 min-h-[100vh] min-w-[50vw] rounded-l-md bg-white px-6 py-10 shadow'
              ref={modalRef}>
             {children}
         </div>

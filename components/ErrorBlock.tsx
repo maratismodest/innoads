@@ -1,19 +1,17 @@
-import { useTranslation } from 'next-i18next'
-import React from 'react'
-import { FieldErrors } from 'react-hook-form'
+import {useTranslation} from 'next-i18next'
+import React, {HTMLProps} from 'react'
+import {FieldErrors} from 'react-hook-form'
 
 type InputType = 'categoryId' | 'price' | 'title' | 'body'
 
-
-const ErrorBlock = ({ name, errors }: Props) => {
-    const { t } = useTranslation()
-    return <span className='text-red mb-2'>{errors![name] ? t('required') : null}</span>
+const ErrorBlock = ({name, errors}: ErrorBlockProps) => {
+    const {t} = useTranslation()
+    return <span className='mb-2 text-red'>{errors![name] ? t('required') : null}</span>
 }
 
-type Props = {
+interface ErrorBlockProps extends HTMLProps<HTMLSpanElement> {
     name: InputType,
-    errors?: FieldErrors,
-    text?: string
+    errors?: FieldErrors
 }
 
 export default ErrorBlock
