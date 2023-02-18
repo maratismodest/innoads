@@ -15,9 +15,9 @@ or
 
 ## Acknowledgements
 
-- [site](https://innoads.ru)
-- [tg-bot](https://t.me/InnoAdsHelpBot)
-- [tg-channel](https://t.me/innoads)
+- [Site](https://innoads.ru)
+- [Telegram-Bot](https://t.me/InnoAdsHelpBot)
+- [Telegram-Channel](https://t.me/innoads)
 
 ## Author
 
