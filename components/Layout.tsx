@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import React, {ReactNode} from 'react'
-import {seo} from "utils/constants";
+import { seo, SEO_IMAGE } from 'utils/constants'
 
 import Header from 'components/Header'
 
@@ -20,7 +20,7 @@ const Layout: React.FC<Props> = ({
                                      children,
                                      title = seo.default.title,
                                      description = seo.default.description,
-                                     image = '/icons/icon-192x192.png',
+                                     image = SEO_IMAGE,
                                      className,
                                      author = 'InnoAds',
                                      keywords = 'innoads, Иннополис, доска объявлений',

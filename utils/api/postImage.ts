@@ -1,22 +1,21 @@
-import axios from 'axios'
+import { messages } from '../constants'
+
+import client from './createRequest'
 
 interface PostImageProps {
     status: 'ok' | 'error'
     value: string
 }
 
-export const handlePostImage = async (
-    formData: FormData
-): Promise<PostImageProps> => {
+const postImage = async (formData: FormData): Promise<PostImageProps> => {
     try {
-        const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_API_URL}/uploads`,
+        const res = await client.post('/uploads',
             formData,
             {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
-            }
+            },
         )
         return {
             status: 'ok',
@@ -26,7 +25,9 @@ export const handlePostImage = async (
         console.log(e)
         return {
             status: 'error',
-            value: 'Что-то пошло не так, попробуйте повторить',
+            value: messages.somethingWentWrong,
         }
     }
 }
+
+export default postImage

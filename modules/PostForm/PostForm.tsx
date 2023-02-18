@@ -9,7 +9,7 @@ import postPost from 'utils/api/postPost'
 import postTelegram from 'utils/api/postTelegram'
 import {FormValues, messages} from 'utils/constants'
 import hasCurseWords from 'utils/curseWords'
-import {options} from 'utils/options'
+import { categories } from 'utils/options'
 import {Routes} from 'utils/routes'
 
 import ErrorBlock from 'components/ErrorBlock'
@@ -101,7 +101,7 @@ const PostForm = ({defaultValues}: PostFormProps) => {
                     className='select'
                     {...register('categoryId', {required: true})}
                 >
-                    {options.map(({value, label}) =>
+                    {categories.map(({value, label}) =>
                         <option key={value} value={value}>{t(label)}</option>)}
                 </select>
                 <ErrorBlock name='categoryId' errors={errors}/>

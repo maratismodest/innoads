@@ -1,10 +1,10 @@
 import Image from 'next/image'
-import {useTranslation} from 'next-i18next'
-import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react'
-import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE} from 'utils/constants'
+import { useTranslation } from 'next-i18next'
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import deleteImage from 'utils/api/deleteImage'
+import { ACCEPTED_IMAGE_FORMAT, NO_IMAGE } from 'utils/constants'
 import getCompressedImagesLinks from 'utils/image/getCompressedImagesLinks'
-import {handleDeleteImage} from 'utils/image/handleDeleteImage'
-import {MoveImage, moveImage} from 'utils/image/moveImage'
+import { MoveImage, moveImage } from 'utils/image/moveImage'
 
 import Icon from 'components/Icon'
 
@@ -18,10 +18,10 @@ const imageErrors = {
     manyImages: 'Не больше 4 фотографий!',
 }
 
-const PostFormImages = ({images, setImages}: PostFormImagesProps) => {
+const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
     const ref = useRef<HTMLInputElement>(null)
     const [error, setError] = useState('')
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -58,12 +58,12 @@ const PostFormImages = ({images, setImages}: PostFormImagesProps) => {
         }
     }
 
-    const deleteImage = async (current: string) => {
+    const handleDeleteImage = async (current: string) => {
         setLoading(true)
         try {
             const res = images.filter((image) => image !== current)
             setImages(res)
-            return await handleDeleteImage(current)
+            return await deleteImage(current)
         } catch (e) {
             console.log('e', e)
         } finally {
@@ -157,7 +157,7 @@ const PostFormImages = ({images, setImages}: PostFormImagesProps) => {
                             <Icon
                                 className='absolute top-0 right-0'
                                 onClick={async () => {
-                                    await deleteImage(image)
+                                    await handleDeleteImage(image)
                                 }}
                             >
                                 &times;

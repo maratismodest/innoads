@@ -1,21 +1,9 @@
-export interface OptionProps {
-    value: number;
-    label: string;
-}
-
-export const options: OptionProps [] = [
-    { value: 1, label: 'sell' },
-    { value: 2, label: 'buy' },
-    { value: 3, label: 'services' },
-    { value: 5, label: 'estate' },
-    { value: 6, label: 'clothes' },
-    { value: 7, label: 'free' },
-]
+type Category = 'sell' | 'services' | 'estate' | 'buy' | 'free' | 'clothes'
 
 interface CategoryProps {
     value: number;
-    label: string;
-    image: string
+    label: Category;
+    image: string;
 }
 
 export const categories: CategoryProps [] = [

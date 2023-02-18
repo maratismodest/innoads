@@ -1,12 +1,6 @@
-export type TelegramUserProps = {
-    id: number,
-    username: string
-    first_name: string | null,
-    last_name: string | null,
-    photo_url: string | null,
-}
+import { TelegramUser } from 'telegram-login-button'
 
-export type UserProps = Pick<TelegramUserProps, 'id' | 'username'>
+export type UserProps = Pick<TelegramUser, 'id' | 'username'>
 
 export type PostInterface = {
     id: number;

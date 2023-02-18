@@ -1,26 +1,26 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import {GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage} from 'next/types'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React, {useMemo, useRef} from 'react'
-import {clsx} from 'clsx'
+import { GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useMemo, useRef, useState } from 'react'
+import { clsx } from 'clsx'
 import dayjs from 'dayjs'
 import useOnScreen from 'hooks/useOnScreen'
-import {GetStaticPostPath, PostInterface} from 'types'
+import { GetStaticPostPath, PostInterface } from 'types'
 import fetchPost from 'utils/api/fetchPost'
 import fetchPosts from 'utils/api/fetchPosts'
-import {tgLink} from 'utils/constants'
-import {getDynamicPaths} from 'utils/getDynamicPaths'
-import {options} from 'utils/options'
-import {Routes} from 'utils/routes'
+import { tgLink } from 'utils/constants'
+import { getDynamicPaths } from 'utils/getDynamicPaths'
+import { categories } from 'utils/options'
+import { Routes } from 'utils/routes'
 
 import Item from 'components/Item'
 import Layout from 'components/Layout'
 import Price from 'components/Price'
 
-const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({post, related}) => {
-    const {t} = useTranslation()
+const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ post, related }) => {
+    const { t } = useTranslation()
     const ul = useRef<HTMLUListElement>(null)
     const refFirst = useRef<HTMLLIElement>(null)
     const refLast = useRef<HTMLLIElement>(null)
@@ -41,7 +41,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
     const images = useMemo(() => post.images.split('||'), [post])
     const category = useMemo(
         () =>
-            options.find((option) => option.value === categoryId) || options[0],
+            categories.find((option) => option.value === categoryId) || categories[0],
         [categoryId],
     )
     const seoTitle = useMemo(
@@ -81,7 +81,8 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
             <div className='mx-auto max-w-[400px]'>
                 <div className='relative'>
                     <ul className='relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll'
-                        ref={ul}>
+                        ref={ul}
+                    >
                         {images.map((image: string, index: number) => {
                             return (
                                 <li
@@ -94,7 +95,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
                                         alt='image'
                                         title={title}
                                         fill={true}
-                                        style={{objectFit: 'cover'}}
+                                        style={{ objectFit: 'cover' }}
                                     />
                                 </li>
                             )
@@ -120,27 +121,27 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
                 </div>
 
                 <Link href={`${Routes.main}search?categoryId=${categoryId}`}>
-                    {t('category', {ns: 'post'})}:{' '}
+                    {t('category', { ns: 'post' })}:{' '}
                     <span>{t(category.label)}</span>
                 </Link>
 
                 <h1>{title}</h1>
-                <Price price={price}/>
-                <hr/>
+                <Price price={price} />
+                <hr />
                 <pre className='whitespace-pre-wrap break-words'>{body}</pre>
                 <p className='mt-5'>
-                    {t('published', {ns: 'post'})}:{' '}
+                    {t('published', { ns: 'post' })}:{' '}
                     {dayjs(createdAt).format('DD.MM.YYYY')}
                 </p>
                 <div className='mt-10'>
                     <Link href={tgLink + '/' + user?.username} passHref={true}>
-                        <button className='button'>{t('textAuthor', {ns: 'post'})}</button>
+                        <button className='button'>{t('textAuthor', { ns: 'post' })}</button>
                     </Link>
                 </div>
 
                 <div className='mt-10'>
                     <Link href={`/user/${post.userId}`} passHref>
-                        <button className='button'>{t('userAds', {ns: 'post'})}</button>
+                        <button className='button'>{t('userAds', { ns: 'post' })}</button>
                     </Link>
                 </div>
 
@@ -148,14 +149,14 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
                     className='button mt-10 inline-flex items-center px-4 py-2 lg:hidden'
                     onClick={async () => await navigator.share(shareData)}
                 >
-                    {t('share', {ns: 'post'})}
+                    {t('share', { ns: 'post' })}
                 </button>
                 {related.length > 0 && (
                     <div className='mt-10'>
                         <h2>Похожие объявления</h2>
                         <ul className='grid grid-cols-2 gap-4'>
                             {related.map((post: PostInterface) => {
-                                return <Item post={post} key={post.slug}/>
+                                return <Item post={post} key={post.slug} />
                             })}
                         </ul>
                     </div>
@@ -167,21 +168,21 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
 
 export default Post
 
-export const getStaticPaths: GetStaticPaths = async ({locales = []}) => {
+export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
     const posts = await getDynamicPaths(1000)
     const paths: GetStaticPostPath[] = posts.flatMap(post =>
         locales.map(locale => ({
-            params: {slug: post.slug},
+            params: { slug: post.slug },
             locale,
         })))
     return {
         paths,
-        fallback: 'blocking'
+        fallback: 'blocking',
     }
 }
 
 
-export const getStaticProps: GetStaticProps = async ({params, locale}) => {
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     const post = await fetchPost(params?.slug as string)
 
     if (!post) {

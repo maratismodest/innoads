@@ -1,7 +1,8 @@
 import React, { Dispatch } from 'react'
 
+import postImage from '../api/postImage'
+
 import handleImageResize from './handleImageUpload'
-import { handlePostImage } from './handlePostImage'
 
 const getCompressedImagesLinks = async (imagesFromInput: FileList, setImages: Dispatch<React.SetStateAction<string[]>>) => {
     for (let i = 0; i < imagesFromInput.length; i++) {
@@ -10,7 +11,7 @@ const getCompressedImagesLinks = async (imagesFromInput: FileList, setImages: Di
         if (resizedImage) {
             const formData = new FormData()
             formData.append('image', resizedImage, resizedImage.name)
-            const { status, value } = await handlePostImage(formData)
+            const { status, value } = await postImage(formData)
             if (status === 'ok') {
                 setImages((prevState: string[]) => [...prevState, value])
             }

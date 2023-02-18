@@ -1,40 +1,39 @@
-import type {GetServerSideProps} from 'next'
-import {useRouter} from 'next/router'
-import {InferGetServerSidePropsType, NextPage} from 'next/types'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React, {useEffect, useState} from 'react'
-import {useForm} from 'react-hook-form'
-import {useAuth} from 'hooks/useAuth'
+import type { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
+import { InferGetServerSidePropsType, NextPage } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useAuth } from 'hooks/useAuth'
 import PostFormImages from 'modules/PostForm/PostFormImages'
-import {EditPostInterface} from 'types'
+import { EditPostInterface } from 'types'
 import getPostBySlug from 'utils/api/fetchPost'
 import updatePost from 'utils/api/updatePost'
-import {defaultValues, FormValues, messages, seo} from 'utils/constants'
+import { defaultValues, FormValues, messages, seo } from 'utils/constants'
 import hasCurseWords from 'utils/curseWords'
-import {options} from 'utils/options'
-import {Routes} from 'utils/routes'
+import { categories } from 'utils/options'
+import { Routes } from 'utils/routes'
 
 import ErrorBlock from 'components/ErrorBlock'
 import Layout from 'components/Layout'
 import Modal from 'components/Modal'
 import Spinner from 'components/Spinner'
 
-
-const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({post, seo}) => {
-    const {t} = useTranslation()
-    const {categoryId, userId, title, body, price, id, slug, createdAt} = post
+const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ post, seo }) => {
+    const { t } = useTranslation()
+    const { categoryId, userId, title, body, price, id, slug, createdAt } = post
     const router = useRouter()
-    const {user} = useAuth()
+    const { user } = useAuth()
     const [images, setImages] = useState<string[]>(() => post.images.split('||'))
     const editValues: FormValues = {
-        ...defaultValues, categoryId: options.find((x) => x.value === categoryId)?.value || 1, body, title, price,
+        ...defaultValues, categoryId: categories.find((x) => x.value === categoryId)?.value || 1, body, title, price,
     }
     const {
         register,
         handleSubmit,
-        formState: {errors},
-    } = useForm<FormValues>({defaultValues: editValues})
+        formState: { errors },
+    } = useForm<FormValues>({ defaultValues: editValues })
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -57,7 +56,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
             return alert(messages.forbiddenWords)
         }
 
-        const {title, body, price, categoryId} = data
+        const { title, body, price, categoryId } = data
 
         const formData: EditPostInterface = {
             id,
@@ -89,7 +88,7 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
     return (
         <Layout {...seo}>
             <Modal visible={loading}>
-                <Spinner/>
+                <Spinner />
             </Modal>
             <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -98,34 +97,34 @@ const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = (
                 <h1>{t('editPost')}</h1>
                 <select
                     className='select'
-                    {...register('categoryId', {required: true})}
+                    {...register('categoryId', { required: true })}
                 >
-                    {options.map(({value, label}) => <option key={value} value={value}>{t(label)}</option>)}
+                    {categories.map(({ value, label }) => <option key={value} value={value}>{t(label)}</option>)}
                 </select>
-                <ErrorBlock name='categoryId' errors={errors}/>
+                <ErrorBlock name='categoryId' errors={errors} />
                 <input
                     className='input'
                     type='number'
                     placeholder={t('price') as string}
-                    {...register('price', {required: true})}
+                    {...register('price', { required: true })}
                 />
-                <ErrorBlock name='price' errors={errors}/>
+                <ErrorBlock name='price' errors={errors} />
                 <input
                     className='input'
                     type='text'
                     placeholder={t('header') as string}
-                    {...register('title', {required: true})}
+                    {...register('title', { required: true })}
                 />
-                <ErrorBlock name='title' errors={errors}/>
+                <ErrorBlock name='title' errors={errors} />
                 <textarea
                     rows={5}
                     cols={5}
                     placeholder={t('description') as string}
-                    {...register('body', {required: true})}
+                    {...register('body', { required: true })}
                     className='rounded p-4'
                 />
-                <ErrorBlock name='body' errors={errors}/>
-                <PostFormImages images={images} setImages={setImages}/>
+                <ErrorBlock name='body' errors={errors} />
+                <PostFormImages images={images} setImages={setImages} />
                 <button
                     className='button mt-10'
                     type='submit'

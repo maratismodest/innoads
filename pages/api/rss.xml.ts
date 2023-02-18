@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import dayjs from 'dayjs'
 import { Feed } from 'feed'
 import { PostInterface } from 'types'
-import { SEO_DESCRIPTION, SEO_TITLE } from 'utils/constants'
+import { seo } from 'utils/constants'
 import { getDynamicPaths } from 'utils/getDynamicPaths'
 
 const baseUrl = `${process.env.NEXT_PUBLIC_APP_URL}`
@@ -20,15 +20,15 @@ const RSS = async (req: NextApiRequest, res: NextApiResponse) => {
     // Construct a new Feed object
     const feed = new Feed({
         copyright: 'InnoAds',
-        title: SEO_TITLE,
-        description: SEO_DESCRIPTION,
+        title: seo.default.title,
+        description: seo.default.description,
         id: baseUrl,
         link: baseUrl,
         language: 'ru',
         feedLinks: {
             rss2: `${baseUrl}/api/rss.xml`,
         },
-        author
+        author,
     })
 
     // Add each article to the feed

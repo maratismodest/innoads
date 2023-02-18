@@ -6,10 +6,10 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React, {useState} from 'react'
 import InfinitePosts from 'modules/InfinitePosts'
 import {seo} from "utils/constants";
-import {options} from 'utils/options'
+import { categories } from 'utils/options'
 import revalidate from 'utils/revalidate'
 
-import MainLayout from 'components/Layout'
+import Layout from 'components/Layout'
 
 const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}) => {
     const {t} = useTranslation()
@@ -18,7 +18,7 @@ const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({s
         Number(router.query['categoryId']) || 1,
     )
     return (
-        <MainLayout {...seo}>
+        <Layout {...seo}>
             <h1>{t('search')}</h1>
             <hr/>
             <select
@@ -27,11 +27,11 @@ const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({s
                 onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                     setCategoryId(Number(event.target.value))
                 }}>
-                {options.map(({value, label}) => <option key={value} value={value}>{t(label)}</option>)}
+                {categories.map(({value, label}) => <option key={value} value={value}>{t(label)}</option>)}
             </select>
             <hr/>
             <InfinitePosts initPage={0} initPosts={[]} options={{categoryId}}/>
-        </MainLayout>
+        </Layout>
     )
 }
 
