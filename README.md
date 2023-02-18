@@ -4,10 +4,11 @@ Innopolis City Classified
 
 ## Instruction:
 
+- create .env
+- yarn start
+
 - yarn dev
-
 or
-
 - Install Docker on your machine
 - Clone the repository
 - Build your container: docker build -t innoads-frontend-docker .
