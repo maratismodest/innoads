@@ -67,7 +67,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ seo
         } catch (e) {
             console.log(e)
         }
-    }, [])
+    }, [login])
 
     useEffect(() => {
         if (user) {

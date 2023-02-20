@@ -10,7 +10,7 @@ import useOnScreen from 'hooks/useOnScreen'
 import { GetStaticPostPath, PostInterface } from 'types'
 import fetchPost from 'utils/api/fetchPost'
 import fetchPosts from 'utils/api/fetchPosts'
-import { tgLink } from 'utils/constants'
+import { NO_IMAGE, tgLink } from 'utils/constants'
 import { categories } from 'utils/options'
 import { Routes } from 'utils/routes'
 
@@ -96,6 +96,8 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
                                         title={title}
                                         fill={true}
                                         style={{ objectFit: 'cover' }}
+                                        placeholder='blur'
+                                        blurDataURL={NO_IMAGE}
                                     />
                                 </li>
                             )

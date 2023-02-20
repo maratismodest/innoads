@@ -27,7 +27,7 @@ interface ItemInterface {
 }
 
 const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
-    const { modal, setModal, setModalValue, modalValue } = useModal()
+    const { setModal, setModalValue } = useModal()
     const { favourites, setFavourites } = useContext(FavouriteContext)
     const { id, slug, title, preview, price, updatedAt } = post
 
@@ -109,7 +109,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
             setModal(false)
         }
 
-    }, [])
+    }, [setModalValue, setModal])
 
     return (
         <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow'>
@@ -148,7 +148,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                     <Image
                         fill={true}
                         style={{ objectFit: 'cover' }}
-                        sizes={'(max-width: 768px) 50vw,(max-width: 1024px) 25vw, 200px'}
+                        sizes={'(max-width: 768px) 45vw,(max-width: 1024px) 25vw, 200px'}
                         alt={title}
                         src={preview || NO_IMAGE}
                         placeholder='blur'

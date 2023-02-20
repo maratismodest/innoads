@@ -16,9 +16,9 @@ const nextConfig = {
     reactStrictMode: true,
     images: {
         domains: [process.env.NEXT_PUBLIC_IMAGES_DOMAIN],
+        formats: ['image/avif', 'image/webp'],
     },
     trailingSlash: true,
-    formats: ['image/avif', 'image/webp'],
     i18n,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md'],
     webpack(config) {
