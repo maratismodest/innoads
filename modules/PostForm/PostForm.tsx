@@ -3,20 +3,22 @@ import { useTranslation } from 'next-i18next'
 import React, { useEffect, useState } from 'react'
 import { AxiosError } from 'axios'
 import { useAuth } from 'hooks/useAuth'
+import { useModal } from 'hooks/useModal'
 import slug from 'slug'
 import { EditPostInterface, PostInterface } from 'types'
 import postPost from 'utils/api/postPost'
 import postTelegram from 'utils/api/postTelegram'
 import updatePost from 'utils/api/updatePost'
 import hasCurseWords from 'utils/curseWords'
-import { categories } from 'utils/options'
 import { Routes } from 'utils/routes'
 
-import Modal from 'components/Modal'
+import Button from 'components/Button'
+import Input from 'components/Input'
+import Select from 'components/Select'
 import Spinner from 'components/Spinner'
 
 import PostFormImages from './PostFormImages'
-import { messages, postDefaultValues,PostFormValues } from './utils'
+import { messages, postDefaultValues, PostFormValues } from './utils'
 
 export interface PostFormProps {
     defaultValues?: PostFormValues
@@ -31,6 +33,7 @@ export type FormValues = {
 }
 
 const PostForm = ({ defaultValues = postDefaultValues, post }: PostFormProps) => {
+    const { modal, setModal, setModalValue, modalValue } = useModal()
     const [images, setImages] = useState<string[]>(() => post ? post.images.split('||') : [])
     const router = useRouter()
     const { t } = useTranslation()
@@ -44,6 +47,21 @@ const PostForm = ({ defaultValues = postDefaultValues, post }: PostFormProps) =>
             return
         }
     }, [])
+
+    useEffect(() => {
+        if (sending) {
+            setModalValue(<Spinner />)
+            setModal(true)
+        } else {
+            setModal(false)
+        }
+
+        return () => {
+            setModalValue(null)
+            setModal(false)
+        }
+
+    }, [sending])
 
     if (!user) {
         return null
@@ -127,67 +145,55 @@ const PostForm = ({ defaultValues = postDefaultValues, post }: PostFormProps) =>
     }
 
     return (
-        <>
-            <Modal visible={sending}>
-                <Spinner />
-            </Modal>
-            <form
-                onSubmit={onSubmit}
-                className='form'
+        <form
+            onSubmit={onSubmit}
+            className='form'
+        >
+            <h1>{t('addPost')}</h1>
+            <Select
+                required={true}
+                name='categoryId'
+                defaultValue={defaultValues.categoryId}
+            />
+            <Input
+                required={true}
+                min={1}
+                type='number'
+                placeholder={t('price') as string}
+                name='price'
+                defaultValue={defaultValues.price}
+            />
+            <Input
+                type='text'
+                placeholder={t('header') as string}
+                required={true}
+                minLength={5}
+                name='title'
+                defaultValue={defaultValues.title}
+            />
+            <textarea
+                rows={5}
+                cols={5}
+                placeholder={t('description') as string}
+                required={true}
+                minLength={10}
+                className='my-4 rounded p-4'
+                name='body'
+                defaultValue={defaultValues.body}
+            />
+
+            <PostFormImages
+                images={images}
+                setImages={setImages}
+            />
+
+            <Button
+                type='submit'
+                disabled={sending}
             >
-                <h1>{t('addPost')}</h1>
-                <select
-                    className='select'
-                    required={true}
-                    name='categoryId'
-                    defaultValue={defaultValues.categoryId}
-                >
-                    {categories.map(({ value, label }) =>
-                        <option key={value} value={value}>{t(label)}</option>)}
-                </select>
-                <input
-                    required={true}
-                    min={1}
-                    className='input mt-4'
-                    type='number'
-                    placeholder={t('price') as string}
-                    name='price'
-                    defaultValue={defaultValues.price}
-                />
-                <input
-                    className='input mt-4'
-                    type='text'
-                    placeholder={t('header') as string}
-                    required={true}
-                    minLength={5}
-                    name='title'
-                    defaultValue={defaultValues.title}
-                />
-                <textarea
-                    rows={5}
-                    cols={5}
-                    placeholder={t('description') as string}
-                    required={true}
-                    minLength={10}
-                    className='my-4 rounded p-4'
-                    name='body'
-                    defaultValue={defaultValues.body}
-                />
-
-                <PostFormImages
-                    images={images}
-                    setImages={setImages}
-                />
-
-                <button
-                    className='button mt-10'
-                    type='submit'
-                    disabled={sending}
-                >
-                    {post ? t('editAd') : t('addAd')}
-                </button>
-            </form>
-        </>
+                {post ? t('editAd') : t('addAd')}
+            </Button>
+        </form>
     )
 }
 

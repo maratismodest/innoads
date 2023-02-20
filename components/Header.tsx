@@ -1,16 +1,17 @@
 import Link from 'next/link'
-import {useTranslation} from 'next-i18next'
-import React, {useCallback, useMemo, useState} from 'react'
-import {useAuth} from 'hooks/useAuth'
+import { useTranslation } from 'next-i18next'
+import React, { useCallback, useMemo, useState } from 'react'
+import { useAuth } from 'hooks/useAuth'
 import useOnClickOutsideRef from 'hooks/useOnClickOutsideRef'
-import {Routes} from 'utils/routes'
+import { Routes } from 'utils/routes'
 
+import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Switcher from 'components/Switcher'
 
-const Buttons = ({className}: { className?: string }) => {
-    const {user} = useAuth()
-    const {t} = useTranslation()
+const Buttons = ({ className }: { className?: string }) => {
+    const { user } = useAuth()
+    const { t } = useTranslation()
     const menu = useMemo(() => [
         {
             id: 'user',
@@ -30,13 +31,13 @@ const Buttons = ({className}: { className?: string }) => {
         {
             id: 'add',
             href: Routes.add,
-            children: <button className='button'>{t('addAd')}</button>,
+            children: <Button>{t('addAd')}</Button>,
         },
     ], [user, t])
 
     return (
         <ul className={className}>
-            {menu.map(({id, href, children}) =>
+            {menu.map(({ id, href, children }) =>
                 <li key={id} className='mb-6 lg:mb-0'>
                     <Link href={href}>{children}</Link>
                 </li>)
@@ -46,7 +47,7 @@ const Buttons = ({className}: { className?: string }) => {
 }
 
 const Header = (): JSX.Element | null => {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     const [dropdown, setDropdown] = useState(false)
 
@@ -67,20 +68,20 @@ const Header = (): JSX.Element | null => {
                     <span className='hidden lg:inline'>{t('innopolisClassified')}</span>
                 </Link>
                 <div ref={ref} className='lg:hidden'>
-                    <button className='button' onClick={openDropdown}>
+                    <Button onClick={openDropdown}>
                         &#8801;
-                    </button>
+                    </Button>
 
                     {dropdown && (
                         <Dropdown closeToggle={() => openDropdown}>
-                            <Buttons className='flex-col'/>
-                            <Switcher/>
+                            <Buttons className='flex-col' />
+                            <Switcher />
                         </Dropdown>
                     )}
                 </div>
                 <div className='hidden items-center gap-2 lg:flex'>
-                    <Switcher/>
-                    <Buttons className='ml-4 flex items-center gap-2'/>
+                    <Switcher />
+                    <Buttons className='ml-4 flex items-center gap-2' />
                 </div>
             </nav>
         </div>

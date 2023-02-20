@@ -6,7 +6,7 @@ import deleteImage from 'utils/api/deleteImage'
 import { ACCEPTED_IMAGE_FORMAT, NO_IMAGE } from 'utils/constants'
 import getCompressedImagesLinks from 'utils/getCompressedImagesLinks'
 
-import Icon from 'components/Icon'
+import Button from 'components/Button'
 
 interface PostFormImagesProps {
     images: string[]
@@ -126,7 +126,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                                 placeholder='blur'
                                 blurDataURL={NO_IMAGE}
                             />
-                            <Icon
+                            <Button
                                 className='absolute top-1/2 left-0 -translate-y-1/2'
                                 onClick={(e) => {
                                     moveImage(
@@ -139,8 +139,8 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                                 }}
                             >
                                 &larr;
-                            </Icon>
-                            <Icon
+                            </Button>
+                            <Button
                                 className='absolute top-1/2 right-0 -translate-y-1/2	'
                                 onClick={(e) => {
                                     moveImage(
@@ -153,15 +153,15 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                                 }}
                             >
                                 &rarr;
-                            </Icon>
-                            <Icon
+                            </Button>
+                            <Button
                                 className='absolute top-0 right-0'
                                 onClick={async () => {
                                     await handleDeleteImage(image)
                                 }}
                             >
                                 &times;
-                            </Icon>
+                            </Button>
                         </li>
                     )
                 })}

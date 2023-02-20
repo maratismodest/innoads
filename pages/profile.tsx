@@ -13,6 +13,7 @@ import { seo } from 'utils/constants'
 import revalidate from 'utils/revalidate'
 import { Routes } from 'utils/routes'
 
+import Button from 'components/Button'
 import Layout from 'components/Layout'
 import Posts from 'components/Posts'
 import Spinner from 'components/Spinner'
@@ -85,7 +86,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ seo
                         dataOnauth={handleTelegram}
                     />
                     {process.env.NEXT_PUBLIC_NODE_ENV == 'development' &&
-                        <button className='button' onClick={handleTelegramImitate}>Imitate</button>}
+                        <Button onClick={handleTelegramImitate}>Imitate</Button>}
                 </div>
             </Layout>
         )
@@ -98,11 +99,11 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ seo
                 <p>{t('addAds')}</p>
             </div>
             <Link href={Routes.add}>
-                <button className='button'>&#43;</button>
+                <Button>&#43;</Button>
             </Link>
             {fetching && <Spinner />}
             {posts.length > 0 && !fetching && <Posts posts={posts} edit={true} />}
-            <button onClick={logout} className='button'>{t('exit')}</button>
+            <Button onClick={logout}>{t('exit')}</Button>
         </Layout>
     )
 }

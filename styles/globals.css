@@ -90,7 +90,7 @@
     }
 
     .form {
-        @apply relative flex flex-col mx-auto max-w-[400px]
+        @apply relative flex flex-col mx-auto max-w-[400px] gap-4
     }
 
     .select {
@@ -139,7 +139,7 @@
     }
 
     .button {
-        @apply text-white bg-blue rounded-lg px-4 py-2 w-fit cursor-pointer shadow hover:hover:shadow-lg
+        @apply text-white bg-blue rounded-lg px-4 py-2 w-fit cursor-pointer shadow transition-all hover:hover:shadow-lg
     }
 
     .input {

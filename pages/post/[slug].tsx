@@ -14,6 +14,7 @@ import { tgLink } from 'utils/constants'
 import { categories } from 'utils/options'
 import { Routes } from 'utils/routes'
 
+import Button from 'components/Button'
 import Item from 'components/Item'
 import Layout from 'components/Layout'
 import Price from 'components/Price'
@@ -100,23 +101,20 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
                             )
                         })}
                     </ul>
-                    <button
-                        className={clsx('button absolute top-1/2 w-fit -translate-y-1/2 cursor-pointer rounded border-none bg-blue p-2 text-white transition-all', 'left-0')}
+                    <Button
+                        className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2', 'left-0')}
                         onClick={() => handleClick('left')}
                         hidden={firstInView || images.length < 2}
                     >
                         &larr;
-                    </button>
-                    <button
-                        className={clsx('button absolute top-1/2 w-fit -translate-y-1/2 cursor-pointer rounded border-none bg-blue p-2 text-white transition-all', 'right-0')}
+                    </Button>
+                    <Button
+                        className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2', 'right-0')}
                         onClick={() => handleClick('right')}
                         hidden={lastInVew || images.length < 2}
                     >
                         &rarr;
-                    </button>
-                    <dialog>
-
-                    </dialog>
+                    </Button>
                 </div>
 
                 <Link href={`${Routes.main}search?categoryId=${categoryId}`}>
@@ -132,24 +130,22 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
                     {t('published', { ns: 'post' })}:{' '}
                     {dayjs(createdAt).format('DD.MM.YYYY')}
                 </p>
-                <div className='mt-10'>
-                    <Link href={tgLink + '/' + user?.username} passHref={true}>
-                        <button className='button'>{t('textAuthor', { ns: 'post' })}</button>
-                    </Link>
-                </div>
 
-                <div className='mt-10'>
-                    <Link href={`/user/${post.userId}`} passHref>
-                        <button className='button'>{t('userAds', { ns: 'post' })}</button>
-                    </Link>
-                </div>
+                <Link href={tgLink + '/' + user?.username} passHref className='mt-8 block'>
+                    <Button>{t('textAuthor', { ns: 'post' })}</Button>
+                </Link>
 
-                <button
-                    className='button mt-10 inline-flex items-center px-4 py-2 lg:hidden'
+
+                <Link href={`/user/${post.userId}`} passHref className='mt-8 block'>
+                    <Button>{t('userAds', { ns: 'post' })}</Button>
+                </Link>
+
+                <Button
+                    className='mt-8'
                     onClick={async () => await navigator.share(shareData)}
                 >
                     {t('share', { ns: 'post' })}
-                </button>
+                </Button>
                 {related.length > 0 && (
                     <div className='mt-10'>
                         <h2>Похожие объявления</h2>

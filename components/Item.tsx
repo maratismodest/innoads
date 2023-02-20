@@ -1,54 +1,52 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import {useRouter} from 'next/router'
-import {useTranslation} from 'next-i18next'
-import React, {useCallback, useContext, useMemo, useState} from 'react'
-import {clsx} from 'clsx'
-import {FavouriteContext} from 'context/FavouritesContext'
+import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { clsx } from 'clsx'
+import { FavouriteContext } from 'context/FavouritesContext'
 import dayjs from 'dayjs'
-import {useAuth} from 'hooks/useAuth'
+import { useAuth } from 'hooks/useAuth'
+import { useModal } from 'hooks/useModal'
 import TransparentHeart from 'public/svg/heart.svg'
 import RedHeart from 'public/svg/heart-red.svg'
-import {PostInterface} from 'types'
+import { PostInterface } from 'types'
 import client from 'utils/api/createRequest'
 import postTelegram from 'utils/api/postTelegram'
 import updatePost from 'utils/api/updatePost'
-import {NO_IMAGE} from 'utils/constants'
-import {Routes} from 'utils/routes'
+import { NO_IMAGE } from 'utils/constants'
+import { Routes } from 'utils/routes'
 
-import Modal from 'components/Modal'
+import Button from 'components/Button'
 import Price from 'components/Price'
 
 const sevenDays = 1000 * 60 * 60 * 24 * 7
-const buttonStyle = 'absolute z-10 p-2 w-8 h-8 flex justify-center items-center'
 
 interface ItemInterface {
     post: PostInterface
     edit?: boolean
 }
 
-const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
+const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
 
-    const {favourites, setFavourites} = useContext(FavouriteContext)
-    const {id, slug, title, preview, price, updatedAt} = post
+    const { modal, setModal, setModalValue, modalValue } = useModal()
+    const { favourites, setFavourites } = useContext(FavouriteContext)
+    const { id, slug, title, preview, price, updatedAt } = post
 
-    const {t} = useTranslation('profile')
+    const { t } = useTranslation('profile')
     const router = useRouter()
-    const {token} = useAuth()
+    const { token } = useAuth()
     const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id])
-
-    const [visible, setVisible] = useState(false)
-    const hideModal = useCallback(() => setVisible(false), [])
 
     const showModal = (text: ItemModalText) => {
         setModalText(text)
-        setVisible(true)
+        setModal(true)
     }
 
     const [modalText, setModalText] = useState<ItemModalText | undefined>()
 
     const handleFunction = useCallback(async () => {
-        hideModal()
+        setModal(true)
         try {
             switch (modalText) {
                 case ItemModalText.edit: {
@@ -72,7 +70,7 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
                         )
                     } else {
                         await postTelegram(post)
-                        await updatePost({...post, createdAt: new Date().toString()})
+                        await updatePost({ ...post, createdAt: new Date().toString() })
                         alert(success.updated)
                     }
                     break
@@ -84,7 +82,7 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
             console.log(e)
             alert(errors.wentWrong)
         }
-    }, [modalText, post, router, token, hideModal, id, slug, updatedAt])
+    }, [modalText, post, router, token, id, slug, updatedAt])
 
     const handleFavourite = useCallback(
         (e: React.SyntheticEvent) => {
@@ -96,77 +94,86 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
         [id, favourites, liked, post, setFavourites],
     )
 
-    return (
-        <>
-            <Modal visible={visible}>
+    useEffect(() => {
+        if (modal) {
+            setModalValue(
                 <div className='flex flex-col'>
                     <h4>{modalText}</h4>
-                    <hr/>
+                    <hr />
                     <div className='mt-12 flex justify-around'>
-                        <button onClick={handleFunction} className='button min-w-[64px]'>Да</button>
-                        <button onClick={hideModal} className='button min-w-[64px]'>Нет</button>
+                        <Button onClick={handleFunction}>Да</Button>
+                        <Button onClick={() => setModal(false)}>Нет</Button>
                     </div>
+                </div>)
+            setModal(true)
+        } else {
+            setModalValue(null)
+            setModal(false)
+        }
+
+        return () => {
+            setModalValue(null)
+            setModal(false)
+        }
+
+    }, [modal, handleFunction])
+
+    return (
+        <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow'>
+            {edit && (
+                <>
+                    <Button
+                        className={clsx('absolute z-10', 'right-0 top-0')}
+                        onClick={() => {
+                            showModal(ItemModalText.delete)
+                        }}
+                    >
+                        &#10008;
+                    </Button>
+                    <Button
+                        title={t('edit') as string}
+                        className={clsx('absolute z-10', 'left-0 top-0')}
+                        onClick={() => {
+                            showModal(ItemModalText.edit)
+                        }}
+                    >
+                        &#10000;
+                    </Button>
+                    <Button
+                        title={t('publishAgain') as string}
+                        className={clsx('absolute z-10', 'right-0 bottom-0')}
+                        onClick={() => {
+                            showModal(ItemModalText.republish)
+                        }}
+                    >
+                        &#8679;
+                    </Button>
+                </>
+            )}
+            <Link href={`${Routes.post}/${slug}`} title={title}>
+                <div className='relative aspect-square transition-all hover:scale-105'>
+                    <Image
+                        fill={true}
+                        style={{ objectFit: 'cover' }}
+                        sizes={'(max-width: 768px) 50vw,(max-width: 1024px) 25vw, 200px'}
+                        alt={title}
+                        src={preview || NO_IMAGE}
+                        placeholder='blur'
+                        blurDataURL={NO_IMAGE}
+                        title={title}
+                    />
                 </div>
-            </Modal>
 
-            <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow'>
-                {edit && (
-                    <>
-                        <button
-                            className={clsx(
-                                'button', buttonStyle, 'right-0 top-0 bg-none',
-                            )}
-                            onClick={() => {
-                                showModal(ItemModalText.delete)
-                            }}
-                        >
-                            &#10008;
-                        </button>
-                        <button
-                            title={t('edit') as string}
-                            className={clsx('button', buttonStyle, 'left-0 top-0 bg-none')}
-                            onClick={() => {
-                                showModal(ItemModalText.edit)
-                            }}
-                        >
-                            &#10000;
-                        </button>
-                        <button
-                            title={t('publishAgain') as string}
-                            className={clsx('button', buttonStyle, 'right-0 bottom-0 bg-none')}
-                            onClick={() => {
-                                showModal(ItemModalText.republish)
-                            }}
-                        >
-                            &#8679;
-                        </button>
-                    </>
-                )}
-                <Link href={`${Routes.post}/${slug}`} title={title}>
-                    <div className='relative aspect-square transition-all hover:scale-105'>
-                        <Image
-                            fill={true}
-                            style={{objectFit: 'cover'}}
-                            sizes={'(max-width: 768px) 50vw,(max-width: 1024px) 25vw, 200px'}
-                            alt={title}
-                            src={preview || NO_IMAGE}
-                            placeholder='blur'
-                            blurDataURL={NO_IMAGE}
-                            title={title}
-                        />
-                    </div>
+                <div className='relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2'>
+                    <Price price={price} />
+                    <h2 className='mt-auto text-ellipsis whitespace-nowrap font-normal'>{title}</h2>
+                    <button className='absolute top-0 right-0 z-10 cursor-pointer' onClick={handleFavourite}>
+                        {liked ? <RedHeart /> : <TransparentHeart />}
+                    </button>
+                </div>
 
-                    <div className='relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2'>
-                        <Price price={price}/>
-                        <h2 className='mt-auto text-ellipsis whitespace-nowrap font-normal'>{title}</h2>
-                        <div className='absolute top-0 right-0 z-10 cursor-pointer' onClick={handleFavourite}>
-                            {liked ? <RedHeart/> : <TransparentHeart/>}
-                        </div>
-                    </div>
-
-                </Link>
-            </li>
-        </>
+            </Link>
+        </li>
     )
 }
 

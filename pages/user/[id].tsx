@@ -11,6 +11,7 @@ import { tgLink } from 'utils/constants'
 import revalidate from 'utils/revalidate'
 import sortByCreatedAt from 'utils/sortByUpdatedAt'
 
+import Button from 'components/Button'
 import Layout from 'components/Layout'
 import Posts from 'components/Posts'
 
@@ -24,7 +25,7 @@ const PublicProfile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = 
             <p>{t('adsCount')}: <span>{posts.length}</span></p>
             <Posts posts={posts} className='mt-10' />
             <Link href={tgLink + '/' + user.username} passHref className='mt-10 block'>
-                <button className='button'>{t('textAuthor')}</button>
+                <Button>{t('textAuthor')}</Button>
             </Link>
         </Layout>
     )
