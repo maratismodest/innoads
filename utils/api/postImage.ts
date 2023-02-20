@@ -1,4 +1,4 @@
-import { messages } from '../constants'
+import { messages } from 'modules/PostForm/utils'
 
 import client from './createRequest'
 

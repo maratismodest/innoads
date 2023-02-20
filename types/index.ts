@@ -48,3 +48,8 @@ export type BlogPost = {
     description: string
     contentHtml?: string
 }
+
+export interface Seo {
+    title: string,
+    description: string
+}

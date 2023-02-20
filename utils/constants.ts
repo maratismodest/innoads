@@ -1,7 +1,4 @@
-export interface Seo {
-    title: string,
-    description: string
-}
+import { Seo } from 'types'
 
 export const seo: Record<string, Seo> = {
     default: {
@@ -48,23 +45,3 @@ export const NO_IMAGE = '/images/no-image.jpeg'
 
 export const SEO_IMAGE = '/icons/icon-192x192.png'
 export const ACCEPTED_IMAGE_FORMAT = '.jpg, .jpeg, .png'
-
-export type CreatePostFormValues = {
-    title: string,
-    body: string,
-    price: number,
-    categoryId: number
-}
-
-export const defaultValues: CreatePostFormValues = {
-    categoryId: 1,
-    title: '',
-    price: 0,
-    body: '',
-}
-
-export const messages = {
-    forbiddenWords: 'Есть запрещенные слова!',
-    postUpdated: 'Ваше объявление изменено!',
-    somethingWentWrong: 'Что-то пошло не так!',
-}

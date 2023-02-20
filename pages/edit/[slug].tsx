@@ -3,20 +3,25 @@ import { InferGetServerSidePropsType, NextPage } from 'next/types'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
 import PostForm from 'modules/PostForm/PostForm'
+import { postDefaultValues, PostFormValues } from 'modules/PostForm/utils'
 import getPostBySlug from 'utils/api/fetchPost'
-import { CreatePostFormValues, defaultValues, seo } from 'utils/constants'
+import { seo } from 'utils/constants'
 import { categories } from 'utils/options'
 
 import Layout from 'components/Layout'
 
 const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ post, seo }) => {
-    const { categoryId, userId, title, body, price, id, slug, createdAt } = post
-    const editValues: CreatePostFormValues = {
-        ...defaultValues, categoryId: categories.find((x) => x.value === categoryId)?.value || 1, body, title, price,
+    const { categoryId, title, body, price } = post
+    const editValues: PostFormValues = {
+        ...postDefaultValues,
+        categoryId: categories.find((x) => x.value === categoryId)?.value || 1,
+        body,
+        title,
+        price,
     }
     return (
         <Layout {...seo}>
-            <PostForm defaultValues={editValues} post={post}/>
+            <PostForm defaultValues={editValues} post={post} />
         </Layout>
     )
 }

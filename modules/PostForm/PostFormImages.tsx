@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
+import { MoveImage, moveImage } from 'modules/PostForm/moveImage'
 import deleteImage from 'utils/api/deleteImage'
 import { ACCEPTED_IMAGE_FORMAT, NO_IMAGE } from 'utils/constants'
-import getCompressedImagesLinks from 'utils/image/getCompressedImagesLinks'
-import { MoveImage, moveImage } from 'utils/image/moveImage'
+import getCompressedImagesLinks from 'utils/getCompressedImagesLinks'
 
 import Icon from 'components/Icon'
 
@@ -78,7 +78,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                 <div>
                     <h4>{t('addPhoto')}</h4>
                     <div
-                        className='relative mb-2 aspect-square w-[48%] cursor-pointer hover:shadow lg:mr-2 lg:w-[150px]'
+                        className='relative mb-2 aspect-square w-[48%] cursor-pointer hover:shadow lg:mr-2'
                         onClick={() => {
                             if (ref.current) {
                                 ref.current.click()
@@ -114,7 +114,7 @@ const PostFormImages = ({ images, setImages }: PostFormImagesProps) => {
                     return (
                         <li
                             key={image}
-                            className='relative aspect-square cursor-pointer hover:shadow'
+                            className='relative aspect-square cursor-pointer shadow hover:shadow-2xl'
                         >
                             <Image
                                 alt={image}

@@ -1,12 +1,13 @@
 import Link from 'next/link'
-import {GetStaticProps} from 'next/types'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next/types'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
-import {getSortedPostsData} from 'utils/blogParse'
-import {Seo, seo} from "utils/constants";
+import { Seo } from 'types'
+import { getSortedPostsData } from 'utils/blogParse'
+import { seo } from 'utils/constants'
 import revalidate from 'utils/revalidate'
-import {Routes} from 'utils/routes'
+import { Routes } from 'utils/routes'
 
 import Layout from 'components/Layout'
 
@@ -19,8 +20,8 @@ export type Props = {
     seo: Seo
 }
 
-const Blog = ({blogPosts, seo}: Props) => {
-    const {t} = useTranslation()
+const Blog = ({ blogPosts, seo }: Props) => {
+    const { t } = useTranslation()
     const canonical = `${process.env.NEXT_PUBLIC_APP_URL}/blog`
     return (
         <Layout
@@ -41,7 +42,7 @@ const Blog = ({blogPosts, seo}: Props) => {
 
 export default Blog
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
     const blogPosts = getSortedPostsData()
     return {
         props: {

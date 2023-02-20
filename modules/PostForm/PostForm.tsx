@@ -8,7 +8,6 @@ import { EditPostInterface, PostInterface } from 'types'
 import postPost from 'utils/api/postPost'
 import postTelegram from 'utils/api/postTelegram'
 import updatePost from 'utils/api/updatePost'
-import { CreatePostFormValues, messages } from 'utils/constants'
 import hasCurseWords from 'utils/curseWords'
 import { categories } from 'utils/options'
 import { Routes } from 'utils/routes'
@@ -17,9 +16,10 @@ import Modal from 'components/Modal'
 import Spinner from 'components/Spinner'
 
 import PostFormImages from './PostFormImages'
+import { messages, postDefaultValues,PostFormValues } from './utils'
 
 export interface PostFormProps {
-    defaultValues: CreatePostFormValues
+    defaultValues?: PostFormValues
     post?: PostInterface
 }
 
@@ -30,7 +30,7 @@ export type FormValues = {
     categoryId: HTMLSelectElement
 }
 
-const PostForm = ({ defaultValues, post }: PostFormProps) => {
+const PostForm = ({ defaultValues = postDefaultValues, post }: PostFormProps) => {
     const [images, setImages] = useState<string[]>(() => post ? post.images.split('||') : [])
     const router = useRouter()
     const { t } = useTranslation()
@@ -44,6 +44,10 @@ const PostForm = ({ defaultValues, post }: PostFormProps) => {
             return
         }
     }, [])
+
+    if (!user) {
+        return null
+    }
 
     const onSubmit: React.FormEventHandler<HTMLFormElement & FormValues> = async (event) => {
         event.preventDefault()
@@ -100,10 +104,11 @@ const PostForm = ({ defaultValues, post }: PostFormProps) => {
             preview: images[0],
             images: images.join('||'),
             slug: slug(data.title) + '-' + Math.floor(Math.random() * 100),
-            telegram: user?.username as string,
-            userId: user?.id as number,
+            telegram: user.username,
+            userId: user.id,
             categoryId: data.categoryId,
         }
+
         try {
             setSending(true)
             await postPost(formData)
@@ -119,10 +124,6 @@ const PostForm = ({ defaultValues, post }: PostFormProps) => {
         } finally {
             setSending(false)
         }
-    }
-
-    if (!user) {
-        return null
     }
 
     return (

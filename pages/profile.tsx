@@ -61,7 +61,6 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ seo
             if (decoded) {
                 localStorage.setItem('token', data.token)
                 client.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
-                // @ts-ignore
                 login(user)
             }
         } catch (e) {

@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import dayjs from 'dayjs'
 import { Feed } from 'feed'
 import { PostInterface } from 'types'
+import fetchPosts from 'utils/api/fetchPosts'
 import { seo } from 'utils/constants'
-import { getDynamicPaths } from 'utils/getDynamicPaths'
 
 const baseUrl = `${process.env.NEXT_PUBLIC_APP_URL}`
 
@@ -15,7 +15,7 @@ const author = {
 
 const RSS = async (req: NextApiRequest, res: NextApiResponse) => {
     // An array with your links
-    const posts: PostInterface[] = await getDynamicPaths(100)
+    const { content: posts } = await fetchPosts({ size: 100 })
 
     // Construct a new Feed object
     const feed = new Feed({

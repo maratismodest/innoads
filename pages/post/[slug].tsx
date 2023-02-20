@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage } from 'next/types'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { clsx } from 'clsx'
 import dayjs from 'dayjs'
 import useOnScreen from 'hooks/useOnScreen'
@@ -11,7 +11,6 @@ import { GetStaticPostPath, PostInterface } from 'types'
 import fetchPost from 'utils/api/fetchPost'
 import fetchPosts from 'utils/api/fetchPosts'
 import { tgLink } from 'utils/constants'
-import { getDynamicPaths } from 'utils/getDynamicPaths'
 import { categories } from 'utils/options'
 import { Routes } from 'utils/routes'
 
@@ -169,7 +168,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({ po
 export default Post
 
 export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
-    const posts = await getDynamicPaths(1000)
+    const { content: posts } = await fetchPosts({ size: 1000 })
     const paths: GetStaticPostPath[] = posts.flatMap(post =>
         locales.map(locale => ({
             params: { slug: post.slug },
