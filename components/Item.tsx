@@ -2,11 +2,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo } from 'react'
 import { clsx } from 'clsx'
 import { FavouriteContext } from 'context/FavouritesContext'
 import dayjs from 'dayjs'
-import { useAuth } from 'hooks/useAuth'
 import { useModal } from 'hooks/useModal'
 import TransparentHeart from 'public/svg/heart.svg'
 import RedHeart from 'public/svg/heart-red.svg'
@@ -28,25 +27,34 @@ interface ItemInterface {
 }
 
 const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
-
     const { modal, setModal, setModalValue, modalValue } = useModal()
     const { favourites, setFavourites } = useContext(FavouriteContext)
     const { id, slug, title, preview, price, updatedAt } = post
 
     const { t } = useTranslation('profile')
     const router = useRouter()
-    const { token } = useAuth()
     const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id])
 
+    const hideModal = () => {
+        setModalValue(null)
+        setModal(false)
+    }
+
     const showModal = (text: ItemModalText) => {
-        setModalText(text)
+        setModalValue(
+            <div className='flex flex-col text-center'>
+                <h4>{text}</h4>
+                <hr />
+                <div className='mt-12 flex justify-around'>
+                    <Button onClick={async () => await handleFunction(text)}>Да</Button>
+                    <Button onClick={hideModal}>Нет</Button>
+                </div>
+            </div>,
+        )
         setModal(true)
     }
 
-    const [modalText, setModalText] = useState<ItemModalText | undefined>()
-
-    const handleFunction = useCallback(async () => {
-        setModal(true)
+    const handleFunction = async (modalText: string) => {
         try {
             switch (modalText) {
                 case ItemModalText.edit: {
@@ -56,6 +64,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
                 case ItemModalText.delete: {
                     await client.delete(`/posts/${id}`)
                     alert(success.deleted)
+                    await router.push(Routes.profile)
                     break
                 }
                 case ItemModalText.republish: {
@@ -82,7 +91,7 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
             console.log(e)
             alert(errors.wentWrong)
         }
-    }, [modalText, post, router, token, id, slug, updatedAt])
+    }
 
     const handleFavourite = useCallback(
         (e: React.SyntheticEvent) => {
@@ -95,28 +104,12 @@ const Item = ({ post, edit = false }: ItemInterface): JSX.Element => {
     )
 
     useEffect(() => {
-        if (modal) {
-            setModalValue(
-                <div className='flex flex-col'>
-                    <h4>{modalText}</h4>
-                    <hr />
-                    <div className='mt-12 flex justify-around'>
-                        <Button onClick={handleFunction}>Да</Button>
-                        <Button onClick={() => setModal(false)}>Нет</Button>
-                    </div>
-                </div>)
-            setModal(true)
-        } else {
-            setModalValue(null)
-            setModal(false)
-        }
-
         return () => {
             setModalValue(null)
             setModal(false)
         }
 
-    }, [modal, handleFunction])
+    }, [])
 
     return (
         <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow'>
