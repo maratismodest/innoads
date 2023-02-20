@@ -1,4 +1,4 @@
-import { FormValues } from './constants'
+import { CreatePostFormValues } from './constants'
 
 const badPatterns = [
     '^(о|а)н(о|а)нист.*',
@@ -215,5 +215,8 @@ const curseWords: curseWordsProps = {
     },
 }
 
-const hasCurseWords = ({ title, body }: FormValues) => curseWords.containsMat(title) || curseWords.containsMat(body)
+const hasCurseWords = ({
+                           title,
+                           body,
+                       }: CreatePostFormValues) => curseWords.containsMat(title) || curseWords.containsMat(body)
 export default hasCurseWords
