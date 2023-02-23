@@ -18,7 +18,6 @@ const nextConfig = {
         domains: [process.env.NEXT_PUBLIC_IMAGES_DOMAIN],
         formats: ['image/avif', 'image/webp'],
     },
-    trailingSlash: true,
     i18n,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md'],
     webpack(config) {
