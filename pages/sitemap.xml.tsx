@@ -18,7 +18,7 @@ function generateSiteMap(posts: PostInterface[]) {
         .map(({ slug }) => {
             return `
        <url>
-           <loc>${`${process.env.NEXT_PUBLIC_APP_URL}/posts/${slug}`}</loc>
+           <loc>${`${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`}</loc>
        </url>
      `
         })
