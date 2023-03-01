@@ -154,6 +154,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
         required={true}
         name='categoryId'
         defaultValue={defaultValues.categoryId}
+        data-testid='categoryId'
       />
       <Input
         required={true}
@@ -162,6 +163,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
         placeholder={t('price') as string}
         name='price'
         defaultValue={defaultValues.price}
+        data-testid='price'
       />
       <Input
         type='text'
@@ -170,6 +172,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
         minLength={5}
         name='title'
         defaultValue={defaultValues.title}
+        data-testid='title'
       />
       <textarea
         rows={5}
@@ -180,6 +183,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
         className='my-4 rounded p-4'
         name='body'
         defaultValue={defaultValues.body}
+        data-testid='description'
       />
 
       <PostFormImages

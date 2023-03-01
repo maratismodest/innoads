@@ -29,7 +29,7 @@ interface ItemInterface {
 const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
   const {setModal, setModalValue} = useModal()
   const {favourites, setFavourites} = useContext(FavouriteContext)
-  const {id, slug, title, preview, price, updatedAt} = post
+  const {id, slug, title, preview, price, updatedAt, categoryId} = post
 
   const {t} = useTranslation('profile')
   const router = useRouter()
@@ -112,7 +112,8 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
   }, [setModalValue, setModal])
 
   return (
-    <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow'>
+    <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow' data-testid="item"
+        data-category={categoryId}>
       {edit && (
         <>
           <Button
