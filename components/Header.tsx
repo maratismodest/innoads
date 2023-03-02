@@ -57,7 +57,7 @@ const Header = (): JSX.Element | null => {
   const ref = useOnClickOutsideRef(closeDropdown)
 
   return (
-    <div className='fixed inset-x-0 top-0 z-50 h-[66px] bg-grey text-black'>
+    <header className='fixed inset-x-0 top-0 z-50 h-[66px] bg-grey text-black'>
       <nav className='mx-auto flex w-full max-w-[1100px] justify-between p-3'>
         <Link
           href={Routes.main}
@@ -84,7 +84,7 @@ const Header = (): JSX.Element | null => {
           <Buttons className='ml-4 flex items-center gap-2'/>
         </div>
       </nav>
-    </div>
+    </header>
   )
 }
 

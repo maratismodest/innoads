@@ -1,21 +1,20 @@
-import { useTranslation } from 'next-i18next'
-import React, { HTMLProps } from 'react'
-import { clsx } from 'clsx'
-import { categories } from 'utils/options'
+import {useTranslation} from 'next-i18next'
+import React, {useMemo} from 'react'
+import ReactSelect from "react-select";
+import {clsx} from 'clsx'
+import {selectOptions} from 'utils/options'
 
-type Props = HTMLProps<HTMLSelectElement> & {}
+const Select = ({className, ...props}: any) => {
+  const {t} = useTranslation()
+  const options = useMemo(() => selectOptions.map(x => ({...x, label: t(x.label)})), [t])
 
-const Select = ({ className, ...props }: Props) => {
-    const { t } = useTranslation()
-    return (
-        <select
-            className={clsx('select', className)}
-            {...props}
-        >
-            {categories.map(({ value, label }) =>
-                <option key={value} value={value}>{t(label)}</option>)}
-        </select>
-    )
+  return (
+    <ReactSelect
+      className={clsx(className)}
+      options={options}
+      {...props}
+    />
+  )
 }
 
 export default Select
