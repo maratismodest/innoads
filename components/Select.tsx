@@ -10,7 +10,9 @@ const Select = ({className, ...props}: any) => {
 
   return (
     <ReactSelect
-      className={clsx(className)}
+      className={clsx('z-20', className)}
+      placeholder={t('chooseCategory')}
+      aria-label='select'
       options={options}
       {...props}
     />
