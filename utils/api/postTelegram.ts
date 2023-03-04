@@ -4,7 +4,7 @@ import client, {beRoutes} from './createRequest'
 
 export const postTelegram = async (formData: PostTelegramDTO) =>
   await client.post(
-    beRoutes.telegram,
+    beRoutes.telegrams,
     formData,
   )
 export default postTelegram
