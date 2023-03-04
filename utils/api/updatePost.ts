@@ -1,18 +1,9 @@
-import { EditPostInterface } from 'types'
+import {EditPostInterface} from 'types'
 
-import client from './createRequest'
+import client, {beRoutes} from './createRequest'
 
-export const updatePost = async (formData: EditPostInterface) => {
-    // const token = localStorage.getItem('token')
-    const res = await client.put(
-        `/posts/` + formData.id,
-        formData,
-        // {
-        //     headers: {
-        //         authorization: `Bearer ${token}`,
-        //     },
-        // },
-    )
-    return res
-}
+export const updatePost = async (formData: EditPostInterface) =>
+  await client.put(beRoutes.posts + '/' + formData.id,
+    formData,
+  )
 export default updatePost

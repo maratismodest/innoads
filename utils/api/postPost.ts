@@ -1,19 +1,12 @@
-import { PostFormInterface } from 'types'
+import {PostFormInterface} from 'types'
 
-import client from './createRequest'
+import client, {beRoutes} from './createRequest'
 
 const postPost = async (formData: PostFormInterface) => {
-    // const token = localStorage.getItem('token')
-
-    const { data } = await client.post(
-        `/posts`,
-        formData,
-        // {
-        //     headers: {
-        //         authorization: `Bearer ${token}`,
-        //     },
-        // },
-    )
-    return data
+  const {data} = await client.post(
+    beRoutes.posts,
+    formData,
+  )
+  return data
 }
 export default postPost

@@ -63,7 +63,7 @@
     }
 
     dialog {
-        @apply relative min-w-[300px] border-none rounded shadow
+        @apply relative w-full max-w-md border-none rounded shadow
     }
 
     input, textarea {

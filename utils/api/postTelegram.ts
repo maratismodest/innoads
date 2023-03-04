@@ -1,18 +1,10 @@
-import { PostFormInterface } from 'types'
+import {PostTelegramDTO} from 'types/TelegramDTO'
 
-import client from './createRequest'
+import client, {beRoutes} from './createRequest'
 
-export const postTelegram = async (formData: PostFormInterface) => {
-    // const token = localStorage.getItem('token')
-    const res = await client.post(
-        `/telegrams`,
-        formData,
-        // {
-        //     headers: {
-        //         authorization: `Bearer ${token}`,
-        //     },
-        // },
-    )
-    return res
-}
+export const postTelegram = async (formData: PostTelegramDTO) =>
+  await client.post(
+    beRoutes.telegram,
+    formData,
+  )
 export default postTelegram

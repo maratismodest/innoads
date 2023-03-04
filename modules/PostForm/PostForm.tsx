@@ -6,6 +6,7 @@ import {useAuth} from 'hooks/useAuth'
 import {useModal} from 'hooks/useModal'
 import slug from 'slug'
 import {EditPostInterface, PostInterface} from 'types'
+import {PostTelegramDTO} from "types/TelegramDTO";
 import postPost from 'utils/api/postPost'
 import postTelegram from 'utils/api/postTelegram'
 import updatePost from 'utils/api/updatePost'
@@ -127,10 +128,20 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       categoryId: data.categoryId,
     }
 
+    const telegramForm: PostTelegramDTO = {
+      title: data.title,
+      body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
+      price: data.price,
+      images: images.join('||'),
+      slug: slug(data.title) + '-' + Math.floor(Math.random() * 100),
+      telegram: user.username,
+      categoryId: data.categoryId,
+    }
+
     try {
       setSending(true)
       await postPost(formData)
-      await postTelegram(formData)
+      await postTelegram(telegramForm)
       alert('Ваше объявление создано!')
       return router.push(Routes.profile)
     } catch (e) {

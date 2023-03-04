@@ -6,6 +6,7 @@ import React, {useCallback, useContext, useEffect, useMemo} from 'react'
 import {clsx} from 'clsx'
 import {FavouriteContext} from 'context/FavouritesContext'
 import dayjs from 'dayjs'
+import {useAuth} from "hooks/useAuth";
 import {useModal} from 'hooks/useModal'
 import TransparentHeart from 'public/svg/heart.svg'
 import RedHeart from 'public/svg/heart-red.svg'
@@ -29,6 +30,7 @@ interface ItemInterface {
 const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
   const {setModal, setModalValue} = useModal()
   const {favourites, setFavourites} = useContext(FavouriteContext)
+  const {user} = useAuth()
   const {id, slug, title, preview, price, updatedAt, categoryId} = post
 
   const {t} = useTranslation('profile')
@@ -78,7 +80,7 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
               ).format('DD.MM.YYYY')}`,
             )
           } else {
-            await postTelegram(post)
+            await postTelegram({...post, telegram: user?.username as string})
             await updatePost({...post, createdAt: new Date().toString()})
             alert(success.updated)
           }

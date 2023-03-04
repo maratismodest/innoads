@@ -1,13 +1,13 @@
-import { UserProps } from 'types'
+import {UserProps} from 'types'
 
-import client from './createRequest'
+import client, {beRoutes} from './createRequest'
 
 type FetchUserProps = {
-    user: UserProps
+  user: UserProps
 }
 
 const fetchUser = async (userId: number): Promise<FetchUserProps> => {
-    const { data } = await client.get<FetchUserProps>(`/users/` + userId)
-    return data
+  const {data} = await client.get<FetchUserProps>(beRoutes.users + '/' + userId)
+  return data
 }
 export default fetchUser
