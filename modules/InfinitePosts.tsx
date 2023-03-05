@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react'
 import useOnScreen from 'hooks/useOnScreen'
-import {PostInterface} from 'types'
+import {PostDTO} from 'types/PostDTO'
 import fetchPosts from 'utils/api/fetchPosts'
 
 import Posts from 'components/Posts'
-import Spinner from 'components/Spinner'
+import Spinner from 'components/ui/Spinner'
 
 const InfinitePosts = ({
                          options,
@@ -13,7 +13,7 @@ const InfinitePosts = ({
                        }: Props) => {
   const elementRef = useRef<HTMLDivElement>(null)
   const isOnScreen = useOnScreen(elementRef)
-  const [posts, setPosts] = useState<PostInterface[]>(initPosts)
+  const [posts, setPosts] = useState<PostDTO[]>(initPosts)
   const [page, setPage] = useState<number>(initPage)
   const [hasMore, setHasMore] = useState(true)
   const [fetching, setFetching] = useState(false)
@@ -66,7 +66,7 @@ const InfinitePosts = ({
 
 type Props = {
   options: Record<string, number>
-  initPosts: PostInterface[],
+  initPosts: PostDTO[],
   initPage: number
 }
 

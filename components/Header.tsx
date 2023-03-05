@@ -5,9 +5,9 @@ import {useAuth} from 'hooks/useAuth'
 import useOnClickOutsideRef from 'hooks/useOnClickOutsideRef'
 import {Routes} from 'utils/routes'
 
-import Button from 'components/Button'
 import Dropdown from 'components/Dropdown'
 import Switcher from 'components/Switcher'
+import Button from 'components/ui/Button'
 
 const Buttons = ({className}: { className?: string }) => {
   const {user} = useAuth()

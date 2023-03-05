@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next'
 import React from 'react'
 import { Routes } from 'utils/routes'
 
-import Button from 'components/Button'
+import Button from 'components/ui/Button'
 
 const GoToProfile = (): JSX.Element => {
     const { t } = useTranslation()

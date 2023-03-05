@@ -1,41 +1,41 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react'
-import { PostInterface } from 'types'
+import {createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react'
+import {PostDTO} from 'types/PostDTO'
 
 type favouritesContextType = {
-    favourites: PostInterface[];
-    setFavourites: Dispatch<SetStateAction<PostInterface[]>>
+  favourites: PostDTO[];
+  setFavourites: Dispatch<SetStateAction<PostDTO[]>>
 };
 
 const favouritesContextDefaultValues: favouritesContextType = {
-    favourites: [],
-    setFavourites: () => {
-    },
+  favourites: [],
+  setFavourites: () => {
+  },
 }
 export const FavouriteContext = createContext<favouritesContextType>(favouritesContextDefaultValues)
 
 type Props = {
-    children: ReactNode;
+  children: ReactNode;
 };
 
-export function FavouriteProvider({ children }: Props) {
-    const [favourites, setFavourites] = useState<PostInterface[]>([])
+export function FavouriteProvider({children}: Props) {
+  const [favourites, setFavourites] = useState<PostDTO[]>([])
 
-    useEffect(() => {
-        const posts = localStorage.getItem('favourites')
-        if (posts) {
-            setFavourites(JSON.parse(posts))
-        } else {
-            localStorage.setItem('favourites', JSON.stringify(favourites))
-        }
-    }, [])
-
-    const value = {
-        favourites, setFavourites,
+  useEffect(() => {
+    const posts = localStorage.getItem('favourites')
+    if (posts) {
+      setFavourites(JSON.parse(posts))
+    } else {
+      localStorage.setItem('favourites', JSON.stringify(favourites))
     }
+  }, [])
 
-    return (
-        <FavouriteContext.Provider value={value}>
-            {children}
-        </FavouriteContext.Provider>
-    )
+  const value = {
+    favourites, setFavourites,
+  }
+
+  return (
+    <FavouriteContext.Provider value={value}>
+      {children}
+    </FavouriteContext.Provider>
+  )
 }

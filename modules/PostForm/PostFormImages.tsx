@@ -6,7 +6,7 @@ import deleteImage from 'utils/api/deleteImage'
 import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE} from 'utils/constants'
 import getCompressedImagesLinks from 'utils/getCompressedImagesLinks'
 
-import Button from 'components/Button'
+import Button from 'components/ui/Button'
 
 interface PostFormImagesProps {
   images: string[]

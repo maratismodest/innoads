@@ -1,48 +1,48 @@
-import type { GetServerSideProps } from 'next'
-import { InferGetServerSidePropsType, NextPage } from 'next/types'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import type {GetServerSideProps} from 'next'
+import {InferGetServerSidePropsType, NextPage} from 'next/types'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React from 'react'
 import PostForm from 'modules/PostForm/PostForm'
-import { postDefaultValues, PostFormValues } from 'modules/PostForm/utils'
+import {postDefaultValues, PostFormValues} from 'modules/PostForm/utils'
 import getPostBySlug from 'utils/api/fetchPost'
-import { seo } from 'utils/constants'
-import { categories } from 'utils/options'
+import {seo} from 'utils/constants'
+import {categories} from 'utils/options'
 
 import Layout from 'components/Layout'
 
-const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({ post, seo }) => {
-    const { categoryId, title, body, price } = post
-    const editValues: PostFormValues = {
-        ...postDefaultValues,
-        categoryId: categories.find((x) => x.value === categoryId)?.value || 1,
-        body,
-        title,
-        price,
-    }
-    return (
-        <Layout {...seo}>
-            <PostForm defaultValues={editValues} post={post} />
-        </Layout>
-    )
+const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({post, seo}) => {
+  const {categoryId, title, body, price} = post
+  const editValues: PostFormValues = {
+    ...postDefaultValues,
+    categoryId: categories.find((x) => x.value === categoryId)?.value || 1,
+    body,
+    title,
+    price,
+  }
+  return (
+    <Layout {...seo}>
+      <PostForm defaultValues={editValues} post={post}/>
+    </Layout>
+  )
 }
 
 export default Edit
 
 export const getServerSideProps: GetServerSideProps = async ({
-                                                                 locale,
-                                                                 query,
+                                                               locale,
+                                                               query,
                                                              }) => {
-    const post = await getPostBySlug(query.slug as string)
-    if (!post) {
-        return {
-            notFound: true,
-        }
-    }
+  const post = await getPostBySlug(query.slug as string)
+  if (!post) {
     return {
-        props: {
-            post,
-            seo: seo.edit,
-            ...(await serverSideTranslations(locale as string, ['common'])),
-        },
+      notFound: true,
     }
+  }
+  return {
+    props: {
+      post,
+      seo: seo.edit,
+      ...(await serverSideTranslations(locale as string)),
+    },
+  }
 }

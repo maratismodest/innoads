@@ -1,4 +1,4 @@
-export interface PostTelegramDTO {
+export interface TelegramPostDTO {
   title: string;
   body: string;
   price: number;

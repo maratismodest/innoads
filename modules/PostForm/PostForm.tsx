@@ -5,25 +5,25 @@ import {AxiosError} from 'axios'
 import {useAuth} from 'hooks/useAuth'
 import {useModal} from 'hooks/useModal'
 import slug from 'slug'
-import {EditPostInterface, PostInterface} from 'types'
-import {PostTelegramDTO} from "types/TelegramDTO";
+import {EditPostDTO, PostDTO} from 'types/PostDTO'
+import {TelegramPostDTO} from "types/TelegramDTO";
 import postPost from 'utils/api/postPost'
 import postTelegram from 'utils/api/postTelegram'
 import updatePost from 'utils/api/updatePost'
 import hasCurseWords from 'utils/curseWords'
 import {Routes} from 'utils/routes'
 
-import Button from 'components/Button'
-import Input from 'components/Input'
-import Select from 'components/Select'
-import Spinner from 'components/Spinner'
+import Button from 'components/ui/Button'
+import Input from 'components/ui/Input'
+import Select from 'components/ui/Select'
+import Spinner from 'components/ui/Spinner'
 
 import PostFormImages from './PostFormImages'
 import {messages, postDefaultValues, PostFormValues} from './utils'
 
 export interface PostFormProps {
   defaultValues?: PostFormValues
-  post?: PostInterface
+  post?: PostDTO
 }
 
 export type FormValues = {
@@ -90,7 +90,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
 
     if (post) {
 
-      const formData: EditPostInterface = {
+      const formData: EditPostDTO = {
         id: post.id,
         categoryId: data.categoryId,
         price: data.price,
@@ -128,7 +128,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       categoryId: data.categoryId,
     }
 
-    const telegramForm: PostTelegramDTO = {
+    const telegramForm: TelegramPostDTO = {
       title: data.title,
       body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
       price: data.price,

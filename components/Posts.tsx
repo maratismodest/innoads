@@ -1,18 +1,18 @@
 import React, {HTMLProps} from 'react'
 import {clsx} from 'clsx'
-import {PostInterface} from 'types'
+import {PostDTO} from 'types/PostDTO'
 
 import Item from 'components/Item'
 
 interface PostsInterface extends HTMLProps<HTMLUListElement> {
-  posts: PostInterface[]
+  posts: PostDTO[]
   edit?: boolean
 }
 
 const Posts = ({posts, edit = false, className = ''}: PostsInterface) => {
   return (
     <ul className={clsx('items', className)} data-testid='posts'>
-      {posts.map((post: PostInterface) => <Item post={post} key={post.slug} edit={edit}/>)}
+      {posts.map((post: PostDTO) => <Item post={post} key={post.slug} edit={edit}/>)}
     </ul>
   )
 }

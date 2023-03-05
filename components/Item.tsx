@@ -10,30 +10,30 @@ import {useAuth} from "hooks/useAuth";
 import {useModal} from 'hooks/useModal'
 import TransparentHeart from 'public/svg/heart.svg'
 import RedHeart from 'public/svg/heart-red.svg'
-import {PostInterface} from 'types'
+import {PostDTO} from 'types/PostDTO'
 import client from 'utils/api/createRequest'
 import postTelegram from 'utils/api/postTelegram'
 import updatePost from 'utils/api/updatePost'
 import {NO_IMAGE} from 'utils/constants'
 import {Routes} from 'utils/routes'
 
-import Button from 'components/Button'
 import Price from 'components/Price'
+import Button from 'components/ui/Button'
 
 const sevenDays = 1000 * 60 * 60 * 24 * 7
 
-interface ItemInterface {
-  post: PostInterface
+type Props = {
+  post: PostDTO
   edit?: boolean
 }
 
-const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
+const Item = ({post, edit = false}: Props): JSX.Element => {
   const {setModal, setModalValue} = useModal()
   const {favourites, setFavourites} = useContext(FavouriteContext)
   const {user} = useAuth()
   const {id, slug, title, preview, price, updatedAt, categoryId} = post
 
-  const {t} = useTranslation('profile')
+  const {t} = useTranslation()
   const router = useRouter()
   const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id])
 
@@ -127,7 +127,7 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
             &#10008;
           </Button>
           <Button
-            title={t('edit') as string}
+            title={t('profile.edit') as string}
             className={clsx('absolute z-10', 'left-0 top-0')}
             onClick={() => {
               showModal(ItemModalText.edit)
@@ -136,7 +136,7 @@ const Item = ({post, edit = false}: ItemInterface): JSX.Element => {
             &#10000;
           </Button>
           <Button
-            title={t('publishAgain') as string}
+            title={t('profile.publishAgain') as string}
             className={clsx('absolute z-10', 'right-0 bottom-0')}
             onClick={() => {
               showModal(ItemModalText.republish)

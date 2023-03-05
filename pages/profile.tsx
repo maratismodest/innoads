@@ -6,25 +6,26 @@ import React, {useCallback, useEffect, useState} from 'react'
 import {useAuth} from 'hooks/useAuth'
 import * as jose from 'jose'
 import TelegramLoginButton from 'telegram-login-button'
-import {PostInterface, TelegramUser} from 'types'
+import {PostDTO} from 'types/PostDTO'
+import {TelegramUser} from "types/UserDTO";
 import client from 'utils/api/createRequest'
 import fetchPosts from 'utils/api/fetchPosts'
 import {seo} from 'utils/constants'
 import revalidate from 'utils/revalidate'
 import {Routes} from 'utils/routes'
 
-import Button from 'components/Button'
 import Layout from 'components/Layout'
 import Posts from 'components/Posts'
-import Spinner from 'components/Spinner'
+import Button from 'components/ui/Button'
+import Spinner from 'components/ui/Spinner'
 
 const error = 'Добавьте алиас у себя в аккаунте / Add alias into your account!'
 
 const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}) => {
-  const [posts, setPosts] = useState<PostInterface[]>([])
+  const [posts, setPosts] = useState<PostDTO[]>([])
   const [fetching, setFetching] = useState(false)
   const {user, login, logout} = useAuth()
-  const {t} = useTranslation('profile')
+  const {t} = useTranslation()
 
   const handleTelegram = async ({username, id}: TelegramUser) => {
     if (!username) {
@@ -80,7 +81,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}
     return (
       <Layout {...seo}>
         <div className='flex flex-col items-center'>
-          <h2>{t('authorization')}</h2>
+          <h2>{t('profile')}</h2>
           <TelegramLoginButton
             botName='InnoAdsPostBot'
             dataOnauth={handleTelegram}
@@ -95,7 +96,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}
   return (
     <Layout {...seo} className='flex flex-col items-center gap-8'>
       <div className='text-center'>
-        <h1>{t('cabinet')}</h1>
+        <h1>{t('profile')}</h1>
         <p>{t('addAds')}</p>
       </div>
       <Link href={Routes.add}>
@@ -112,10 +113,7 @@ export default Profile
 export const getStaticProps: GetStaticProps = async ({locale}) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, [
-        'common',
-        'profile',
-      ])),
+      ...(await serverSideTranslations(locale as string)),
       seo: seo.profile,
     },
     revalidate: revalidate,

@@ -11,21 +11,21 @@ import { tgLink } from 'utils/constants'
 import revalidate from 'utils/revalidate'
 import sortByCreatedAt from 'utils/sortByUpdatedAt'
 
-import Button from 'components/Button'
 import Layout from 'components/Layout'
 import Posts from 'components/Posts'
+import Button from 'components/ui/Button'
 
 const PublicProfile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ user, posts }) => {
-    const { t } = useTranslation('post')
+    const { t } = useTranslation()
     return (
         <Layout title={`Пользователь ${user.username}`}
                 description={`Пользователь ${user.username} c ${posts.length} объявлениями`}
         >
-            <h1>{t('userProfile')}</h1>
-            <p>{t('adsCount')}: <span>{posts.length}</span></p>
+            <h1>{t('post.userProfile')}</h1>
+            <p>{t('post.adsCount')}: <span>{posts.length}</span></p>
             <Posts posts={posts} className='mt-10' />
             <Link href={tgLink + '/' + user.username} passHref className='mt-10 block'>
-                <Button>{t('textAuthor')}</Button>
+                <Button>{t('post.textAuthor')}</Button>
             </Link>
         </Layout>
     )
@@ -60,39 +60,8 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
         props: {
             posts: sortByCreatedAt(posts),
             user,
-            ...(await serverSideTranslations(locale as string, [
-                'common',
-                'post',
-            ])),
+            ...(await serverSideTranslations(locale as string)),
         },
         revalidate: revalidate,
     }
 }
-
-// export const getServerSideProps: GetServerSideProps = async ({
-//                                                                  locale,
-//                                                                  query,
-//                                                              }) => {
-//     const userId = Number(query.id)
-//     const user = await fetchUser(userId)
-//     const { content: blog } = await fetchPosts({
-//         size: 10, userId,
-//     })
-//
-//     if (!blog || !user) {
-//         return {
-//             notFound: true,
-//         }
-//     }
-//
-//     return {
-//         props: {
-//             blog: sortByCreatedAt(blog),
-//             user,
-//             ...(await serverSideTranslations(locale as string, [
-//                 'common',
-//                 'post',
-//             ])),
-//         },
-//     }
-// }

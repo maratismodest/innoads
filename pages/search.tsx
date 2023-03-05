@@ -10,7 +10,7 @@ import {selectOptions, SelectProps} from "utils/options";
 import revalidate from 'utils/revalidate'
 
 import Layout from 'components/Layout'
-import Select from 'components/Select';
+import Select from 'components/ui/Select';
 
 const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}) => {
   const {t} = useTranslation()
@@ -35,10 +35,7 @@ export default SearchPage
 export const getStaticProps: GetStaticProps = async ({locale}) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale as string, [
-        'common',
-        'search',
-      ])),
+      ...(await serverSideTranslations(locale as string)),
       seo: seo.search,
     },
     revalidate: revalidate,

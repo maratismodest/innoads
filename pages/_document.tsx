@@ -2,19 +2,14 @@ import Document, {DocumentProps, Head, Html, Main, NextScript} from 'next/docume
 import Script from 'next/script'
 import React from 'react'
 
-import i18nextConfig from '../next-i18next.config'
-
 type Props = DocumentProps & {
   // add custom document props
 }
 
 class MyDocument extends Document<Props> {
   render() {
-    const currentLocale =
-      this.props.__NEXT_DATA__.locale ??
-      i18nextConfig.i18n.defaultLocale
     return (
-      <Html lang={currentLocale}>
+      <Html lang='ru'>
         <Head>
           <meta charSet='utf-8'/>
           <meta name='robots'/>
