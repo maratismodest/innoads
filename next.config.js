@@ -3,6 +3,7 @@ const {i18n} = require('./next-i18next.config')
 /** @type {import('next').NextConfig} */
 const withPWA = require('next-pwa')({
     dest: 'public',
+    disable: process.env.NEXT_PUBLIC_NODE_ENV === 'development',
 })
 
 /** @type {import('next').NextConfig} */
