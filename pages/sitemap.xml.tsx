@@ -1,8 +1,8 @@
 // const EXTERNAL_DATA_URL = 'https://jsonplaceholder.typicode.com/posts';
 
 import {NextApiResponse} from 'next'
-import {PostDTO} from 'types/PostDTO'
-import fetchPosts from 'utils/api/fetchPosts'
+import {PostDTO} from '@/types/PostDTO'
+import fetchPosts from '@/utils/api/fetchPosts'
 
 function generateSiteMap(posts: PostDTO[]) {
   // <!--We manually set the two URLs we know already-->

@@ -4,13 +4,13 @@ import {InferGetStaticPropsType, NextPage} from 'next/types'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React, {useState} from 'react'
-import InfinitePosts from "modules/InfinitePosts";
-import {seo} from 'utils/constants'
-import {selectOptions, SelectProps} from "utils/options";
-import revalidate from 'utils/revalidate'
+import InfinitePosts from "@/modules/InfinitePosts";
+import {seo} from '@/utils/constants'
+import {selectOptions, SelectProps} from "@/utils/options";
+import revalidate from '@/utils/revalidate'
 
-import Layout from 'components/Layout'
-import Select from 'components/ui/Select';
+import Layout from '@/components/Layout'
+import Select from '@/components/ui/Select';
 
 const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}) => {
   const {t} = useTranslation()

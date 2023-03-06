@@ -2,7 +2,7 @@ import {useTranslation} from 'next-i18next'
 import React, {useMemo} from 'react'
 import ReactSelect from "react-select";
 import {clsx} from 'clsx'
-import {selectOptions} from 'utils/options'
+import {selectOptions} from '@/utils/options'
 
 const Select = ({className, ...props}: any) => {
   const {t} = useTranslation()

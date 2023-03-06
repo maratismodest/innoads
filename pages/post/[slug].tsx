@@ -6,19 +6,19 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React, {useMemo, useRef} from 'react'
 import {clsx} from 'clsx'
 import dayjs from 'dayjs'
-import useOnScreen from 'hooks/useOnScreen'
-import {GetStaticPostPath} from 'types'
-import {PostDTO} from 'types/PostDTO'
-import fetchPost from 'utils/api/fetchPost'
-import fetchPosts from 'utils/api/fetchPosts'
-import {NO_IMAGE, tgLink} from 'utils/constants'
-import {categories} from 'utils/options'
-import {Routes} from 'utils/routes'
+import useOnScreen from '@/hooks/useOnScreen'
+import {GetStaticPostPath} from '@/types'
+import {PostDTO} from '@/types/PostDTO'
+import fetchPost from '@/utils/api/fetchPost'
+import fetchPosts from '@/utils/api/fetchPosts'
+import {NO_IMAGE, tgLink} from '@/utils/constants'
+import {categories} from '@/utils/options'
+import {Routes} from '@/utils/routes'
 
-import Item from 'components/Item'
-import Layout from 'components/Layout'
-import Price from 'components/Price'
-import Button from 'components/ui/Button'
+import Item from '@/components/Item'
+import Layout from '@/components/Layout'
+import Price from '@/components/Price'
+import Button from '@/components/ui/Button'
 
 const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({post, related}) => {
   const {t} = useTranslation()
@@ -121,7 +121,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
         </div>
 
         <Link href={`${Routes.main}search?categoryId=${categoryId}`}>
-          {t('category', {ns: 'post'})}:{' '}
+          {t('category')}:{' '}
           <span>{t(category.label)}</span>
         </Link>
 
@@ -130,7 +130,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
         <hr/>
         <pre className='whitespace-pre-wrap break-words'>{body}</pre>
         <p className='mt-5'>
-          {t('published', {ns: 'post'})}:{' '}
+          {t('published')}:{' '}
           {dayjs(createdAt).format('DD.MM.YYYY')}
         </p>
 

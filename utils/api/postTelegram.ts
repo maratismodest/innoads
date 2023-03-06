@@ -1,4 +1,4 @@
-import {TelegramPostDTO} from 'types/TelegramDTO'
+import {TelegramPostDTO} from '@/types/TelegramDTO'
 
 import client, {beRoutes} from './createRequest'
 

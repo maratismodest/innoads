@@ -1,8 +1,8 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import dayjs from 'dayjs'
 import {Feed} from 'feed'
-import fetchPosts from 'utils/api/fetchPosts'
-import {seo} from 'utils/constants'
+import fetchPosts from '@/utils/api/fetchPosts'
+import {seo} from '@/utils/constants'
 
 const baseUrl = `${process.env.NEXT_PUBLIC_APP_URL}`
 

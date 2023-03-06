@@ -1,4 +1,4 @@
-import { PostFormValues } from 'modules/PostForm/utils'
+import { PostFormValues } from '@/modules/PostForm/utils'
 
 const badPatterns = [
     '^(о|а)н(о|а)нист.*',

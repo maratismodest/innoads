@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import {useTranslation} from 'next-i18next'
 import React, {useCallback, useMemo, useState} from 'react'
-import {useAuth} from 'hooks/useAuth'
-import useOnClickOutsideRef from 'hooks/useOnClickOutsideRef'
-import {Routes} from 'utils/routes'
+import {useAuth} from '@/hooks/useAuth'
+import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef'
+import {Routes} from '@/utils/routes'
 
-import Dropdown from 'components/Dropdown'
-import Switcher from 'components/Switcher'
-import Button from 'components/ui/Button'
+import Dropdown from '@/components/Dropdown'
+import Switcher from '@/components/Switcher'
+import Button from '@/components/ui/Button'
 
 const Buttons = ({className}: { className?: string }) => {
   const {user} = useAuth()

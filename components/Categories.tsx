@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {useTranslation} from "next-i18next";
-import {categories} from "utils/options";
+import {categories} from "@/utils/options";
 
 const Categories = (): JSX.Element => {
   const {t} = useTranslation();

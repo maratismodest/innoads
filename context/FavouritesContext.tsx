@@ -1,5 +1,5 @@
 import {createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react'
-import {PostDTO} from 'types/PostDTO'
+import {PostDTO} from '@/types/PostDTO'
 
 type favouritesContextType = {
   favourites: PostDTO[];

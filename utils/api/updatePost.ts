@@ -1,4 +1,4 @@
-import {EditPostDTO} from 'types/PostDTO'
+import {EditPostDTO} from '@/types/PostDTO'
 
 import client, {beRoutes} from './createRequest'
 

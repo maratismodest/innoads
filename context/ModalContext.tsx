@@ -1,6 +1,6 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react'
 
-import Modal from 'components/Modal'
+import Modal from '@/components/Modal'
 
 type modalContextType = {
     modal: boolean;

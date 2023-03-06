@@ -3,17 +3,17 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage } fro
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
-import { GetStaticPath } from 'types'
-import fetchPosts from 'utils/api/fetchPosts'
-import fetchUser from 'utils/api/fetchUser'
-import fetchUsers from 'utils/api/fetchUsers'
-import { tgLink } from 'utils/constants'
-import revalidate from 'utils/revalidate'
-import sortByCreatedAt from 'utils/sortByUpdatedAt'
+import { GetStaticPath } from '@/types'
+import fetchPosts from '@/utils/api/fetchPosts'
+import fetchUser from '@/utils/api/fetchUser'
+import fetchUsers from '@/utils/api/fetchUsers'
+import { tgLink } from '@/utils/constants'
+import revalidate from '@/utils/revalidate'
+import sortByCreatedAt from '@/utils/sortByUpdatedAt'
 
-import Layout from 'components/Layout'
-import Posts from 'components/Posts'
-import Button from 'components/ui/Button'
+import Layout from '@/components/Layout'
+import Posts from '@/components/Posts'
+import Button from '@/components/ui/Button'
 
 const PublicProfile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ user, posts }) => {
     const { t } = useTranslation()

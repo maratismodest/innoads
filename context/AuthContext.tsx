@@ -1,7 +1,7 @@
 import {createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react'
 import * as jose from 'jose'
-import {UserDTO} from 'types/UserDTO'
-import fetchUser from 'utils/api/fetchUser'
+import {UserDTO} from '@/types/UserDTO'
+import fetchUser from '@/utils/api/fetchUser'
 
 type authContextType = {
   user: UserDTO | undefined;

@@ -1,22 +1,22 @@
-import type { AppProps } from 'next/app'
-import { appWithTranslation } from 'next-i18next'
-import React from 'react'
-import { AuthProvider } from 'context/AuthContext'
-import { FavouriteProvider } from 'context/FavouritesContext'
-import { ModalProvider } from 'context/ModalContext'
+import '@/styles/globals.css'
+import type {AppProps} from 'next/app'
+import {Inter} from 'next/font/google'
+import {appWithTranslation} from 'next-i18next'
 
-import 'styles/globals.css'
+// If loading a variable font, you don't need to specify the font weight
+const inter = Inter({subsets: ['latin']})
 
-function MyApp({ Component, pageProps }: AppProps) {
-    return (
-        <AuthProvider>
-            <FavouriteProvider>
-                <ModalProvider>
-                    <Component {...pageProps} />
-                </ModalProvider>
-            </FavouriteProvider>
-        </AuthProvider>
-    )
+function App({Component, pageProps}: AppProps) {
+  return (
+    <>
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+      <Component {...pageProps} />
+    </>
+  )
 }
 
-export default appWithTranslation(MyApp)
+export default appWithTranslation(App)

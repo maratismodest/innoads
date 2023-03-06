@@ -1,4 +1,4 @@
-import {UserDTO} from "types/UserDTO";
+import {UserDTO} from "@/types/UserDTO";
 
 export interface PostDTO {
   id: number;

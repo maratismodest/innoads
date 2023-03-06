@@ -1,11 +1,11 @@
 import {GetStaticPaths, GetStaticProps, NextPage} from 'next/types'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import {GetStaticPath} from 'types'
-import {BlogPost} from 'types/BlogDTO'
-import {getAllPostIds, getPostData} from 'utils/blogParse'
-import revalidate from 'utils/revalidate'
+import {GetStaticPath} from '@/types'
+import {BlogPost} from '@/types/BlogDTO'
+import {getAllPostIds, getPostData} from '@/utils/blogParse'
+import revalidate from '@/utils/revalidate'
 
-import Layout from 'components/Layout'
+import Layout from '@/components/Layout'
 
 const BlogPost: NextPage<Props> = ({postData}) => {
   return (

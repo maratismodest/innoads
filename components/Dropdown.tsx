@@ -1,5 +1,5 @@
 import React from 'react'
-import useOnClickOutsideRef from 'hooks/useOnClickOutsideRef'
+import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef'
 
 interface DropdownProps extends React.HTMLProps<HTMLDivElement> {
     closeToggle: (e: Event) => void

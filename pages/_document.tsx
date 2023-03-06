@@ -1,31 +1,18 @@
-import Document, {DocumentProps, Head, Html, Main, NextScript} from 'next/document'
-import Script from 'next/script'
-import React from 'react'
+import {Html, Head, Main, NextScript} from 'next/document'
+import Script from "next/script";
 
-type Props = DocumentProps & {
-  // add custom document props
-}
-
-class MyDocument extends Document<Props> {
-  render() {
-    return (
-      <Html lang='ru'>
-        <Head>
-          <meta charSet='utf-8'/>
-          <meta name='robots'/>
-          <link rel='icon' href='/favicon.ico'/>
-          <link rel='manifest' href='/manifest.json'/>
-          <meta property='og:type' content='website'/>
-          <meta name='publisher' content='InnoAds'/>
-        </Head>
-        <body>
-        <Main/>
-        <NextScript/>
-        {process.env.NODE_ENV !== 'development' && <Script
-            id='yandex-metrika'
-            strategy='afterInteractive'
-            dangerouslySetInnerHTML={{
-              __html: `
+export default function Document() {
+  return (
+    <Html lang="ru">
+      <Head/>
+      <body>
+      <Main/>
+      <NextScript/>
+      {process.env.NODE_ENV !== 'development' && <Script
+          id='yandex-metrika'
+          strategy='afterInteractive'
+          dangerouslySetInnerHTML={{
+            __html: `
                     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
                     m[i].l=1*new Date();
                     for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
@@ -38,11 +25,9 @@ class MyDocument extends Document<Props> {
                     accurateTrackBounce:true,
                     webvisor:true
                 });`,
-            }}
-        />}</body>
-      </Html>
-    )
-  }
+          }}
+      />}
+      </body>
+    </Html>
+  )
 }
-
-export default MyDocument

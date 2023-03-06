@@ -1,21 +1,16 @@
-import dynamic from 'next/dynamic'
-import {GetStaticProps, NextPage} from 'next/types'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React, {useMemo} from 'react'
-import InfinitePosts from 'modules/InfinitePosts'
-import {Seo} from 'types'
-import {PostDTO} from 'types/PostDTO'
-import fetchPosts from 'utils/api/fetchPosts'
-import {seo} from 'utils/constants'
+import Categories from "@/components/Categories";
+import Layout from "@/components/Layout";
+import InfinitePosts from "@/modules/InfinitePosts";
+import {Seo} from "@/types";
+import {PostDTO} from "@/types/PostDTO";
+import fetchPosts from "@/utils/api/fetchPosts";
+import {seo} from "@/utils/constants";
+import {GetStaticProps} from "next";
+import {useTranslation} from "next-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useMemo} from "react";
 
-import Layout from 'components/Layout'
-
-const Categories = dynamic(() => import('components/Categories'), {
-  ssr: true,
-})
-
-const Home: NextPage<Props> = ({posts, totalPages, seo}) => {
+export default function Home({posts, totalPages, seo}: Props) {
   const {t} = useTranslation()
   const count = useMemo(() => totalPages * 20, [totalPages])
   return (
@@ -29,7 +24,6 @@ const Home: NextPage<Props> = ({posts, totalPages, seo}) => {
     </Layout>
   )
 }
-export default Home
 
 type Props = {
   posts: PostDTO[],

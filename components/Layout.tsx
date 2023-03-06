@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import Link from "next/link";
 import React, {ReactNode} from 'react'
-import {seo, SEO_IMAGE} from 'utils/constants'
+import {seo, SEO_IMAGE} from '@/utils/constants'
 
-import Header from 'components/Header'
+import Header from '@/components/Header'
 
 interface Props {
   title?: string

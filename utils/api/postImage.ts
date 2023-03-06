@@ -1,4 +1,4 @@
-import {messages} from 'modules/PostForm/utils'
+import {messages} from '@/modules/PostForm/utils'
 
 import client, {beRoutes} from './createRequest'
 

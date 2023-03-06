@@ -1,4 +1,4 @@
-import { Seo } from 'types'
+import { Seo } from '@/types'
 
 export const seo: Record<string, Seo> = {
     default: {

@@ -3,12 +3,12 @@ import {GetStaticProps, InferGetStaticPropsType, NextPage} from 'next/types'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React from 'react'
-import {seo} from 'utils/constants'
-import revalidate from 'utils/revalidate'
-import {Routes} from 'utils/routes'
+import {seo} from '@/utils/constants'
+import revalidate from '@/utils/revalidate'
+import {Routes} from '@/utils/routes'
 
-import Layout from 'components/Layout'
-import Button from 'components/ui/Button'
+import Layout from '@/components/Layout'
+import Button from '@/components/ui/Button'
 
 const ErrorPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}) => {
   const {t} = useTranslation()

@@ -1,8 +1,8 @@
 import React, {HTMLProps} from 'react'
 import {clsx} from 'clsx'
-import {PostDTO} from 'types/PostDTO'
+import {PostDTO} from '@/types/PostDTO'
 
-import Item from 'components/Item'
+import Item from '@/components/Item'
 
 interface PostsInterface extends HTMLProps<HTMLUListElement> {
   posts: PostDTO[]

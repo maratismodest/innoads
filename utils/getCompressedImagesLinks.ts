@@ -1,6 +1,6 @@
 import React, { Dispatch } from 'react'
-import postImage from 'utils/api/postImage'
-import handleImageResize from 'utils/handleImageResize'
+import postImage from '@/utils/api/postImage'
+import handleImageResize from '@/utils/handleImageResize'
 
 const getCompressedImagesLinks = async (imagesFromInput: FileList, setImages: Dispatch<React.SetStateAction<string[]>>) => {
     for (let i = 0; i < imagesFromInput.length; i++) {

@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react'
-import useOnScreen from 'hooks/useOnScreen'
-import {PostDTO} from 'types/PostDTO'
-import fetchPosts from 'utils/api/fetchPosts'
+import useOnScreen from '@/hooks/useOnScreen'
+import {PostDTO} from '@/types/PostDTO'
+import fetchPosts from '@/utils/api/fetchPosts'
 
-import Posts from 'components/Posts'
-import Spinner from 'components/ui/Spinner'
+import Posts from '@/components/Posts'
+import Spinner from '@/components/ui/Spinner'
 
 const InfinitePosts = ({
                          options,

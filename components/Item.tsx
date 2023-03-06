@@ -4,21 +4,21 @@ import {useRouter} from 'next/router'
 import {useTranslation} from 'next-i18next'
 import React, {useCallback, useContext, useEffect, useMemo} from 'react'
 import {clsx} from 'clsx'
-import {FavouriteContext} from 'context/FavouritesContext'
+import {FavouriteContext} from '@/context/FavouritesContext'
 import dayjs from 'dayjs'
-import {useAuth} from "hooks/useAuth";
-import {useModal} from 'hooks/useModal'
-import TransparentHeart from 'public/svg/heart.svg'
-import RedHeart from 'public/svg/heart-red.svg'
-import {PostDTO} from 'types/PostDTO'
-import client from 'utils/api/createRequest'
-import postTelegram from 'utils/api/postTelegram'
-import updatePost from 'utils/api/updatePost'
-import {NO_IMAGE} from 'utils/constants'
-import {Routes} from 'utils/routes'
+import {useAuth} from "@/hooks/useAuth";
+import {useModal} from '@/hooks/useModal'
+import TransparentHeart from '@/public/svg/heart.svg'
+import RedHeart from '@/public/svg/heart-red.svg'
+import {PostDTO} from '@/types/PostDTO'
+import client from '@/utils/api/createRequest'
+import postTelegram from '@/utils/api/postTelegram'
+import updatePost from '@/utils/api/updatePost'
+import {NO_IMAGE} from '@/utils/constants'
+import {Routes} from '@/utils/routes'
 
-import Price from 'components/Price'
-import Button from 'components/ui/Button'
+import Price from '@/components/Price'
+import Button from '@/components/ui/Button'
 
 const sevenDays = 1000 * 60 * 60 * 24 * 7
 
@@ -48,8 +48,8 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
         <h4>{text}</h4>
         <hr/>
         <div className='mt-12 flex justify-around'>
-          <Button onClick={async () => await handleFunction(text)}>Да</Button>
-          <Button onClick={hideModal}>Нет</Button>
+          <Button onClick={async () => await handleFunction(text)}>{t('yes')}</Button>
+          <Button onClick={hideModal}>{t('no')}</Button>
         </div>
       </div>,
     )
@@ -114,8 +114,10 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
   }, [setModalValue, setModal])
 
   return (
-    <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow' data-testid="item"
-        data-category={categoryId}>
+    <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow'
+        data-testid="item"
+        data-category={categoryId}
+    >
       {edit && (
         <>
           <Button

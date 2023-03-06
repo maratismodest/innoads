@@ -3,13 +3,13 @@ import {GetStaticProps} from 'next/types'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React from 'react'
-import {Seo} from 'types'
-import {getSortedPostsData} from 'utils/blogParse'
-import {seo} from 'utils/constants'
-import revalidate from 'utils/revalidate'
-import {Routes} from 'utils/routes'
+import {Seo} from '@/types'
+import {getSortedPostsData} from '@/utils/blogParse'
+import {seo} from '@/utils/constants'
+import revalidate from '@/utils/revalidate'
+import {Routes} from '@/utils/routes'
 
-import Layout from 'components/Layout'
+import Layout from '@/components/Layout'
 
 export type BlogPost = {
   id: string, date: string, title: string
