@@ -3,6 +3,6 @@ module.exports = {
         defaultLocale: 'ru', locales: ['ru', 'en']
     },
     fallbackLng: {
-        default: 'ru',
+        default: ['ru', 'en'],
     },
 }
