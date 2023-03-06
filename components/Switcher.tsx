@@ -2,7 +2,6 @@ import {useRouter} from 'next/router'
 import {useTranslation} from 'next-i18next'
 import React from 'react'
 
-
 const Switcher = (): JSX.Element => {
   const router = useRouter()
   const {i18n} = useTranslation()

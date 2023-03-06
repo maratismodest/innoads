@@ -81,7 +81,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}
     return (
       <Layout {...seo}>
         <div className='flex flex-col items-center'>
-          <h2>{t('profile')}</h2>
+          <h2>{t('authorization')}</h2>
           <TelegramLoginButton
             botName='InnoAdsPostBot'
             dataOnauth={handleTelegram}

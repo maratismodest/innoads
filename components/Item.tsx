@@ -129,7 +129,7 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
             &#10008;
           </Button>
           <Button
-            title={t('profile.edit') as string}
+            title={t('edit')}
             className={clsx('absolute z-10', 'left-0 top-0')}
             onClick={() => {
               showModal(ItemModalText.edit)
@@ -138,7 +138,7 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
             &#10000;
           </Button>
           <Button
-            title={t('profile.publishAgain') as string}
+            title={t('publishAgain')}
             className={clsx('absolute z-10', 'right-0 bottom-0')}
             onClick={() => {
               showModal(ItemModalText.republish)

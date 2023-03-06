@@ -21,11 +21,11 @@ const PublicProfile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = 
         <Layout title={`Пользователь ${user.username}`}
                 description={`Пользователь ${user.username} c ${posts.length} объявлениями`}
         >
-            <h1>{t('post.userProfile')}</h1>
-            <p>{t('post.adsCount')}: <span>{posts.length}</span></p>
+            <h1>{t('userProfile')}</h1>
+            <p>{t('adsCount')}: <span>{posts.length}</span></p>
             <Posts posts={posts} className='mt-10' />
             <Link href={tgLink + '/' + user.username} passHref className='mt-10 block'>
-                <Button>{t('post.textAuthor')}</Button>
+                <Button>{t('textAuthor')}</Button>
             </Link>
         </Layout>
     )

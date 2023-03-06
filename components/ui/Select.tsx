@@ -2,11 +2,19 @@ import {useTranslation} from 'next-i18next'
 import React, {useMemo} from 'react'
 import ReactSelect from "react-select";
 import {clsx} from 'clsx'
-import {selectOptions} from '@/utils/options'
+import {SelectProps} from '@/utils/options'
 
 const Select = ({className, ...props}: any) => {
   const {t} = useTranslation()
-  const options = useMemo(() => selectOptions.map(x => ({...x, label: t(x.label)})), [t])
+
+  const options: SelectProps[] = useMemo(() => [
+    {value: 1, label: t('sell')},
+    {value: 3, label: t('services')},
+    {value: 5, label: t('estate')},
+    {value: 2, label: t('buy')},
+    {value: 7, label: t('free')},
+    {value: 6, label: t('clothes')},
+  ], [t])
 
   return (
     <ReactSelect
