@@ -1,4 +1,7 @@
 import '@/styles/globals.css'
+import {AuthProvider} from "@/context/AuthContext";
+import {FavouriteProvider} from "@/context/FavouritesContext";
+import {ModalProvider} from "@/context/ModalContext";
 import type {AppProps} from 'next/app'
 import {Inter} from 'next/font/google'
 import {appWithTranslation} from 'next-i18next'
@@ -14,7 +17,13 @@ function App({Component, pageProps}: AppProps) {
           font-family: ${inter.style.fontFamily};
         }
       `}</style>
-      <Component {...pageProps} />
+      <AuthProvider>
+        <FavouriteProvider>
+          <ModalProvider>
+            <Component {...pageProps} />
+          </ModalProvider>
+        </FavouriteProvider>
+      </AuthProvider>
     </>
   )
 }

@@ -135,19 +135,19 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
         </p>
 
         <Link href={tgLink + '/' + user?.username} passHref className='mt-8 block'>
-          <Button>{t('textAuthor', {ns: 'post'})}</Button>
+          <Button>{t('textAuthor')}</Button>
         </Link>
 
 
         <Link href={`/user/${post.userId}`} passHref className='mt-8 block'>
-          <Button>{t('userAds', {ns: 'post'})}</Button>
+          <Button>{t('userAds')}</Button>
         </Link>
 
         <Button
           className='mt-8'
           onClick={async () => await navigator.share(shareData)}
         >
-          {t('share', {ns: 'post'})}
+          {t('share')}
         </Button>
         {related.length > 0 && (
           <div className='mt-10'>
