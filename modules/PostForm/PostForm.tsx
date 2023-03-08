@@ -116,15 +116,17 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
 
     }
 
+    const aSlug = slug(data.title) + '-' + Math.floor(Math.random() * 100)
+
     const formData = {
       title: data.title,
       body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
       price: data.price,
       preview: images[0],
       images: images.join('||'),
-      slug: slug(data.title) + '-' + Math.floor(Math.random() * 100),
       telegram: user.username,
       userId: user.id,
+      slug: aSlug,
       categoryId: data.categoryId,
     }
 
@@ -133,7 +135,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
       price: data.price,
       images: images.join('||'),
-      slug: slug(data.title) + '-' + Math.floor(Math.random() * 100),
+      slug: aSlug,
       telegram: user.username,
       categoryId: data.categoryId,
     }
