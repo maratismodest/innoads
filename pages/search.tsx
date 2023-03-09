@@ -23,7 +23,7 @@ const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({s
     <Layout {...seo}>
       <h1>{t('search')}</h1>
       <hr/>
-      <Select onChange={setCategory}/>
+      <Select onChange={setCategory} defaultValue={category.value}/>
       <hr/>
       <InfinitePosts initPage={0} initPosts={[]} options={{categoryId: category.value}}/>
     </Layout>

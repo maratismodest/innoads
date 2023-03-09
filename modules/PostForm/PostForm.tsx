@@ -119,27 +119,29 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
     const aSlug = slug(data.title) + '-' + Math.floor(Math.random() * 100)
 
     const formData = {
+      categoryId: data.categoryId,
+      price: data.price,
       title: data.title,
       body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
-      price: data.price,
       preview: images[0],
       images: images.join('||'),
-      telegram: user.username,
-      userId: user.id,
       slug: aSlug,
-      categoryId: data.categoryId,
+      userId: user.id,
     }
 
     const telegramForm: TelegramPostDTO = {
       title: data.title,
       body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
-      price: data.price,
-      images: images.join('||'),
       slug: aSlug,
       telegram: user.username,
       categoryId: data.categoryId,
+      images: images.join('||'),
+      price: data.price,
     }
 
+    console.log('formData',formData)
+    console.log('telegramForm',telegramForm)
+    // return
     try {
       setSending(true)
       await postPost(formData)

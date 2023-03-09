@@ -4,7 +4,7 @@ import ReactSelect from "react-select";
 import {clsx} from 'clsx'
 import {SelectProps} from '@/utils/options'
 
-const Select = ({className, ...props}: any) => {
+const Select = ({className, defaultValue, ...props}: any) => {
   const {t} = useTranslation()
 
   const options: SelectProps[] = useMemo(() => [
@@ -18,6 +18,7 @@ const Select = ({className, ...props}: any) => {
 
   return (
     <ReactSelect
+      defaultValue={options.find(x => x.value === defaultValue)}
       className={clsx('z-20', className)}
       placeholder={t('chooseCategory')}
       aria-label='select'
