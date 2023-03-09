@@ -3,7 +3,7 @@ export interface TelegramPostDTO {
   body: string;
   price: number;
   slug: string;
-  telegram: string;
+  username: string;
   categoryId: number;
   images: string;
 }

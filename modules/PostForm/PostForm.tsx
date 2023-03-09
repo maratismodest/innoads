@@ -133,7 +133,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       title: data.title,
       body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
       slug: aSlug,
-      telegram: user.username,
+      username: user.username,
       categoryId: data.categoryId,
       images: images.join('||'),
       price: data.price,
