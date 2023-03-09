@@ -80,7 +80,7 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
               ).format('DD.MM.YYYY')}`,
             )
           } else {
-            await postTelegram({...post, telegram: user?.username as string})
+            await postTelegram({...post, username: user?.username as string})
             await updatePost({...post, createdAt: new Date().toString()})
             alert(success.updated)
           }
