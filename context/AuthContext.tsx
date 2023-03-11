@@ -1,3 +1,4 @@
+import client from "@/utils/api/createRequest";
 import {createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react'
 import * as jose from 'jose'
 import {UserDTO} from '@/types/UserDTO'
@@ -42,6 +43,7 @@ export function AuthProvider({children}: Props) {
           // @ts-ignore
           setUser(decoded)
           setToken(token)
+          client.defaults.headers.common['Authorization'] = `Bearer ${token}`
         } else {
           localStorage.removeItem('token')
           alert('Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново')
