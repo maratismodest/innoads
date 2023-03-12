@@ -131,7 +131,8 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
             title="Tg"
             className={clsx('absolute z-10', 'left-0 bottom-0')}
             onClick={() => {
-              showModal(ItemModalText.edit)
+              showModal(ItemModalText.telegram
+)
             }}
           >
             Tg
