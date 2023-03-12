@@ -44,6 +44,7 @@ export function AuthProvider({children}: Props) {
           setUser(decoded)
           setToken(token)
           client.defaults.headers.common['Authorization'] = `Bearer ${token}`
+          console.log('client',client.defaults.headers.common)
         } else {
           localStorage.removeItem('token')
           alert('Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново')

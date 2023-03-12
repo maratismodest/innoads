@@ -62,7 +62,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}
       const decoded = await jose.decodeJwt(data.token)
       if (decoded) {
         localStorage.setItem('token', data.token)
-        console.log('decoded',decoded)
+        console.log('decoded', decoded)
         client.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
         login(user)
       }
