@@ -1,6 +1,7 @@
 import Price from '@/components/Price'
 import Button from '@/components/ui/Button'
 import {FavouriteContext} from '@/context/FavouritesContext'
+import {useAuth} from "@/hooks/useAuth";
 import {useModal} from '@/hooks/useModal'
 import RedHeart from '@/public/svg/heart-red.svg'
 import TransparentHeart from '@/public/svg/heart.svg'
@@ -24,7 +25,8 @@ type Props = {
 const Item = ({post, edit = false}: Props): JSX.Element => {
   const {setModal, setModalValue} = useModal()
   const {favourites, setFavourites} = useContext(FavouriteContext)
-  const {id, slug, title, preview, price, categoryId, user, body, images} = post
+  const {user} = useAuth()
+  const {id, slug, title, preview, price, categoryId, body, images} = post
 
   const {t} = useTranslation()
   const router = useRouter()
@@ -58,8 +60,11 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
         }
         case ItemModalText.telegram: {
           await postTelegram({
-            title, body, price, slug, username: user.username, categoryId, images
+            title, body, price, slug, username: user?.username as string, categoryId, images
           })
+          alert(success.telegram)
+          setModal(false)
+          await router.push(Routes.profile)
           break
         }
         // title: string;
@@ -128,14 +133,14 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
             &#10000;
           </Button>
           <Button
-            title="Tg"
-            className={clsx('absolute z-10', 'left-0 bottom-0')}
+            title="Telegram"
+            className={clsx('absolute z-10', 'right-0 bottom-0')}
             onClick={() => {
               showModal(ItemModalText.telegram
-)
+              )
             }}
           >
-            Tg
+            Telegram
           </Button>
         </>
       )}
@@ -169,6 +174,7 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
 
 const success = {
   updated: 'Объявление поднято в поиске!',
+  telegram: 'Объявление в канале InnoAds!',
   deleted: 'Объявление удалено! Перезагрузите страницу, чтобы вы увидели изменения',
 }
 const errors = {
@@ -179,7 +185,7 @@ const errors = {
 enum ItemModalText {
   edit = 'Редактировать объявление?',
   delete = 'Удалить объявление?',
-  telegram = 'telegram',
+  telegram = 'Опубликовать в канале InnoAds?',
 }
 
 export default Item
