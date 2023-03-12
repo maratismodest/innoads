@@ -24,7 +24,7 @@ const error = 'Добавьте алиас у себя в аккаунте / Add
 const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}) => {
   const [posts, setPosts] = useState<PostDTO[]>([])
   const [fetching, setFetching] = useState(false)
-  const {user, login, logout} = useAuth()
+  const {user, login, logout, setToken} = useAuth()
   const {t} = useTranslation()
 
   const handleTelegram = async ({username, id}: TelegramUser) => {
@@ -62,7 +62,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}
       const decoded = await jose.decodeJwt(data.token)
       if (decoded) {
         localStorage.setItem('token', data.token)
-        console.log('decoded', decoded)
+        setToken(data.token)
         client.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
         login(user)
       }
