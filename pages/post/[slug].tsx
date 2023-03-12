@@ -1,24 +1,23 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import {GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage} from 'next/types'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React, {useMemo, useRef} from 'react'
-import {clsx} from 'clsx'
-import dayjs from 'dayjs'
-import useOnScreen from '@/hooks/useOnScreen'
-import {GetStaticPostPath} from '@/types'
-import {PostDTO} from '@/types/PostDTO'
-import fetchPost from '@/utils/api/fetchPost'
-import fetchPosts from '@/utils/api/fetchPosts'
-import {NO_IMAGE, tgLink} from '@/utils/constants'
-import {categories} from '@/utils/options'
-import {Routes} from '@/utils/routes'
-
 import Item from '@/components/Item'
 import Layout from '@/components/Layout'
 import Price from '@/components/Price'
 import Button from '@/components/ui/Button'
+import useOnScreen from '@/hooks/useOnScreen'
+import {GetStaticPostPath} from '@/types'
+import {PostDTO} from '@/types/PostDTO'
+import fetchAd from "@/utils/api/fetchAd";
+import fetchAds from "@/utils/api/fetchAds";
+import {NO_IMAGE, tgLink} from '@/utils/constants'
+import {categories} from '@/utils/options'
+import {Routes} from '@/utils/routes'
+import {clsx} from 'clsx'
+import dayjs from 'dayjs'
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import Image from 'next/image'
+import Link from 'next/link'
+import {GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage} from 'next/types'
+import React, {useMemo, useRef} from 'react'
 
 const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({post, related}) => {
   const {t} = useTranslation()
@@ -167,7 +166,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
 export default Post
 
 export const getStaticPaths: GetStaticPaths = async ({locales = []}) => {
-  const {content: posts} = await fetchPosts({size: 1000})
+  const {content: posts} = await fetchAds({size: 1000})
   const paths: GetStaticPostPath[] = posts.flatMap(post =>
     locales.map(locale => ({
       params: {slug: post.slug},
@@ -181,16 +180,16 @@ export const getStaticPaths: GetStaticPaths = async ({locales = []}) => {
 
 
 export const getStaticProps: GetStaticProps = async ({params, locale}) => {
-  const post = await fetchPost(params?.slug as string)
+  const ad = await fetchAd(params?.slug as string)
 
-  if (!post) {
+  if (!ad) {
     return {
       notFound: true,
     }
   }
 
-  const related = await fetchPosts({
-    categoryId: post.categoryId,
+  const related = await fetchAds({
+    categoryId: ad.categoryId,
     size: 5,
   })
 
@@ -202,8 +201,8 @@ export const getStaticProps: GetStaticProps = async ({params, locale}) => {
 
   return {
     props: {
-      post,
-      related: related.content.filter(x => x.id !== post.id),
+      post: ad,
+      related: related.content.filter(x => x.id !== ad.id),
       ...(await serverSideTranslations(locale as string)),
     },
     revalidate: 3600,

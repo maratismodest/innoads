@@ -86,7 +86,7 @@
   }
 
   .items {
-    @apply grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2;
+    @apply grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 w-full;
   }
 
   .form {

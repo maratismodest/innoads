@@ -36,5 +36,4 @@ export interface EditPostDTO {
   images: string;
   slug: string;
   categoryId: number;
-  createdAt: string;
 }

@@ -1,10 +1,10 @@
+import fetchPost from "@/utils/api/fetchAd";
 import type {GetServerSideProps} from 'next'
 import {InferGetServerSidePropsType, NextPage} from 'next/types'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React from 'react'
 import PostForm from '@/modules/PostForm/PostForm'
-import {postDefaultValues, PostFormValues} from '@/modules/PostForm/utils'
-import getPostBySlug from '@/utils/api/fetchPost'
+import {postDefaultValues, PostFormValues} from '@/modules/PostForm/utils';
 import {seo} from '@/utils/constants'
 import {categories} from '@/utils/options'
 
@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async ({
                                                                locale,
                                                                query,
                                                              }) => {
-  const post = await getPostBySlug(query.slug as string)
+  const post = await fetchPost(query.slug as string)
   if (!post) {
     return {
       notFound: true,

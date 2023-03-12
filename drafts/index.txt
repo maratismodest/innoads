@@ -1,0 +1,40 @@
+console.log('telegramForm',telegramForm)
+return
+
+const telegramForm: TelegramPostDTO = {
+  title: data.title,
+  body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
+  slug: aSlug,
+  username: user.username,
+  categoryId: data.categoryId,
+  images: images.join('||'),
+  price: data.price,
+}
+
+// case ItemModalText.republish: {
+//   const now = new Date().getTime()
+//   const updated = new Date(updatedAt).getTime()
+//
+//   if (now - updated < sevenDays) {
+//     alert(
+//       `Объявление можно публиковать повторно не чаще раз в неделю! Можно подать повторно ${dayjs(
+//         updated + sevenDays,
+//       ).format('DD.MM.YYYY')}`,
+//     )
+//   } else {
+//     await postTelegram({...post, username: user?.username as string})
+//     await updatePost({...post, createdAt: new Date().toString()})
+//     alert(success.updated)
+//   }
+//   break
+// }
+
+// <Button
+// title={t('publishAgain')}
+// className={clsx('absolute z-10', 'right-0 bottom-0')}
+// onClick={() => {
+//   showModal(ItemModalText.republish)
+// }}
+// >
+// &#8679;
+// </Button>

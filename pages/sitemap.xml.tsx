@@ -1,8 +1,8 @@
 // const EXTERNAL_DATA_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-import {NextApiResponse} from 'next'
 import {PostDTO} from '@/types/PostDTO'
-import fetchPosts from '@/utils/api/fetchPosts'
+import fetchAds from "@/utils/api/fetchAds";
+import {NextApiResponse} from 'next'
 
 function generateSiteMap(posts: PostDTO[]) {
   // <!--We manually set the two URLs we know already-->
@@ -34,11 +34,11 @@ function SiteMap() {
 export async function getServerSideProps({res}: { res: NextApiResponse }) {
   // We make an API call to gather the URLs for our site
   // const request = await fetch(EXTERNAL_DATA_URL);
-  const {content: posts} = await fetchPosts({size: 5000})
+  const {content: ads} = await fetchAds({size: 5000})
   // const blog = await request.json();
 
   // We generate the XML sitemap with the blog data
-  const sitemap = generateSiteMap(posts)
+  const sitemap = generateSiteMap(ads)
 
   res.setHeader('Content-Type', 'text/xml')
   // we send the XML to the browser

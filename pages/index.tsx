@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import InfinitePosts from "@/modules/InfinitePosts";
 import {Seo} from "@/types";
 import {PostDTO} from "@/types/PostDTO";
-import fetchPosts from "@/utils/api/fetchPosts";
+import fetchAds from "@/utils/api/fetchAds";
 import {seo} from "@/utils/constants";
 import {GetStaticProps} from "next";
 import {useTranslation} from "next-i18next";
@@ -32,7 +32,7 @@ type Props = {
 }
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
-  const {content: posts, totalPages} = await fetchPosts({
+  const {content: posts, totalPages} = await fetchAds({
     size: 20,
   })
 

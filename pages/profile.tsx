@@ -9,7 +9,7 @@ import TelegramLoginButton from 'telegram-login-button'
 import {PostDTO} from '@/types/PostDTO'
 import {TelegramUser} from "@/types/UserDTO";
 import client from '@/utils/api/createRequest'
-import fetchPosts from '@/utils/api/fetchPosts'
+import fetchPosts from '@/utils/api/fetchAds'
 import {seo} from '@/utils/constants'
 import revalidate from '@/utils/revalidate'
 import {Routes} from '@/utils/routes'

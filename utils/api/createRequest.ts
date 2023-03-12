@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const beRoutes = {
   telegrams: '/telegrams',
-  posts: '/posts',
+  ads: '/ads',
   uploads: '/uploads',
   users: '/users'
 }

@@ -1,23 +1,16 @@
-import client from "@/utils/api/createRequest";
-import {useRouter} from 'next/router'
-import {useTranslation} from 'next-i18next'
-import React, {useEffect, useState} from 'react'
-import {AxiosError} from 'axios'
-import {useAuth} from '@/hooks/useAuth'
-import {useModal} from '@/hooks/useModal'
-import slug from 'slug'
-import {EditPostDTO, PostDTO} from '@/types/PostDTO'
-import {TelegramPostDTO} from "@/types/TelegramDTO";
-import postPost from '@/utils/api/postPost'
-import postTelegram from '@/utils/api/postTelegram'
-import updatePost from '@/utils/api/updatePost'
-import hasCurseWords from '@/utils/curseWords'
-import {Routes} from '@/utils/routes'
-
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
-import Spinner from '@/components/ui/Spinner'
+import {useAuth} from '@/hooks/useAuth'
+import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types/PostDTO'
+import postAd from "@/utils/api/postPost";
+import {updateAd} from '@/utils/api/updatePost'
+import {Routes} from '@/utils/routes'
+import {AxiosError} from 'axios'
+import {useTranslation} from 'next-i18next'
+import {useRouter} from 'next/router'
+import React, {useEffect, useState} from 'react'
+import slug from 'slug'
 
 import PostFormImages from './PostFormImages'
 import {messages, postDefaultValues, PostFormValues} from './utils'
@@ -35,7 +28,6 @@ export type FormValues = {
 }
 
 const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
-  const {setModal, setModalValue} = useModal()
   const [images, setImages] = useState<string[]>(() => post ? post.images.split('||') : [])
   const router = useRouter()
   const {t} = useTranslation()
@@ -50,23 +42,40 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
     }
   }, [])
 
-  useEffect(() => {
-    if (sending) {
-      setModalValue(<Spinner/>)
-      setModal(true)
-    } else {
-      setModal(false)
-    }
-
-    return () => {
-      setModalValue(null)
-      setModal(false)
-    }
-
-  }, [sending])
-
   if (!user) {
     return null
+  }
+
+  const handleCreate = async (formData: CreatePostDTO) => {
+    try {
+      setSending(true)
+      await postAd(formData)
+      alert('Ваше объявление создано!')
+      return router.push(Routes.profile)
+    } catch (e) {
+      console.log(e)
+      if (e instanceof AxiosError) {
+        return alert(e.response?.data)
+      }
+      return
+    } finally {
+      setSending(false)
+    }
+  }
+
+  const handleEdit = async (formData: EditPostDTO) => {
+    try {
+      setSending(true)
+      await updateAd(formData)
+      alert(messages.postUpdated)
+      return router.push(Routes.profile)
+    } catch (e) {
+      console.log(e)
+      alert(messages.somethingWentWrong)
+      return
+    } finally {
+      setSending(false)
+    }
   }
 
   const onSubmit: React.FormEventHandler<HTMLFormElement & FormValues> = async (event) => {
@@ -85,79 +94,34 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       categoryId: Number(categoryId.value),
     }
 
-    if (hasCurseWords(data)) {
-      return alert(messages.forbiddenWords)
-    }
-
     if (post) {
-
-      const formData: EditPostDTO = {
+      const editPostDto: EditPostDTO = {
         id: post.id,
         categoryId: data.categoryId,
         price: data.price,
         title: data.title,
-        body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
+        body: data.body,
         preview: images[0],
         images: images.join('||'),
-        userId: post.userId,
+        userId: user.id,
         slug: post.slug,
-        createdAt: post.createdAt,
       }
-      try {
-        setSending(true)
-        await updatePost(formData)
-        alert(messages.postUpdated)
-        return router.push(Routes.profile)
-      } catch (e) {
-        console.log(e)
-        alert(messages.somethingWentWrong)
-      } finally {
-        setSending(false)
-      }
-
+      await handleEdit(editPostDto)
+      return
     }
 
-    const aSlug = slug(data.title) + '-' + Math.floor(Math.random() * 100)
-
-    const formData = {
+    const createPostDto: CreatePostDTO = {
       categoryId: data.categoryId,
       price: data.price,
       title: data.title,
-      body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
+      body: data.body,
       preview: images[0],
       images: images.join('||'),
-      slug: aSlug,
+      slug: slug(data.title) + '-' + Math.floor(Math.random() * 100),
       userId: user.id,
     }
-
-    const telegramForm: TelegramPostDTO = {
-      title: data.title,
-      body: data.body.length > 800 ? data.body.substring(0, 800) + '...' : data.body,
-      slug: aSlug,
-      username: user.username,
-      categoryId: data.categoryId,
-      images: images.join('||'),
-      price: data.price,
-    }
-
-    console.log('formData',formData)
-    console.log('telegramForm',telegramForm)
-    // return
-    try {
-      setSending(true)
-      await postPost(formData)
-      await postTelegram(telegramForm)
-      alert('Ваше объявление создано!')
-      return router.push(Routes.profile)
-    } catch (e) {
-      console.log(e)
-      if (e instanceof AxiosError) {
-        return alert(e.response?.data)
-      }
-      return
-    } finally {
-      setSending(false)
-    }
+    await handleCreate(createPostDto)
+    return
   }
 
   return (
@@ -196,6 +160,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
         placeholder={t('description') as string}
         required={true}
         minLength={10}
+        maxLength={800}
         className='my-4 rounded p-4'
         name='body'
         defaultValue={defaultValues.body}

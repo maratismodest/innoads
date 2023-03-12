@@ -1,26 +1,19 @@
+import Price from '@/components/Price'
+import Button from '@/components/ui/Button'
+import {FavouriteContext} from '@/context/FavouritesContext'
+import {useModal} from '@/hooks/useModal'
+import RedHeart from '@/public/svg/heart-red.svg'
+import TransparentHeart from '@/public/svg/heart.svg'
+import {PostDTO} from '@/types/PostDTO'
+import client, {beRoutes} from '@/utils/api/createRequest'
+import {NO_IMAGE} from '@/utils/constants'
+import {Routes} from '@/utils/routes'
+import {clsx} from 'clsx'
+import {useTranslation} from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
-import {useTranslation} from 'next-i18next'
 import React, {useCallback, useContext, useEffect, useMemo} from 'react'
-import {clsx} from 'clsx'
-import {FavouriteContext} from '@/context/FavouritesContext'
-import dayjs from 'dayjs'
-import {useAuth} from "@/hooks/useAuth";
-import {useModal} from '@/hooks/useModal'
-import TransparentHeart from '@/public/svg/heart.svg'
-import RedHeart from '@/public/svg/heart-red.svg'
-import {PostDTO} from '@/types/PostDTO'
-import client from '@/utils/api/createRequest'
-import postTelegram from '@/utils/api/postTelegram'
-import updatePost from '@/utils/api/updatePost'
-import {NO_IMAGE} from '@/utils/constants'
-import {Routes} from '@/utils/routes'
-
-import Price from '@/components/Price'
-import Button from '@/components/ui/Button'
-
-const sevenDays = 1000 * 60 * 60 * 24 * 7
 
 type Props = {
   post: PostDTO
@@ -30,8 +23,7 @@ type Props = {
 const Item = ({post, edit = false}: Props): JSX.Element => {
   const {setModal, setModalValue} = useModal()
   const {favourites, setFavourites} = useContext(FavouriteContext)
-  const {user} = useAuth()
-  const {id, slug, title, preview, price, updatedAt, categoryId} = post
+  const {id, slug, title, preview, price, categoryId} = post
 
   const {t} = useTranslation()
   const router = useRouter()
@@ -64,26 +56,10 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
           break
         }
         case ItemModalText.delete: {
-          await client.delete(`/posts/${id}`)
+          await client.delete(`${beRoutes.ads}/${id}`)
           alert(success.deleted)
+          setModal(false)
           await router.push(Routes.profile)
-          break
-        }
-        case ItemModalText.republish: {
-          const now = new Date().getTime()
-          const updated = new Date(updatedAt).getTime()
-
-          if (now - updated < sevenDays) {
-            alert(
-              `Объявление можно публиковать повторно не чаще раз в неделю! Можно подать повторно ${dayjs(
-                updated + sevenDays,
-              ).format('DD.MM.YYYY')}`,
-            )
-          } else {
-            await postTelegram({...post, username: user?.username as string})
-            await updatePost({...post, createdAt: new Date().toString()})
-            alert(success.updated)
-          }
           break
         }
         default:
@@ -137,15 +113,6 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
           >
             &#10000;
           </Button>
-          <Button
-            title={t('publishAgain')}
-            className={clsx('absolute z-10', 'right-0 bottom-0')}
-            onClick={() => {
-              showModal(ItemModalText.republish)
-            }}
-          >
-            &#8679;
-          </Button>
         </>
       )}
       <Link href={`${Routes.post}/${slug}`} title={title}>
@@ -187,7 +154,6 @@ const errors = {
 
 enum ItemModalText {
   edit = 'Редактировать объявление?',
-  republish = 'Опубликовать повторно объявление в канале и поднять его на сайте?',
   delete = 'Удалить объявление?',
 }
 
