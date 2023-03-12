@@ -6,6 +6,7 @@ import RedHeart from '@/public/svg/heart-red.svg'
 import TransparentHeart from '@/public/svg/heart.svg'
 import {PostDTO} from '@/types/PostDTO'
 import client, {beRoutes} from '@/utils/api/createRequest'
+import postTelegram from "@/utils/api/postTelegram";
 import {NO_IMAGE} from '@/utils/constants'
 import {Routes} from '@/utils/routes'
 import {clsx} from 'clsx'
@@ -23,7 +24,7 @@ type Props = {
 const Item = ({post, edit = false}: Props): JSX.Element => {
   const {setModal, setModalValue} = useModal()
   const {favourites, setFavourites} = useContext(FavouriteContext)
-  const {id, slug, title, preview, price, categoryId} = post
+  const {id, slug, title, preview, price, categoryId, user, body, images} = post
 
   const {t} = useTranslation()
   const router = useRouter()
@@ -55,6 +56,19 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
           await router.push(Routes.edit + '/' + slug)
           break
         }
+        case ItemModalText.telegram: {
+          await postTelegram({
+            title, body, price, slug, username: user.username, categoryId, images
+          })
+          break
+        }
+        // title: string;
+        // body: string;
+        // price: number;
+        // slug: string;
+        // username: string;
+        // categoryId: number;
+        // images: string;
         case ItemModalText.delete: {
           await client.delete(`${beRoutes.ads}/${id}`)
           alert(success.deleted)
@@ -113,6 +127,15 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
           >
             &#10000;
           </Button>
+          <Button
+            title="Tg"
+            className={clsx('absolute z-10', 'left-0 bottom-0')}
+            onClick={() => {
+              showModal(ItemModalText.edit)
+            }}
+          >
+            Tg
+          </Button>
         </>
       )}
       <Link href={`${Routes.post}/${slug}`} title={title}>
@@ -155,6 +178,7 @@ const errors = {
 enum ItemModalText {
   edit = 'Редактировать объявление?',
   delete = 'Удалить объявление?',
+  telegram = 'telegram',
 }
 
 export default Item
