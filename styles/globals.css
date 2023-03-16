@@ -93,10 +93,6 @@
     @apply relative flex flex-col mx-auto max-w-[400px] gap-4
   }
 
-  .button {
-    @apply text-white bg-blue rounded-lg px-4 py-2 w-fit cursor-pointer shadow transition-all hover:hover:shadow-lg
-  }
-
   .input {
     @apply h-12 rounded px-4;
   }

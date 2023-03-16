@@ -1,3 +1,4 @@
+import buttonStyles from "@/components/buttonStyles";
 import Link from 'next/link'
 import {GetStaticProps, InferGetStaticPropsType, NextPage} from 'next/types'
 import {useTranslation} from 'next-i18next'
@@ -100,9 +101,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}
         <h1>{t('profile')}</h1>
         <p>{t('addAds')}</p>
       </div>
-      <Link href={Routes.add}>
-        <Button>&#43;</Button>
-      </Link>
+      <Link href={Routes.add} className={buttonStyles()}>&#43;</Link>
       {fetching && <Spinner/>}
       {posts.length > 0 && !fetching && <Posts posts={posts} edit={true}/>}
       <Button onClick={logout} data-testid="logout">{t('exit')}</Button>

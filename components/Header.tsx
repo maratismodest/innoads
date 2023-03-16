@@ -16,17 +16,17 @@ const Buttons = ({className}: { className?: string }) => {
     {
       id: 'user',
       href: Routes.profile,
-      children: t(user ? 'profile' : 'login'),
+      children: <Button intent="secondary">{t(user ? 'profile' : 'login')}</Button>,
     },
     {
       id: 'favourite',
       href: Routes.favourites,
-      children: t('favourite'),
+      children: <Button intent="secondary">{t('favourite')}</Button>,
     },
     {
       id: 'blog',
       href: Routes.blog,
-      children: t('blog'),
+      children: <Button intent="secondary">{t('blog')}</Button>,
     },
     {
       id: 'add',
@@ -38,7 +38,7 @@ const Buttons = ({className}: { className?: string }) => {
   return (
     <ul className={className}>
       {menu.map(({id, href, children}) =>
-        <li key={id} className='mb-6 lg:mb-0' data-testid={id}>
+        <li key={id} className='mb-1 lg:mb-0' data-testid={id}>
           <Link href={href}>{children}</Link>
         </li>)
       }
@@ -74,14 +74,14 @@ const Header = (): JSX.Element | null => {
 
           {dropdown && (
             <Dropdown closeToggle={() => openDropdown}>
-              <Buttons className='flex-col'/>
+              <Buttons className='flex-col mb-8'/>
               <Switcher/>
             </Dropdown>
           )}
         </div>
         <div className='hidden items-center gap-2 lg:flex'>
           <Switcher/>
-          <Buttons className='ml-4 flex items-center gap-2'/>
+          <Buttons className='ml-4 flex items-center gap-1'/>
         </div>
       </nav>
     </header>
