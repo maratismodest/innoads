@@ -132,16 +132,16 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
           >
             &#10000;
           </Button>
-          <Button
-            title="Telegram"
-            className={clsx('absolute z-10', 'right-0 bottom-0')}
-            onClick={() => {
-              showModal(ItemModalText.telegram
-              )
-            }}
-          >
-            Telegram
-          </Button>
+          {/*<Button*/}
+          {/*  title="Telegram"*/}
+          {/*  className={clsx('absolute z-10', 'right-0 bottom-0')}*/}
+          {/*  onClick={() => {*/}
+          {/*    showModal(ItemModalText.telegram*/}
+          {/*    )*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  Telegram*/}
+          {/*</Button>*/}
         </>
       )}
       <Link href={`${Routes.post}/${slug}`} title={title}>

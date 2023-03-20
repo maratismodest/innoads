@@ -5,6 +5,7 @@ import {useAuth} from '@/hooks/useAuth'
 import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types/PostDTO'
 import client from "@/utils/api/createRequest";
 import postAd from "@/utils/api/postPost";
+import postTelegram from "@/utils/api/postTelegram";
 import {updateAd} from '@/utils/api/updatePost'
 import {Routes} from '@/utils/routes'
 import {AxiosError} from 'axios'
@@ -52,7 +53,9 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
   const handleCreate = async (formData: CreatePostDTO) => {
     try {
       setSending(true)
-      await postAd(formData)
+      const res = await postAd(formData)
+      console.log('res',res)
+      await postTelegram({...res, username: user.username})
       alert('Ваше объявление создано!')
       return router.push(Routes.profile)
     } catch (e) {
