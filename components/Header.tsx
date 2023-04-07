@@ -1,3 +1,4 @@
+import buttonStyles from "@/styles/buttonStyles";
 import Link from 'next/link'
 import {useTranslation} from 'next-i18next'
 import React, {useCallback, useMemo, useState} from 'react'
@@ -16,30 +17,30 @@ const Buttons = ({className}: { className?: string }) => {
     {
       id: 'user',
       href: Routes.profile,
-      children: <Button intent="secondary">{t(user ? 'profile' : 'login')}</Button>,
+      text: t(user ? 'profile' : 'login')
     },
     {
       id: 'favourite',
       href: Routes.favourites,
-      children: <Button intent="secondary">{t('favourite')}</Button>,
+      text: t('favourite'),
     },
     {
       id: 'blog',
       href: Routes.blog,
-      children: <Button intent="secondary">{t('blog')}</Button>,
+      text: t('blog'),
     },
     {
       id: 'add',
       href: Routes.add,
-      children: <Button>{t('addAd')}</Button>,
+      text: t('addAd'),
     },
   ], [user, t])
 
   return (
     <ul className={className}>
-      {menu.map(({id, href, children}) =>
-        <li key={id} className='mb-1 lg:mb-0' data-testid={id}>
-          <Link href={href}>{children}</Link>
+      {menu.map(({id, href, text}) =>
+        <li key={id} className='mb-2 lg:mb-0' data-testid={id}>
+          <Link href={href} className={buttonStyles({variant: "secondary"})}>{text}</Link>
         </li>)
       }
     </ul>

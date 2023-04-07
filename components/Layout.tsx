@@ -1,9 +1,9 @@
-import Head from 'next/head'
-import Link from "next/link";
-import React, {ReactNode} from 'react'
-import {seo, SEO_IMAGE} from '@/utils/constants'
-
 import Header from '@/components/Header'
+import Button from "@/components/ui/Button";
+import {seo, SEO_IMAGE} from '@/utils/constants'
+import scrollToTop from "@/utils/scrollToTop";
+import Head from 'next/head'
+import React, {ReactNode} from 'react'
 
 interface Props {
   title?: string
@@ -45,10 +45,8 @@ const Layout: React.FC<Props> = ({
       </Head>
       <Header/>
       <main className={className}>{children}</main>
-      <footer className='bg-grey text-black'>
-        <nav className='mx-auto flex w-full max-w-[1100px] p-3 justify-center'>
-          <Link href='#'>Up</Link>
-        </nav>
+      <footer className='bg-grey'>
+        <Button variant="secondary" className='mx-auto flex justify-center' onClick={scrollToTop}>Up</Button>
       </footer>
     </>
   )

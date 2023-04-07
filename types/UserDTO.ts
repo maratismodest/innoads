@@ -8,4 +8,7 @@ export interface TelegramUser {
   hash: string;
 }
 
-export type UserDTO = Pick<TelegramUser, 'id' | 'username'>
+export type UserDTO = {
+  readonly id: number,
+  readonly username: string
+}

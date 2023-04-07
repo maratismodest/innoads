@@ -1,12 +1,11 @@
-import buttonStyles from "@/components/buttonStyles";
-import Link from 'next/link'
-import {GetStaticProps, InferGetStaticPropsType, NextPage} from 'next/types'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React, {useCallback, useEffect, useState} from 'react'
+import buttonStyles from "@/styles/buttonStyles";
+
+import Layout from '@/components/Layout'
+import Posts from '@/components/Posts'
+import Button from '@/components/ui/Button'
+import Spinner from '@/components/ui/Spinner'
 import {useAuth} from '@/hooks/useAuth'
-import * as jose from 'jose'
-import TelegramLoginButton from 'telegram-login-button'
+import {Seo} from "@/types";
 import {PostDTO} from '@/types/PostDTO'
 import {TelegramUser} from "@/types/UserDTO";
 import client from '@/utils/api/createRequest'
@@ -14,18 +13,24 @@ import fetchPosts from '@/utils/api/fetchAds'
 import {seo} from '@/utils/constants'
 import revalidate from '@/utils/revalidate'
 import {Routes} from '@/utils/routes'
-
-import Layout from '@/components/Layout'
-import Posts from '@/components/Posts'
-import Button from '@/components/ui/Button'
-import Spinner from '@/components/ui/Spinner'
+import * as jose from 'jose'
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import Link from 'next/link'
+import {GetStaticProps, NextPage} from 'next/types'
+import React, {useCallback, useEffect, useState} from 'react'
+import TelegramLoginButton from 'telegram-login-button'
 
 const error = 'Добавьте алиас у себя в аккаунте / Add alias into your account!'
 
-const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}) => {
+interface ProfilePageProps {
+  seo: Seo
+}
+
+const Profile: NextPage<ProfilePageProps> = ({seo}) => {
   const [posts, setPosts] = useState<PostDTO[]>([])
   const [fetching, setFetching] = useState(false)
-  const {user, login, logout, setToken} = useAuth()
+  const {user, login, logout} = useAuth()
   const {t} = useTranslation()
 
   const handleTelegram = async ({username, id}: TelegramUser) => {
@@ -37,9 +42,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}
       const {data} = await client.post('/users/login', user)
       const decoded = jose.decodeJwt(data.token)
       if (decoded) {
-        localStorage.setItem('token', data.token)
-        client.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
-        login(user)
+        login(user, data.token)
       }
       return
     } catch (e) {
@@ -62,10 +65,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}
       const {data} = await client.post('/users/login', user)
       const decoded = await jose.decodeJwt(data.token)
       if (decoded) {
-        localStorage.setItem('token', data.token)
-        setToken(data.token)
-        client.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
-        login(user)
+        login(user, data.token)
       }
     } catch (e) {
       console.log(e)
@@ -104,6 +104,7 @@ const Profile: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}
       <Link href={Routes.add} className={buttonStyles()}>&#43;</Link>
       {fetching && <Spinner/>}
       {posts.length > 0 && !fetching && <Posts posts={posts} edit={true}/>}
+      {posts.length === 0 && !fetching && <h2>{t('noAds')}</h2>}
       <Button onClick={logout} data-testid="logout">{t('exit')}</Button>
     </Layout>
   )

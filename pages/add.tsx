@@ -1,12 +1,16 @@
-import {GetStaticProps, InferGetStaticPropsType, NextPage} from 'next/types'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React from 'react'
-import PostForm from '@/modules/PostForm/PostForm'
-import {seo} from '@/utils/constants'
-
 import Layout from '@/components/Layout'
+import PostForm from '@/modules/PostForm/PostForm'
+import {Seo} from "@/types";
+import {seo} from '@/utils/constants'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import {GetStaticProps, NextPage} from 'next/types'
+import React from 'react'
 
-const Add: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}) => {
+interface AddPageProps {
+  seo: Seo
+}
+
+const Add: NextPage<AddPageProps> = ({seo}) => {
   return (
     <Layout {...seo}>
       <PostForm/>

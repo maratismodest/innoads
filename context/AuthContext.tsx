@@ -1,29 +1,22 @@
-import client from "@/utils/api/createRequest";
-import {createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react'
-import * as jose from 'jose'
 import {UserDTO} from '@/types/UserDTO'
 import fetchUser from '@/utils/api/fetchUser'
+import * as jose from 'jose'
+import {createContext, ReactNode, useEffect, useState} from 'react'
 
 type authContextType = {
   user: UserDTO | undefined;
-  login: (a: UserDTO) => void;
+  login: (user: UserDTO, token: string) => void;
   logout: () => void;
-  token: string
-  setToken: Dispatch<SetStateAction<string>>
 };
 
 const authContextDefaultValues: authContextType = {
   user: undefined,
-  token: '',
   login: () => {
   },
   logout: () => {
   },
-  setToken: () => {
-  },
 }
 export const AuthContext = createContext<authContextType>(authContextDefaultValues)
-
 
 type Props = {
   children: ReactNode;
@@ -31,30 +24,25 @@ type Props = {
 
 export function AuthProvider({children}: Props) {
   const [user, setUser] = useState<UserDTO | undefined>(undefined)
-  const [token, setToken] = useState('')
 
   const checkToken = async () => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      try {
-        const decoded = await jose.decodeJwt(token)
-        const response = await fetchUser(decoded.id as number)
-        if (response) {
-          // @ts-ignore
-          setUser(decoded)
-          setToken(token)
-          client.defaults.headers.common['Authorization'] = `Bearer ${token}`
-          console.log('client',client.defaults.headers.common)
+    try {
+      const token = localStorage.getItem('token')
+      if (token) {
+        const decoded: jose.JWTPayload = await jose.decodeJwt(token)
+        const fetchedUser = await fetchUser(decoded.id as number)
+        if (fetchedUser) {
+          login(fetchedUser, token)
         } else {
-          localStorage.removeItem('token')
+          logout()
           alert('Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново')
-          return
         }
-
-      } catch
-        (e) {
-        console.log('e', e)
       }
+      return
+
+    } catch
+      (e) {
+      console.log('e', e)
     }
   }
 
@@ -64,7 +52,8 @@ export function AuthProvider({children}: Props) {
     return () => checkToken()
   }, [])
 
-  const login = (user: UserDTO) => {
+  const login = (user: UserDTO, token: string) => {
+    localStorage.setItem('token', token)
     setUser(user)
   }
 
@@ -75,8 +64,6 @@ export function AuthProvider({children}: Props) {
 
   const value = {
     user,
-    token,
-    setToken,
     login,
     logout,
   }

@@ -1,18 +1,22 @@
-import type {GetStaticProps} from 'next'
-import {useRouter} from 'next/router'
-import {InferGetStaticPropsType, NextPage} from 'next/types'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React, {useState} from 'react'
+import Layout from '@/components/Layout'
+import Select from '@/components/ui/Select';
 import InfinitePosts from "@/modules/InfinitePosts";
+import {Seo} from "@/types";
 import {seo} from '@/utils/constants'
 import {selectOptions, SelectProps} from "@/utils/options";
 import revalidate from '@/utils/revalidate'
+import type {GetStaticProps} from 'next'
+import {useTranslation} from 'next-i18next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import {useRouter} from 'next/router'
+import {NextPage} from 'next/types'
+import React, {useState} from 'react'
 
-import Layout from '@/components/Layout'
-import Select from '@/components/ui/Select';
+interface SearchPageProps {
+  seo: Seo
+}
 
-const SearchPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({seo}) => {
+const SearchPage: NextPage<SearchPageProps> = ({seo}) => {
   const {t} = useTranslation()
   const router = useRouter()
   const [category, setCategory] = useState<SelectProps>(

@@ -1,8 +1,8 @@
 import {cva} from "class-variance-authority";
 
-const buttonStyles = cva(["rounded-lg px-4 py-2 w-fit cursor-pointer shadow transition-all hover:shadow-lg"], {
+const buttonStyles = cva(["inline-block text-center rounded-lg px-4 py-2 w-fit cursor-pointer shadow transition-all hover:shadow-lg"], {
   variants: {
-    intent: {
+    variant: {
       primary: [
         "bg-blue",
         "text-white",
@@ -12,6 +12,7 @@ const buttonStyles = cva(["rounded-lg px-4 py-2 w-fit cursor-pointer shadow tran
         "text-black",
         "shadow-none",
         "hover:shadow-none",
+        "hover:text-black/80",
       ],
     },
     size: {
@@ -21,7 +22,7 @@ const buttonStyles = cva(["rounded-lg px-4 py-2 w-fit cursor-pointer shadow tran
   },
   compoundVariants: [
     {
-      intent: "primary",
+      variant: "primary",
       size: "medium",
       // class: "uppercase",
       // **or** if you're a React.js user, `className` may feel more consistent:
@@ -29,7 +30,7 @@ const buttonStyles = cva(["rounded-lg px-4 py-2 w-fit cursor-pointer shadow tran
     },
   ],
   defaultVariants: {
-    intent: "primary",
+    variant: "primary",
     // size: "medium",
   },
 });

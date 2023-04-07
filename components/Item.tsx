@@ -151,7 +151,7 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
             style={{objectFit: 'cover'}}
             sizes={'(max-width: 768px) 45vw,(max-width: 1024px) 25vw, 200px'}
             alt={title}
-            src={preview || NO_IMAGE}
+            src={preview}
             placeholder='blur'
             blurDataURL={NO_IMAGE}
             title={title}

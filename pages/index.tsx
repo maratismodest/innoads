@@ -8,9 +8,16 @@ import {seo} from "@/utils/constants";
 import {GetStaticProps} from "next";
 import {useTranslation} from "next-i18next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {NextPage} from "next/types";
 import {useMemo} from "react";
 
-export default function Home({posts, totalPages, seo}: Props) {
+interface HomePageProps {
+  posts: PostDTO[],
+  totalPages: number,
+  seo: Seo
+}
+
+const Home: NextPage<HomePageProps> = ({posts, totalPages, seo}) => {
   const {t} = useTranslation()
   const count = useMemo(() => totalPages * 20, [totalPages])
   return (
@@ -25,11 +32,7 @@ export default function Home({posts, totalPages, seo}: Props) {
   )
 }
 
-type Props = {
-  posts: PostDTO[],
-  totalPages: number,
-  seo: Seo
-}
+export default Home
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
   const {content: posts, totalPages} = await fetchAds({

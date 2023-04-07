@@ -37,8 +37,6 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
   const {user} = useAuth()
   const [sending, setSending] = useState(false)
 
-  console.log('client.defaults.headers.common in post',client.defaults.headers.common)
-
   useEffect(() => {
     if (!user) {
       router.push(Routes.profile)
@@ -181,6 +179,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       <Button
         type='submit'
         disabled={sending}
+        className="mx-auto"
       >
         {post ? t('editAd') : t('addAd')}
       </Button>
