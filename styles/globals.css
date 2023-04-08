@@ -4,6 +4,10 @@
 
 @layer base {
 
+    ul::-webkit-scrollbar {
+        display: none;
+    }
+
     html {
         @apply scroll-smooth
     }

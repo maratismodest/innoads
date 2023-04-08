@@ -65,7 +65,7 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
   const handleClick = (direction: 'left' | 'right') => {
     const res = direction === 'right' ? 1 : -1
     if (ul.current && refFirst.current && refLast.current) {
-      ul.current.scrollLeft = ul.current.scrollLeft + 300 * res
+      ul.current.scrollTo({left: ul.current.scrollLeft + 300 * res, behavior: 'smooth'})
     }
   }
 
@@ -104,16 +104,14 @@ const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({pos
             })}
           </ul>
           <Button
-            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2', 'left-0')}
+            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2', 'left-0', (firstInView || images.length < 2) && 'hidden')}
             onClick={() => handleClick('left')}
-            hidden={firstInView || images.length < 2}
           >
             &larr;
           </Button>
           <Button
-            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2', 'right-0')}
+            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2', 'right-0', (lastInVew || images.length < 2) && 'hidden')}
             onClick={() => handleClick('right')}
-            hidden={lastInVew || images.length < 2}
           >
             &rarr;
           </Button>
