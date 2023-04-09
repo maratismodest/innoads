@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import {GetStaticProps} from 'next/types'
+import {GetStaticProps, NextPage} from 'next/types'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import React from 'react'
@@ -15,12 +15,12 @@ export type BlogPost = {
   id: string, date: string, title: string
 }
 
-export type Props = {
+type Props = {
   blogPosts: BlogPost[]
   seo: Seo
 }
 
-const Blog = ({blogPosts, seo}: Props) => {
+const Blog: NextPage<Props> = ({blogPosts, seo}) => {
   const {t} = useTranslation()
   const canonical = `${process.env.NEXT_PUBLIC_APP_URL}/blog`
   return (

@@ -7,6 +7,10 @@ import revalidate from '@/utils/revalidate'
 
 import Layout from '@/components/Layout'
 
+type Props = {
+  postData: BlogPost
+}
+
 const BlogPost: NextPage<Props> = ({postData}) => {
   return (
     <Layout
@@ -16,10 +20,6 @@ const BlogPost: NextPage<Props> = ({postData}) => {
       <div dangerouslySetInnerHTML={{__html: postData.contentHtml as string}}/>
     </Layout>
   )
-}
-
-type Props = {
-  postData: BlogPost
 }
 
 export default BlogPost

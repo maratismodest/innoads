@@ -23,11 +23,11 @@ import TelegramLoginButton from 'telegram-login-button'
 
 const error = 'Добавьте алиас у себя в аккаунте / Add alias into your account!'
 
-interface ProfilePageProps {
+type Props = {
   seo: Seo
 }
 
-const Profile: NextPage<ProfilePageProps> = ({seo}) => {
+const Profile: NextPage<Props> = ({seo}) => {
   const [posts, setPosts] = useState<PostDTO[]>([])
   const [fetching, setFetching] = useState(false)
   const {user, login, logout} = useAuth()

@@ -1,16 +1,22 @@
-import fetchPost from "@/utils/api/fetchAd";
-import type {GetServerSideProps} from 'next'
-import {InferGetServerSidePropsType, NextPage} from 'next/types'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React from 'react'
+import Layout from '@/components/Layout'
 import PostForm from '@/modules/PostForm/PostForm'
 import {postDefaultValues, PostFormValues} from '@/modules/PostForm/utils';
+import {Seo} from "@/types";
+import {PostDTO} from "@/types/PostDTO";
+import fetchPost from "@/utils/api/fetchAd";
+import {categories} from '@/utils/categories'
 import {seo} from '@/utils/constants'
-import {categories} from '@/utils/options'
+import type {GetServerSideProps} from 'next'
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import {NextPage} from 'next/types'
+import React from 'react'
 
-import Layout from '@/components/Layout'
+type Props = {
+  post: PostDTO,
+  seo: Seo
+}
 
-const Edit: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({post, seo}) => {
+const Edit: NextPage<Props> = ({post, seo}) => {
   const {categoryId, title, body, price} = post
   const editValues: PostFormValues = {
     ...postDefaultValues,

@@ -9,11 +9,11 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetStaticProps, NextPage} from 'next/types'
 import React, {useContext} from 'react'
 
-interface FavouritesPageProps {
+type Props = {
   seo: Seo
 }
 
-const Favourites: NextPage<FavouritesPageProps> = ({seo}) => {
+const Favourites: NextPage<Props> = ({seo}) => {
   const {t} = useTranslation()
   const {favourites} = useContext(FavouriteContext)
 

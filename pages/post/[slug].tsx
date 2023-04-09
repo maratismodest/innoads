@@ -7,8 +7,8 @@ import {GetStaticPostPath} from '@/types'
 import {PostDTO} from '@/types/PostDTO'
 import fetchAd from "@/utils/api/fetchAd";
 import fetchAds from "@/utils/api/fetchAds";
+import {categories} from '@/utils/categories'
 import {NO_IMAGE, tgLink} from '@/utils/constants'
-import {categories} from '@/utils/options'
 import {Routes} from '@/utils/routes'
 import {clsx} from 'clsx'
 import dayjs from 'dayjs'
@@ -16,10 +16,15 @@ import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
 import Link from 'next/link'
-import {GetStaticPaths, GetStaticProps, InferGetServerSidePropsType, NextPage} from 'next/types'
+import {GetStaticPaths, GetStaticProps, NextPage} from 'next/types'
 import React, {useMemo, useRef} from 'react'
 
-const Post: NextPage<InferGetServerSidePropsType<typeof getStaticProps>> = ({post, related}) => {
+type Props = {
+  post: PostDTO,
+  related: PostDTO[]
+}
+
+const Post: NextPage<Props> = ({post, related}) => {
   const {t} = useTranslation()
   const ul = useRef<HTMLUListElement>(null)
   const refFirst = useRef<HTMLLIElement>(null)

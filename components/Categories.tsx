@@ -1,14 +1,14 @@
+import {categories} from "@/utils/categories";
 import Image from "next/image";
 import Link from "next/link";
 import {useTranslation} from "next-i18next";
-import {categories} from "@/utils/options";
 
 const Categories = (): JSX.Element => {
   const {t} = useTranslation();
   return (
     <ul
       className="mb-1 flex snap-x snap-mandatory justify-between gap-12 overflow-scroll rounded-2xl bg-grey px-8 py-2">
-      {categories.map(({value, image, label}, index) => {
+      {categories.map(({value, label}, index) => {
         return (
           <li key={value} tabIndex={index + 1}>
             <Link
@@ -19,7 +19,7 @@ const Categories = (): JSX.Element => {
               className="flex flex-col w-10 snap-center items-center justify-between"
             >
               <Image
-                src={image}
+                src={`/images/${label}.png`}
                 alt={label}
                 width={40}
                 height={40}

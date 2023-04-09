@@ -10,11 +10,11 @@ import Link from 'next/link'
 import {GetStaticProps, NextPage} from 'next/types'
 import React from 'react'
 
-interface ErrorPageProps {
+type Props = {
   seo: Seo
 }
 
-const ErrorPage: NextPage<ErrorPageProps> = ({seo}) => {
+const ErrorPage: NextPage<Props> = ({seo}) => {
   const {t} = useTranslation()
   return (
     <Layout {...seo} className='flex'>

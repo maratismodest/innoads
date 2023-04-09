@@ -11,13 +11,13 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {NextPage} from "next/types";
 import {useMemo} from "react";
 
-interface HomePageProps {
+type Props = {
   posts: PostDTO[],
   totalPages: number,
   seo: Seo
 }
 
-const Home: NextPage<HomePageProps> = ({posts, totalPages, seo}) => {
+const Home: NextPage<Props> = ({posts, totalPages, seo}) => {
   const {t} = useTranslation()
   const count = useMemo(() => totalPages * 20, [totalPages])
   return (

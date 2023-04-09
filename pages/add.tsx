@@ -6,11 +6,11 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import {GetStaticProps, NextPage} from 'next/types'
 import React from 'react'
 
-interface AddPageProps {
+type Props = {
   seo: Seo
 }
 
-const Add: NextPage<AddPageProps> = ({seo}) => {
+const Add: NextPage<Props> = ({seo}) => {
   return (
     <Layout {...seo}>
       <PostForm/>
