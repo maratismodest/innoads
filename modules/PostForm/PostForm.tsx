@@ -1,6 +1,7 @@
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
+import Spinner from "@/components/ui/Spinner";
 import {useAuth} from '@/hooks/useAuth'
 import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types/PostDTO'
 import postAd from "@/utils/api/postPost";
@@ -44,14 +45,13 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
   }, [])
 
   if (!user) {
-    return null
+    return <Spinner />
   }
 
   const handleCreate = async (formData: CreatePostDTO) => {
     try {
       setSending(true)
       const res = await postAd(formData)
-      console.log('res',res)
       await postTelegram({...res, username: user.username})
       alert('Ваше объявление создано!')
       return router.push(Routes.profile)
@@ -131,45 +131,48 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
     <form
       onSubmit={onSubmit}
       className='form'
+      name={post ? t('editAd') : t('addAd')}
     >
       <h1>{t('addPost')}</h1>
       <Select
+        label={t('chooseCategory')}
         required={true}
         name='categoryId'
         defaultValue={defaultValues.categoryId}
         data-testid='categoryId'
       />
+
       <Input
+        label={t('price')}
         required={true}
         min={1}
         type='number'
-        placeholder={t('price') as string}
         name='price'
         defaultValue={defaultValues.price}
         data-testid='price'
       />
       <Input
-        type='text'
-        placeholder={t('header') as string}
+        label={t('header')}
         required={true}
         minLength={5}
         name='title'
         defaultValue={defaultValues.title}
         data-testid='title'
       />
-      <textarea
-        rows={5}
-        cols={5}
-        placeholder={t('description') as string}
-        required={true}
-        minLength={10}
-        maxLength={800}
-        className='my-4 rounded p-4'
-        name='body'
-        defaultValue={defaultValues.body}
-        data-testid='description'
-      />
-
+      <div className='grid'>
+        <label htmlFor="body">{t('description')}</label>
+        <textarea
+          id="body"
+          rows={5}
+          cols={5}
+          required={true}
+          minLength={10}
+          maxLength={800}
+          name='body'
+          defaultValue={defaultValues.body}
+          data-testid='description'
+        />
+      </div>
       <PostFormImages
         images={images}
         setImages={setImages}

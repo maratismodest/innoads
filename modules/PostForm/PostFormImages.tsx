@@ -1,3 +1,4 @@
+import {clsx} from "clsx";
 import Image from 'next/image'
 import {useTranslation} from 'next-i18next'
 import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react'
@@ -168,10 +169,9 @@ const PostFormImages = ({images, setImages}: PostFormImagesProps) => {
         })}
         {loading && (
           <li
-            className='relative mb-2 aspect-square w-[48%] cursor-pointer hover:shadow lg:mr-2 lg:w-[150px]'
+            className={clsx('relative aspect-square cursor-pointer shadow hover:shadow-2xl')}
           >
-            <p className='flex h-full w-full items-center justify-center rounded text-center text-red'
-            >
+            <p className='flex justify-center items-center text-red h-full p-4 text-center'>
               Загружаем изображение
             </p>
           </li>

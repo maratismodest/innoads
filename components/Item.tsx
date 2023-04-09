@@ -113,7 +113,7 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
         data-testid="item"
         data-category={categoryId}
     >
-      {edit && (
+      {user && edit && (
         <>
           <Button
             className={clsx('absolute z-10', 'right-0 top-0')}

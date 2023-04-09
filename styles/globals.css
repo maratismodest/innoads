@@ -68,7 +68,7 @@
     }
 
     textarea {
-        @apply border border-inputBorder;
+        @apply m-0 border border-inputBorder rounded px-4 py-2;
     }
 
     hr {

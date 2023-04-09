@@ -5,9 +5,13 @@ import {clsx} from 'clsx'
 
 type Props = React.HTMLProps<HTMLInputElement> & VariantProps<typeof inputStyles>;
 
-const Input = ({className, variant, ...props}: Props): JSX.Element => {
+const Input = ({className, variant, label, name, ...props}: Props): JSX.Element => {
   return (
-    <input className={clsx(inputStyles({variant}), className)} {...props} />
+    <div className='grid'>
+      {label && <label htmlFor={name}>{label}</label>}
+      <input id={name} name={name} className={clsx(inputStyles({variant}),className)} {...props} />
+    </div>
+
   )
 }
 

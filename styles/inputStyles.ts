@@ -1,6 +1,6 @@
 import {cva} from "class-variance-authority";
 
-const inputStyles = cva(["border border-inputBorder h-12 rounded px-4"], {
+const inputStyles = cva(["border border-inputBorder h-9 rounded px-4"], {
   variants: {
     variant: {
       primary: [],
