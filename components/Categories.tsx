@@ -7,7 +7,7 @@ const Categories = (): JSX.Element => {
   const {t} = useTranslation();
   return (
     <ul
-      className="mb-1 flex snap-x snap-mandatory justify-between gap-12 overflow-scroll rounded-2xl bg-grey px-4 py-2">
+      className="mb-1 flex snap-x snap-mandatory justify-between gap-12 overflow-scroll rounded-2xl bg-grey px-8 py-2">
       {categories.map(({value, image, label}, index) => {
         return (
           <li key={value} tabIndex={index + 1}>

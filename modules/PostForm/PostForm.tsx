@@ -3,7 +3,6 @@ import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import {useAuth} from '@/hooks/useAuth'
 import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types/PostDTO'
-import client from "@/utils/api/createRequest";
 import postAd from "@/utils/api/postPost";
 import postTelegram from "@/utils/api/postTelegram";
 import {updateAd} from '@/utils/api/updatePost'

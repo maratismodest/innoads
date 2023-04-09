@@ -14,6 +14,7 @@ module.exports = {
             blue: '#1282a6',
             green: '#15b012',
             red: '#f00',
+            inputBorder: 'hsl(0deg 0% 80%)'
         },
         extend: {},
     },

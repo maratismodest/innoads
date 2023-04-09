@@ -1,12 +1,14 @@
+import inputStyles from "@/styles/inputStyles";
+import {VariantProps} from "class-variance-authority";
 import React from 'react'
-import { clsx } from 'clsx'
+import {clsx} from 'clsx'
 
-type Props = React.HTMLProps<HTMLInputElement> & {}
+type Props = React.HTMLProps<HTMLInputElement> & VariantProps<typeof inputStyles>;
 
-const Input = ({ className, ...props }: Props): JSX.Element => {
-    return (
-        <input className={clsx('input', className)} {...props} />
-    )
+const Input = ({className, variant, ...props}: Props): JSX.Element => {
+  return (
+    <input className={clsx(inputStyles({variant}), className)} {...props} />
+  )
 }
 
 export default Input

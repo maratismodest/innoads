@@ -67,8 +67,8 @@
         @apply relative w-full max-w-md border-none rounded shadow
     }
 
-    input, textarea {
-        border: 1px solid hsl(0deg 0% 80%);
+    textarea {
+        @apply border border-inputBorder;
     }
 
     hr {
@@ -92,10 +92,6 @@
 
     .form {
         @apply relative flex flex-col mx-auto max-w-[400px] gap-4
-    }
-
-    .input {
-        @apply h-12 rounded px-4;
     }
 
 }
