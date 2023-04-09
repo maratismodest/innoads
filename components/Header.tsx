@@ -1,46 +1,52 @@
-import buttonStyles from "@/styles/buttonStyles";
-import Link from 'next/link'
-import {useTranslation} from 'next-i18next'
-import React, {useCallback, useMemo, useState} from 'react'
-import {useAuth} from '@/hooks/useAuth'
-import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef'
-import {Routes} from '@/utils/routes'
-
 import Dropdown from '@/components/Dropdown'
 import Switcher from '@/components/Switcher'
 import Button from '@/components/ui/Button'
+import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef'
+import buttonStyles from "@/styles/buttonStyles";
+import {Routes} from '@/utils/routes'
+import {useTranslation} from 'next-i18next'
+import Link from 'next/link'
+import React, {useCallback, useState} from 'react'
+
+type MenuProps = {
+  href: string,
+  variant: 'primary' | 'secondary',
+  text: any
+}
+
+const menu: MenuProps[] = [
+  {
+    href: Routes.profile,
+    variant: 'secondary',
+    text: 'profile'
+  },
+  {
+    href: Routes.favourites,
+    variant: 'secondary',
+    text: 'favourite'
+  },
+  {
+    href: Routes.blog,
+    variant: 'secondary',
+    text: 'blog'
+  },
+  {
+    href: Routes.add,
+    variant: 'primary',
+    text: 'addAd'
+  },
+]
 
 const Buttons = ({className}: { className?: string }) => {
-  const {user} = useAuth()
   const {t} = useTranslation()
-  const menu = useMemo(() => [
-    {
-      id: 'user',
-      href: Routes.profile,
-      text: t(user ? 'profile' : 'login')
-    },
-    {
-      id: 'favourite',
-      href: Routes.favourites,
-      text: t('favourite'),
-    },
-    {
-      id: 'blog',
-      href: Routes.blog,
-      text: t('blog'),
-    },
-    {
-      id: 'add',
-      href: Routes.add,
-      text: t('addAd'),
-    },
-  ], [user, t])
 
   return (
     <ul className={className}>
-      {menu.map(({id, href, text}) =>
-        <li key={id} className='mb-2 lg:mb-0' data-testid={id}>
-          <Link href={href} className={buttonStyles({variant: "secondary"})}>{text}</Link>
+      {menu.map(({href, text, variant}) =>
+        <li key={href} className='mb-2 lg:mb-0' data-testid={href}>
+          <Link href={href} className={buttonStyles({variant: variant})}>
+            {t(text)}
+          </Link>
         </li>)
       }
     </ul>

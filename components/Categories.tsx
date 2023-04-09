@@ -16,22 +16,15 @@ const Categories = (): JSX.Element => {
                 pathname: "/search",
                 query: {categoryId: value},
               }}
-              className="flex w-10 snap-center flex-col items-center justify-between"
+              className="flex flex-col w-10 snap-center items-center justify-between"
             >
-              <button
-                aria-label={label}
-                className="relative aspect-square w-full overflow-hidden rounded-[50%] bg-white p-2 shadow transition-all hover:scale-110">
-                <Image
-                  src={image}
-                  alt={label}
-                  fill={true}
-                  style={{
-                    objectFit: "contain",
-                    padding: 8,
-                  }}
-                />
-              </button>
-
+              <Image
+                src={image}
+                alt={label}
+                width={40}
+                height={40}
+                className="relative rounded-[50%] bg-white p-2 shadow transition-all hover:scale-110"
+              />
               <h5>{t(label)}</h5>
             </Link>
           </li>
