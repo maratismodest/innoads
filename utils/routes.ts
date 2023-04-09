@@ -7,4 +7,5 @@ export enum Routes {
   post = '/post',
   favourites = '/favourites',
   blog = '/blog',
+  articles = '/articles',
 }

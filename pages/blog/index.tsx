@@ -1,52 +1,38 @@
-import Link from 'next/link'
-import {GetStaticProps, NextPage} from 'next/types'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import React from 'react'
-import {Seo} from '@/types'
-import {getSortedPostsData} from '@/utils/blogParse'
-import {seo} from '@/utils/constants'
-import revalidate from '@/utils/revalidate'
-import {Routes} from '@/utils/routes'
+import Layout from "@/components/Layout";
+import {ArticleDTO} from "@/types/ArticleDTO";
+import fetchArticles from "@/utils/api/fetchArticles";
+import {seo} from "@/utils/constants";
+import revalidate from "@/utils/revalidate";
+import {Routes} from "@/utils/routes";
+import {useTranslation} from "next-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import Link from "next/link";
+import {GetStaticProps} from "next/types";
+import React from 'react';
 
-import Layout from '@/components/Layout'
-
-export type BlogPost = {
-  id: string, date: string, title: string
-}
-
-type Props = {
-  blogPosts: BlogPost[]
-  seo: Seo
-}
-
-const Blog: NextPage<Props> = ({blogPosts, seo}) => {
+const Articles = ({articles}: { articles: ArticleDTO[] }) => {
   const {t} = useTranslation()
-  const canonical = `${process.env.NEXT_PUBLIC_APP_URL}/blog`
   return (
-    <Layout
-      {...seo}
-      canonical={canonical}
-    >
+    <Layout>
       <h1>{t('blog')}</h1>
       <ul>
-        {blogPosts.map((post) =>
-          <li key={post.id} className='mb-2'>
-            <Link href={Routes.blog + '/' + post.id}>{post.title}</Link>
+        {articles.map((article) =>
+          <li key={article.id} className='mb-2'>
+            <Link href={Routes.blog + '/' + article.slug}>{article.title}</Link>
           </li>,
         )}
       </ul>
     </Layout>
-  )
-}
+  );
+};
 
-export default Blog
+export default Articles;
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
-  const blogPosts = getSortedPostsData()
+  const articles = await fetchArticles()
   return {
     props: {
-      blogPosts,
+      articles,
       seo: seo.blog,
       ...(await serverSideTranslations(locale as string)),
     },
