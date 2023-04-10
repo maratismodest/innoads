@@ -14,7 +14,7 @@ type Props = {
 const Article: NextPage<Props> = ({article}) => {
   return (
     <Layout>
-      <article className='prose' dangerouslySetInnerHTML={{__html: article.body}}/>
+      <article className='wysiwyg' dangerouslySetInnerHTML={{__html: article.body}}/>
     </Layout>
   )
 }
