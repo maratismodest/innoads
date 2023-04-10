@@ -94,4 +94,12 @@
         @apply relative flex flex-col mx-auto max-w-[400px] gap-4
     }
 
+    .wysiwyg > ul,p {
+        @apply mt-2
+    }
+
+    .wysiwyg ul {
+        @apply list-disc list-inside
+    }
+
 }
