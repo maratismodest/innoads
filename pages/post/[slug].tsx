@@ -1,24 +1,22 @@
+import ImageInView from "@/components/ImageInView";
 import Item from '@/components/Item'
 import Layout from '@/components/Layout'
 import Price from '@/components/Price'
 import Button from '@/components/ui/Button'
-import useOnScreen from '@/hooks/useOnScreen'
 import {GetStaticPostPath} from '@/types'
 import {PostDTO} from '@/types/PostDTO'
 import fetchAd from "@/utils/api/fetchAd";
 import fetchAds from "@/utils/api/fetchAds";
 import {categories} from '@/utils/categories'
-import {NO_IMAGE, tgLink} from '@/utils/constants'
+import {tgLink} from '@/utils/constants'
 import {Routes} from '@/utils/routes'
 import {clsx} from 'clsx'
 import dayjs from 'dayjs'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import Image from 'next/image'
 import Link from 'next/link'
 import {GetStaticPaths, GetStaticProps, NextPage} from 'next/types'
-import React, {useCallback, useMemo, useRef, useState} from 'react'
-import ImageViewer from 'react-simple-image-viewer';
+import React, {useMemo, useRef, useState} from 'react'
 
 type Props = {
   post: PostDTO,
@@ -27,11 +25,9 @@ type Props = {
 
 const Post: NextPage<Props> = ({post, related}) => {
   const {t} = useTranslation()
+  const [current, setCurrent] = useState(0)
+
   const ul = useRef<HTMLUListElement>(null)
-  const refFirst = useRef<HTMLLIElement>(null)
-  const refLast = useRef<HTMLLIElement>(null)
-  const firstInView = useOnScreen(refFirst)
-  const lastInVew = useOnScreen(refLast)
 
   const {
     title,
@@ -45,69 +41,34 @@ const Post: NextPage<Props> = ({post, related}) => {
   } = post
 
   const images = useMemo(() => post.images.split('||'), [post])
+
+  const refs = useRef<HTMLLIElement[]>([])
+
   const category = useMemo(
     () =>
       categories.find((option) => option.value === categoryId) || categories[0],
     [categoryId],
   )
-  const seoTitle = useMemo(
-    () => `${t(category.label)} ${title.slice(0, 50)} в городе Иннополис`,
-    [category.label, title, t],
-  )
-  const seoDescription = useMemo(() => body.slice(0, 320), [body])
-  const seoImage = useMemo(() => preview, [preview])
-  const seoKeywords = useMemo(
-    () => `innoads, Иннополис, доска объявлений, ${category.label}`,
-    [category.label],
-  )
-  const canonical = useMemo(() => `${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`, [slug])
-
-  const shareData = {
-    title: 'InnoAds',
-    text: 'Поделиться ссылкой:',
-    url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug,
-  }
 
   const handleClick = (direction: 'left' | 'right') => {
     const res = direction === 'right' ? 1 : -1
-    if (ul.current && refFirst.current && refLast.current) {
-      ul.current.scrollTo({left: ul.current.scrollLeft + 300 * res, behavior: 'smooth'})
+    setCurrent(prevState => prevState + res)
+    if (ul.current) {
+      ul.current.scrollTo({left: ul.current.scrollLeft + ul.current.clientWidth * res, behavior: 'smooth'})
     }
   }
-  const openImageViewer = useCallback((index: number) => {
-    setCurrentImage(index);
-    setIsViewerOpen(true);
-  }, []);
-
-  const closeImageViewer = () => {
-    setCurrentImage(0);
-    setIsViewerOpen(false);
-  };
-
-  const [currentImage, setCurrentImage] = useState(0);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
 
   return (
     <Layout
-      title={seoTitle}
-      description={seoDescription}
-      canonical={canonical}
-      keywords={seoKeywords}
-      image={seoImage}
+      title={`${t(category.label)} ${title.slice(0, 50)} в городе Иннополис`}
+      description={body.slice(0, 320)}
+      canonical={`${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`}
+      keywords={`innoads, Иннополис, доска объявлений, ${t(category.label)}`}
+      image={preview}
       author={`${tgLink}/${user?.username}`}
     >
       <div className='mx-auto max-w-[400px]'>
         <div className='relative'>
-          {isViewerOpen && (
-              <ImageViewer
-                src={ images }
-                currentIndex={ currentImage }
-                disableScroll={ false }
-                closeOnClickOutside={ true }
-                onClose={ closeImageViewer }
-                backgroundStyle={{zIndex:100}}
-              />
-          )}
           <ul className='relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll'
               ref={ul}
           >
@@ -116,39 +77,33 @@ const Post: NextPage<Props> = ({post, related}) => {
                 <li
                   key={image}
                   className='relative aspect-square h-full flex-none snap-center overflow-y-hidden'
-                  ref={index === 0 ? refFirst : index === images.length - 1 ? refLast : undefined}
+                  ref={(el: HTMLLIElement) => refs.current[index] = el}
                 >
-                  <Image
+                  <ImageInView
+                    index={index}
                     src={image}
-                    alt='image'
                     title={title}
-                    fill={true}
-                    style={{objectFit: 'cover'}}
-                    placeholder='blur'
-                    blurDataURL={NO_IMAGE}
+                    setCurrent={setCurrent}
                   />
-                  <Button
-                    variant="secondary"
-                    className={clsx('absolute bottom-0 w-fit -translate-x-1/2 p-2', 'left-1/2')}
-                    onClick={ () => openImageViewer(index) }>
-                    FullScreen
-                  </Button>
                 </li>
               )
             })}
           </ul>
           <Button
-            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2', 'left-0', (firstInView || images.length < 2) && 'hidden')}
+            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2 hidden', 'left-0', ((current !== 0) && (images.length > 1)) && '!block')}
             onClick={() => handleClick('left')}
+            hidden={(current === 0) || (images.length < 2)}
           >
             &larr;
           </Button>
           <Button
-            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2', 'right-0', (lastInVew || images.length < 2) && 'hidden')}
+            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2 hidden', 'right-0', ((current + 1 < refs.current.length) && (images.length > 1)) && '!block')}
             onClick={() => handleClick('right')}
           >
             &rarr;
           </Button>
+          <div
+            className='bg-[rgba(0,0,0,0.6)] absolute bottom-0 rounded left-1/2 -translate-x-1/2 p-1 text-white'>{`${current + 1}/${images.length}`}</div>
         </div>
 
         <Link href={`${Routes.main}search?categoryId=${categoryId}`}>
@@ -176,7 +131,11 @@ const Post: NextPage<Props> = ({post, related}) => {
 
         <Button
           className='mt-8'
-          onClick={async () => await navigator.share(shareData)}
+          onClick={async () => await navigator.share({
+            title: 'InnoAds',
+            text: 'Поделиться ссылкой:',
+            url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug,
+          })}
         >
           {t('share')}
         </Button>
