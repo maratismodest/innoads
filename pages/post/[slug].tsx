@@ -97,7 +97,7 @@ const Post: NextPage<Props> = ({post, related}) => {
             &larr;
           </Button>
           <Button
-            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2 hidden', 'right-0', ((current + 1 < refs.current.length) && (images.length > 1)) && '!block')}
+            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2 hidden', 'right-0', ((current + 1 < images.length) && (images.length > 1)) && '!block')}
             onClick={() => handleClick('right')}
           >
             &rarr;
