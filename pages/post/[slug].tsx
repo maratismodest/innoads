@@ -17,7 +17,8 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import Image from 'next/image'
 import Link from 'next/link'
 import {GetStaticPaths, GetStaticProps, NextPage} from 'next/types'
-import React, {useMemo, useRef} from 'react'
+import React, {useCallback, useMemo, useRef, useState} from 'react'
+import ImageViewer from 'react-simple-image-viewer';
 
 type Props = {
   post: PostDTO,
@@ -73,6 +74,18 @@ const Post: NextPage<Props> = ({post, related}) => {
       ul.current.scrollTo({left: ul.current.scrollLeft + 300 * res, behavior: 'smooth'})
     }
   }
+  const openImageViewer = useCallback((index: number) => {
+    setCurrentImage(index);
+    setIsViewerOpen(true);
+  }, []);
+
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  };
+
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
 
   return (
     <Layout
@@ -85,6 +98,16 @@ const Post: NextPage<Props> = ({post, related}) => {
     >
       <div className='mx-auto max-w-[400px]'>
         <div className='relative'>
+          {isViewerOpen && (
+              <ImageViewer
+                src={ images }
+                currentIndex={ currentImage }
+                disableScroll={ false }
+                closeOnClickOutside={ true }
+                onClose={ closeImageViewer }
+                backgroundStyle={{zIndex:100}}
+              />
+          )}
           <ul className='relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll'
               ref={ul}
           >
@@ -104,6 +127,12 @@ const Post: NextPage<Props> = ({post, related}) => {
                     placeholder='blur'
                     blurDataURL={NO_IMAGE}
                   />
+                  <Button
+                    variant="secondary"
+                    className={clsx('absolute bottom-0 w-fit -translate-x-1/2 p-2', 'left-1/2')}
+                    onClick={ () => openImageViewer(index) }>
+                    FullScreen
+                  </Button>
                 </li>
               )
             })}

@@ -12,9 +12,11 @@ type Props = {
 }
 
 const Article: NextPage<Props> = ({article}) => {
+  const {title, body} = article
   return (
-    <Layout>
-      <article className='wysiwyg' dangerouslySetInnerHTML={{__html: article.body}}/>
+    <Layout title={title}>
+      <h1>{title}</h1>
+      <article className='wysiwyg' dangerouslySetInnerHTML={{__html: body}}/>
     </Layout>
   )
 }
