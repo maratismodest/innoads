@@ -17,12 +17,14 @@ import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import Image from "next/image";
 import Link from 'next/link'
 import {GetStaticPaths, GetStaticProps, NextPage} from 'next/types'
-import React, {useMemo, useRef, useState} from 'react'
+import React, {useEffect, useMemo, useRef, useState} from 'react'
 
 type Props = {
   post: PostDTO,
   related: PostDTO[]
 }
+
+const styles = 'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center'
 
 const Post: NextPage<Props> = ({post, related}) => {
   const {t} = useTranslation()
@@ -61,6 +63,14 @@ const Post: NextPage<Props> = ({post, related}) => {
     }
   }
 
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [open]);
+
   return (
     <Layout
       title={`${t(category.label)} ${title.slice(0, 50)} в городе Иннополис`}
@@ -70,21 +80,21 @@ const Post: NextPage<Props> = ({post, related}) => {
       image={preview}
       author={`${tgLink}/${user?.username}`}
     >
-      {open && <dialog open={true}
-                       className='z-40 w-screen h-[calc(100vh_-_64px)] backdrop-grayscale absolute max-w-full bg-black top-0'>
-          <Button className='absolute right-4 top-4 z-50' onClick={() => setOpen(false)}>
-              &#x2715;
-          </Button>
-          <Image
-              draggable={false}
-              src={images[current]}
-              alt='image'
-              title={title}
-              fill={true}
-              style={{objectFit: 'contain'}}
-              placeholder='blur'
-              blurDataURL={NO_IMAGE}
-          />
+      {<dialog open={open}
+               className='z-40 w-screen h-[calc(100vh_-_64px)] backdrop-grayscale absolute max-w-full bg-black top-0'>
+        <button className={clsx(styles, 'absolute right-4 top-4 z-50')} onClick={() => setOpen(false)}>
+          &#x2715;
+        </button>
+        <Image
+          draggable={false}
+          src={images[current]}
+          alt='image'
+          title={title}
+          fill={true}
+          style={{objectFit: 'contain'}}
+          placeholder='blur'
+          blurDataURL={NO_IMAGE}
+        />
       </dialog>
       }
       <div className='mx-auto max-w-[400px]'>
@@ -109,24 +119,24 @@ const Post: NextPage<Props> = ({post, related}) => {
               )
             })}
           </ul>
-          <Button
-            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2 hidden', 'left-0', ((current !== 0) && (images.length > 1)) && '!block')}
+          <button
+            className={clsx(styles, 'absolute top-1/2 -translate-y-1/2 hidden', 'left-0', ((current !== 0) && (images.length > 1)) && '!block')}
             onClick={() => handleClick('left')}
             hidden={(current === 0) || (images.length < 2)}
           >
             &larr;
-          </Button>
-          <Button
-            className={clsx('absolute top-1/2 w-fit -translate-y-1/2 p-2 hidden', 'right-0', ((current + 1 < images.length) && (images.length > 1)) && '!block')}
+          </button>
+          <button
+            className={clsx(styles, 'absolute -translate-y-1/2 top-1/2 hidden', 'right-0', ((current + 1 < images.length) && (images.length > 1)) && '!block')}
             onClick={() => handleClick('right')}
           >
             &rarr;
-          </Button>
-          <div onClick={() => setOpen(true)}
-               className='bg-[rgba(0,0,0,0.6)] absolute top-0 rounded left-1/2 -translate-x-1/2 p-1 text-white cursor-pointer w-12 h-12 flex justify-center items-center'>&#x1F50D;
-          </div>
-          <div
-            className='bg-[rgba(0,0,0,0.6)] absolute bottom-0 rounded left-1/2 -translate-x-1/2 p-1 text-white'>{`${current + 1}/${images.length}`}</div>
+          </button>
+          <button onClick={() => setOpen(true)}
+                  className={clsx(styles, 'absolute top-0 left-1/2 -translate-x-1/2')}>&#x1F50D;
+          </button>
+          <button
+            className={clsx(styles, 'absolute bottom-0 left-1/2 -translate-x-1/2')}>{`${current + 1}/${images.length}`}</button>
         </div>
 
         <Link href={`${Routes.main}search?categoryId=${categoryId}`}>
