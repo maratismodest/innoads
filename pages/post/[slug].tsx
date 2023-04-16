@@ -8,12 +8,13 @@ import {PostDTO} from '@/types/PostDTO'
 import fetchAd from "@/utils/api/fetchAd";
 import fetchAds from "@/utils/api/fetchAds";
 import {categories} from '@/utils/categories'
-import {tgLink} from '@/utils/constants'
+import {NO_IMAGE, tgLink} from '@/utils/constants'
 import {Routes} from '@/utils/routes'
 import {clsx} from 'clsx'
 import dayjs from 'dayjs'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import Image from "next/image";
 import Link from 'next/link'
 import {GetStaticPaths, GetStaticProps, NextPage} from 'next/types'
 import React, {useMemo, useRef, useState} from 'react'
@@ -39,6 +40,8 @@ const Post: NextPage<Props> = ({post, related}) => {
     user,
     slug,
   } = post
+
+  const [open, setOpen] = useState(false)
 
   const images = useMemo(() => post.images.split('||'), [post])
 
@@ -67,6 +70,23 @@ const Post: NextPage<Props> = ({post, related}) => {
       image={preview}
       author={`${tgLink}/${user?.username}`}
     >
+      {open && <dialog open={true}
+                       className='z-40 w-screen h-[calc(100vh_-_64px)] backdrop-grayscale absolute max-w-full bg-black top-0'>
+          <Button className='absolute right-4 top-4 z-50' onClick={() => setOpen(false)}>
+              &#x2715;
+          </Button>
+          <Image
+              draggable={false}
+              src={images[current]}
+              alt='image'
+              title={title}
+              fill={true}
+              style={{objectFit: 'contain'}}
+              placeholder='blur'
+              blurDataURL={NO_IMAGE}
+          />
+      </dialog>
+      }
       <div className='mx-auto max-w-[400px]'>
         <div className='relative'>
           <ul className='relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll'
@@ -102,6 +122,9 @@ const Post: NextPage<Props> = ({post, related}) => {
           >
             &rarr;
           </Button>
+          <div onClick={() => setOpen(true)}
+               className='bg-[rgba(0,0,0,0.6)] absolute top-0 rounded left-1/2 -translate-x-1/2 p-1 text-white cursor-pointer w-12 h-12 flex justify-center items-center'>&#x1F50D;
+          </div>
           <div
             className='bg-[rgba(0,0,0,0.6)] absolute bottom-0 rounded left-1/2 -translate-x-1/2 p-1 text-white'>{`${current + 1}/${images.length}`}</div>
         </div>
