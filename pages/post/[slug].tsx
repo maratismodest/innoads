@@ -135,8 +135,8 @@ const Post: NextPage<Props> = ({post, related}) => {
           <button onClick={() => setOpen(true)}
                   className={clsx(styles, 'absolute top-0 left-1/2 -translate-x-1/2')}>&#x1F50D;
           </button>
-          <button
-            className={clsx(styles, 'absolute bottom-0 left-1/2 -translate-x-1/2')}>{`${current + 1}/${images.length}`}</button>
+          <div
+            className={clsx('bg-[rgba(0,0,0,0.6)] text-white rounded text-sm bold p-1', 'absolute bottom-0 left-1/2 -translate-x-1/2')}>{`${current + 1} / ${images.length}`}</div>
         </div>
 
         <Link href={`${Routes.main}search?categoryId=${categoryId}`}>
