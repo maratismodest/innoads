@@ -45,7 +45,7 @@ const Layout: React.FC<Props> = ({
       </Head>
       <Header/>
       <main className={className}>{children}</main>
-      <footer className='bg-grey'>
+      <footer className='bg-gray'>
         <Button variant="secondary" className='mx-auto flex justify-center' onClick={scrollToTop}>Up</Button>
       </footer>
     </>

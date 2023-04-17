@@ -8,11 +8,18 @@ module.exports = {
     ],
     theme: {
         colors: {
+            blue: {
+                DEFAULT: '#1282a6'
+            },
+            green: '#008489',
+            yellow: '#F0BB3C',
             white: '#ffffff',
-            grey: '#f9f8f9',
+            gray: {
+                light: '#F9F8F9',
+                DEFAULT: '#f9f8f9',
+                dark: '#8191A2'
+            },
             black: '#151617',
-            blue: '#1282a6',
-            green: '#15b012',
             red: '#f00',
             inputBorder: 'hsl(0deg 0% 80%)'
         },

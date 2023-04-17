@@ -8,7 +8,7 @@ export interface TelegramUser {
   hash: string;
 }
 
-export type UserDTO = {
+export interface UserDTO {
   readonly id: number,
   readonly username: string
 }

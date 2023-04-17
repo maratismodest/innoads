@@ -72,7 +72,7 @@
     }
 
     hr {
-        @apply my-2 border-grey
+        @apply my-2 border-gray
     }
 
 }
