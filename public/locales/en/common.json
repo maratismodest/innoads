@@ -56,5 +56,8 @@
   "noFavourites": "No favourites",
   "yes": "Yes",
   "no": "No",
-  "noAds": "No Ads"
+  "noAds": "No Ads",
+  "required": "Field is required",
+  "min": "Field can't be less than {{min}}",
+  "max": "Field should be less than {{max}}"
 }

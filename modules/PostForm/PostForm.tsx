@@ -26,15 +26,16 @@ export interface PostFormProps {
   post?: PostDTO
 }
 
-const schema = yup.object({
-  title: yup.string().required().min(5).max(50),
-  body: yup.string().required().min(10).max(800),
-  price: yup.number().typeError('Price must be a number').required().min(1, "Too little"),
-  categoryId: yup.number().nullable().required("Please select category"),
-}).required();
-type FormData = yup.InferType<typeof schema>;
-
 const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
+  const {t} = useTranslation()
+  const schema = yup.object({
+    title: yup.string().required(t('required')).min(5, ({min}) => t('min', {min})).max(50, ({max}) => t('max', {max})),
+    body: yup.string().required(t('required')).min(10, ({min}) => t('min', {min})).max(800, ({max}) => t('max', {max})),
+    price: yup.number().typeError('Price must be a number').required(t('required')).min(1, ({min}) => t('min', {min})),
+    categoryId: yup.number().required(t('required')),
+  });
+
+  type FormData = yup.InferType<typeof schema>;
 
   const {control, register, handleSubmit, formState: {errors}} = useForm<FormData>({
     resolver: yupResolver(schema)
@@ -45,7 +46,6 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
   });
   const [images, setImages] = useState<string[]>(() => post ? post.images.split('||') : [])
   const router = useRouter()
-  const {t} = useTranslation()
 
   const {user} = useAuth()
   const [sending, setSending] = useState(false)
@@ -137,8 +137,6 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
     return
   }
 
-  console.log(errors)
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -150,7 +148,6 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
         <Select
           label={t('chooseCategory')}
           data-testid='categoryId'
-          defaultValue={defaultValues?.categoryId}
           value={categoryIdValue ? categories.map(({value, label}) => ({
             value,
             label: t(label)
