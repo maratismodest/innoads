@@ -1,5 +1,5 @@
 import Dropdown from '@/components/Dropdown'
-import Switcher from '@/components/Switcher'
+import Switcher from '@/components/LanguageSwitcher'
 import Button from '@/components/ui/Button'
 import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef'
 import buttonStyles from "@/styles/buttonStyles";
