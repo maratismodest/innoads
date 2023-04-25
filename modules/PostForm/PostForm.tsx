@@ -2,7 +2,9 @@ import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import Spinner from "@/components/ui/Spinner";
+import inputValidation from "@/modules/PostForm/inputValidation";
 import {useAuth} from '@/hooks/useAuth'
+import useValidation from "@/hooks/useValidation";
 import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types/PostDTO'
 import postAd from "@/utils/api/postPost";
 import postTelegram from "@/utils/api/postTelegram";
@@ -23,12 +25,13 @@ export interface PostFormProps {
   post?: PostDTO
 }
 
+export type PostOptions = Record<string, string | number | boolean>
+
 interface FormField {
   type: 'select' | 'number' | 'text' | 'textarea',
   value: any,
   label: string
-  required: boolean
-  options: object
+  options: PostOptions,
 }
 
 interface Form {
@@ -45,31 +48,31 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       type: 'select',
       value: defaultValues?.categoryId,
       label: t('chooseCategory'),
-      required: true,
-      options: {},
+      options: {
+        required: true,
+      },
     },
     price: {
       type: 'number',
       value: defaultValues?.price,
       label: t('price'),
-      required: true,
-      options: {min: 1},
+      options: {required: true, min: 1},
     },
     title: {
       type: 'text',
       value: defaultValues?.title,
       label: t('header'),
-      required: true,
-      options: {minLength: 5, maxLength: 50},
+      options: {required: true, minLength: 5, maxLength: 50},
     },
     description: {
       type: 'textarea',
       value: defaultValues?.body,
       label: t('description'),
-      required: true,
-      options: {minLength: 10, maxLength: 800},
+      options: {required: true, minLength: 10, maxLength: 800},
     }
   })
+
+  const textAreaError = useValidation(data.description.value, data.description.options)
 
   const [images, setImages] = useState<string[]>(() => post ? post.images.split('||') : [])
   const router = useRouter()
@@ -86,7 +89,6 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
 
   if (!user) {
     return <Spinner/>
-
   }
 
   const handleCreate = async (formData: CreatePostDTO) => {
@@ -129,6 +131,15 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
     e.preventDefault()
 
     if (images.length === 0) {
+      return
+    }
+
+    const isValidCategory = inputValidation(data.categoryId.value, data.categoryId.options)
+    const isValidPrice = inputValidation(data.price.value, data.price.options)
+    const isValidTitle = inputValidation(data.title.value, data.title.options)
+    const isValidBody = inputValidation(data.description.value, data.description.options)
+
+    if (!isValidCategory || !isValidPrice || !isValidTitle || !isValidBody) {
       return
     }
 
@@ -177,13 +188,13 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       name={post ? t('editAd') : t('addAd')}
     >
       <h1>{t('addPost')}</h1>
-      {Object.entries(data).map(([name, {label, value, type, required, options}]) => {
+      {Object.entries(data).map(([name, {label, value, type, options}]) => {
         switch (type) {
           case "select": {
             return (
               <Select
                 label={label}
-                data-testid={name}
+                name={name}
                 value={value ? categories.map(({value, label}) => ({
                   value,
                   label: t(label)
@@ -191,7 +202,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
                 onChange={(option: CategoryProps) => {
                   handleChange(name as keyof Form, Number(option.value))
                 }}
-                required={required}
+                validations={options}
               />
             )
           }
@@ -201,37 +212,40 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
                 type='number'
                 label={label}
                 data-testid={name}
+                name={name}
                 value={value}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   handleChange(name as keyof Form, Number(event.target.value))
                 }}
-                required={required}
-                {...options}
+                options={options}
               />
             )
           case "text":
             return (
               <Input
                 type='text'
+                name={name}
                 label={label}
                 data-testid={name}
                 value={value}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   handleChange(name as keyof Form, event.target.value)
                 }}
-                required={required}
-                {...options}
+                options={options}
               />
             )
           case "textarea":
             return (
               <div className='grid'>
                 <label htmlFor={name}>{label}</label>
-                <textarea rows={5} cols={5} name={name} data-testid={name} value={value}
-                          required={required} {...options}
+                <textarea rows={5} cols={5}
+                          name={name} data-testid={name} value={value}
+                          {...options}
                           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             handleChange(name as keyof Form, event.target.value)
-                          }}/>
+                          }}
+                />
+                {textAreaError && <span className='text-red'>{textAreaError}</span>}
               </div>
             )
           default:
@@ -242,7 +256,6 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
         images={images}
         setImages={setImages}
       />
-
       <Button
         type='submit'
         disabled={sending}
