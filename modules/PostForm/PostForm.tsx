@@ -6,17 +6,14 @@ import {useAuth} from '@/hooks/useAuth'
 import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types/PostDTO'
 import postAd from "@/utils/api/postPost";
 import postTelegram from "@/utils/api/postTelegram";
-import {updateAd} from '@/utils/api/updatePost'
+import updateAd from "@/utils/api/updatePost";
 import {categories, CategoryProps} from "@/utils/categories";
 import {Routes} from '@/utils/routes'
-import {AxiosError} from 'axios'
+import {AxiosError} from "axios";
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
-import {useForm, Controller, useController} from "react-hook-form";
 import slug from 'slug'
-import {yupResolver} from '@hookform/resolvers/yup';
-import * as yup from "yup";
 
 import PostFormImages from './PostFormImages'
 import {messages, postDefaultValues, PostFormValues} from './utils'
@@ -26,24 +23,54 @@ export interface PostFormProps {
   post?: PostDTO
 }
 
+interface FormField {
+  type: 'select' | 'number' | 'text' | 'textarea',
+  value: any,
+  label: string
+  required: boolean
+  options: object
+}
+
+interface Form {
+  categoryId: FormField,
+  price: FormField,
+  title: FormField,
+  description: FormField,
+}
+
 const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
   const {t} = useTranslation()
-  const schema = yup.object({
-    title: yup.string().required(t('required')).min(5, ({min}) => t('min', {min})).max(50, ({max}) => t('max', {max})),
-    body: yup.string().required(t('required')).min(10, ({min}) => t('min', {min})).max(800, ({max}) => t('max', {max})),
-    price: yup.number().typeError('Price must be a number').required(t('required')).min(1, ({min}) => t('min', {min})),
-    categoryId: yup.number().required(t('required')),
-  });
-
-  type FormData = yup.InferType<typeof schema>;
-
-  const {control, register, handleSubmit, formState: {errors}} = useForm<FormData>({
-    resolver: yupResolver(schema)
+  const [data, setData] = useState<Form>({
+    categoryId: {
+      type: 'select',
+      value: defaultValues?.categoryId,
+      label: t('chooseCategory'),
+      required: true,
+      options: {},
+    },
+    price: {
+      type: 'number',
+      value: defaultValues?.price,
+      label: t('price'),
+      required: true,
+      options: {min: 1},
+    },
+    title: {
+      type: 'text',
+      value: defaultValues?.title,
+      label: t('header'),
+      required: true,
+      options: {minLength: 5, maxLength: 50},
+    },
+    description: {
+      type: 'textarea',
+      value: defaultValues?.body,
+      label: t('description'),
+      required: true,
+      options: {minLength: 10, maxLength: 800},
+    }
   })
-  const {field: {value: categoryIdValue, onChange: langOnChange, ...restLangField}} = useController({
-    name: 'categoryId',
-    control
-  });
+
   const [images, setImages] = useState<string[]>(() => post ? post.images.split('||') : [])
   const router = useRouter()
 
@@ -59,6 +86,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
 
   if (!user) {
     return <Spinner/>
+
   }
 
   const handleCreate = async (formData: CreatePostDTO) => {
@@ -94,26 +122,30 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
     }
   }
 
-  const onSubmit = async ({title, body, price, categoryId}: FormData) => {
+  const handleChange = (name: keyof Form, value: any) =>
+    setData(prev => ({...prev, [name]: {...prev[name], value}}))
+
+  const onSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault()
+
     if (images.length === 0) {
       return
     }
 
-    const data = {
-      title: title.trim(),
-      body: body.trim(),
-      price,
-      categoryId,
+    const form = {
+      title: data.title.value.trim(),
+      body: data.description.value.trim(),
+      price: data.price.value,
+      categoryId: data.categoryId.value,
     }
-    console.log('data', data)
 
     if (post) {
       const editPostDto: EditPostDTO = {
         id: post.id,
-        categoryId: data.categoryId,
-        price: data.price,
-        title: data.title,
-        body: data.body,
+        categoryId: form.categoryId,
+        price: form.price,
+        title: form.title,
+        body: form.body,
         preview: images[0],
         images: images.join('||'),
         userId: user.id,
@@ -124,78 +156,88 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
     }
 
     const createPostDto: CreatePostDTO = {
-      categoryId: data.categoryId,
-      price: data.price,
-      title: data.title,
-      body: data.body,
+      categoryId: form.categoryId,
+      price: form.price,
+      title: form.title,
+      body: form.body,
       preview: images[0],
       images: images.join('||'),
-      slug: slug(data.title) + '-' + Math.floor(Math.random() * 100),
+      slug: slug(form.title) + '-' + Math.floor(Math.random() * 100),
       userId: user.id,
     }
     await handleCreate(createPostDto)
     return
+
   }
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={onSubmit}
       className='form'
       name={post ? t('editAd') : t('addAd')}
     >
       <h1>{t('addPost')}</h1>
-      <div>
-        <Select
-          label={t('chooseCategory')}
-          data-testid='categoryId'
-          value={categoryIdValue ? categories.map(({value, label}) => ({
-            value,
-            label: t(label)
-          })).find(x => x.value === categoryIdValue) : categoryIdValue}
-          onChange={(option: CategoryProps) => langOnChange(option ? option.value : option)}
-          {...restLangField}
-        />
-        <span className='text-red'>{errors.categoryId?.message}</span>
-      </div>
-
-      <div>
-        <Controller
-          name="price"
-          control={control}
-          defaultValue={defaultValues.price}
-          render={({field}) => <Input
-            type='number'
-            label={t('price')}
-            data-testid='price'
-            {...field}/>}
-        />
-        <span className='text-red'>{errors.price?.message}</span>
-      </div>
-      <div>
-        <Controller
-          name="title"
-          control={control}
-          defaultValue={defaultValues.title}
-          render={({field}) => <Input
-            label={t('header')}
-            data-testid='title'
-            {...field}/>}
-        />
-        <span className='text-red'>{errors.title?.message}</span>
-      </div>
-      <div className='grid'>
-        <label htmlFor="body">{t('description')}</label>
-        <textarea
-          id="body"
-          {...register('body', {required: true, minLength: 10, maxLength: 800})}
-          rows={5}
-          cols={5}
-          name='body'
-          defaultValue={defaultValues.body}
-          data-testid='description'
-        />
-        <span className='text-red'>{errors.body?.message}</span>
-      </div>
+      {Object.entries(data).map(([name, {label, value, type, required, options}]) => {
+        switch (type) {
+          case "select": {
+            return (
+              <Select
+                label={label}
+                data-testid={name}
+                value={value ? categories.map(({value, label}) => ({
+                  value,
+                  label: t(label)
+                })).find(x => x.value === value) : value}
+                onChange={(option: CategoryProps) => {
+                  handleChange(name as keyof Form, Number(option.value))
+                }}
+                required={required}
+              />
+            )
+          }
+          case "number":
+            return (
+              <Input
+                type='number'
+                label={label}
+                data-testid={name}
+                value={value}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  handleChange(name as keyof Form, Number(event.target.value))
+                }}
+                required={required}
+                {...options}
+              />
+            )
+          case "text":
+            return (
+              <Input
+                type='text'
+                label={label}
+                data-testid={name}
+                value={value}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  handleChange(name as keyof Form, event.target.value)
+                }}
+                required={required}
+                {...options}
+              />
+            )
+          case "textarea":
+            return (
+              <div className='grid'>
+                <label htmlFor={name}>{label}</label>
+                <textarea rows={5} cols={5} name={name} data-testid={name} value={value}
+                          required={required} {...options}
+                          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            handleChange(name as keyof Form, event.target.value)
+                          }}/>
+              </div>
+            )
+          default:
+            return null
+        }
+      })}
       <PostFormImages
         images={images}
         setImages={setImages}
@@ -213,3 +255,11 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
 }
 
 export default PostForm
+
+
+// const schema = yup.object({
+//   title: yup.string().required(t('required')).min(5, ({min}) => t('min', {min})).max(50, ({max}) => t('max', {max})),
+//   body: yup.string().required(t('required')).min(10, ({min}) => t('min', {min})).max(800, ({max}) => t('max', {max})),
+//   price: yup.number().typeError('Price must be a number').required(t('required')).min(1, ({min}) => t('min', {min})),
+//   categoryId: yup.number().required(t('required')),
+// });
