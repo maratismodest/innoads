@@ -59,5 +59,7 @@
   "noAds": "No Ads",
   "required": "Field is required",
   "min": "Field can't be less than {{min}}",
-  "max": "Field should be less than {{max}}"
+  "max": "Field should be less than {{max}}",
+  "minLength": "Field can't be shorter than {{min}}",
+  "maxLength": "Field should be shorter than {{max}}"
 }

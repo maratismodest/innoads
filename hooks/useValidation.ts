@@ -1,7 +1,9 @@
 import {PostOptions} from "@/modules/PostForm/PostForm";
+import {useTranslation} from "next-i18next";
 import {useEffect, useState} from "react";
 
 export default function useValidation(value: any, validations: PostOptions) {
+  const {t} = useTranslation()
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -9,22 +11,27 @@ export default function useValidation(value: any, validations: PostOptions) {
       switch (validation) {
         case 'required':
           if (!value) {
-            setError('Required')
+            setError(t('required'))
             return
           }
         case 'minLength':
           if (value.length < validations['minLength']) {
-            setError(`Short: should be longer than ${validations['minLength']}`)
+            setError(t('minLength', {min: validations['minLength']}))
             return
           }
         case 'maxLength':
           if (value.length > validations['maxLength']) {
-            setError(`Long: should be shorter than ${validations['maxLength']}`)
+            setError(t('maxLength', {max: validations['minLength']}))
             return
           }
         case 'min':
           if (value < validations['min']) {
-            setError(`Small: should be bigger than ${validations['min']}`)
+            setError(t('min', {min: validations['min']}))
+            return
+          }
+        case 'max':
+          if (value > validations['max']) {
+            setError(t('max', {max: validations['max']}))
             return
           }
         default:
