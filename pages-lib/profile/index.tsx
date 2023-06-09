@@ -1,34 +1,24 @@
+'use client'
+import Posts from "@/components/Posts";
+import Button from "@/components/ui/Button";
+import Spinner from "@/components/ui/Spinner";
+import useAuth from "@/hooks/useAuth";
 import buttonStyles from "@/styles/buttonStyles";
+import {PostDTO, TelegramUser} from "@/types";
+import client from "@/utils/api/createRequest";
+import fetchPosts from "@/utils/api/fetchAds";
+import {routes} from "@/utils/constants";
+import * as jose from "jose";
+import Link from "next/link";
+import React, {useCallback, useEffect, useState} from 'react';
+import TelegramLoginButton from "telegram-login-button";
 
-import Layout from '@/components/Layout'
-import Posts from '@/components/Posts'
-import Button from '@/components/ui/Button'
-import Spinner from '@/components/ui/Spinner'
-import useAuth from '@/hooks/useAuth'
-import type {Seo, PostDTO, TelegramUser} from "@/types";
-import client from '@/utils/api/createRequest'
-import fetchPosts from '@/utils/api/fetchAds'
-import {seo, routes} from '@/utils/constants'
-import revalidate from '@/utils/revalidate'
-import * as jose from 'jose'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import Link from 'next/link'
-import type {GetStaticProps} from 'next/types'
-import React, {useCallback, useEffect, useState} from 'react'
-import TelegramLoginButton from 'telegram-login-button'
+const error = 'Добавьте алиас у себя в аккаунте / Page alias into your account!'
 
-const error = 'Добавьте алиас у себя в аккаунте / Add alias into your account!'
-
-type Props = {
-  seo: Seo
-}
-
-export default function Profile<NextPage>({seo}: Props) {
+const Profile = () => {
   const [posts, setPosts] = useState<PostDTO[]>([])
   const [fetching, setFetching] = useState(false)
   const {user, login, logout} = useAuth()
-  const {t} = useTranslation()
 
   const handleTelegram = async ({username, id}: TelegramUser) => {
     if (!username) {
@@ -78,9 +68,9 @@ export default function Profile<NextPage>({seo}: Props) {
 
   if (!user) {
     return (
-      <Layout {...seo}>
+      <div>
         <div className='flex flex-col items-center'>
-          <h2>{t('authorization')}</h2>
+          <h2>Авторизоваться</h2>
           <TelegramLoginButton
             botName='InnoAdsPostBot'
             dataOnauth={handleTelegram}
@@ -88,31 +78,23 @@ export default function Profile<NextPage>({seo}: Props) {
           {process.env.NEXT_PUBLIC_NODE_ENV == 'development' &&
               <Button onClick={handleTelegramImitate} data-testid="development-login-button">Imitate</Button>}
         </div>
-      </Layout>
+      </div>
     )
   }
 
   return (
-    <Layout {...seo} className='flex flex-col items-center gap-8'>
+    <div className='flex flex-col items-center gap-8'>
       <div className='text-center'>
-        <h1>{t('profile')}</h1>
-        <p>{t('addAds')}</p>
+        <h1>Профилье</h1>
+        <p>Добавить объявление</p>
       </div>
       <Link href={routes.add} className={buttonStyles()}>&#43;</Link>
       {fetching && <Spinner/>}
       {posts.length > 0 && !fetching && <Posts posts={posts} edit={true}/>}
-      {posts.length === 0 && !fetching && <h2>{t('noAds')}</h2>}
-      <Button onClick={logout} data-testid="logout">{t('exit')}</Button>
-    </Layout>
+      {posts.length === 0 && !fetching && <h2>Нет объявлений</h2>}
+      <Button onClick={logout} data-testid="logout">Выйти</Button>
+    </div>
   )
-}
+};
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale as string)),
-      seo: seo.profile,
-    },
-    revalidate: revalidate,
-  }
-}
+export default Profile;

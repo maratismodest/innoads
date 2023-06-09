@@ -1,22 +1,16 @@
+'use client'
 import ImageInView from "@/components/ImageInView";
-import Item from '@/components/Item'
-import Layout from '@/components/Layout'
-import Price from '@/components/Price'
-import Button from '@/components/ui/Button'
-import type {GetStaticPostPath} from '@/types'
-import type {PostDTO} from '@/types'
-import fetchAd from "@/utils/api/fetchAd";
-import fetchAds from "@/utils/api/fetchAds";
-import {categories} from '@/utils/categories'
-import {NO_IMAGE, tgLink, routes} from '@/utils/constants'
-import {clsx} from 'clsx'
-import dayjs from 'dayjs'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
+import Item from "@/components/Item";
+import Price from "@/components/Price";
+import Button from "@/components/ui/Button";
+import {PostDTO} from "@/types";
+import {categories} from "@/utils/categories";
+import {NO_IMAGE, routes, tgLink} from "@/utils/constants";
+import {clsx} from "clsx";
+import dayjs from "dayjs";
 import Image from "next/image";
-import Link from 'next/link'
-import type {GetStaticPaths, GetStaticProps} from 'next/types'
-import React, {useEffect, useMemo, useRef, useState} from 'react'
+import Link from "next/link";
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 type Props = {
   post: PostDTO,
@@ -25,8 +19,7 @@ type Props = {
 
 const styles = 'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center'
 
-export default function Post<NextPage>({post, related}: Props) {
-  const {t} = useTranslation()
+const Post = ({post, related}: Props) => {
   const [current, setCurrent] = useState(0)
 
   const ul = useRef<HTMLUListElement>(null)
@@ -71,14 +64,15 @@ export default function Post<NextPage>({post, related}: Props) {
   }, [open]);
 
   return (
-    <Layout
-      title={`${t(category.label)} ${title.slice(0, 50)} в городе Иннополис`}
-      description={body.slice(0, 320)}
-      canonical={`${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`}
-      keywords={`innoads, Иннополис, доска объявлений, ${t(category.label)}`}
-      image={preview}
-      author={`${tgLink}/${user?.username}`}
-    >
+    // <Layout
+    //   title={`${t(category.label)} ${title.slice(0, 50)} в городе Иннополис`}
+    //   description={body.slice(0, 320)}
+    //   canonical={`${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`}
+    //   keywords={`innoads, Иннополис, доска объявлений, ${t(category.label)}`}
+    //   image={preview}
+    //   author={`${tgLink}/${user?.username}`}
+    // >
+    <>
       {<dialog open={open}
                className='z-40 w-screen h-[calc(100vh_-_64px)] backdrop-grayscale absolute max-w-full bg-black top-0'>
         <button className={clsx(styles, 'absolute right-4 top-4 z-50')} onClick={() => setOpen(false)}>
@@ -139,8 +133,8 @@ export default function Post<NextPage>({post, related}: Props) {
         </div>
 
         <Link href={`${routes.main}search?categoryId=${categoryId}`}>
-          {t('category')}:{' '}
-          <span>{t(category.label)}</span>
+          Категория :{' '}
+          <span>{category.label}</span>
         </Link>
 
         <h1>{title}</h1>
@@ -148,17 +142,17 @@ export default function Post<NextPage>({post, related}: Props) {
         <hr/>
         <pre className='whitespace-pre-wrap break-words'>{body}</pre>
         <p className='mt-5'>
-          {t('published')}:{' '}
+          Опубликован:{' '}
           {dayjs(createdAt).format('DD.MM.YYYY')}
         </p>
 
         <Link href={tgLink + '/' + user?.username} passHref className='mt-8 block'>
-          <Button>{t('textAuthor')}</Button>
+          <Button>Написать автору</Button>
         </Link>
 
 
         <Link href={`/user/${post.userId}`} passHref className='mt-8 block'>
-          <Button>{t('userAds')}</Button>
+          <Button>Объявления автора</Button>
         </Link>
 
         <Button
@@ -169,7 +163,7 @@ export default function Post<NextPage>({post, related}: Props) {
             url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug,
           })}
         >
-          {t('share')}
+          Поделиться
         </Button>
         {related.length > 0 && (
           <div className='mt-10'>
@@ -182,51 +176,9 @@ export default function Post<NextPage>({post, related}: Props) {
           </div>
         )}
       </div>
-    </Layout>
+    {/*</Layout>*/}
+    </>
   )
-}
+};
 
-export const getStaticPaths: GetStaticPaths = async ({locales = []}) => {
-  const {content: posts} = await fetchAds({size: 1000})
-  const paths: GetStaticPostPath[] = posts.flatMap(post =>
-    locales.map(locale => ({
-      params: {slug: post.slug},
-      locale,
-    })))
-  return {
-    paths,
-    fallback: 'blocking',
-  }
-}
-
-
-export const getStaticProps: GetStaticProps = async ({params, locale}) => {
-  const ad = await fetchAd(params?.slug as string)
-
-  if (!ad) {
-    return {
-      notFound: true,
-    }
-  }
-
-  const related = await fetchAds({
-    categoryId: ad.categoryId,
-    size: 5,
-  })
-
-  if (!related) {
-    return {
-      notFound: true,
-    }
-  }
-
-  return {
-    props: {
-      post: ad,
-      related: related.content.filter(x => x.id !== ad.id),
-      ...(await serverSideTranslations(locale as string)),
-    },
-    revalidate: 3600,
-  }
-}
-
+export default Post;

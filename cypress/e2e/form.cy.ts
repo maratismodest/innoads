@@ -54,7 +54,7 @@ describe('template spec', () => {
     cy.get(byId('post-form-images')).first().children().should('have.length', 0)
   })
 
-  it('has blog', () => {
+  it('has something', () => {
     cy.visit('http://localhost:3000/blog')
     cy.get('main > ul > li')
       .its('length')

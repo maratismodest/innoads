@@ -1,10 +1,11 @@
+'use client'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import Spinner from "@/components/ui/Spinner";
-import inputValidation from "@/modules/PostForm/inputValidation";
 import useAuth from '@/hooks/useAuth'
 import useValidation from "@/hooks/useValidation";
+import inputValidation from "@/modules/PostForm/inputValidation";
 import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types'
 import postAd from "@/utils/api/postPost";
 import postTelegram from "@/utils/api/postTelegram";
@@ -12,8 +13,7 @@ import updateAd from "@/utils/api/updatePost";
 import {categories, CategoryProps} from "@/utils/categories";
 import {routes} from '@/utils/constants'
 import {AxiosError} from "axios";
-import {useTranslation} from 'next-i18next'
-import {useRouter} from 'next/router'
+import {useRouter} from 'next/navigation'
 import React, {useEffect, useState} from 'react'
 import slug from 'slug'
 
@@ -42,12 +42,11 @@ interface Form {
 }
 
 const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
-  const {t} = useTranslation()
   const [data, setData] = useState<Form>({
     categoryId: {
       type: 'select',
       value: defaultValues?.categoryId,
-      label: t('chooseCategory'),
+      label: "Выберите категорию",
       options: {
         required: true,
       },
@@ -55,19 +54,19 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
     price: {
       type: 'number',
       value: defaultValues?.price,
-      label: t('price'),
+      label: "Цена",
       options: {required: true, min: 1},
     },
     title: {
       type: 'text',
       value: defaultValues?.title,
-      label: t('header'),
+      label: "Заголовок",
       options: {required: true, minLength: 5, maxLength: 50},
     },
     description: {
       type: 'textarea',
       value: defaultValues?.body,
-      label: t('description'),
+      label: "Описание",
       options: {required: true, minLength: 10, maxLength: 800},
     }
   })
@@ -78,6 +77,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
   const router = useRouter()
 
   const {user} = useAuth()
+  console.log('user', user)
   const [sending, setSending] = useState(false)
 
   useEffect(() => {
@@ -185,9 +185,9 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
     <form
       onSubmit={onSubmit}
       className='form'
-      name={post ? t('editAd') : t('addAd')}
+      name={post ? "Редактировать" : "Добавить"}
     >
-      <h1>{t('addPost')}</h1>
+      <h1>Добавить объявление</h1>
       {Object.entries(data).map(([name, {label, value, type, options}]) => {
         switch (type) {
           case "select": {
@@ -197,7 +197,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
                 name={name}
                 value={value ? categories.map(({value, label}) => ({
                   value,
-                  label: t(label)
+                  label: label
                 })).find(x => x.value === value) : value}
                 onChange={(option: CategoryProps) => {
                   handleChange(name as keyof Form, Number(option.value))
@@ -261,7 +261,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
         disabled={sending}
         className="mx-auto"
       >
-        {post ? t('editAd') : t('addAd')}
+        {post ? "Редактировать" : "Подать"}
       </Button>
     </form>
   )

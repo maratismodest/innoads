@@ -1,5 +1,3 @@
-const {i18n} = require('./next-i18next.config')
-
 /** @type {import('next').NextConfig} */
 const withPWA = require('next-pwa')({
     dest: 'public',
@@ -9,7 +7,6 @@ const withPWA = require('next-pwa')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    i18n,
     images: {
         domains: [process.env.NEXT_PUBLIC_IMAGES_DOMAIN],
         formats: ['image/avif', 'image/webp'],
@@ -22,7 +19,7 @@ const nextConfig = {
         })
 
         return config
-    },
+    }
 }
 
 module.exports = withPWA(nextConfig)

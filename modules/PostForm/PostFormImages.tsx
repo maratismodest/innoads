@@ -1,6 +1,5 @@
 import {clsx} from "clsx";
 import Image from 'next/image'
-import {useTranslation} from 'next-i18next'
 import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react'
 import moveImage, {MoveImage} from '@/modules/PostForm/moveImage'
 import deleteImage from '@/utils/api/deleteImage'
@@ -22,7 +21,6 @@ const imageErrors = {
 export default function PostFormImages({images, setImages}: PostFormImagesProps) {
   const ref = useRef<HTMLInputElement>(null)
   const [error, setError] = useState('')
-  const {t} = useTranslation()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -77,7 +75,7 @@ export default function PostFormImages({images, setImages}: PostFormImagesProps)
     <>
       <div>
         <div>
-          <h4>{t('addPhoto')}</h4>
+          <h4>Добавить фото</h4>
           <div
             className='relative mb-2 aspect-square w-[48%] cursor-pointer hover:shadow lg:mr-2'
             onClick={() => {
@@ -107,7 +105,7 @@ export default function PostFormImages({images, setImages}: PostFormImagesProps)
         />
       </div>
       {!loading && error && <span className='text-red'>{error}</span>}
-      <h4>{t('preview')}</h4>
+      <h4>Предварительный просмотр</h4>
       <ul
         className='grid grid-cols-2 gap-4'
         data-testid="post-form-images"

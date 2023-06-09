@@ -9,8 +9,6 @@ import fetchUsers from '@/utils/api/fetchUsers'
 import {tgLink} from '@/utils/constants'
 import revalidate from '@/utils/revalidate'
 import sortByCreatedAt from '@/utils/sortByUpdatedAt'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import type {GetStaticPaths, GetStaticProps} from 'next/types'
 import React from 'react'
@@ -21,16 +19,15 @@ type Props = {
 }
 
 export default function PublicProfile<NextPage>({user, posts}: Props) {
-  const {t} = useTranslation()
   return (
     <Layout title={`Пользователь ${user.username}`}
             description={`Пользователь ${user.username} c ${posts.length} объявлениями`}
     >
-      <h1>{t('userProfile')}</h1>
-      <p>{t('adsCount')}: <span>{posts.length}</span></p>
+      <h1>Профиль продавца</h1>
+      <p>Количество объявлений: <span>{posts.length}</span></p>
       <Posts posts={posts} className='mt-10'/>
       <Link href={tgLink + '/' + user.username} passHref className='mt-10 block'>
-        <Button>{t('textAuthor')}</Button>
+        <Button>Написать автору</Button>
       </Link>
     </Layout>
   )
@@ -63,7 +60,6 @@ export const getStaticProps: GetStaticProps = async ({params, locale}) => {
     props: {
       posts: sortByCreatedAt(posts),
       user,
-      ...(await serverSideTranslations(locale as string)),
     },
     revalidate: revalidate,
   }
