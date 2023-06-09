@@ -1,4 +1,4 @@
-import {ArticleDTO} from "@/types/ArticleDTO";
+import {ArticleDTO} from "@/types";
 
 import client, {beRoutes} from './createRequest'
 

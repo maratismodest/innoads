@@ -3,7 +3,7 @@ import Switcher from '@/components/LanguageSwitcher'
 import Button from '@/components/ui/Button'
 import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef'
 import buttonStyles from "@/styles/buttonStyles";
-import {Routes} from '@/utils/routes'
+import {routes} from '@/utils/constants'
 import {useTranslation} from 'next-i18next'
 import Link from 'next/link'
 import React, {useCallback, useState} from 'react'
@@ -16,22 +16,22 @@ type MenuProps = {
 
 const menu: MenuProps[] = [
   {
-    href: Routes.profile,
+    href: routes.profile,
     variant: 'secondary',
     text: 'profile'
   },
   {
-    href: Routes.favourites,
+    href: routes.favourites,
     variant: 'secondary',
     text: 'favourite'
   },
   {
-    href: Routes.blog,
+    href: routes.blog,
     variant: 'secondary',
     text: 'blog'
   },
   {
-    href: Routes.add,
+    href: routes.add,
     variant: 'primary',
     text: 'addAd'
   },
@@ -53,7 +53,7 @@ const Buttons = ({className}: { className?: string }) => {
   )
 }
 
-const Header = (): JSX.Element | null => {
+export default function Header() {
   const {t} = useTranslation()
 
   const [dropdown, setDropdown] = useState(false)
@@ -67,7 +67,7 @@ const Header = (): JSX.Element | null => {
     <header className='fixed inset-x-0 top-0 z-50 h-[66px] bg-gray text-black'>
       <nav className='mx-auto flex w-full max-w-[1100px] justify-between p-3'>
         <Link
-          href={Routes.main}
+          href={routes.main}
           className='flex items-center gap-2'
         >
           <span className='text-2xl'>INNOADS</span>
@@ -94,5 +94,3 @@ const Header = (): JSX.Element | null => {
     </header>
   )
 }
-
-export default Header

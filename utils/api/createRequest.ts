@@ -6,7 +6,7 @@ export const beRoutes = {
   uploads: '/uploads',
   users: '/users',
   articles: '/articles'
-}
+} as const
 
 const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

@@ -3,7 +3,7 @@ import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import React, {useMemo} from 'react'
 
-const LanguageSwitcher = (): JSX.Element => {
+export default function LanguageSwitcher() {
   const router = useRouter()
   const {i18n} = useTranslation()
   const {pathname, asPath, query} = router
@@ -29,5 +29,3 @@ const LanguageSwitcher = (): JSX.Element => {
 
   )
 }
-
-export default LanguageSwitcher

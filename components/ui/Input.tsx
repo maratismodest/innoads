@@ -1,11 +1,12 @@
 import useValidation from "@/hooks/useValidation";
+import {PostOptions} from "@/modules/PostForm/PostForm";
 import inputStyles from "@/styles/inputStyles";
 import {VariantProps} from "class-variance-authority";
 import React from 'react'
 import {clsx} from 'clsx'
 
 type InputProps = React.HTMLProps<HTMLInputElement> & VariantProps<typeof inputStyles> & {
-  options: any
+  options: PostOptions
 }
 
 export default function Input({
@@ -18,7 +19,7 @@ export default function Input({
                                 type,
                                 options,
                                 ...props
-                              }: InputProps): JSX.Element {
+                              }: InputProps) {
   const error = useValidation(value, options)
   return (
     <div className='grid'>

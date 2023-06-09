@@ -4,20 +4,17 @@ import Layout from '@/components/Layout'
 import Posts from '@/components/Posts'
 import Button from '@/components/ui/Button'
 import Spinner from '@/components/ui/Spinner'
-import {useAuth} from '@/hooks/useAuth'
-import {Seo} from "@/types";
-import {PostDTO} from '@/types/PostDTO'
-import {TelegramUser} from "@/types/UserDTO";
+import useAuth from '@/hooks/useAuth'
+import type {Seo, PostDTO, TelegramUser} from "@/types";
 import client from '@/utils/api/createRequest'
 import fetchPosts from '@/utils/api/fetchAds'
-import {seo} from '@/utils/constants'
+import {seo, routes} from '@/utils/constants'
 import revalidate from '@/utils/revalidate'
-import {Routes} from '@/utils/routes'
 import * as jose from 'jose'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
-import {GetStaticProps, NextPage} from 'next/types'
+import type {GetStaticProps} from 'next/types'
 import React, {useCallback, useEffect, useState} from 'react'
 import TelegramLoginButton from 'telegram-login-button'
 
@@ -27,7 +24,7 @@ type Props = {
   seo: Seo
 }
 
-const Profile: NextPage<Props> = ({seo}) => {
+export default function Profile<NextPage>({seo}: Props) {
   const [posts, setPosts] = useState<PostDTO[]>([])
   const [fetching, setFetching] = useState(false)
   const {user, login, logout} = useAuth()
@@ -101,7 +98,7 @@ const Profile: NextPage<Props> = ({seo}) => {
         <h1>{t('profile')}</h1>
         <p>{t('addAds')}</p>
       </div>
-      <Link href={Routes.add} className={buttonStyles()}>&#43;</Link>
+      <Link href={routes.add} className={buttonStyles()}>&#43;</Link>
       {fetching && <Spinner/>}
       {posts.length > 0 && !fetching && <Posts posts={posts} edit={true}/>}
       {posts.length === 0 && !fetching && <h2>{t('noAds')}</h2>}
@@ -109,7 +106,6 @@ const Profile: NextPage<Props> = ({seo}) => {
     </Layout>
   )
 }
-export default Profile
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
   return {

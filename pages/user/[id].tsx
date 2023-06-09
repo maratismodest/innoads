@@ -1,9 +1,8 @@
 import Layout from '@/components/Layout'
 import Posts from '@/components/Posts'
 import Button from '@/components/ui/Button'
-import {GetStaticPath} from '@/types'
-import {PostDTO} from "@/types/PostDTO";
-import {UserDTO} from "@/types/UserDTO";
+import type {GetStaticPath} from '@/types'
+import type {PostDTO, UserDTO} from "@/types";
 import fetchPosts from '@/utils/api/fetchAds'
 import fetchUser from '@/utils/api/fetchUser'
 import fetchUsers from '@/utils/api/fetchUsers'
@@ -13,7 +12,7 @@ import sortByCreatedAt from '@/utils/sortByUpdatedAt'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
-import {GetStaticPaths, GetStaticProps, NextPage} from 'next/types'
+import type {GetStaticPaths, GetStaticProps} from 'next/types'
 import React from 'react'
 
 type Props = {
@@ -21,7 +20,7 @@ type Props = {
   posts: PostDTO[]
 }
 
-const PublicProfile: NextPage<Props> = ({user, posts}) => {
+export default function PublicProfile<NextPage>({user, posts}: Props) {
   const {t} = useTranslation()
   return (
     <Layout title={`Пользователь ${user.username}`}
@@ -36,8 +35,6 @@ const PublicProfile: NextPage<Props> = ({user, posts}) => {
     </Layout>
   )
 }
-
-export default PublicProfile
 
 export const getStaticPaths: GetStaticPaths = async ({locales = []}) => {
   const users = await fetchUsers()

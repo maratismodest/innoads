@@ -1,12 +1,12 @@
-import {UserDTO} from '@/types/UserDTO'
+import {UserDTO} from '@/types'
 import fetchUser from '@/utils/api/fetchUser'
 import * as jose from 'jose'
 import {createContext, ReactNode, useEffect, useState} from 'react'
 
 type authContextType = {
   user: UserDTO | undefined;
-  login: (user: UserDTO, token: string) => void;
-  logout: () => void;
+  login: (user: UserDTO, token: string) => void | undefined;
+  logout: () => void | undefined;
 };
 
 const authContextDefaultValues: authContextType = {
@@ -22,7 +22,7 @@ type Props = {
   children: ReactNode;
 };
 
-export function AuthProvider({children}: Props) {
+export default function AuthProvider({children}: Props) {
   const [user, setUser] = useState<UserDTO | undefined>(undefined)
 
   const checkToken = async () => {

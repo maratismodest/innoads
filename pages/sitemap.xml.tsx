@@ -1,6 +1,6 @@
 // const EXTERNAL_DATA_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-import {PostDTO} from '@/types/PostDTO'
+import {PostDTO} from '@/types'
 import fetchAds from "@/utils/api/fetchAds";
 import {NextApiResponse} from 'next'
 

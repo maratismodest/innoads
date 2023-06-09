@@ -1,15 +1,14 @@
 import Price from '@/components/Price'
 import Button from '@/components/ui/Button'
 import {FavouriteContext} from '@/context/FavouritesContext'
-import {useAuth} from "@/hooks/useAuth";
-import {useModal} from '@/hooks/useModal'
+import useAuth from "@/hooks/useAuth";
+import useModal from '@/hooks/useModal'
 import RedHeart from '@/public/svg/heart-red.svg'
 import TransparentHeart from '@/public/svg/heart.svg'
-import {PostDTO} from '@/types/PostDTO'
+import {PostDTO} from '@/types'
 import client, {beRoutes} from '@/utils/api/createRequest'
 import postTelegram from "@/utils/api/postTelegram";
-import {NO_IMAGE} from '@/utils/constants'
-import {Routes} from '@/utils/routes'
+import {NO_IMAGE, routes} from '@/utils/constants'
 import {clsx} from 'clsx'
 import {useTranslation} from 'next-i18next'
 import Image from 'next/image'
@@ -22,7 +21,7 @@ type Props = {
   edit?: boolean
 }
 
-const Item = ({post, edit = false}: Props): JSX.Element => {
+export default function Item({post, edit = false}: Props) {
   const {setModal, setModalValue} = useModal()
   const {favourites, setFavourites} = useContext(FavouriteContext)
   const {user} = useAuth()
@@ -55,7 +54,7 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
     try {
       switch (modalText) {
         case ItemModalText.edit: {
-          await router.push(Routes.edit + '/' + slug)
+          await router.push(routes.edit + '/' + slug)
           break
         }
         case ItemModalText.telegram: {
@@ -64,21 +63,14 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
           })
           alert(success.telegram)
           setModal(false)
-          await router.push(Routes.profile)
+          await router.push(routes.profile)
           break
         }
-        // title: string;
-        // body: string;
-        // price: number;
-        // slug: string;
-        // username: string;
-        // categoryId: number;
-        // images: string;
         case ItemModalText.delete: {
           await client.delete(`${beRoutes.ads}/${id}`)
           alert(success.deleted)
           setModal(false)
-          await router.push(Routes.profile)
+          await router.push(routes.profile)
           break
         }
         default:
@@ -132,19 +124,16 @@ const Item = ({post, edit = false}: Props): JSX.Element => {
           >
             &#10000;
           </Button>
-          {/*<Button*/}
-          {/*  title="Telegram"*/}
-          {/*  className={clsx('absolute z-10', 'right-0 bottom-0')}*/}
-          {/*  onClick={() => {*/}
-          {/*    showModal(ItemModalText.telegram*/}
-          {/*    )*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  Telegram*/}
-          {/*</Button>*/}
+          <Button
+            title="Telegram"
+            className={clsx('absolute z-10', 'right-0 bottom-0')}
+            onClick={() => showModal(ItemModalText.telegram)}
+          >
+            &#8482;
+          </Button>
         </>
       )}
-      <Link href={`${Routes.post}/${slug}`} title={title}>
+      <Link href={`${routes.post}/${slug}`} title={title}>
         <div className='relative aspect-square transition-all hover:scale-105'>
           <Image
             fill={true}
@@ -187,5 +176,3 @@ enum ItemModalText {
   delete = 'Удалить объявление?',
   telegram = 'Опубликовать в канале InnoAds?',
 }
-
-export default Item

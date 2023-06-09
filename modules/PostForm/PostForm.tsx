@@ -3,14 +3,14 @@ import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
 import Spinner from "@/components/ui/Spinner";
 import inputValidation from "@/modules/PostForm/inputValidation";
-import {useAuth} from '@/hooks/useAuth'
+import useAuth from '@/hooks/useAuth'
 import useValidation from "@/hooks/useValidation";
-import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types/PostDTO'
+import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types'
 import postAd from "@/utils/api/postPost";
 import postTelegram from "@/utils/api/postTelegram";
 import updateAd from "@/utils/api/updatePost";
 import {categories, CategoryProps} from "@/utils/categories";
-import {Routes} from '@/utils/routes'
+import {routes} from '@/utils/constants'
 import {AxiosError} from "axios";
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
@@ -82,7 +82,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
 
   useEffect(() => {
     if (!user) {
-      router.push(Routes.profile)
+      router.push(routes.profile)
       return
     }
   }, [])
@@ -97,7 +97,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       const res = await postAd(formData)
       await postTelegram({...res, username: user.username})
       alert('Ваше объявление создано!')
-      return router.push(Routes.profile)
+      return router.push(routes.profile)
     } catch (e) {
       console.log(e)
       if (e instanceof AxiosError) {
@@ -114,7 +114,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       setSending(true)
       await updateAd(formData)
       alert(messages.postUpdated)
-      return router.push(Routes.profile)
+      return router.push(routes.profile)
     } catch (e) {
       console.log(e)
       alert(messages.somethingWentWrong)

@@ -10,28 +10,26 @@ interface ImageInViewProps {
   index: number
 }
 
-const ImageInView = ({title, src, setCurrent,index}:ImageInViewProps ) => {
+export default function ImageInView({title, src, setCurrent, index}: ImageInViewProps) {
   const ref = useRef<HTMLImageElement>(null)
   const inView = useOnScreen(ref)
 
-  useEffect(()=>{
+  useEffect(() => {
     if (inView) {
       setCurrent(index)
     }
-  },[inView])
+  }, [inView])
   return (
-      <Image
-        ref={ref}
-        draggable={false}
-        src={src}
-        alt='image'
-        title={title}
-        fill={true}
-        style={{objectFit: 'cover'}}
-        placeholder='blur'
-        blurDataURL={NO_IMAGE}
-      />
+    <Image
+      ref={ref}
+      draggable={false}
+      src={src}
+      alt='image'
+      title={title}
+      fill={true}
+      style={{objectFit: 'cover'}}
+      placeholder='blur'
+      blurDataURL={NO_IMAGE}
+    />
   );
 };
-
-export default ImageInView;

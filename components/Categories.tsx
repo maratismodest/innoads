@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {useTranslation} from "next-i18next";
 
-const Categories = (): JSX.Element => {
+export default function Categories() {
   const {t} = useTranslation();
   return (
     <ul
@@ -33,5 +33,3 @@ const Categories = (): JSX.Element => {
     </ul>
   );
 };
-
-export default Categories;

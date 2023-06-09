@@ -1,16 +1,22 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react'
 import useOnScreen from '@/hooks/useOnScreen'
-import {PostDTO} from '@/types/PostDTO'
+import {PostDTO} from '@/types'
 import fetchPosts from '@/utils/api/fetchAds'
 
 import Posts from '@/components/Posts'
 import Spinner from '@/components/ui/Spinner'
 
-const InfinitePosts = ({
-                         options,
-                         initPosts,
-                         initPage,
-                       }: Props) => {
+type Props = {
+  options: Record<string, number>
+  initPosts: PostDTO[],
+  initPage: number
+}
+
+export default function InfinitePosts({
+                                        options,
+                                        initPosts,
+                                        initPage,
+                                      }: Props) {
   const elementRef = useRef<HTMLDivElement>(null)
   const isOnScreen = useOnScreen(elementRef)
   const [posts, setPosts] = useState<PostDTO[]>(initPosts)
@@ -63,11 +69,3 @@ const InfinitePosts = ({
     </>
   )
 }
-
-type Props = {
-  options: Record<string, number>
-  initPosts: PostDTO[],
-  initPage: number
-}
-
-export default InfinitePosts

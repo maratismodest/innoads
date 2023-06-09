@@ -6,7 +6,7 @@ import {clsx} from 'clsx'
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonStyles> {
 }
 
-export default function Button({className, type, children, variant, onClick, ...props}: ButtonProps): JSX.Element {
+export default function Button({className, type, children, variant, onClick, ...props}: ButtonProps) {
   return (
     <button onClick={onClick} className={clsx(buttonStyles({variant}), className)} {...props}>{children}</button>
   )

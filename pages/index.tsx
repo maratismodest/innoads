@@ -1,14 +1,12 @@
 import Categories from "@/components/Categories";
 import Layout from "@/components/Layout";
 import InfinitePosts from "@/modules/InfinitePosts";
-import {Seo} from "@/types";
-import {PostDTO} from "@/types/PostDTO";
+import type {Seo, PostDTO} from "@/types";
 import fetchAds from "@/utils/api/fetchAds";
 import {seo} from "@/utils/constants";
-import {GetStaticProps} from "next";
+import type {GetStaticProps} from "next";
 import {useTranslation} from "next-i18next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {NextPage} from "next/types";
 import {useMemo} from "react";
 
 type Props = {
@@ -17,7 +15,7 @@ type Props = {
   seo: Seo
 }
 
-const Home: NextPage<Props> = ({posts, totalPages, seo}) => {
+export default function Home<NextPage>({posts, totalPages, seo}: Props) {
   const {t} = useTranslation()
   const count = useMemo(() => totalPages * 20, [totalPages])
   return (
@@ -31,8 +29,6 @@ const Home: NextPage<Props> = ({posts, totalPages, seo}) => {
     </Layout>
   )
 }
-
-export default Home
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
   const {content: posts, totalPages} = await fetchAds({

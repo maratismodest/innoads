@@ -1,32 +1,33 @@
 import Layout from "@/components/Layout";
-import {ArticleDTO} from "@/types/ArticleDTO";
+import type {ArticleDTO, Seo} from "@/types";
 import fetchArticles from "@/utils/api/fetchArticles";
-import {seo} from "@/utils/constants";
+import {seo, routes} from "@/utils/constants";
 import revalidate from "@/utils/revalidate";
-import {Routes} from "@/utils/routes";
 import {useTranslation} from "next-i18next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import Link from "next/link";
-import {GetStaticProps} from "next/types";
-import React from 'react';
+import type {GetStaticProps} from "next/types";
 
-const Articles = ({articles}: { articles: ArticleDTO[] }) => {
+type Props = {
+  seo: Seo
+  articles: ArticleDTO[]
+}
+
+export default function Articles<NextPage>({articles}: Props) {
   const {t} = useTranslation()
   return (
-    <Layout>
+    <Layout {...seo}>
       <h1>{t('blog')}</h1>
       <ul>
         {articles.map((article) =>
           <li key={article.id} className='mb-2'>
-            <Link href={Routes.blog + '/' + article.slug}>{article.title}</Link>
+            <Link href={routes.blog + '/' + article.slug}>{article.title}</Link>
           </li>,
         )}
       </ul>
     </Layout>
   );
 };
-
-export default Articles;
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
   const articles = await fetchArticles()

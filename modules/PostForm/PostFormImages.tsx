@@ -2,9 +2,9 @@ import {clsx} from "clsx";
 import Image from 'next/image'
 import {useTranslation} from 'next-i18next'
 import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react'
-import {MoveImage, moveImage} from '@/modules/PostForm/moveImage'
+import moveImage, {MoveImage} from '@/modules/PostForm/moveImage'
 import deleteImage from '@/utils/api/deleteImage'
-import {ACCEPTED_IMAGE_FORMAT, NO_IMAGE} from '@/utils/constants'
+import {NO_IMAGE} from '@/utils/constants'
 import getCompressedImagesLinks from '@/utils/getCompressedImagesLinks'
 
 import Button from '@/components/ui/Button'
@@ -19,7 +19,7 @@ const imageErrors = {
   manyImages: 'Не больше 4 фотографий!',
 }
 
-const PostFormImages = ({images, setImages}: PostFormImagesProps) => {
+export default function PostFormImages({images, setImages}: PostFormImagesProps) {
   const ref = useRef<HTMLInputElement>(null)
   const [error, setError] = useState('')
   const {t} = useTranslation()
@@ -102,7 +102,7 @@ const PostFormImages = ({images, setImages}: PostFormImagesProps) => {
           onChange={imageHandler}
           hidden
           multiple
-          accept={ACCEPTED_IMAGE_FORMAT}
+          accept='.jpg, .jpeg, .png'
           ref={ref}
         />
       </div>
@@ -181,4 +181,4 @@ const PostFormImages = ({images, setImages}: PostFormImagesProps) => {
   )
 }
 
-export default PostFormImages
+

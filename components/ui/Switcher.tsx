@@ -2,7 +2,8 @@ import {clsx} from "clsx";
 import React from 'react'
 
 type Props = React.HTMLProps<HTMLInputElement> & {}
-const Switcher = ({checked, onChange}: Props): JSX.Element => {
+
+export default function Switcher({checked, onChange}: Props) {
   return (
     <div className='inline-flex gap-2 relative cursor-pointer'>
       <input
@@ -17,5 +18,3 @@ const Switcher = ({checked, onChange}: Props): JSX.Element => {
     </div>
   )
 }
-
-export default Switcher

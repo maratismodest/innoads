@@ -1,19 +1,19 @@
 import Item from '@/components/Item'
 import Layout from '@/components/Layout'
 import {FavouriteContext} from '@/context/FavouritesContext'
-import {Seo} from "@/types";
+import type {Seo} from "@/types";
 import {seo} from '@/utils/constants'
 import revalidate from '@/utils/revalidate'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import {GetStaticProps, NextPage} from 'next/types'
+import type {GetStaticProps} from 'next/types'
 import React, {useContext} from 'react'
 
 type Props = {
   seo: Seo
 }
 
-const Favourites: NextPage<Props> = ({seo}) => {
+export default function Favourites<NextPage>({seo}: Props) {
   const {t} = useTranslation()
   const {favourites} = useContext(FavouriteContext)
 
@@ -29,7 +29,6 @@ const Favourites: NextPage<Props> = ({seo}) => {
     </Layout>
   )
 }
-export default Favourites
 
 export const getStaticProps: GetStaticProps = async ({locale}) => {
   return {

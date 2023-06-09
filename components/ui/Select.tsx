@@ -5,7 +5,7 @@ import {useTranslation} from 'next-i18next'
 import React, {useMemo} from 'react'
 import ReactSelect from "react-select";
 
-const Select = ({className, defaultValue, label, validations, value, name, ...props}: any) => {
+export default function Select({className, defaultValue, label, validations, value, name, ...props}: any) {
   const error = useValidation(value, validations)
   const {t} = useTranslation()
 
@@ -29,5 +29,3 @@ const Select = ({className, defaultValue, label, validations, value, name, ...pr
     </div>
   )
 }
-
-export default Select

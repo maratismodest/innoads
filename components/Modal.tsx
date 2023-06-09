@@ -4,7 +4,7 @@ interface ModalProps extends React.HTMLProps<HTMLDialogElement> {
     visible: boolean
 }
 
-const Modal = ({ visible, children, className = '' }: ModalProps): JSX.Element => {
+export default function Modal({ visible, children, className = '' }: ModalProps){
     const ref = useRef<HTMLDialogElement>(null)
 
     useEffect(() => {
@@ -16,7 +16,6 @@ const Modal = ({ visible, children, className = '' }: ModalProps): JSX.Element =
             }
         }
     }, [visible])
+
     return <dialog ref={ref} className={className}>{children}</dialog>
 }
-
-export default Modal

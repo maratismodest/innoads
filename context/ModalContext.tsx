@@ -23,7 +23,7 @@ type Props = {
     children: ReactNode;
 };
 
-export function ModalProvider({ children }: Props) {
+export default function ModalProvider({ children }: Props) {
     const [modal, setModal] = useState(false)
     const [modalValue, setModalValue] = useState(null)
 

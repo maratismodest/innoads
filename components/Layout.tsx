@@ -17,7 +17,7 @@ interface Props {
   link?: string
 }
 
-const Layout: React.FC<Props> = ({
+export default function Layout({
                                    children,
                                    title = seo.default.title,
                                    description = seo.default.description,
@@ -26,7 +26,7 @@ const Layout: React.FC<Props> = ({
                                    author = 'InnoAds',
                                    keywords = 'innoads, Иннополис, доска объявлений',
                                    canonical = process.env.NEXT_PUBLIC_APP_URL,
-                                 }) => {
+                                 }: Props) {
   return (
     <>
       <Head>
@@ -51,5 +51,3 @@ const Layout: React.FC<Props> = ({
     </>
   )
 }
-
-export default Layout

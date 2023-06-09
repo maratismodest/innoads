@@ -1,4 +1,4 @@
-import {PostDTO} from '@/types/PostDTO'
+import {PostDTO} from '@/types'
 
 export default function sortByCreatedAt(posts: PostDTO[]) {
   return posts.sort(function (a, b) {

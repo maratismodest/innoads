@@ -1,5 +1,5 @@
 import {createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react'
-import {PostDTO} from '@/types/PostDTO'
+import {PostDTO} from '@/types'
 
 type favouritesContextType = {
   favourites: PostDTO[];
@@ -17,7 +17,7 @@ type Props = {
   children: ReactNode;
 };
 
-export function FavouriteProvider({children}: Props) {
+export default function FavouriteProvider({children}: Props) {
   const [favourites, setFavourites] = useState<PostDTO[]>([])
 
   useEffect(() => {

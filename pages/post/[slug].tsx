@@ -3,20 +3,19 @@ import Item from '@/components/Item'
 import Layout from '@/components/Layout'
 import Price from '@/components/Price'
 import Button from '@/components/ui/Button'
-import {GetStaticPostPath} from '@/types'
-import {PostDTO} from '@/types/PostDTO'
+import type {GetStaticPostPath} from '@/types'
+import type {PostDTO} from '@/types'
 import fetchAd from "@/utils/api/fetchAd";
 import fetchAds from "@/utils/api/fetchAds";
 import {categories} from '@/utils/categories'
-import {NO_IMAGE, tgLink} from '@/utils/constants'
-import {Routes} from '@/utils/routes'
+import {NO_IMAGE, tgLink, routes} from '@/utils/constants'
 import {clsx} from 'clsx'
 import dayjs from 'dayjs'
 import {useTranslation} from 'next-i18next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import Image from "next/image";
 import Link from 'next/link'
-import {GetStaticPaths, GetStaticProps, NextPage} from 'next/types'
+import type {GetStaticPaths, GetStaticProps} from 'next/types'
 import React, {useEffect, useMemo, useRef, useState} from 'react'
 
 type Props = {
@@ -26,7 +25,7 @@ type Props = {
 
 const styles = 'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center'
 
-const Post: NextPage<Props> = ({post, related}) => {
+export default function Post<NextPage>({post, related}: Props) {
   const {t} = useTranslation()
   const [current, setCurrent] = useState(0)
 
@@ -139,7 +138,7 @@ const Post: NextPage<Props> = ({post, related}) => {
             className={clsx('bg-[rgba(0,0,0,0.6)] text-white rounded text-sm bold p-1', 'absolute bottom-0 left-1/2 -translate-x-1/2')}>{`${current + 1} / ${images.length}`}</div>
         </div>
 
-        <Link href={`${Routes.main}search?categoryId=${categoryId}`}>
+        <Link href={`${routes.main}search?categoryId=${categoryId}`}>
           {t('category')}:{' '}
           <span>{t(category.label)}</span>
         </Link>
@@ -186,8 +185,6 @@ const Post: NextPage<Props> = ({post, related}) => {
     </Layout>
   )
 }
-
-export default Post
 
 export const getStaticPaths: GetStaticPaths = async ({locales = []}) => {
   const {content: posts} = await fetchAds({size: 1000})

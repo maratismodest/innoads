@@ -1,14 +1,12 @@
 import Layout from '@/components/Layout'
 import PostForm from '@/modules/PostForm/PostForm'
 import {postDefaultValues, PostFormValues} from '@/modules/PostForm/utils';
-import {Seo} from "@/types";
-import {PostDTO} from "@/types/PostDTO";
+import type {Seo, PostDTO} from "@/types";
 import fetchPost from "@/utils/api/fetchAd";
 import {categories} from '@/utils/categories'
 import {seo} from '@/utils/constants'
 import type {GetServerSideProps} from 'next'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import {NextPage} from 'next/types'
 import React from 'react'
 
 type Props = {
@@ -16,11 +14,11 @@ type Props = {
   seo: Seo
 }
 
-const Edit: NextPage<Props> = ({post, seo}) => {
+export default function Edit<NextPage>({post, seo}: Props) {
   const {categoryId, title, body, price} = post
   const editValues: PostFormValues = {
     ...postDefaultValues,
-    categoryId: categories.find((x) => x.value === categoryId)?.value || 1,
+    categoryId: categories.find((category) => category.value === categoryId)?.value || 1,
     body,
     title,
     price,
@@ -31,8 +29,6 @@ const Edit: NextPage<Props> = ({post, seo}) => {
     </Layout>
   )
 }
-
-export default Edit
 
 export const getServerSideProps: GetServerSideProps = async ({
                                                                locale,

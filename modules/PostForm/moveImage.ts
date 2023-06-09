@@ -1,9 +1,9 @@
-export enum MoveImage {
+export const enum MoveImage {
     left = 'left',
     right = 'right'
 }
 
-export const moveImage = (e: any, images: string[], index: number, where: MoveImage, setImages: (value: string[]) => void) => {
+export default function moveImage (e: any, images: string[], index: number, where: MoveImage, setImages: (value: string[]) => void) {
     e.preventDefault()
     // console.log('images', images)
     if (images.length < 2 || (index === 0 && where === MoveImage.left) || (index === images.length - 1 && where === MoveImage.right)) {

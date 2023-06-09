@@ -1,17 +1,18 @@
 import Layout from '@/components/Layout'
-import {GetStaticPostPath} from '@/types'
-import {ArticleDTO} from "@/types/ArticleDTO";
+import type {GetStaticPostPath} from '@/types'
+import type {ArticleDTO} from "@/types";
 import fetchArticle from "@/utils/api/fetchArticle";
 import fetchArticles from "@/utils/api/fetchArticles";
+import revalidate from "@/utils/revalidate";
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import {GetStaticPaths, GetStaticProps, NextPage} from 'next/types'
+import type {GetStaticPaths, GetStaticProps} from 'next/types'
 import React from 'react'
 
 type Props = {
   article: ArticleDTO,
 }
 
-const Article: NextPage<Props> = ({article}) => {
+export default function Article<NextPage>({article}: Props) {
   const {title, body} = article
   return (
     <Layout title={title}>
@@ -20,8 +21,6 @@ const Article: NextPage<Props> = ({article}) => {
     </Layout>
   )
 }
-
-export default Article
 
 export const getStaticPaths: GetStaticPaths = async ({locales = []}) => {
   const articles = await fetchArticles()
@@ -35,7 +34,6 @@ export const getStaticPaths: GetStaticPaths = async ({locales = []}) => {
     fallback: 'blocking',
   }
 }
-
 
 export const getStaticProps: GetStaticProps = async ({params, locale}) => {
   const article = await fetchArticle(params?.slug as string)
@@ -51,7 +49,7 @@ export const getStaticProps: GetStaticProps = async ({params, locale}) => {
       article,
       ...(await serverSideTranslations(locale as string)),
     },
-    revalidate: 3600,
+    revalidate: revalidate,
   }
 }
 
