@@ -1,5 +1,4 @@
 import Post from "@/pages-lib/post";
-import {PostDTO} from "@/types";
 import fetchAd from "@/utils/api/fetchAd";
 import fetchAds from "@/utils/api/fetchAds";
 import React from 'react'

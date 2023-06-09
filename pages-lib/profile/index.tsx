@@ -85,7 +85,7 @@ const Profile = () => {
   return (
     <div className='flex flex-col items-center gap-8'>
       <div className='text-center'>
-        <h1>Профилье</h1>
+        <h1>Профиль</h1>
         <p>Добавить объявление</p>
       </div>
       <Link href={routes.add} className={buttonStyles()}>&#43;</Link>

@@ -1,9 +1,8 @@
-import Footer from "@/components/Footer";
+import './globals.css'
 import Header from "@/components/Header";
 import AuthProvider from "@/context/AuthContext";
 import FavouriteProvider from "@/context/FavouritesContext";
 import ModalProvider from "@/context/ModalContext";
-import '@/styles/globals.css'
 import {seo} from "@/utils/constants";
 import {Metadata} from "next";
 import {Inter} from 'next/font/google'
@@ -31,7 +30,6 @@ export default async function RootLayout({
         <ModalProvider>
           <Header/>
           <main>{children}</main>
-          <Footer/>
         </ModalProvider>
       </FavouriteProvider>
     </AuthProvider>

@@ -20,16 +20,18 @@ type Props = {
 
 export default function PublicProfile<NextPage>({user, posts}: Props) {
   return (
-    <Layout title={`Пользователь ${user.username}`}
-            description={`Пользователь ${user.username} c ${posts.length} объявлениями`}
-    >
+    // <Layout title={`Пользователь ${user.username}`}
+    //         description={`Пользователь ${user.username} c ${posts.length} объявлениями`}
+    // >
+    <div>
       <h1>Профиль продавца</h1>
       <p>Количество объявлений: <span>{posts.length}</span></p>
       <Posts posts={posts} className='mt-10'/>
       <Link href={tgLink + '/' + user.username} passHref className='mt-10 block'>
         <Button>Написать автору</Button>
       </Link>
-    </Layout>
+    </div>
+    // </Layout>
   )
 }
 

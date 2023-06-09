@@ -176,7 +176,7 @@ const Post = ({post, related}: Props) => {
           </div>
         )}
       </div>
-    {/*</Layout>*/}
+      {/*</Layout>*/}
     </>
   )
 };

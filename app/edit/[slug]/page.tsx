@@ -21,8 +21,6 @@ export default async function EditPage<NextPage>({params}: { params: any }) {
     price,
   }
   return (
-    <>
-      <PostForm defaultValues={editValues} post={post}/>
-    </>
+    <PostForm defaultValues={editValues} post={post}/>
   )
 }
