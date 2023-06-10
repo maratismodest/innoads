@@ -11,7 +11,7 @@ import postTelegram from "@/utils/api/postTelegram";
 import updateAd from "@/utils/api/updatePost";
 import {categories, CategoryProps} from "@/utils/categories";
 import {routes} from '@/utils/constants'
-import {url_slug} from "@/utils/slug";
+import slug from "@/utils/slug";
 import {AxiosError} from "axios";
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
@@ -173,7 +173,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
       body: form.body,
       preview: images[0],
       images: images.join('||'),
-      slug: url_slug(form.title) + '-' + Math.floor(Math.random() * 100),
+      slug: slug(form.title) + '-' + Math.floor(Math.random() * 100),
       userId: user.id,
     }
     await handleCreate(createPostDto)

@@ -67,7 +67,7 @@ const rules: Record<string, string> = {
   "ю": "iu",
 }
 
-export default function url_slug(word: string) {
+export default function slug(word: string) {
   let answer = ""
 
   for (const letter of word) {
