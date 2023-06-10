@@ -1,4 +1,3 @@
-'use client'
 import Price from '@/components/Price'
 import Button from '@/components/ui/Button'
 import {FavouriteContext} from '@/context/FavouritesContext'
@@ -11,9 +10,10 @@ import client, {beRoutes} from '@/utils/api/createRequest'
 import postTelegram from "@/utils/api/postTelegram";
 import {NO_IMAGE, routes} from '@/utils/constants'
 import {clsx} from 'clsx'
+import {useTranslation} from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useRouter} from 'next/navigation'
+import {useRouter} from 'next/router'
 import React, {useCallback, useContext, useEffect, useMemo} from 'react'
 
 type Props = {
@@ -26,6 +26,8 @@ export default function Item({post, edit = false}: Props) {
   const {favourites, setFavourites} = useContext(FavouriteContext)
   const {user} = useAuth()
   const {id, slug, title, preview, price, categoryId, body, images} = post
+
+  const {t} = useTranslation()
   const router = useRouter()
   const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id])
 
@@ -40,8 +42,8 @@ export default function Item({post, edit = false}: Props) {
         <h4>{text}</h4>
         <hr/>
         <div className='mt-12 flex justify-around'>
-          <Button onClick={async () => await handleFunction(text)}>Да</Button>
-          <Button onClick={hideModal}>Нет</Button>
+          <Button onClick={async () => await handleFunction(text)}>{t('yes')}</Button>
+          <Button onClick={hideModal}>{t('no')}</Button>
         </div>
       </div>,
     )
@@ -114,6 +116,7 @@ export default function Item({post, edit = false}: Props) {
             &#10008;
           </Button>
           <Button
+            title={t('edit')}
             className={clsx('absolute z-10', 'left-0 top-0')}
             onClick={() => {
               showModal(ItemModalText.edit)
@@ -122,6 +125,7 @@ export default function Item({post, edit = false}: Props) {
             &#10000;
           </Button>
           <Button
+            title="Telegram"
             className={clsx('absolute z-10', 'right-0 bottom-0')}
             onClick={() => showModal(ItemModalText.telegram)}
           >

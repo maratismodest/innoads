@@ -1,4 +1,3 @@
-'use client'
 import {UserDTO} from '@/types'
 import fetchUser from '@/utils/api/fetchUser'
 import * as jose from 'jose'
