@@ -1,16 +1,13 @@
 import PostForm from '@/modules/PostForm/PostForm'
 import {postDefaultValues, PostFormValues} from '@/modules/PostForm/utils';
-import type {PostDTO, Seo} from "@/types";
 import fetchPost from "@/utils/api/fetchAd";
 import {categories} from '@/utils/categories'
-import React from 'react'
 
-type Props = {
-  post: PostDTO,
-  seo: Seo
+interface EditPageProps {
+  params: { slug: string }
 }
 
-export default async function EditPage<NextPage>({params}: { params: any }) {
+export default async function EditPage<NextPage>({params}: EditPageProps) {
   const post = await fetchPost(params.slug as string)
   const {categoryId, title, body, price} = post
   const editValues: PostFormValues = {

@@ -7,7 +7,7 @@ import ReactSelect from "react-select";
 export default function Select({className, defaultValue, label, validations, value, name, ...props}: any) {
   const error = useValidation(value, validations)
 
-  const options = useMemo(() => categories.map(({value, label}) => ({value, label: label})), [])
+  const options = useMemo(() => categories.map(({value, label, ru}) => ({value, label: ru})), [])
 
   return (
     <div className='grid'>

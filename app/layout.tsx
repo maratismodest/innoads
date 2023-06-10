@@ -1,5 +1,5 @@
 import './globals.css'
-import Header from "@/components/Header";
+import Index from "@/components/Header";
 import AuthProvider from "@/context/AuthContext";
 import FavouriteProvider from "@/context/FavouritesContext";
 import ModalProvider from "@/context/ModalContext";
@@ -28,7 +28,7 @@ export default async function RootLayout({
     <AuthProvider>
       <FavouriteProvider>
         <ModalProvider>
-          <Header/>
+          <Index/>
           <main>{children}</main>
         </ModalProvider>
       </FavouriteProvider>

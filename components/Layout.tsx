@@ -1,4 +1,4 @@
-import Header from '@/components/Header'
+import Index from '@/components/Header'
 import Button from "@/components/ui/Button";
 import {seo, SEO_IMAGE} from '@/utils/constants'
 import scrollToTop from "@/utils/scrollToTop";
@@ -43,7 +43,7 @@ export default function Layout({
         <meta name='author' content={author}/>
         <link rel='image_src' href={image}/>
       </Head>
-      <Header/>
+      <Index/>
       <main className={className}>{children}</main>
       <footer className='bg-gray'>
         <Button variant="secondary" className='mx-auto flex justify-center' onClick={scrollToTop}>Up</Button>

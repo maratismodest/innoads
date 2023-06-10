@@ -1,19 +1,10 @@
-'use client'
-import Item from "@/components/Item";
-import {FavouriteContext} from "@/context/FavouritesContext";
-import React, {useContext} from "react";
+import Favourites from "@/pages-lib/favourites";
+import {seo} from "@/utils/constants";
+import {Metadata} from "next";
+import React from "react";
+
+export const metadata: Metadata = seo.favourites
 
 export default function FavouritesPage<NextPage>() {
-  const {favourites} = useContext(FavouriteContext)
-  return (
-    <div className="text-center">
-      <h1>Избранное</h1>
-      {favourites.length > 0 ?
-        <ul className='items'>
-          {favourites.map((post) => <Item post={post} key={post.slug}/>)}
-        </ul> :
-        <h2>Пусто</h2>
-      }
-    </div>
-  );
+  return <Favourites />
 }

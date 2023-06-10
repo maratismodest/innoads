@@ -1,62 +1,13 @@
 'use client'
 import Dropdown from '@/components/Dropdown'
+import HeaderButtons from "@/components/Header/HeaderButtons";
 import Button from '@/components/ui/Button'
 import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef'
-import buttonStyles from "@/styles/buttonStyles";
 import {routes} from '@/utils/constants'
 import Link from 'next/link'
 import React, {useCallback, useState} from 'react'
 
-type MenuProps = {
-  href: string,
-  variant: 'primary' | 'secondary',
-  text: string,
-  label: string
-}
-
-const menu: MenuProps[] = [
-  {
-    href: routes.profile,
-    variant: 'secondary',
-    text: 'profile',
-    label: 'Профиль'
-  },
-  {
-    href: routes.favourites,
-    variant: 'secondary',
-    text: 'favourite',
-    label: 'Избранное'
-  },
-  {
-    href: routes.blog,
-    variant: 'secondary',
-    text: 'blog',
-    label: 'Блог'
-  },
-  {
-    href: routes.add,
-    variant: 'primary',
-    text: 'addAd',
-    label: 'Добавить объявление'
-  },
-]
-
-const Buttons = ({className}: { className?: string }) => {
-
-  return (
-    <ul className={className}>
-      {menu.map(({href, text, variant, label}) =>
-        <li key={href} className='mb-2 lg:mb-0' data-testid={href}>
-          <Link href={href} className={buttonStyles({variant: variant})}>
-            {label}
-          </Link>
-        </li>)
-      }
-    </ul>
-  )
-}
-
-export default function Header() {
+export default function Index() {
 
   const [dropdown, setDropdown] = useState(false)
 
@@ -83,12 +34,12 @@ export default function Header() {
 
           {dropdown && (
             <Dropdown closeToggle={() => openDropdown}>
-              <Buttons className='flex-col mb-8'/>
+              <HeaderButtons className='flex-col mb-8'/>
             </Dropdown>
           )}
         </div>
         <div className='hidden items-center gap-2 lg:flex'>
-          <Buttons className='ml-4 flex items-center gap-1'/>
+          <HeaderButtons className='ml-4 flex items-center gap-1'/>
         </div>
       </nav>
     </header>

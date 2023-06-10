@@ -1,3 +1,4 @@
+'use client'
 import Price from '@/components/Price'
 import Button from '@/components/ui/Button'
 import {FavouriteContext} from '@/context/FavouritesContext'

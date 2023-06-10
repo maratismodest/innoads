@@ -1,9 +1,8 @@
 import Profile from "@/pages-lib/profile";
-import type {Seo} from "@/types";
+import {seo} from "@/utils/constants";
+import {Metadata} from "next";
 
-type Props = {
-  seo: Seo
-}
+export const metadata: Metadata = {...seo.profile}
 
 export default function ProfilePage<NextPage>() {
   return <Profile/>

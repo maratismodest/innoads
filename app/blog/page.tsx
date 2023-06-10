@@ -1,17 +1,14 @@
 import fetchArticles from "@/utils/api/fetchArticles";
-import {routes} from "@/utils/constants";
+import {routes, seo} from "@/utils/constants";
+import {Metadata} from "next";
 import Link from "next/link";
 import React from "react";
 
-async function getProps() {
-  const articles = await fetchArticles()
-  return {
-    articles
-  }
-}
+export const metadata: Metadata = seo.blog
 
-export default async function Articles() {
-  const {articles} = await getProps()
+export default async function BlogPage() {
+  const articles = await fetchArticles()
+
   return (
     <>
       <h1>Блог</h1>

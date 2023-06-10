@@ -6,9 +6,10 @@ import type {PostDTO, UserDTO} from "@/types";
 import fetchPosts from '@/utils/api/fetchAds'
 import fetchUser from '@/utils/api/fetchUser'
 import fetchUsers from '@/utils/api/fetchUsers'
-import {tgLink} from '@/utils/constants'
+import {seo, tgLink} from '@/utils/constants'
 import revalidate from '@/utils/revalidate'
 import sortByCreatedAt from '@/utils/sortByUpdatedAt'
+import {Metadata} from "next";
 import Link from 'next/link'
 import type {GetStaticPaths, GetStaticProps} from 'next/types'
 import React from 'react'
@@ -18,11 +19,19 @@ type Props = {
   posts: PostDTO[]
 }
 
+export async function generateMetadata(
+  {params}: { params: any },
+): Promise<Metadata> {
+  const user = await fetchUser(params?.id)
+
+  return {
+    title: user.username,
+    description: user.id.toString()
+  }
+}
+
 export default function PublicProfile<NextPage>({user, posts}: Props) {
   return (
-    // <Layout title={`Пользователь ${user.username}`}
-    //         description={`Пользователь ${user.username} c ${posts.length} объявлениями`}
-    // >
     <div>
       <h1>Профиль продавца</h1>
       <p>Количество объявлений: <span>{posts.length}</span></p>
@@ -31,7 +40,6 @@ export default function PublicProfile<NextPage>({user, posts}: Props) {
         <Button>Написать автору</Button>
       </Link>
     </div>
-    // </Layout>
   )
 }
 
