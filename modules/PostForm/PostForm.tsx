@@ -11,11 +11,11 @@ import postTelegram from "@/utils/api/postTelegram";
 import updateAd from "@/utils/api/updatePost";
 import {categories, CategoryProps} from "@/utils/categories";
 import {routes} from '@/utils/constants'
+import {url_slug} from "@/utils/slug";
 import {AxiosError} from "axios";
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import React, {useEffect, useState} from 'react'
-import slug from 'slug'
 
 import PostFormImages from './PostFormImages'
 import {messages, postDefaultValues, PostFormValues} from './utils'
@@ -41,7 +41,7 @@ interface Form {
   description: FormField,
 }
 
-const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
+export default function PostForm({defaultValues = postDefaultValues, post}: PostFormProps) {
   const {t} = useTranslation()
   const [data, setData] = useState<Form>({
     categoryId: {
@@ -173,7 +173,7 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
       body: form.body,
       preview: images[0],
       images: images.join('||'),
-      slug: slug(form.title) + '-' + Math.floor(Math.random() * 100),
+      slug: url_slug(form.title) + '-' + Math.floor(Math.random() * 100),
       userId: user.id,
     }
     await handleCreate(createPostDto)
@@ -211,7 +211,6 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
               <Input
                 type='number'
                 label={label}
-                data-testid={name}
                 name={name}
                 value={value}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -226,7 +225,6 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
                 type='text'
                 name={name}
                 label={label}
-                data-testid={name}
                 value={value}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   handleChange(name as keyof Form, event.target.value)
@@ -266,13 +264,3 @@ const PostForm = ({defaultValues = postDefaultValues, post}: PostFormProps) => {
     </form>
   )
 }
-
-export default PostForm
-
-
-// const schema = yup.object({
-//   title: yup.string().required(t('required')).min(5, ({min}) => t('min', {min})).max(50, ({max}) => t('max', {max})),
-//   body: yup.string().required(t('required')).min(10, ({min}) => t('min', {min})).max(800, ({max}) => t('max', {max})),
-//   price: yup.number().typeError('Price must be a number').required(t('required')).min(1, ({min}) => t('min', {min})),
-//   categoryId: yup.number().required(t('required')),
-// });

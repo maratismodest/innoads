@@ -14,11 +14,6 @@ Innopolis City Classified
 - yarn start
 
 - yarn dev
-or
-- Install Docker on your machine
-- Clone the repository
-- Build your container: docker build -t innoads-frontend-docker .
-- Run your container: docker run -p 3000:3000 innoads-frontend-docker
 
 ## Acknowledgements
 
