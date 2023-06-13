@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout'
 import PostForm from '@/modules/PostForm/PostForm'
-import type {Seo} from "@/types";
+import type {Seo} from '@/types';
 import {seo} from '@/utils/constants'
 import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
 import type {GetStaticProps} from 'next/types'

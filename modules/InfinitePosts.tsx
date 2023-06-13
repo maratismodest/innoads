@@ -1,10 +1,10 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react'
-import useOnScreen from '@/hooks/useOnScreen'
-import {PostDTO} from '@/types'
-import fetchPosts from '@/utils/api/fetchAds'
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import useOnScreen from '@/hooks/useOnScreen';
+import { PostDTO } from '@/types';
+import fetchPosts from '@/utils/api/fetchAds';
 
-import Posts from '@/components/Posts'
-import Spinner from '@/components/ui/Spinner'
+import Posts from '@/components/Posts';
+import Spinner from '@/components/ui/Spinner';
 
 type Props = {
   options: Record<string, number>
@@ -15,57 +15,57 @@ type Props = {
 export default function InfinitePosts({
                                         options,
                                         initPosts,
-                                        initPage,
+                                        initPage
                                       }: Props) {
-  const elementRef = useRef<HTMLDivElement>(null)
-  const isOnScreen = useOnScreen(elementRef)
-  const [posts, setPosts] = useState<PostDTO[]>(initPosts)
-  const [page, setPage] = useState<number>(initPage)
-  const [hasMore, setHasMore] = useState(true)
-  const [fetching, setFetching] = useState(false)
+  const elementRef = useRef<HTMLDivElement>(null);
+  const isOnScreen = useOnScreen(elementRef);
+  const [posts, setPosts] = useState<PostDTO[]>(initPosts);
+  const [page, setPage] = useState<number>(initPage);
+  const [hasMore, setHasMore] = useState(true);
+  const [fetching, setFetching] = useState(false);
 
   const loadMore = useCallback(async () => {
     if (fetching) {
-      return
+      return;
     }
-    setFetching(true)
+    setFetching(true);
     try {
-      const {content, totalPages} = await fetchPosts({
+      const { content, totalPages } = await fetchPosts({
         ...options,
         page,
-        size: 20,
-      })
-      setPosts([...posts, ...content])
-      setPage(prev => prev + 1)
-      setHasMore(page + 1 < totalPages)
+        size: 20
+      });
+      setPosts([...posts, ...content]);
+      setPage(prev => prev + 1);
+      setHasMore(page + 1 < totalPages);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     } finally {
-      setFetching(false)
+      setFetching(false);
     }
-  }, [posts, fetching, page, hasMore, options])
+  }, [posts, fetching, page, hasMore, options]);
 
   useEffect(() => {
     if (isOnScreen && hasMore) {
-      loadMore()
+      loadMore();
     }
-  }, [isOnScreen, hasMore])
+  }, [isOnScreen, hasMore]);
 
   //just reset component to initial state
   useEffect(() => {
     if (Object.keys(options).length) {
-      setPosts([])
-      setHasMore(true)
-      setPage(initPage)
-      setFetching(false)
+      setPosts([]);
+      setHasMore(true);
+      setPage(initPage);
+      setFetching(false);
     }
-  }, [options])
+  }, [options]);
 
   return (
     <>
-      <Posts posts={posts}/>
-      {fetching && <Spinner/>}
-      <div ref={elementRef} data-testid="scroll"/>
+      <Posts posts={posts} />
+      {fetching && <Spinner />}
+      <div ref={elementRef} data-testid='scroll' />
     </>
-  )
+  );
 }

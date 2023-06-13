@@ -1,11 +1,11 @@
-import buttonStyles from "@/styles/buttonStyles";
+import buttonStyles from '@/styles/buttonStyles';
 
 import Layout from '@/components/Layout'
 import Posts from '@/components/Posts'
 import Button from '@/components/ui/Button'
 import Spinner from '@/components/ui/Spinner'
 import useAuth from '@/hooks/useAuth'
-import type {Seo, PostDTO, TelegramUser} from "@/types";
+import type {Seo, PostDTO, TelegramUser} from '@/types';
 import client from '@/utils/api/createRequest'
 import fetchPosts from '@/utils/api/fetchAds'
 import {seo, routes} from '@/utils/constants'

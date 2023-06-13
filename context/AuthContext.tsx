@@ -1,7 +1,7 @@
-import {UserDTO} from '@/types'
-import fetchUser from '@/utils/api/fetchUser'
-import * as jose from 'jose'
-import {createContext, ReactNode, useEffect, useState} from 'react'
+import { UserDTO } from '@/types';
+import fetchUser from '@/utils/api/fetchUser';
+import * as jose from 'jose';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 
 type authContextType = {
   user: UserDTO | undefined;
@@ -14,62 +14,62 @@ const authContextDefaultValues: authContextType = {
   login: () => {
   },
   logout: () => {
-  },
-}
-export const AuthContext = createContext<authContextType>(authContextDefaultValues)
+  }
+};
+export const AuthContext = createContext<authContextType>(authContextDefaultValues);
 
 type Props = {
   children: ReactNode;
 };
 
-export default function AuthProvider({children}: Props) {
-  const [user, setUser] = useState<UserDTO | undefined>(undefined)
+export default function AuthProvider({ children }: Props) {
+  const [user, setUser] = useState<UserDTO | undefined>(undefined);
 
   const checkToken = async () => {
     try {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem('token');
       if (token) {
-        const decoded: jose.JWTPayload = await jose.decodeJwt(token)
-        const fetchedUser = await fetchUser(decoded.id as number)
+        const decoded: jose.JWTPayload = await jose.decodeJwt(token);
+        const fetchedUser = await fetchUser(decoded.id as number);
         if (fetchedUser) {
-          login(fetchedUser, token)
+          login(fetchedUser, token);
         } else {
-          logout()
-          alert('Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново')
+          logout();
+          alert('Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново');
         }
       }
-      return
+      return;
 
     } catch
       (e) {
-      console.log('e', e)
+      console.log('e', e);
     }
-  }
+  };
 
 // @ts-ignore
   useEffect(() => {
-    checkToken()
-    return () => checkToken()
-  }, [])
+    checkToken();
+    return () => checkToken();
+  }, []);
 
   const login = (user: UserDTO, token: string) => {
-    localStorage.setItem('token', token)
-    setUser(user)
-  }
+    localStorage.setItem('token', token);
+    setUser(user);
+  };
 
   const logout = () => {
-    localStorage.removeItem('token')
-    setUser(undefined)
-  }
+    localStorage.removeItem('token');
+    setUser(undefined);
+  };
 
   const value = {
     user,
     login,
-    logout,
-  }
+    logout
+  };
   return (
     <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
-  )
+  );
 }

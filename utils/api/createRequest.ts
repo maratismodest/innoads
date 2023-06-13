@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 export const beRoutes = {
   telegrams: '/telegrams',
@@ -6,16 +6,16 @@ export const beRoutes = {
   uploads: '/uploads',
   users: '/users',
   articles: '/articles'
-} as const
+} as const;
 
 const client = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-})
+  baseURL: process.env.NEXT_PUBLIC_API_URL
+});
 
 client.interceptors.request.use((config) => {
   // Do something before request is sent
   if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('token');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }
@@ -27,4 +27,4 @@ client.interceptors.request.use((config) => {
 });
 
 
-export default client
+export default client;

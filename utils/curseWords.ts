@@ -1,4 +1,4 @@
-import {PostFormValues} from '@/modules/PostForm/utils'
+import { PostFormValues } from '@/modules/PostForm/utils';
 
 const badPatterns = [
   '^(о|а)н(о|а)нист.*',
@@ -29,8 +29,8 @@ const badPatterns = [
   '.*(д(о|а)лб(о|а)|разъ|разь|за|вы|по)ебы*.*',
   '.*пид(а|о|е)р.*',
   '.*хер.*',
-  '^жоп(а|ы|ой|ами).*',
-]
+  '^жоп(а|ы|ой|ами).*'
+];
 
 const goodPatterns = [
   '.*психу.*',
@@ -42,16 +42,16 @@ const goodPatterns = [
   '.*м(а|о)нд(а|о)рин.*',
   '.*р(а|о)ссл(а|о)блять.*',
   '.*п(о|а)тр(е|и)блять.*',
-  '.*@.*\\.(ру|сом|нет)$',
-]
+  '.*@.*\\.(ру|сом|нет)$'
+];
 
 const goodWords = [
   'дезмонда',
   'застрахуйте',
   'одномандатный',
   'подстрахуй',
-  'психуй',
-]
+  'психуй'
+];
 
 const letters: Record<string, string> = {
   'a': 'а',
@@ -79,8 +79,8 @@ const letters: Record<string, string> = {
   'z': 'з',
   'ё': 'е',
   '6': 'б',
-  '9': 'д',
-}
+  '9': 'д'
+};
 
 interface curseWordsProps {
   badPatterns: string[],
@@ -105,119 +105,119 @@ const curseWords: curseWordsProps = {
   goodPatterns,
   goodWords,
   letters,
-  containsMat: function (aText: string) {
+  containsMat: function(aText: string) {
 
-    const text = this.cleanBadSymbols(aText.toLowerCase())
+    const text = this.cleanBadSymbols(aText.toLowerCase());
 
-    const words = text.split(' ')
+    const words = text.split(' ');
 
     for (let i = 0; i < words.length; i++) {
 
-      const word = this.convertEngToRus(words[i])
+      const word = this.convertEngToRus(words[i]);
 
       if (this.isInGoodWords(word) && this.isInGoodPatterns(word))
-        continue
+        continue;
 
       if (this.isInBadPatterns(word))
-        return true
+        return true;
     }
 
     if (this.containsMatInSpaceWords(words))
-      return true
+      return true;
 
-    return false
+    return false;
   },
-  convertEngToRus: function (word: string) {
+  convertEngToRus: function(word: string) {
     for (let j = 0; j < word.length; j++) {
       for (const key in this.letters) {
         if (word.charAt(j) == key)
-          word = word.substring(0, j) + this.letters[key] + word.substring(j + 1, word.length)
+          word = word.substring(0, j) + this.letters[key] + word.substring(j + 1, word.length);
       }
     }
 
-    return word
+    return word;
   },
-  cleanBadSymbols: function (text: string) {
-    return text.replace(/[^a-zA-Zа-яА-Яё0-9\s]/g, '')
+  cleanBadSymbols: function(text: string) {
+    return text.replace(/[^a-zA-Zа-яА-Яё0-9\s]/g, '');
   },
-  isInGoodWords: function (word: string) {
+  isInGoodWords: function(word: string) {
 
     for (let i = 0; i < this.goodWords.length; i++) {
       if (word == this.goodWords[i])
-        return true
+        return true;
     }
 
-    return false
+    return false;
   },
-  isInGoodPatterns: function (word: string) {
+  isInGoodPatterns: function(word: string) {
 
     for (let i = 0; i < this.goodPatterns.length; i++) {
-      const pattern = new RegExp(this.goodPatterns[i])
+      const pattern = new RegExp(this.goodPatterns[i]);
       if (pattern.test(word))
-        return true
+        return true;
     }
 
-    return false
+    return false;
   },
-  isInBadPatterns: function (word: string) {
+  isInBadPatterns: function(word: string) {
 
     for (let i = 0; i < this.badPatterns.length; i++) {
-      const pattern = new RegExp(this.badPatterns[i])
+      const pattern = new RegExp(this.badPatterns[i]);
       if (pattern.test(word))
-        return true
+        return true;
     }
 
-    return false
+    return false;
   },
-  containsMatInSpaceWords: function (words: string) {
-    const spaceWords = this.findSpaceWords(words)
+  containsMatInSpaceWords: function(words: string) {
+    const spaceWords = this.findSpaceWords(words);
 
     for (let i = 0; i < spaceWords.length; i++) {
 
-      const word = this.convertEngToRus(spaceWords[i])
+      const word = this.convertEngToRus(spaceWords[i]);
 
       if (this.isInBadPatterns(word))
-        return true
+        return true;
     }
 
-    return false
+    return false;
   },
-  findSpaceWords: function (words: string) {
+  findSpaceWords: function(words: string) {
 
-    const out = []
-    let spaceWord = ''
+    const out = [];
+    let spaceWord = '';
 
     for (let i = 0; i < words.length; i++) {
-      const word = words[i]
+      const word = words[i];
 
       if (word.length <= 3) {
-        spaceWord += word
-        continue
+        spaceWord += word;
+        continue;
       }
 
       if (spaceWord.length >= 3) {
-        out.push(spaceWord)
-        spaceWord = ''
+        out.push(spaceWord);
+        spaceWord = '';
       }
     }
 
-    return out
+    return out;
   },
-  addBadPattern: function (pattern: string) {
-    this.badPatterns.push(pattern)
+  addBadPattern: function(pattern: string) {
+    this.badPatterns.push(pattern);
   },
 
-  addGoodPattern: function (pattern: string) {
-    this.goodPatterns.push(pattern)
+  addGoodPattern: function(pattern: string) {
+    this.goodPatterns.push(pattern);
   },
-  addGoodWord: function (pattern: string) {
-    this.goodWords.push(pattern)
-  },
-}
+  addGoodWord: function(pattern: string) {
+    this.goodWords.push(pattern);
+  }
+};
 
 export default function hasCurseWords({
                                         title,
-                                        body,
+                                        body
                                       }: PostFormValues) {
-  return curseWords.containsMat(title) || curseWords.containsMat(body)
+  return curseWords.containsMat(title) || curseWords.containsMat(body);
 }

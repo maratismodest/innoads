@@ -1,35 +1,35 @@
-import ImageInView from "@/components/ImageInView";
-import Item from '@/components/Item'
-import Layout from '@/components/Layout'
-import Price from '@/components/Price'
-import Button from '@/components/ui/Button'
-import type {GetStaticPostPath} from '@/types'
-import type {PostDTO} from '@/types'
-import fetchAd from "@/utils/api/fetchAd";
-import fetchAds from "@/utils/api/fetchAds";
-import {categories} from '@/utils/categories'
-import {NO_IMAGE, tgLink, routes} from '@/utils/constants'
-import {clsx} from 'clsx'
-import dayjs from 'dayjs'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import Image from "next/image";
-import Link from 'next/link'
-import type {GetStaticPaths, GetStaticProps} from 'next/types'
-import React, {useEffect, useMemo, useRef, useState} from 'react'
+import ImageInView from '@/components/ImageInView';
+import Item from '@/components/Item';
+import Layout from '@/components/Layout';
+import Price from '@/components/Price';
+import Button from '@/components/ui/Button';
+import type { GetStaticPostPath } from '@/types';
+import type { PostDTO } from '@/types';
+import fetchAd from '@/utils/api/fetchAd';
+import fetchAds from '@/utils/api/fetchAds';
+import { categories } from '@/utils/categories';
+import { NO_IMAGE, tgLink, routes } from '@/utils/constants';
+import { clsx } from 'clsx';
+import dayjs from 'dayjs';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Image from 'next/image';
+import Link from 'next/link';
+import type { GetStaticPaths, GetStaticProps } from 'next/types';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 type Props = {
   post: PostDTO,
   related: PostDTO[]
 }
 
-const styles = 'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center'
+const styles = 'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center';
 
-export default function Post<NextPage>({post, related}: Props) {
-  const {t} = useTranslation()
-  const [current, setCurrent] = useState(0)
+export default function Post<NextPage>({ post, related }: Props) {
+  const { t } = useTranslation();
+  const [current, setCurrent] = useState(0);
 
-  const ul = useRef<HTMLUListElement>(null)
+  const ul = useRef<HTMLUListElement>(null);
 
   const {
     title,
@@ -39,32 +39,32 @@ export default function Post<NextPage>({post, related}: Props) {
     price,
     createdAt,
     user,
-    slug,
-  } = post
+    slug
+  } = post;
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
-  const images = useMemo(() => post.images.split('||'), [post])
+  const images = useMemo(() => post.images.split('||'), [post]);
 
-  const refs = useRef<HTMLLIElement[]>([])
+  const refs = useRef<HTMLLIElement[]>([]);
 
   const category = useMemo(
     () =>
       categories.find((option) => option.value === categoryId) || categories[0],
-    [categoryId],
-  )
+    [categoryId]
+  );
 
   const handleClick = (direction: 'left' | 'right') => {
-    const res = direction === 'right' ? 1 : -1
-    setCurrent(prevState => prevState + res)
+    const res = direction === 'right' ? 1 : -1;
+    setCurrent(prevState => prevState + res);
     if (ul.current) {
-      ul.current.scrollTo({left: ul.current.scrollLeft + ul.current.clientWidth * res, behavior: 'smooth'})
+      ul.current.scrollTo({ left: ul.current.scrollLeft + ul.current.clientWidth * res, behavior: 'smooth' });
     }
-  }
+  };
 
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
@@ -90,7 +90,7 @@ export default function Post<NextPage>({post, related}: Props) {
           alt='image'
           title={title}
           fill={true}
-          style={{objectFit: 'contain'}}
+          style={{ objectFit: 'contain' }}
           placeholder='blur'
           blurDataURL={NO_IMAGE}
         />
@@ -115,7 +115,7 @@ export default function Post<NextPage>({post, related}: Props) {
                     setCurrent={setCurrent}
                   />
                 </li>
-              )
+              );
             })}
           </ul>
           <button
@@ -144,8 +144,8 @@ export default function Post<NextPage>({post, related}: Props) {
         </Link>
 
         <h1>{title}</h1>
-        <Price price={price}/>
-        <hr/>
+        <Price price={price} />
+        <hr />
         <pre className='whitespace-pre-wrap break-words'>{body}</pre>
         <p className='mt-5'>
           {t('published')}:{' '}
@@ -166,7 +166,7 @@ export default function Post<NextPage>({post, related}: Props) {
           onClick={async () => await navigator.share({
             title: 'InnoAds',
             text: 'Поделиться ссылкой:',
-            url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug,
+            url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug
           })}
         >
           {t('share')}
@@ -176,57 +176,57 @@ export default function Post<NextPage>({post, related}: Props) {
             <h2>Похожие объявления</h2>
             <ul className='grid grid-cols-2 gap-4'>
               {related.map((post: PostDTO) => {
-                return <Item post={post} key={post.slug}/>
+                return <Item post={post} key={post.slug} />;
               })}
             </ul>
           </div>
         )}
       </div>
     </Layout>
-  )
+  );
 }
 
-export const getStaticPaths: GetStaticPaths = async ({locales = []}) => {
-  const {content: posts} = await fetchAds({size: 1000})
+export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
+  const { content: posts } = await fetchAds({ size: 1000 });
   const paths: GetStaticPostPath[] = posts.flatMap(post =>
     locales.map(locale => ({
-      params: {slug: post.slug},
-      locale,
-    })))
+      params: { slug: post.slug },
+      locale
+    })));
   return {
     paths,
-    fallback: 'blocking',
-  }
-}
+    fallback: 'blocking'
+  };
+};
 
 
-export const getStaticProps: GetStaticProps = async ({params, locale}) => {
-  const ad = await fetchAd(params?.slug as string)
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
+  const ad = await fetchAd(params?.slug as string);
 
   if (!ad) {
     return {
-      notFound: true,
-    }
+      notFound: true
+    };
   }
 
   const related = await fetchAds({
     categoryId: ad.categoryId,
-    size: 5,
-  })
+    size: 5
+  });
 
   if (!related) {
     return {
-      notFound: true,
-    }
+      notFound: true
+    };
   }
 
   return {
     props: {
       post: ad,
       related: related.content.filter(x => x.id !== ad.id),
-      ...(await serverSideTranslations(locale as string)),
+      ...(await serverSideTranslations(locale as string))
     },
-    revalidate: 3600,
-  }
-}
+    revalidate: 3600
+  };
+};
 

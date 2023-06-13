@@ -1,12 +1,12 @@
-import Dropdown from '@/components/Dropdown'
-import Switcher from '@/components/LanguageSwitcher'
-import Button from '@/components/ui/Button'
-import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef'
-import buttonStyles from "@/styles/buttonStyles";
-import {routes} from '@/utils/constants'
-import {useTranslation} from 'next-i18next'
-import Link from 'next/link'
-import React, {useCallback, useState} from 'react'
+import Dropdown from '@/components/Dropdown';
+import Switcher from '@/components/LanguageSwitcher';
+import Button from '@/components/ui/Button';
+import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef';
+import buttonStyles from '@/styles/buttonStyles';
+import { routes } from '@/utils/constants';
+import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
+import React, { useCallback, useState } from 'react';
 
 type MenuProps = {
   href: string,
@@ -34,34 +34,34 @@ const menu: MenuProps[] = [
     href: routes.add,
     variant: 'primary',
     text: 'addAd'
-  },
-]
+  }
+];
 
-const Buttons = ({className}: { className?: string }) => {
-  const {t} = useTranslation()
+const Buttons = ({ className }: { className?: string }) => {
+  const { t } = useTranslation();
 
   return (
     <ul className={className}>
-      {menu.map(({href, text, variant}) =>
+      {menu.map(({ href, text, variant }) =>
         <li key={href} className='mb-2 lg:mb-0' data-testid={href}>
-          <Link href={href} className={buttonStyles({variant: variant})}>
+          <Link href={href} className={buttonStyles({ variant: variant })}>
             {t(text)}
           </Link>
         </li>)
       }
     </ul>
-  )
-}
+  );
+};
 
 export default function Header() {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
 
-  const [dropdown, setDropdown] = useState(false)
+  const [dropdown, setDropdown] = useState(false);
 
-  const openDropdown = useCallback(() => setDropdown(true), [])
-  const closeDropdown = useCallback(() => setDropdown(false), [])
+  const openDropdown = useCallback(() => setDropdown(true), []);
+  const closeDropdown = useCallback(() => setDropdown(false), []);
 
-  const ref = useOnClickOutsideRef(closeDropdown)
+  const ref = useOnClickOutsideRef(closeDropdown);
 
   return (
     <header className='fixed inset-x-0 top-0 z-50 h-[66px] bg-gray text-black'>
@@ -81,16 +81,16 @@ export default function Header() {
 
           {dropdown && (
             <Dropdown closeToggle={() => openDropdown}>
-              <Buttons className='flex-col mb-8'/>
-              <Switcher/>
+              <Buttons className='flex-col mb-8' />
+              <Switcher />
             </Dropdown>
           )}
         </div>
         <div className='hidden items-center gap-2 lg:flex'>
-          <Switcher/>
-          <Buttons className='ml-4 flex items-center gap-1'/>
+          <Switcher />
+          <Buttons className='ml-4 flex items-center gap-1' />
         </div>
       </nav>
     </header>
-  )
+  );
 }

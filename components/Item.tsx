@@ -1,13 +1,13 @@
 import Price from '@/components/Price'
 import Button from '@/components/ui/Button'
 import {FavouriteContext} from '@/context/FavouritesContext'
-import useAuth from "@/hooks/useAuth";
+import useAuth from '@/hooks/useAuth';
 import useModal from '@/hooks/useModal'
 import RedHeart from '@/public/svg/heart-red.svg'
 import TransparentHeart from '@/public/svg/heart.svg'
 import {PostDTO} from '@/types'
 import client, {beRoutes} from '@/utils/api/createRequest'
-import postTelegram from "@/utils/api/postTelegram";
+import postTelegram from '@/utils/api/postTelegram';
 import {NO_IMAGE, routes} from '@/utils/constants'
 import {clsx} from 'clsx'
 import {useTranslation} from 'next-i18next'

@@ -1,77 +1,77 @@
-import {clsx} from "clsx";
-import Image from 'next/image'
-import {useTranslation} from 'next-i18next'
-import React, {Dispatch, SetStateAction, useEffect, useRef, useState} from 'react'
-import moveImage, {MoveImage} from '@/modules/PostForm/moveImage'
-import deleteImage from '@/utils/api/deleteImage'
-import {NO_IMAGE} from '@/utils/constants'
-import getCompressedImagesLinks from '@/utils/getCompressedImagesLinks'
+import { clsx } from 'clsx';
+import Image from 'next/image';
+import { useTranslation } from 'next-i18next';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import moveImage, { MoveImage } from '@/modules/PostForm/moveImage';
+import deleteImage from '@/utils/api/deleteImage';
+import { NO_IMAGE } from '@/utils/constants';
+import getCompressedImagesLinks from '@/utils/getCompressedImagesLinks';
 
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/Button';
 
 interface PostFormImagesProps {
-  images: string[]
-  setImages: Dispatch<SetStateAction<string[]>>
+  images: string[];
+  setImages: Dispatch<SetStateAction<string[]>>;
 }
 
 const imageErrors = {
   noImages: 'Добавить хотя бы одно фото!',
-  manyImages: 'Не больше 4 фотографий!',
-}
+  manyImages: 'Не больше 4 фотографий!'
+};
 
-export default function PostFormImages({images, setImages}: PostFormImagesProps) {
-  const ref = useRef<HTMLInputElement>(null)
-  const [error, setError] = useState('')
-  const {t} = useTranslation()
-  const [loading, setLoading] = useState(false)
+export default function PostFormImages({ images, setImages }: PostFormImagesProps) {
+  const ref = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState('');
+  const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!loading) {
-      imagesValidate()
+      imagesValidate();
     }
-  }, [loading])
+  }, [loading]);
 
   const imagesValidate = () => {
     if (images.length === 0) {
-      setError(imageErrors.noImages)
+      setError(imageErrors.noImages);
     } else if (images.length > 4) {
-      setError(imageErrors.manyImages)
+      setError(imageErrors.manyImages);
     } else {
-      setError('')
+      setError('');
     }
-  }
+  };
 
   const imageHandler = async (event: any) => {
-    setLoading(true)
+    setLoading(true);
     try {
       if (event.target.files) {
-        const imagesFromInput = event.target.files
-        const length = imagesFromInput.length + images.length
+        const imagesFromInput = event.target.files;
+        const length = imagesFromInput.length + images.length;
         if (length > 4) {
-          return setError(imageErrors.manyImages)
+          return setError(imageErrors.manyImages);
         }
-        await getCompressedImagesLinks(imagesFromInput, setImages)
+        await getCompressedImagesLinks(imagesFromInput, setImages);
       }
     } catch (e) {
-      console.log('e', e)
+      console.log('e', e);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleDeleteImage = async (current: string) => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const res = images.filter((image) => image !== current)
-      setImages(res)
-      return await deleteImage(current)
+      const res = images.filter((image) => image !== current);
+      setImages(res);
+      return await deleteImage(current);
     } catch (e) {
-      console.log('e', e)
+      console.log('e', e);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
 
-  }
+  };
 
   return (
     <>
@@ -82,7 +82,7 @@ export default function PostFormImages({images, setImages}: PostFormImagesProps)
             className='relative mb-2 aspect-square w-[48%] cursor-pointer hover:shadow lg:mr-2'
             onClick={() => {
               if (ref.current) {
-                ref.current.click()
+                ref.current.click();
               }
             }}
           >
@@ -91,7 +91,7 @@ export default function PostFormImages({images, setImages}: PostFormImagesProps)
               src={NO_IMAGE}
               fill={true}
               style={{
-                objectFit: 'cover',
+                objectFit: 'cover'
               }}
             />
           </div>
@@ -110,7 +110,7 @@ export default function PostFormImages({images, setImages}: PostFormImagesProps)
       <h4>{t('preview')}</h4>
       <ul
         className='grid grid-cols-2 gap-4'
-        data-testid="post-form-images"
+        data-testid='post-form-images'
       >
         {images.map((image: string, index: number) => {
           return (
@@ -122,7 +122,7 @@ export default function PostFormImages({images, setImages}: PostFormImagesProps)
                 alt={image}
                 src={image}
                 style={{
-                  objectFit: 'cover',
+                  objectFit: 'cover'
                 }}
                 fill={true}
                 placeholder='blur'
@@ -136,8 +136,8 @@ export default function PostFormImages({images, setImages}: PostFormImagesProps)
                     images,
                     index,
                     MoveImage.left,
-                    setImages,
-                  )
+                    setImages
+                  );
                 }}
               >
                 &larr;
@@ -150,8 +150,8 @@ export default function PostFormImages({images, setImages}: PostFormImagesProps)
                     images,
                     index,
                     MoveImage.right,
-                    setImages,
-                  )
+                    setImages
+                  );
                 }}
               >
                 &rarr;
@@ -159,13 +159,13 @@ export default function PostFormImages({images, setImages}: PostFormImagesProps)
               <Button
                 className='absolute top-0 right-0'
                 onClick={async () => {
-                  await handleDeleteImage(image)
+                  await handleDeleteImage(image);
                 }}
               >
                 &times;
               </Button>
             </li>
-          )
+          );
         })}
         {loading && (
           <li
@@ -178,7 +178,7 @@ export default function PostFormImages({images, setImages}: PostFormImagesProps)
         )}
       </ul>
     </>
-  )
+  );
 }
 
 

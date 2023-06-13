@@ -1,7 +1,7 @@
 import Header from '@/components/Header'
-import Button from "@/components/ui/Button";
+import Button from '@/components/ui/Button';
 import {seo, SEO_IMAGE} from '@/utils/constants'
-import scrollToTop from "@/utils/scrollToTop";
+import scrollToTop from '@/utils/scrollToTop';
 import Head from 'next/head'
 import React, {ReactNode} from 'react'
 

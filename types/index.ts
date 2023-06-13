@@ -19,6 +19,7 @@ export interface GetStaticPostPath {
   params: { slug: string },
   locale: string
 }
+
 export interface TelegramUser {
   id: number;
   first_name: string;

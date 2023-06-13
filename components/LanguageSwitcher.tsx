@@ -1,4 +1,4 @@
-import Switcher from "@/components/ui/Switcher";
+import Switcher from '@/components/ui/Switcher';
 import {useTranslation} from 'next-i18next'
 import {useRouter} from 'next/router'
 import React, {useMemo} from 'react'

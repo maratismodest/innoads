@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout'
 import Button from '@/components/ui/Button'
-import type {Seo} from "@/types";
+import type {Seo} from '@/types';
 import {seo, routes} from '@/utils/constants'
 import revalidate from '@/utils/revalidate'
 import {useTranslation} from 'next-i18next'

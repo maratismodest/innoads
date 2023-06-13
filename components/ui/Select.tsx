@@ -1,21 +1,21 @@
-import useValidation from "@/hooks/useValidation";
-import {categories} from "@/utils/categories";
-import {clsx} from 'clsx'
-import {useTranslation} from 'next-i18next'
-import React, {useMemo} from 'react'
-import ReactSelect from "react-select";
+import useValidation from '@/hooks/useValidation';
+import { categories } from '@/utils/categories';
+import { clsx } from 'clsx';
+import { useTranslation } from 'next-i18next';
+import React, { useMemo } from 'react';
+import ReactSelect from 'react-select';
 
-export default function Select({className, defaultValue, label, validations, value, name, ...props}: any) {
-  const error = useValidation(value, validations)
-  const {t} = useTranslation()
+export default function Select({ className, defaultValue, label, validations, value, name, ...props }: any) {
+  const error = useValidation(value, validations);
+  const { t } = useTranslation();
 
-  const options = useMemo(() => categories.map(({value, label}) => ({value, label: t(label)})), [t])
+  const options = useMemo(() => categories.map(({ value, label }) => ({ value, label: t(label) })), [t]);
 
   return (
     <div className='grid'>
       {label && <label htmlFor={name}>{label}</label>}
       <ReactSelect
-        id="select"
+        id='select'
         data-testid={name}
         name={name}
         defaultValue={options.find(x => x.value === defaultValue)}
@@ -25,7 +25,7 @@ export default function Select({className, defaultValue, label, validations, val
         options={options}
         {...props}
       />
-      {error && <span className="text-red">{error}</span>}
+      {error && <span className='text-red'>{error}</span>}
     </div>
-  )
+  );
 }

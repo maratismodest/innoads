@@ -1,7 +1,7 @@
 import Item from '@/components/Item'
 import Layout from '@/components/Layout'
 import {FavouriteContext} from '@/context/FavouritesContext'
-import type {Seo} from "@/types";
+import type {Seo} from '@/types';
 import {seo} from '@/utils/constants'
 import revalidate from '@/utils/revalidate'
 import {useTranslation} from 'next-i18next'
@@ -24,7 +24,7 @@ export default function Favourites<NextPage>({seo}: Props) {
         <ul className='items'>
           {favourites.map((post) => <Item post={post} key={post.slug}/>)}
         </ul> :
-        <h2>{t("noFavourites")}</h2>
+        <h2>{t('noFavourites')}</h2>
       }
     </Layout>
   )

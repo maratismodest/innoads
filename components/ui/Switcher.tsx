@@ -1,9 +1,9 @@
-import {clsx} from "clsx";
-import React from 'react'
+import { clsx } from 'clsx';
+import React from 'react';
 
 type Props = React.HTMLProps<HTMLInputElement> & {}
 
-export default function Switcher({checked, onChange}: Props) {
+export default function Switcher({ checked, onChange }: Props) {
   return (
     <div className='inline-flex gap-2 relative cursor-pointer'>
       <input
@@ -12,9 +12,9 @@ export default function Switcher({checked, onChange}: Props) {
         checked={checked}
         onChange={onChange}
       />
-      <div className={clsx("h-6 w-11 rounded-full flex items-center px-1 bg-blue", checked && 'justify-end')}>
-        <div className={clsx('h-4 w-4 rounded-full bg-white')}/>
+      <div className={clsx('h-6 w-11 rounded-full flex items-center px-1 bg-blue', checked && 'justify-end')}>
+        <div className={clsx('h-4 w-4 rounded-full bg-white')} />
       </div>
     </div>
-  )
+  );
 }

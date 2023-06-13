@@ -1,26 +1,26 @@
-import {PostOptions} from "@/modules/PostForm/PostForm";
+import { PostOptions } from '@/modules/PostForm/PostForm';
 
 export default function inputValidation(value: any, validations: PostOptions) {
   for (const validation in validations) {
     switch (validation) {
       case 'required':
         if (!value) {
-          return false
+          return false;
         }
       case 'minLength':
         if (value.length < validations['minLength']) {
-          return false
+          return false;
         }
       case 'maxLength':
         if (value.length > validations['maxLength']) {
-          return false
+          return false;
         }
       case 'min':
         if (value < validations['min']) {
-          return false
+          return false;
         }
       default:
-        return true
+        return true;
     }
   }
 }

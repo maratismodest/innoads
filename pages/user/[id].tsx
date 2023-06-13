@@ -2,7 +2,7 @@ import Layout from '@/components/Layout'
 import Posts from '@/components/Posts'
 import Button from '@/components/ui/Button'
 import type {GetStaticPath} from '@/types'
-import type {PostDTO, UserDTO} from "@/types";
+import type {PostDTO, UserDTO} from '@/types';
 import fetchPosts from '@/utils/api/fetchAds'
 import fetchUser from '@/utils/api/fetchUser'
 import fetchUsers from '@/utils/api/fetchUsers'

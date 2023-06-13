@@ -1,13 +1,13 @@
-import Categories from "@/components/Categories";
-import Layout from "@/components/Layout";
-import InfinitePosts from "@/modules/InfinitePosts";
-import type {Seo, PostDTO} from "@/types";
-import fetchAds from "@/utils/api/fetchAds";
-import {seo} from "@/utils/constants";
-import type {GetStaticProps} from "next";
-import {useTranslation} from "next-i18next";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {useMemo} from "react";
+import Categories from '@/components/Categories';
+import Layout from '@/components/Layout';
+import InfinitePosts from '@/modules/InfinitePosts';
+import type {Seo, PostDTO} from '@/types';
+import fetchAds from '@/utils/api/fetchAds';
+import {seo} from '@/utils/constants';
+import type {GetStaticProps} from 'next';
+import {useTranslation} from 'next-i18next';
+import {serverSideTranslations} from 'next-i18next/serverSideTranslations';
+import {useMemo} from 'react';
 
 type Props = {
   posts: PostDTO[],

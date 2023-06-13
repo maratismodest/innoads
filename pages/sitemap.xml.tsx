@@ -1,8 +1,8 @@
 // const EXTERNAL_DATA_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-import {PostDTO} from '@/types'
-import fetchAds from "@/utils/api/fetchAds";
-import {NextApiResponse} from 'next'
+import { PostDTO } from '@/types';
+import fetchAds from '@/utils/api/fetchAds';
+import { NextApiResponse } from 'next';
 
 function generateSiteMap(posts: PostDTO[]) {
   // <!--We manually set the two URLs we know already-->
@@ -15,39 +15,39 @@ function generateSiteMap(posts: PostDTO[]) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      ${posts
-    .map(({slug}) => {
+    .map(({ slug }) => {
       return `
        <url>
            <loc>${`${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`}</loc>
        </url>
-     `
+     `;
     })
     .join('')}
    </urlset>
- `
+ `;
 }
 
 function SiteMap() {
   // getServerSideProps will do the heavy lifting
 }
 
-export async function getServerSideProps({res}: { res: NextApiResponse }) {
+export async function getServerSideProps({ res }: { res: NextApiResponse }) {
   // We make an API call to gather the URLs for our site
   // const request = await fetch(EXTERNAL_DATA_URL);
-  const {content: ads} = await fetchAds({size: 5000})
+  const { content: ads } = await fetchAds({ size: 5000 });
   // const blog = await request.json();
 
   // We generate the XML sitemap with the blog data
-  const sitemap = generateSiteMap(ads)
+  const sitemap = generateSiteMap(ads);
 
-  res.setHeader('Content-Type', 'text/xml')
+  res.setHeader('Content-Type', 'text/xml');
   // we send the XML to the browser
-  res.write(sitemap)
-  res.end()
+  res.write(sitemap);
+  res.end();
 
   return {
-    props: {},
-  }
+    props: {}
+  };
 }
 
-export default SiteMap
+export default SiteMap;

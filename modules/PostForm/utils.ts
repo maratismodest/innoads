@@ -1,19 +1,19 @@
 export type PostFormValues = {
-    title: string,
-    body: string,
-    price: number ,
-    categoryId: number
+  title: string,
+  body: string,
+  price: number,
+  categoryId: number
 }
 
 export const postDefaultValues: PostFormValues = {
-    categoryId: 0,
-    title: '',
-    price: 0,
-    body: '',
-}
+  categoryId: 0,
+  title: '',
+  price: 0,
+  body: ''
+};
 
 export const messages = {
-    forbiddenWords: 'Есть запрещенные слова!',
-    postUpdated: 'Ваше объявление изменено!',
-    somethingWentWrong: 'Что-то пошло не так!',
-}
+  forbiddenWords: 'Есть запрещенные слова!',
+  postUpdated: 'Ваше объявление изменено!',
+  somethingWentWrong: 'Что-то пошло не так!'
+};

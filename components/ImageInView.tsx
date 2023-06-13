@@ -1,7 +1,7 @@
-import useOnScreen from "@/hooks/useOnScreen";
-import {NO_IMAGE} from "@/utils/constants";
-import Image from "next/image";
-import React, {Dispatch, SetStateAction, useEffect, useRef} from 'react';
+import useOnScreen from '@/hooks/useOnScreen';
+import { NO_IMAGE } from '@/utils/constants';
+import Image from 'next/image';
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
 interface ImageInViewProps {
   title: string,
@@ -10,15 +10,15 @@ interface ImageInViewProps {
   index: number
 }
 
-export default function ImageInView({title, src, setCurrent, index}: ImageInViewProps) {
-  const ref = useRef<HTMLImageElement>(null)
-  const inView = useOnScreen(ref)
+export default function ImageInView({ title, src, setCurrent, index }: ImageInViewProps) {
+  const ref = useRef<HTMLImageElement>(null);
+  const inView = useOnScreen(ref);
 
   useEffect(() => {
     if (inView) {
-      setCurrent(index)
+      setCurrent(index);
     }
-  }, [inView])
+  }, [inView]);
   return (
     <Image
       ref={ref}
@@ -27,7 +27,7 @@ export default function ImageInView({title, src, setCurrent, index}: ImageInView
       alt='image'
       title={title}
       fill={true}
-      style={{objectFit: 'cover'}}
+      style={{ objectFit: 'cover' }}
       placeholder='blur'
       blurDataURL={NO_IMAGE}
     />

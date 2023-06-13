@@ -1,8 +1,8 @@
 import Layout from '@/components/Layout'
 import Select from '@/components/ui/Select';
-import InfinitePosts from "@/modules/InfinitePosts";
-import type {Seo} from "@/types";
-import {categories, CategoryProps} from "@/utils/categories";
+import InfinitePosts from '@/modules/InfinitePosts';
+import type {Seo} from '@/types';
+import {categories, CategoryProps} from '@/utils/categories';
 import {seo} from '@/utils/constants'
 import revalidate from '@/utils/revalidate'
 import type {GetStaticProps} from 'next'

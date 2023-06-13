@@ -1,10 +1,10 @@
-import {messages} from '@/modules/PostForm/utils'
+import { messages } from '@/modules/PostForm/utils';
 
-import client, {beRoutes} from './createRequest'
+import client, { beRoutes } from './createRequest';
 
 interface PostImageProps {
-  status: 'ok' | 'error'
-  value: string
+  status: 'ok' | 'error';
+  value: string;
 }
 
 const postImage = async (formData: FormData): Promise<PostImageProps> => {
@@ -13,21 +13,21 @@ const postImage = async (formData: FormData): Promise<PostImageProps> => {
       formData,
       {
         headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
-    )
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    );
     return {
       status: 'ok',
-      value: res.data.link as string,
-    }
+      value: res.data.link as string
+    };
   } catch (e) {
-    console.log(e)
+    console.log(e);
     return {
       status: 'error',
-      value: messages.somethingWentWrong,
-    }
+      value: messages.somethingWentWrong
+    };
   }
-}
+};
 
-export default postImage
+export default postImage;
