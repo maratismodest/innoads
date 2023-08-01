@@ -1,8 +1,7 @@
 import Layout from '@/components/Layout';
 import type { ArticleDTO, Seo } from '@/types';
 import fetchArticles from '@/utils/api/fetchArticles';
-import { seo, routes } from '@/utils/constants';
-import revalidate from '@/utils/revalidate';
+import { seo, routes, revalidate } from '@/utils/constants';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Link from 'next/link';

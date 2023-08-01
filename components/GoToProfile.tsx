@@ -2,9 +2,9 @@ import buttonStyles from '@/styles/buttonStyles';
 import { routes } from '@/utils/constants';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
-import React from 'react';
+import React, { memo } from 'react';
 
-export default function GoToProfile() {
+const GoToProfile = memo(() => {
   const { t } = useTranslation();
   return (
     <div className='flex w-full flex-col items-center justify-center'>
@@ -14,6 +14,10 @@ export default function GoToProfile() {
       </Link>
     </div>
   );
-}
+});
+
+GoToProfile.displayName = 'GoToProfile';
+
+export default GoToProfile;
 
 

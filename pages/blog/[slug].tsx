@@ -3,7 +3,7 @@ import type { GetStaticPostPath } from '@/types';
 import type { ArticleDTO } from '@/types';
 import fetchArticle from '@/utils/api/fetchArticle';
 import fetchArticles from '@/utils/api/fetchArticles';
-import revalidate from '@/utils/revalidate';
+import { revalidate } from '@/utils/constants';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import type { GetStaticPaths, GetStaticProps } from 'next/types';
 import React from 'react';

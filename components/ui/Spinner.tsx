@@ -1,14 +1,20 @@
-import React, { HTMLProps } from 'react';
 import { clsx } from 'clsx';
+import React, { memo } from 'react';
 
-type Props = HTMLProps<HTMLDivElement>
+interface Props extends React.ComponentPropsWithoutRef<'div'> {
+}
 
-export default function Spinner({ className }: Props) {
+const Spinner = memo(({ className }: Props) => {
   return (
     <div className={clsx('flex items-center justify-center p-8', className)}>
       <div className='h-16 w-16 animate-spin rounded-full border-b-2 border-blue'></div>
     </div>
   );
-}
+});
+
+Spinner.displayName = 'Spinner';
+
+export default Spinner;
+
 
 

@@ -1,51 +1,50 @@
 import buttonStyles from '@/styles/buttonStyles';
 
-import Layout from '@/components/Layout'
-import Posts from '@/components/Posts'
-import Button from '@/components/ui/Button'
-import Spinner from '@/components/ui/Spinner'
-import useAuth from '@/hooks/useAuth'
-import type {Seo, PostDTO, TelegramUser} from '@/types';
-import client from '@/utils/api/createRequest'
-import fetchPosts from '@/utils/api/fetchAds'
-import {seo, routes} from '@/utils/constants'
-import revalidate from '@/utils/revalidate'
-import * as jose from 'jose'
-import {useTranslation} from 'next-i18next'
-import {serverSideTranslations} from 'next-i18next/serverSideTranslations'
-import Link from 'next/link'
-import type {GetStaticProps} from 'next/types'
-import React, {useCallback, useEffect, useState} from 'react'
-import TelegramLoginButton from 'telegram-login-button'
+import Layout from '@/components/Layout';
+import Posts from '@/components/Posts';
+import Button from '@/components/ui/Button';
+import Spinner from '@/components/ui/Spinner';
+import useAuth from '@/hooks/useAuth';
+import type { Seo, PostDTO, TelegramUser } from '@/types';
+import client from '@/utils/api/createRequest';
+import fetchPosts from '@/utils/api/fetchAds';
+import { seo, routes, revalidate } from '@/utils/constants';
+import * as jose from 'jose';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Link from 'next/link';
+import type { GetStaticProps } from 'next/types';
+import React, { useCallback, useEffect, useState } from 'react';
+import TelegramLoginButton from 'telegram-login-button';
 
-const error = 'Добавьте алиас у себя в аккаунте / Add alias into your account!'
+const error = 'Добавьте алиас у себя в аккаунте / Add alias into your account!';
 
 type Props = {
   seo: Seo
 }
 
-export default function Profile<NextPage>({seo}: Props) {
-  const [posts, setPosts] = useState<PostDTO[]>([])
-  const [fetching, setFetching] = useState(false)
-  const {user, login, logout} = useAuth()
-  const {t} = useTranslation()
+export default function Profile<NextPage>({ seo }: Props) {
+  const [posts, setPosts] = useState<PostDTO[]>([]);
+  const [fetching, setFetching] = useState(false);
+  const { user, login, logout } = useAuth();
+  const { t } = useTranslation();
 
-  const handleTelegram = async ({username, id}: TelegramUser) => {
+  const handleTelegram = async ({ username, id }: TelegramUser) => {
     if (!username) {
-      return alert({error})
+      return alert({ error });
     }
     try {
-      const user = {id, username}
-      const {data} = await client.post('/users/login', user)
-      const decoded = jose.decodeJwt(data.token)
+      const user = { id, username };
+      const { data } = await client.post('/users/login', user);
+      const decoded = jose.decodeJwt(data.token);
       if (decoded) {
-        login(user, data.token)
+        login(user, data.token);
       }
-      return
+      return;
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
 
   const handleTelegramImitate = useCallback(async () => {
     const userTemplate: TelegramUser = {
@@ -55,26 +54,26 @@ export default function Profile<NextPage>({seo}: Props) {
       photo_url: process.env.NEXT_PUBLIC_PHOTO_URL as string,
       username: process.env.NEXT_PUBLIC_USERNAME as string,
       auth_date: 0,
-      hash: '',
-    }
+      hash: ''
+    };
     try {
-      const user = {id: userTemplate.id, username: userTemplate.username}
-      const {data} = await client.post('/users/login', user)
-      const decoded = await jose.decodeJwt(data.token)
+      const user = { id: userTemplate.id, username: userTemplate.username };
+      const { data } = await client.post('/users/login', user);
+      const decoded = await jose.decodeJwt(data.token);
       if (decoded) {
-        login(user, data.token)
+        login(user, data.token);
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }, [login])
+  }, [login]);
 
   useEffect(() => {
     if (user) {
-      setFetching(true)
-      fetchPosts({userId: user.id}).then(({content}) => setPosts(content)).catch(e => alert(e.message)).finally(() => setFetching(false))
+      setFetching(true);
+      fetchPosts({ userId: user.id }).then(({ content }) => setPosts(content)).catch(e => alert(e.message)).finally(() => setFetching(false));
     }
-  }, [user])
+  }, [user]);
 
   if (!user) {
     return (
@@ -86,10 +85,10 @@ export default function Profile<NextPage>({seo}: Props) {
             dataOnauth={handleTelegram}
           />
           {process.env.NEXT_PUBLIC_NODE_ENV == 'development' &&
-              <Button onClick={handleTelegramImitate} data-testid="development-login-button">Imitate</Button>}
+            <Button onClick={handleTelegramImitate} data-testid='development-login-button'>Imitate</Button>}
         </div>
       </Layout>
-    )
+    );
   }
 
   return (
@@ -99,20 +98,20 @@ export default function Profile<NextPage>({seo}: Props) {
         <p>{t('addAds')}</p>
       </div>
       <Link href={routes.add} className={buttonStyles()}>&#43;</Link>
-      {fetching && <Spinner/>}
-      {posts.length > 0 && !fetching && <Posts posts={posts} edit={true}/>}
+      {fetching && <Spinner />}
+      {posts.length > 0 && !fetching && <Posts posts={posts} edit={true} />}
       {posts.length === 0 && !fetching && <h2>{t('noAds')}</h2>}
-      <Button onClick={logout} data-testid="logout">{t('exit')}</Button>
+      <Button onClick={logout} data-testid='logout'>{t('exit')}</Button>
     </Layout>
-  )
+  );
 }
 
-export const getStaticProps: GetStaticProps = async ({locale}) => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
       ...(await serverSideTranslations(locale as string)),
-      seo: seo.profile,
+      seo: seo.profile
     },
-    revalidate: revalidate,
-  }
-}
+    revalidate: revalidate
+  };
+};
