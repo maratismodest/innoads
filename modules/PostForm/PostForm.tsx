@@ -1,5 +1,5 @@
 'use client'
-import {useTranslation} from "@/app/i18n/client";
+
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
@@ -7,19 +7,19 @@ import Spinner from '@/components/ui/Spinner';
 import inputValidation from '@/modules/PostForm/inputValidation';
 import useAuth from '@/hooks/useAuth';
 import useValidation from '@/hooks/useValidation';
-import { CreatePostDTO, EditPostDTO, PostDTO } from '@/types';
+import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types';
 import postAd from '@/utils/api/postPost';
 import postTelegram from '@/utils/api/postTelegram';
 import updateAd from '@/utils/api/updatePost';
-import { categories, CategoryProps } from '@/utils/categories';
-import { routes } from '@/utils/constants';
+import {categories, CategoryProps} from '@/utils/categories';
+import {routes} from '@/utils/constants';
 import slug from '@/utils/slug';
-import { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import {AxiosError} from 'axios';
+import {useRouter} from 'next/navigation';
+import React, {useEffect, useState} from 'react';
 
 import PostFormImages from './PostFormImages';
-import { messages, postDefaultValues, PostFormValues } from './utils';
+import {messages, postDefaultValues, PostFormValues} from './utils';
 
 export interface PostFormProps {
   defaultValues?: PostFormValues;
@@ -42,13 +42,12 @@ interface Form {
   description: FormField,
 }
 
-export default function PostForm({ defaultValues = postDefaultValues, post }: PostFormProps) {
-  const { t } = useTranslation();
+export default function PostForm({defaultValues = postDefaultValues, post}: PostFormProps) {
   const [data, setData] = useState<Form>({
     categoryId: {
       type: 'select',
       value: defaultValues?.categoryId,
-      label: t('chooseCategory'),
+      label: "Выберите категорию",
       options: {
         required: true
       }
@@ -56,20 +55,20 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
     price: {
       type: 'number',
       value: defaultValues?.price,
-      label: t('price'),
-      options: { required: true, min: 1 }
+      label: 'Цена',
+      options: {required: true, min: 1}
     },
     title: {
       type: 'text',
       value: defaultValues?.title,
-      label: t('header'),
-      options: { required: true, minLength: 5, maxLength: 50 }
+      label: "Заголовок",
+      options: {required: true, minLength: 5, maxLength: 50}
     },
     description: {
       type: 'textarea',
       value: defaultValues?.body,
-      label: t('description'),
-      options: { required: true, minLength: 10, maxLength: 800 }
+      label: "Описание",
+      options: {required: true, minLength: 10, maxLength: 800}
     }
   });
 
@@ -78,7 +77,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   const [images, setImages] = useState<string[]>(() => post ? post.images.split('||') : []);
   const router = useRouter();
 
-  const { user } = useAuth();
+  const {user} = useAuth();
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
@@ -89,14 +88,14 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   }, []);
 
   if (!user) {
-    return <Spinner />;
+    return <Spinner/>;
   }
 
   const handleCreate = async (formData: CreatePostDTO) => {
     try {
       setSending(true);
       const res = await postAd(formData);
-      await postTelegram({ ...res, username: user.username });
+      await postTelegram({...res, username: user.username});
       alert('Ваше объявление создано!');
       return router.push(routes.profile);
     } catch (e) {
@@ -126,7 +125,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   };
 
   const handleChange = (name: keyof Form, value: any) =>
-    setData(prev => ({ ...prev, [name]: { ...prev[name], value } }));
+    setData(prev => ({...prev, [name]: {...prev[name], value}}));
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -186,20 +185,17 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
     <form
       onSubmit={onSubmit}
       className='form'
-      name={post ? t('editAd') : t('addAd')}
+      name={post ? "Редакировать" : "Добавить"}
     >
-      <h1>{t('addPost')}</h1>
-      {Object.entries(data).map(([name, { label, value, type, options }]) => {
+      <h1>Добавить объявление</h1>
+      {Object.entries(data).map(([name, {label, value, type, options}]) => {
         switch (type) {
           case 'select': {
             return (
               <Select
                 label={label}
                 name={name}
-                value={value ? categories.map(({ value, label }) => ({
-                  value,
-                  label: t(label)
-                })).find(x => x.value === value) : value}
+                value={value ? categories.find(x => x.value === value) : value}
                 onChange={(option: CategoryProps) => {
                   handleChange(name as keyof Form, Number(option.value));
                 }}
@@ -260,7 +256,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
         disabled={sending}
         className='mx-auto'
       >
-        {post ? t('editAd') : t('addAd')}
+        {post ? "Редактировать" : "Подать"}
       </Button>
     </form>
   );

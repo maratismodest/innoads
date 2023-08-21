@@ -1,5 +1,4 @@
 'use client'
-import {useTranslation} from '@/app/i18n/client';
 import ImageInView from '@/components/ImageInView';
 import Layout from '@/components/Layout';
 import Price from '@/components/Price';
@@ -21,7 +20,6 @@ type Props = {
 const styles = 'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center';
 
 export default function PostPage<NextPage>({post}: Props) {
-  const {t} = useTranslation();
   const [current, setCurrent] = useState(0);
 
   const ul = useRef<HTMLUListElement>(null);
@@ -136,8 +134,8 @@ export default function PostPage<NextPage>({post}: Props) {
         </div>
 
         <Link href={`${routes.main}search?categoryId=${categoryId}`}>
-          {t('category')}:{' '}
-          <span>{t(category.label)}</span>
+          Категория:{' '}
+          <span>{category.label}</span>
         </Link>
 
         <h1>{title}</h1>
@@ -145,17 +143,17 @@ export default function PostPage<NextPage>({post}: Props) {
         <hr/>
         <pre className='whitespace-pre-wrap break-words'>{body}</pre>
         <p className='mt-5'>
-          {t('published')}:{' '}
+          Опубликовано:{' '}
           {dayjs(createdAt).format('DD.MM.YYYY')}
         </p>
 
         <Link href={tgLink + '/' + user?.username} passHref className='mt-8 block'>
-          <Button>{t('textAuthor')}</Button>
+          <Button>Написать автору</Button>
         </Link>
 
 
         <Link href={`/user/${post.userId}`} passHref className='mt-8 block'>
-          <Button>{t('userAds')}</Button>
+          <Button>Все объявления автора</Button>
         </Link>
 
         <Button
@@ -166,7 +164,7 @@ export default function PostPage<NextPage>({post}: Props) {
             url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug
           })}
         >
-          {t('share')}
+          Поделиться
         </Button>
         {/*{related.length > 0 && (*/}
         {/*  <div className='mt-10'>*/}

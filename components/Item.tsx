@@ -1,5 +1,4 @@
 'use client'
-import {useTranslation} from '@/app/i18n/client';
 import Price from '@/components/Price'
 import Button from '@/components/ui/Button'
 import {FavouriteContext} from '@/context/FavouritesContext'
@@ -28,7 +27,6 @@ export default function Item({post, edit = false}: Props) {
   const {user} = useAuth()
   const {id, slug, title, preview, price, categoryId, body, images} = post
 
-  const {t} = useTranslation()
   const router = useRouter()
   const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id])
 
@@ -43,8 +41,8 @@ export default function Item({post, edit = false}: Props) {
         <h4>{text}</h4>
         <hr/>
         <div className='mt-12 flex justify-around'>
-          <Button onClick={async () => await handleFunction(text)}>{t('yes')}</Button>
-          <Button onClick={hideModal}>{t('no')}</Button>
+          <Button onClick={async () => await handleFunction(text)}>Да</Button>
+          <Button onClick={hideModal}>Нет</Button>
         </div>
       </div>,
     )
@@ -117,7 +115,7 @@ export default function Item({post, edit = false}: Props) {
             &#10008;
           </Button>
           <Button
-            title={t('edit')}
+            title='Редактировать'
             className={clsx('absolute z-10', 'left-0 top-0')}
             onClick={() => {
               showModal(ItemModalText.edit)

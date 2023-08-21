@@ -1,10 +1,8 @@
 'use client'
-import {useTranslation} from "@/app/i18n/client";
-import { PostOptions } from '@/modules/PostForm/PostForm';
-import { useEffect, useState } from 'react';
+import {PostOptions} from '@/modules/PostForm/PostForm';
+import {useEffect, useState} from 'react';
 
 export default function useValidation(value: any, validations: PostOptions) {
-  const { t } = useTranslation();
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -12,27 +10,27 @@ export default function useValidation(value: any, validations: PostOptions) {
       switch (validation) {
         case 'required':
           if (!value) {
-            setError(t('required'));
+            setError('Поле обязательное');
             return;
           }
         case 'minLength':
           if (value.length < validations['minLength']) {
-            setError(t('minLength', { min: validations['minLength'] }));
+            setError('Минимальная длинна: ' + validations['minLength']);
             return;
           }
         case 'maxLength':
           if (value.length > validations['maxLength']) {
-            setError(t('maxLength', { max: validations['minLength'] }));
+            setError('Максимальная длинна: ' + validations['maxLength']);
             return;
           }
         case 'min':
           if (value < validations['min']) {
-            setError(t('min', { min: validations['min'] }));
+            setError('Не меньше чем ' + validations['min']);
             return;
           }
         case 'max':
           if (value > validations['max']) {
-            setError(t('max', { max: validations['max'] }));
+            setError('Не больше чем ' + validations['max']);
             return;
           }
         default:

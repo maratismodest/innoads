@@ -1,6 +1,5 @@
 'use client'
-import {useTranslation} from '@/app/i18n/client';
-import {categories} from '@/utils/categories';
+import {categories, Category} from '@/utils/categories';
 import Image from 'next/image';
 import Link from 'next/link';
 import buy from '@/assets/images/buy.png'
@@ -10,26 +9,25 @@ import estate from '@/assets/images/estate.png'
 import services from '@/assets/images/services.png'
 import clothes from '@/assets/images/clothes.png'
 import noImage from '@/assets/images/no-image.jpeg'
-const src = (label: string) => {
+const src = (label: Category) => {
   switch (label) {
-    case 'buy':
+    case 'Куплю':
       return buy
-    case 'sell':
+    case 'Продам':
       return sell
-    case 'clothes':
+    case 'Одежда':
       return clothes
-    case 'free':
+    case 'Даром':
       return free
-    case 'services':
+    case 'Услуги':
       return services
-    case 'estate':
+    case 'Недвижимость':
       return estate
     default:
       return noImage
   }
 }
 export default function Categories() {
-  const {t} = useTranslation();
   return (
     <ul
       className='mb-1 flex snap-x snap-mandatory justify-between gap-12 overflow-scroll rounded-2xl bg-gray px-8 py-2'
@@ -52,7 +50,7 @@ export default function Categories() {
                 height={40}
                 className='relative rounded-[50%] bg-white p-2 shadow transition-all hover:scale-110'
               />
-              <h5>{t(label)}</h5>
+              <h5>{label}</h5>
             </Link>
           </li>
         );

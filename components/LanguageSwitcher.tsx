@@ -1,15 +1,15 @@
 'use client'
-import {useTranslation} from '@/app/i18n/client';
+
 import Switcher from '@/components/ui/Switcher';
 import {useRouter} from 'next/navigation'
 import React, {useMemo} from 'react'
 
 export default function LanguageSwitcher() {
   const router = useRouter()
-  const {i18n} = useTranslation()
+  // const {i18n} = useTranslation()
   // const {pathname, asPath, query} = router
-  const language = i18n.language
-  const checked = useMemo(() => language === 'en', [language])
+  // const language = i18n.language
+  // const checked = useMemo(() => language === 'en', [language])
 
   const onChange = async () => {
     // await router.push(
@@ -24,8 +24,8 @@ export default function LanguageSwitcher() {
 
   return (
     <div className='inline-flex gap-2 relative cursor-pointer'>
-      <Switcher checked={checked} onChange={onChange}/>
-      <label htmlFor='language'>{checked ? 'En' : 'Ru'}</label>
+      {/*<Switcher checked={checked} onChange={onChange}/>*/}
+      {/*<label htmlFor='language'>{checked ? 'En' : 'Ru'}</label>*/}
     </div>
 
   )
