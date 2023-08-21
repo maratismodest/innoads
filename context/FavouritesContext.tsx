@@ -1,3 +1,4 @@
+'use client'
 import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react';
 import { PostDTO } from '@/types';
 

@@ -1,3 +1,5 @@
+'use client'
+import {useTranslation} from "@/app/i18n/client";
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
@@ -13,8 +15,7 @@ import { categories, CategoryProps } from '@/utils/categories';
 import { routes } from '@/utils/constants';
 import slug from '@/utils/slug';
 import { AxiosError } from 'axios';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import PostFormImages from './PostFormImages';

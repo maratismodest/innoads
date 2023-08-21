@@ -1,12 +1,13 @@
+'use client'
 import Dropdown from '@/components/Dropdown';
 import Switcher from '@/components/LanguageSwitcher';
 import Button from '@/components/ui/Button';
 import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef';
 import buttonStyles from '@/styles/buttonStyles';
-import { routes } from '@/utils/constants';
-import { useTranslation } from 'next-i18next';
+import {routes} from '@/utils/constants';
+import {useTranslation} from '@/app/i18n/client';
 import Link from 'next/link';
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useState} from 'react';
 
 type MenuProps = {
   href: string,
@@ -37,14 +38,14 @@ const menu: MenuProps[] = [
   }
 ];
 
-const Buttons = ({ className }: { className?: string }) => {
-  const { t } = useTranslation();
+const Buttons = ({className}: { className?: string }) => {
+  const {t} = useTranslation();
 
   return (
     <ul className={className}>
-      {menu.map(({ href, text, variant }) =>
+      {menu.map(({href, text, variant}) =>
         <li key={href} className='mb-2 lg:mb-0' data-testid={href}>
-          <Link href={href} className={buttonStyles({ variant: variant })}>
+          <Link href={href} className={buttonStyles({variant: variant})}>
             {t(text)}
           </Link>
         </li>)
@@ -54,7 +55,7 @@ const Buttons = ({ className }: { className?: string }) => {
 };
 
 export default function Header() {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
 
   const [dropdown, setDropdown] = useState(false);
 
@@ -81,14 +82,14 @@ export default function Header() {
 
           {dropdown && (
             <Dropdown closeToggle={() => openDropdown}>
-              <Buttons className='flex-col mb-8' />
-              <Switcher />
+              <Buttons className='flex-col mb-8'/>
+              <Switcher/>
             </Dropdown>
           )}
         </div>
         <div className='hidden items-center gap-2 lg:flex'>
-          <Switcher />
-          <Buttons className='ml-4 flex items-center gap-1' />
+          <Switcher/>
+          <Buttons className='ml-4 flex items-center gap-1'/>
         </div>
       </nav>
     </header>

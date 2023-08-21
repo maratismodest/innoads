@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useOnScreen from '@/hooks/useOnScreen';
 import { PostDTO } from '@/types';

@@ -1,6 +1,7 @@
+'use client'
 import buttonStyles from '@/styles/buttonStyles';
 import { routes } from '@/utils/constants';
-import { useTranslation } from 'next-i18next';
+import {useTranslation} from '@/app/i18n/client';
 import Link from 'next/link';
 import React, { memo } from 'react';
 

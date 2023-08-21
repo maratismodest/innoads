@@ -1,7 +1,7 @@
+import {useTranslation} from '@/app/i18n/client';
 import useValidation from '@/hooks/useValidation';
 import { categories } from '@/utils/categories';
 import { clsx } from 'clsx';
-import { useTranslation } from 'next-i18next';
 import React, { useMemo } from 'react';
 import ReactSelect from 'react-select';
 

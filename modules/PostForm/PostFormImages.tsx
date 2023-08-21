@@ -1,6 +1,7 @@
+'use client'
+import {useTranslation} from "@/app/i18n/client";
 import { clsx } from 'clsx';
 import Image from 'next/image';
-import { useTranslation } from 'next-i18next';
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import moveImage, { MoveImage } from '@/modules/PostForm/moveImage';
 import deleteImage from '@/utils/api/deleteImage';

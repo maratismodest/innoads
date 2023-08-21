@@ -1,5 +1,6 @@
+'use client'
+import {useTranslation} from "@/app/i18n/client";
 import { PostOptions } from '@/modules/PostForm/PostForm';
-import { useTranslation } from 'next-i18next';
 import { useEffect, useState } from 'react';
 
 export default function useValidation(value: any, validations: PostOptions) {
