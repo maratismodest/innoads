@@ -39,7 +39,7 @@ export default function RootLayout({
         </FavouriteProvider>
       </ModalProvider>
     </AuthProvider>
-    <Script src="/yandex.js" strategy='afterInteractive'/>
+    <Script src="/scripts/ym.js" strategy='afterInteractive'/>
     </body>
     </html>
   )
