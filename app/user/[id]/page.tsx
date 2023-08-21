@@ -1,17 +1,12 @@
 import Posts from '@/components/Posts';
 import Button from '@/components/ui/Button';
-import type {PostDTO, UserDTO} from '@/types';
 import fetchPosts from '@/utils/api/fetchAds';
 import fetchUser from '@/utils/api/fetchUser';
 import fetchUsers from '@/utils/api/fetchUsers';
 import {tgLink} from '@/utils/constants';
+import {Metadata} from 'next';
 import Link from 'next/link';
 import React from 'react';
-
-type Props = {
-  user: UserDTO,
-  posts: PostDTO[]
-}
 
 export async function generateStaticParams() {
   const users = await fetchUsers();
@@ -21,16 +16,23 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function PublicProfile<NextPage>({params: {id, lng}}: any) {
+export async function generateMetadata({
+                                         params: {id},
+                                       }: any): Promise<Metadata> {
+  const user = await fetchUser(id);
+  return {
+    title: `Пользователь ${user.username}`,
+    description: `Пользователь ${user.id}`
+  }
+}
+
+export default async function PublicProfile<NextPage>({params: {id}}: any) {
   const user = await fetchUser(id)
   const {content: posts} = await fetchPosts({
     size: 10, userId: id
-  })
+  });
 
   return (
-    // <Layout title={`Пользователь ${user.username}`}
-    //         description={`Пользователь ${user.username} c ${posts.length} объявлениями`}
-    // >
     <>
       <h1>Профиль пользователя</h1>
       <p>Количество объявлений: <span>{posts.length}</span></p>
@@ -39,7 +41,6 @@ export default async function PublicProfile<NextPage>({params: {id, lng}}: any) 
         <Button>Написать пользователю</Button>
       </Link>
     </>
-    // </Layout>
   );
 }
 

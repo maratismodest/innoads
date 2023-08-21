@@ -2,10 +2,6 @@ import Categories from '@/components/Categories';
 import InfinitePosts from '@/modules/InfinitePosts';
 import fetchAds from '@/utils/api/fetchAds';
 
-type Props = {
-  params: { lng: string }
-}
-
 export const revalidate = 3600
 
 export default async function Home() {

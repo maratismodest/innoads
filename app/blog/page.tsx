@@ -1,20 +1,14 @@
-import type {ArticleDTO, Seo} from '@/types';
 import fetchArticles from '@/utils/api/fetchArticles';
 import {routes, seo} from '@/utils/constants';
 import {Metadata} from 'next';
 import Link from 'next/link';
-
-type Props = {
-  seo: Seo
-  articles: ArticleDTO[]
-}
 
 export const metadata: Metadata = {
   title: seo.blog.title,
   description: seo.blog.description,
 }
 
-export default async function Articles<NextPage>({params}: any) {
+export default async function Articles<NextPage>() {
   const articles = await fetchArticles();
   return (
     <>

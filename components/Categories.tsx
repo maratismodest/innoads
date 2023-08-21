@@ -1,4 +1,3 @@
-'use client'
 import {categories, Category} from '@/utils/categories';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,6 +8,7 @@ import estate from '@/assets/images/estate.png'
 import services from '@/assets/images/services.png'
 import clothes from '@/assets/images/clothes.png'
 import noImage from '@/assets/images/no-image.jpeg'
+
 const src = (label: Category) => {
   switch (label) {
     case 'Куплю':
@@ -27,6 +27,7 @@ const src = (label: Category) => {
       return noImage
   }
 }
+
 export default function Categories() {
   return (
     <ul

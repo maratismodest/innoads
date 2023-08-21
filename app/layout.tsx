@@ -6,6 +6,7 @@ import ModalProvider from '@/context/ModalContext';
 import {seo} from '@/utils/constants';
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
+import Script from 'next/script';
 import React from 'react';
 import './globals.css'
 
@@ -15,7 +16,9 @@ export const metadata: Metadata = {
   title: seo.default.title,
   description: seo.default.description,
   authors: [{name: 'InnoAds'}],
+  publisher: 'InnoAds',
   keywords: 'innoads, Иннополис, доска объявлений',
+  manifest: '/manifest.json'
 }
 
 export default function RootLayout({
@@ -35,6 +38,7 @@ export default function RootLayout({
         </FavouriteProvider>
       </ModalProvider>
     </AuthProvider>
+    <Script src="/yandex.js" strategy='afterInteractive'/>
     </body>
     </html>
   )

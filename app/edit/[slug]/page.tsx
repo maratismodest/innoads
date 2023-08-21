@@ -1,20 +1,12 @@
 'use client'
-import Layout from '@/components/Layout';
 import Spinner from '@/components/ui/Spinner';
 import PostForm from '@/modules/PostForm/PostForm';
 import {postDefaultValues, PostFormValues} from '@/modules/PostForm/utils';
-import type {Seo, PostDTO} from '@/types';
+import type {PostDTO} from '@/types';
 import fetchPost from '@/utils/api/fetchAd';
 import {categories} from '@/utils/categories';
-import {seo} from '@/utils/constants';
-import type {GetServerSideProps} from 'next';
 import {useParams} from 'next/navigation';
 import React, {useEffect, useState} from 'react';
-
-type Props = {
-  post: PostDTO,
-  seo: Seo
-}
 
 export default function Edit<NextPage>() {
   const {slug} = useParams()
@@ -40,8 +32,6 @@ export default function Edit<NextPage>() {
     price
   };
   return (
-    // <Layout {...seo}>
     <PostForm defaultValues={editValues} post={post}/>
-    // </Layout>
   );
 }

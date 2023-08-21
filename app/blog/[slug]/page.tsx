@@ -25,12 +25,10 @@ export default async function Article<NextPage>({params: {lng, slug}}: any) {
   const article = await fetchArticle(slug);
   const {title, body} = article;
   return (
-    // <Layout title={title}>
     <>
       <h1>{title}</h1>
       <article className='wysiwyg' dangerouslySetInnerHTML={{__html: body}}/>
     </>
-    // </Layout>
   );
 }
 

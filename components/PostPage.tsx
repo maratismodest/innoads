@@ -1,6 +1,6 @@
 'use client'
 import ImageInView from '@/components/ImageInView';
-import Layout from '@/components/Layout';
+import Item from '@/components/Item';
 import Price from '@/components/Price';
 import Button from '@/components/ui/Button';
 import type {PostDTO} from '@/types';
@@ -14,12 +14,12 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 type Props = {
   post: PostDTO,
-  // related: PostDTO[]
+  related: PostDTO[]
 }
 
 const styles = 'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center';
 
-export default function PostPage<NextPage>({post}: Props) {
+export default function PostPage<NextPage>({post, related}: Props) {
   const [current, setCurrent] = useState(0);
 
   const ul = useRef<HTMLUListElement>(null);
@@ -64,16 +64,7 @@ export default function PostPage<NextPage>({post}: Props) {
   }, [open]);
 
   return (
-    // <Layout
-    //   title={`${t(category.label)} ${title.slice(0, 50)} в городе Иннополис`}
-    //   description={body.slice(0, 320)}
-    //   canonical={`${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`}
-    //   keywords={`innoads, Иннополис, доска объявлений, ${t(category.label)}`}
-    //   image={preview}
-    //   author={`${tgLink}/${user?.username}`}
-    // >
     <>
-
       {<dialog open={open}
                className='z-40 w-screen h-[calc(100vh_-_64px)] backdrop-grayscale absolute max-w-full bg-black top-0'>
         <button className={clsx(styles, 'absolute right-4 top-4 z-50')} onClick={() => setOpen(false)}>
@@ -151,7 +142,6 @@ export default function PostPage<NextPage>({post}: Props) {
           <Button>Написать автору</Button>
         </Link>
 
-
         <Link href={`/user/${post.userId}`} passHref className='mt-8 block'>
           <Button>Все объявления автора</Button>
         </Link>
@@ -166,19 +156,18 @@ export default function PostPage<NextPage>({post}: Props) {
         >
           Поделиться
         </Button>
-        {/*{related.length > 0 && (*/}
-        {/*  <div className='mt-10'>*/}
-        {/*    <h2>Похожие объявления</h2>*/}
-        {/*    <ul className='grid grid-cols-2 gap-4'>*/}
-        {/*      {related.map((post: PostDTO) => {*/}
-        {/*        return <Item post={post} key={post.slug}/>;*/}
-        {/*      })}*/}
-        {/*    </ul>*/}
-        {/*  </div>*/}
-        {/*)}*/}
+        {related.length > 0 && (
+          <div className='mt-10'>
+            <h2>Похожие объявления</h2>
+            <ul className='grid grid-cols-2 gap-4'>
+              {related.map((post: PostDTO) => {
+                return <Item key={post.slug} post={post}/>;
+              })}
+            </ul>
+          </div>
+        )}
       </div>
     </>
-    // </Layout>
   );
 }
 
