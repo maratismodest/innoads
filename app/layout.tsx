@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import Header from '@/components/Header';
+import Header from '@/components/Header/Header';
 import AuthProvider from '@/context/AuthContext';
 import FavouriteProvider from '@/context/FavouritesContext';
 import ModalProvider from '@/context/ModalContext';

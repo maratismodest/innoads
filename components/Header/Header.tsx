@@ -1,55 +1,12 @@
 'use client'
 import Dropdown from '@/components/Dropdown';
+import HeaderButtons from './HeaderButtons';
 import Button from '@/components/ui/Button';
 import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef';
-import buttonStyles from '@/styles/buttonStyles';
 import {routes} from '@/utils/constants';
 import Link from 'next/link';
 import React, {useCallback, useState} from 'react';
 
-type MenuProps = {
-  href: string,
-  variant: 'primary' | 'secondary',
-  text: any
-}
-
-const menu: MenuProps[] = [
-  {
-    href: routes.profile,
-    variant: 'secondary',
-    text: 'Профиль'
-  },
-  {
-    href: routes.favourites,
-    variant: 'secondary',
-    text: 'Избранное'
-  },
-  {
-    href: routes.blog,
-    variant: 'secondary',
-    text: 'Блог'
-  },
-  {
-    href: routes.add,
-    variant: 'primary',
-    text: 'Добавить объявление'
-  }
-];
-
-const Buttons = ({className}: { className?: string }) => {
-  return (
-    <ul className={className}>
-      {menu.map(({href, text, variant}) =>
-        <li key={href} className='mb-2 lg:mb-0' data-testid={href}>
-          <Link href={href} className={buttonStyles({variant: variant})}>
-            {text}
-          </Link>
-        </li>)
-      }
-    </ul>
-  );
-};
-const innopolisClassified = 'Доска объявлений города Иннополис'
 export default function Header() {
 
   const [dropdown, setDropdown] = useState(false);
@@ -68,7 +25,7 @@ export default function Header() {
         >
           <span className='text-2xl'>INNOADS</span>
           <span className='hidden lg:inline'>|</span>
-          <span className='hidden lg:inline'>{innopolisClassified}</span>
+          <span className='hidden lg:inline'>Доска объявлений города Иннополис</span>
         </Link>
         <div ref={ref} className='lg:hidden'>
           <Button onClick={openDropdown}>
@@ -77,14 +34,14 @@ export default function Header() {
 
           {dropdown && (
             <Dropdown closeToggle={() => openDropdown}>
-              <Buttons className='flex-col mb-8'/>
+              <HeaderButtons className='flex-col mb-8' onClick={() => setDropdown(false)}/>
               {/*<Switcher/>*/}
             </Dropdown>
           )}
         </div>
         <div className='hidden items-center gap-2 lg:flex'>
           {/*<Switcher/>*/}
-          <Buttons className='ml-4 flex items-center gap-1'/>
+          <HeaderButtons className='ml-4 flex items-center gap-1'/>
         </div>
       </nav>
     </header>

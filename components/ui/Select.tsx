@@ -20,6 +20,7 @@ export default function Select({className, defaultValue, label, validations, val
         aria-label='select'
         options={categories}
         {...props}
+        value={value}
       />
       {error && <span className='text-red'>{error}</span>}
     </div>

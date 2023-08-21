@@ -31,6 +31,7 @@ export default function Edit<NextPage>() {
     title,
     price
   };
+
   return (
     <PostForm defaultValues={editValues} post={post}/>
   );

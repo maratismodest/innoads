@@ -43,31 +43,32 @@ interface Form {
 }
 
 export default function PostForm({defaultValues = postDefaultValues, post}: PostFormProps) {
+
   const [data, setData] = useState<Form>({
     categoryId: {
       type: 'select',
       value: defaultValues?.categoryId,
-      label: "Выберите категорию",
+      label: 'Выберите категорию',
       options: {
         required: true
       }
     },
     price: {
       type: 'number',
-      value: defaultValues?.price,
+      value: defaultValues?.price ?? null,
       label: 'Цена',
       options: {required: true, min: 1}
     },
     title: {
       type: 'text',
       value: defaultValues?.title,
-      label: "Заголовок",
+      label: 'Заголовок',
       options: {required: true, minLength: 5, maxLength: 50}
     },
     description: {
       type: 'textarea',
       value: defaultValues?.body,
-      label: "Описание",
+      label: 'Описание',
       options: {required: true, minLength: 10, maxLength: 800}
     }
   });
@@ -185,7 +186,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
     <form
       onSubmit={onSubmit}
       className='form'
-      name={post ? "Редакировать" : "Добавить"}
+      name={post ? 'Редактировать' : 'Добавить'}
     >
       <h1>Добавить объявление</h1>
       {Object.entries(data).map(([name, {label, value, type, options}]) => {
@@ -195,7 +196,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
               <Select
                 label={label}
                 name={name}
-                value={value ? categories.find(x => x.value === value) : value}
+                value={categories.find(x => x.value === value)}
                 onChange={(option: CategoryProps) => {
                   handleChange(name as keyof Form, Number(option.value));
                 }}
@@ -256,7 +257,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
         disabled={sending}
         className='mx-auto'
       >
-        {post ? "Редактировать" : "Подать"}
+        {post ? 'Редактировать' : 'Подать'}
       </Button>
     </form>
   );
