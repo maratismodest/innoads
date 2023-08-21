@@ -1,8 +1,6 @@
 import PostPage from '@/components/PostPage';
-import type {PostDTO} from '@/types';
 import fetchAd from '@/utils/api/fetchAd';
 import fetchAds from '@/utils/api/fetchAds';
-import fetchArticles from '@/utils/api/fetchArticles';
 import {categories} from '@/utils/categories';
 import {Metadata} from 'next';
 import React from 'react';
@@ -13,6 +11,8 @@ type Props = {
     slug: string;
   };
 };
+
+// export const revalidate = 3600
 
 export async function generateMetadata({
                                          params: {slug, lng},

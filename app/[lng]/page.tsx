@@ -7,6 +7,8 @@ type Props = {
   params: { lng: string }
 }
 
+export const revalidate = 3600
+
 export default async function Home({params: {lng}}: Props) {
   const {t} = await useTranslation(lng)
 
