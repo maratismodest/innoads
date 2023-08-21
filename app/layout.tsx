@@ -18,7 +18,8 @@ export const metadata: Metadata = {
   authors: [{name: 'InnoAds'}],
   publisher: 'InnoAds',
   keywords: 'innoads, Иннополис, доска объявлений',
-  manifest: '/manifest.json'
+  manifest: '/manifest.json',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL)
 }
 
 export default function RootLayout({
