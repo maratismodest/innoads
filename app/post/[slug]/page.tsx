@@ -49,5 +49,5 @@ export default async function Post<NextPage>({params: {slug}}: any) {
   const ad = await fetchAd(slug as string);
   const {content: related} = await fetchAds({size: 6, categoryId: ad.categoryId})
   return (
-    <PostPage post={ad} related={related.filter(x => x.id == ad.id)}/>)
+    <PostPage post={ad} related={related.filter(x => x.id != ad.id)}/>)
 }
