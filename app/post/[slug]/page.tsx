@@ -1,4 +1,5 @@
 import PostPage from '@/components/PostPage';
+import {GetSlugPath} from '@/types';
 import fetchAd from '@/utils/api/fetchAd';
 import fetchAds from '@/utils/api/fetchAds';
 import {categories} from '@/utils/categories';
@@ -45,7 +46,7 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function Post<NextPage>({params: {slug}}: any) {
+export default async function Post<NextPage>({params: {slug}}: GetSlugPath) {
   const ad = await fetchAd(slug as string);
   const {content: related} = await fetchAds({size: 6, categoryId: ad.categoryId})
   return (

@@ -1,5 +1,6 @@
 import Posts from '@/components/Posts';
 import Button from '@/components/ui/Button';
+import {GetIdPath} from '@/types';
 import fetchPosts from '@/utils/api/fetchAds';
 import fetchUser from '@/utils/api/fetchUser';
 import fetchUsers from '@/utils/api/fetchUsers';
@@ -7,6 +8,8 @@ import {tgLink} from '@/utils/constants';
 import {Metadata} from 'next';
 import Link from 'next/link';
 import React from 'react';
+
+export const revalidate = 86400
 
 export async function generateStaticParams() {
   const users = await fetchUsers();
@@ -18,7 +21,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
                                          params: {id},
-                                       }: any): Promise<Metadata> {
+                                       }: GetIdPath): Promise<Metadata> {
   const user = await fetchUser(id);
   return {
     title: `Пользователь ${user.username}`,
@@ -26,7 +29,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function PublicProfile<NextPage>({params: {id}}: any) {
+export default async function PublicProfile<NextPage>({params: {id}}: GetIdPath) {
   const user = await fetchUser(id)
   const {content: posts} = await fetchPosts({
     size: 10, userId: id

@@ -1,13 +1,13 @@
-import { messages } from '@/modules/PostForm/utils';
+import {messages} from '@/modules/PostForm/utils';
 
-import client, { beRoutes } from './createRequest';
+import client, {beRoutes} from './createRequest';
 
 interface PostImageProps {
   status: 'ok' | 'error';
   value: string;
 }
 
-const postImage = async (formData: FormData): Promise<PostImageProps> => {
+export default async function postImage(formData: FormData): Promise<PostImageProps> {
   try {
     const res = await client.post(beRoutes.uploads,
       formData,
@@ -29,5 +29,3 @@ const postImage = async (formData: FormData): Promise<PostImageProps> => {
     };
   }
 };
-
-export default postImage;

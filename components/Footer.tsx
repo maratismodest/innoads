@@ -6,7 +6,7 @@ import React from 'react';
 const Footer = () => {
   return (
     <footer className='bg-gray'>
-      <Button variant="secondary" className='mx-auto flex justify-center' onClick={scrollToTop}>Обратно</Button>
+      <Button variant="secondary" className='w-full' onClick={scrollToTop}>Наверх</Button>
     </footer>
   );
 };

@@ -1,3 +1,4 @@
+import {GetSlugPath} from '@/types';
 import fetchArticle from '@/utils/api/fetchArticle';
 import fetchArticles from '@/utils/api/fetchArticles';
 import {Metadata} from 'next';
@@ -13,7 +14,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
                                          params: {slug},
-                                       }: any): Promise<Metadata> {
+                                       }: GetSlugPath): Promise<Metadata> {
   const article = await fetchArticle(slug);
   return {
     title: article.title,
@@ -21,7 +22,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function Article<NextPage>({params: {lng, slug}}: any) {
+export default async function Article<NextPage>({params: {slug}}: GetSlugPath) {
   const article = await fetchArticle(slug);
   const {title, body} = article;
   return (

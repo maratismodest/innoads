@@ -10,14 +10,12 @@ export interface Seo {
   description: string
 }
 
-export interface GetStaticPath {
-  params: { id: string },
-  locale: string
+export interface GetIdPath {
+  params: { id: number },
 }
 
-export interface GetStaticPostPath {
-  params: { slug: string },
-  locale: string
+export interface GetSlugPath {
+  params: { slug: string }
 }
 
 export interface TelegramUser {
