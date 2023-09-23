@@ -15,12 +15,12 @@ export default function useValidation(value: any, validations: PostOptions) {
           }
         case 'minLength':
           if (value.length < validations['minLength']) {
-            setError('Минимальная длинна: ' + validations['minLength']);
+            setError('Минимальная длина: ' + validations['minLength']);
             return;
           }
         case 'maxLength':
           if (value.length > validations['maxLength']) {
-            setError('Максимальная длинна: ' + validations['maxLength']);
+            setError('Максимальная длина: ' + validations['maxLength']);
             return;
           }
         case 'min':
