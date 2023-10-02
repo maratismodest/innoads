@@ -48,7 +48,7 @@ export async function generateStaticParams() {
 
 export default async function Post<NextPage>({params: {slug}}: GetSlugPath) {
   const ad = await fetchAd(slug as string);
-  const {content: related} = await fetchAds({size: 6, categoryId: ad.categoryId})
+  const {content: related} = await fetchAds({size: 7, categoryId: ad.categoryId})
   return (
     <PostPage post={ad} related={related.filter(x => x.id != ad.id)}/>)
 }

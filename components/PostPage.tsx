@@ -132,7 +132,7 @@ export default function PostPage<NextPage>({post, related}: Props) {
         <h1>{title}</h1>
         <Price price={price}/>
         <hr/>
-        <pre className='whitespace-pre-wrap break-words'>{body}</pre>
+        <p className='break-all'>{body}</p>
         <p className='mt-5'>
           Опубликовано:{' '}
           {dayjs(createdAt).format('DD.MM.YYYY')}
