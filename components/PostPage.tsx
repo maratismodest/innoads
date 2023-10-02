@@ -3,6 +3,7 @@ import ImageInView from '@/components/ImageInView';
 import Item from '@/components/Item';
 import Price from '@/components/Price';
 import Button from '@/components/ui/Button';
+import useLockedBody from '@/hooks/useLockedBody';
 import type {PostDTO} from '@/types';
 import {categories} from '@/utils/categories';
 import {NO_IMAGE, routes, tgLink} from '@/utils/constants';
@@ -21,6 +22,7 @@ const styles = 'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex just
 
 export default function PostPage<NextPage>({post, related}: Props) {
   const [current, setCurrent] = useState(0);
+  const [locked, setLocked] = useLockedBody(false, 'root')
 
   const ul = useRef<HTMLUListElement>(null);
 
@@ -57,16 +59,17 @@ export default function PostPage<NextPage>({post, related}: Props) {
 
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden';
+      setLocked(true)
     } else {
-      document.body.style.overflow = 'unset';
+      setLocked(false)
     }
+    return () => setLocked(false)
   }, [open]);
 
   return (
     <>
       {<dialog open={open}
-               className='z-40 w-screen h-[calc(100vh_-_64px)] backdrop-grayscale absolute max-w-full bg-black top-0'>
+               className='z-40 w-screen fixed h-[calc(100vh_-_64px)] backdrop-grayscale max-w-full bg-black top-[64px]'>
         <button className={clsx(styles, 'absolute right-4 top-4 z-50')} onClick={() => setOpen(false)}>
           &#x2715;
         </button>
@@ -82,7 +85,7 @@ export default function PostPage<NextPage>({post, related}: Props) {
         />
       </dialog>
       }
-      <div className='mx-auto max-w-[400px]'>
+      <div className='mx-auto max-w-[400px] w-full relative'>
         <div className='relative'>
           <ul className='relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll'
               ref={ul}
@@ -132,7 +135,7 @@ export default function PostPage<NextPage>({post, related}: Props) {
         <h1>{title}</h1>
         <Price price={price}/>
         <hr/>
-        <p className='break-all'>{body}</p>
+        <p className='break-words'>{body}</p>
         <p className='mt-5'>
           Опубликовано:{' '}
           {dayjs(createdAt).format('DD.MM.YYYY')}
@@ -160,9 +163,7 @@ export default function PostPage<NextPage>({post, related}: Props) {
           <div className='mt-10'>
             <h2>Похожие объявления</h2>
             <ul className='grid grid-cols-2 gap-4'>
-              {related.map((post: PostDTO) => {
-                return <Item key={post.slug} post={post}/>;
-              })}
+              {related.map((post: PostDTO) => <Item key={post.slug} post={post}/>)}
             </ul>
           </div>
         )}
@@ -171,5 +172,11 @@ export default function PostPage<NextPage>({post, related}: Props) {
   );
 }
 
-
+// useEffect(() => {
+//   if (open) {
+//     document.body.style.overflow = 'hidden';
+//   } else {
+//     document.body.style.overflow = 'unset';
+//   }
+// }, [open]);
 
