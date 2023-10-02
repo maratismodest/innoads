@@ -11,9 +11,9 @@ Innopolis City Classified
 ## Instruction:
 
 - create .env
-- yarn start
+- npm run start
 
-- yarn dev
+- npm run dev
 
 ## Acknowledgements
 
