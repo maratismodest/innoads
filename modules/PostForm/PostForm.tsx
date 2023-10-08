@@ -213,7 +213,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
                 name={name}
                 value={value}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  handleChange(name as keyof Form, event.target.value.replace(digitsRegex, ''));
+                  handleChange(name as keyof Form, Number(event.target.value.replace(digitsRegex, '')));
                 }}
                 options={options}
               />
