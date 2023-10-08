@@ -42,6 +42,7 @@ interface Form {
   description: FormField,
 }
 
+const digitsRegex = /[^0-9]+/g
 export default function PostForm({defaultValues = postDefaultValues, post}: PostFormProps) {
 
   const [data, setData] = useState<Form>({
@@ -55,7 +56,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
     },
     price: {
       type: 'number',
-      value: defaultValues?.price ?? null,
+      value: defaultValues?.price ?? '',
       label: 'Цена',
       options: {required: true, min: 1}
     },
@@ -207,12 +208,12 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
           case 'number':
             return (
               <Input
-                type='number'
+                type='text'
                 label={label}
                 name={name}
                 value={value}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  handleChange(name as keyof Form, Number(event.target.value));
+                  handleChange(name as keyof Form, event.target.value.replace(digitsRegex, ''));
                 }}
                 options={options}
               />

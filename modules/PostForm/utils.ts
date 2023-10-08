@@ -1,14 +1,14 @@
 export type PostFormValues = {
   title: string,
   body: string,
-  price: number,
+  price: number | string,
   categoryId: number
 }
 
 export const postDefaultValues: PostFormValues = {
   categoryId: 0,
   title: '',
-  price: 0,
+  price: '',
   body: ''
 };
 
