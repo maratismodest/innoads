@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
@@ -7,19 +7,19 @@ import Spinner from '@/components/ui/Spinner';
 import inputValidation from '@/modules/PostForm/inputValidation';
 import useAuth from '@/hooks/useAuth';
 import useValidation from '@/hooks/useValidation';
-import {CreatePostDTO, EditPostDTO, PostDTO} from '@/types';
+import { CreatePostDTO, EditPostDTO, PostDTO } from '@/types';
 import postAd from '@/utils/api/postPost';
 import postTelegram from '@/utils/api/postTelegram';
 import updateAd from '@/utils/api/updatePost';
-import {categories, CategoryProps} from '@/utils/categories';
-import {routes} from '@/utils/constants';
+import { categories, CategoryProps } from '@/utils/categories';
+import { routes } from '@/utils/constants';
 import slug from '@/utils/slug';
-import {AxiosError} from 'axios';
-import {useRouter} from 'next/navigation';
-import React, {useEffect, useState} from 'react';
+import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 import PostFormImages from './PostFormImages';
-import {messages, postDefaultValues, PostFormValues} from './utils';
+import { messages, postDefaultValues, PostFormValues } from './utils';
 
 export interface PostFormProps {
   defaultValues?: PostFormValues;
@@ -42,8 +42,8 @@ interface Form {
   description: FormField,
 }
 
-const digitsRegex = /[^0-9]+/g
-export default function PostForm({defaultValues = postDefaultValues, post}: PostFormProps) {
+const digitsRegex = /[^0-9]+/g;
+export default function PostForm({ defaultValues = postDefaultValues, post }: PostFormProps) {
 
   const [data, setData] = useState<Form>({
     categoryId: {
@@ -51,27 +51,27 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
       value: defaultValues?.categoryId,
       label: 'Выберите категорию',
       options: {
-        required: true
-      }
+        required: true,
+      },
     },
     price: {
       type: 'number',
       value: defaultValues?.price ?? '',
       label: 'Цена',
-      options: {required: true, min: 1}
+      options: { required: true, min: 1 },
     },
     title: {
       type: 'text',
       value: defaultValues?.title,
       label: 'Заголовок',
-      options: {required: true, minLength: 5, maxLength: 50}
+      options: { required: true, minLength: 5, maxLength: 50 },
     },
     description: {
       type: 'textarea',
       value: defaultValues?.body,
       label: 'Описание',
-      options: {required: true, minLength: 10, maxLength: 800}
-    }
+      options: { required: true, minLength: 10, maxLength: 800 },
+    },
   });
 
   const textAreaError = useValidation(data.description.value, data.description.options);
@@ -79,7 +79,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
   const [images, setImages] = useState<string[]>(() => post ? post.images.split('||') : []);
   const router = useRouter();
 
-  const {user} = useAuth();
+  const { user } = useAuth();
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
@@ -90,14 +90,14 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
   }, []);
 
   if (!user) {
-    return <Spinner/>;
+    return <Spinner />;
   }
 
   const handleCreate = async (formData: CreatePostDTO) => {
     try {
       setSending(true);
       const res = await postAd(formData);
-      await postTelegram({...res, username: user.username});
+      await postTelegram({ ...res, username: user.username });
       alert('Ваше объявление создано!');
       return router.push(routes.profile);
     } catch (e) {
@@ -127,7 +127,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
   };
 
   const handleChange = (name: keyof Form, value: any) =>
-    setData(prev => ({...prev, [name]: {...prev[name], value}}));
+    setData(prev => ({ ...prev, [name]: { ...prev[name], value } }));
 
   const onSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -149,7 +149,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
       title: data.title.value.trim(),
       body: data.description.value.trim(),
       price: data.price.value,
-      categoryId: data.categoryId.value
+      categoryId: data.categoryId.value,
     };
 
     if (post) {
@@ -162,7 +162,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
         preview: images[0],
         images: images.join('||'),
         userId: user.id,
-        slug: post.slug
+        slug: post.slug,
       };
       await handleEdit(editPostDto);
       return;
@@ -176,7 +176,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
       preview: images[0],
       images: images.join('||'),
       slug: slug(form.title) + '-' + Math.floor(Math.random() * 100),
-      userId: user.id
+      userId: user.id,
     };
     await handleCreate(createPostDto);
     return;
@@ -190,7 +190,7 @@ export default function PostForm({defaultValues = postDefaultValues, post}: Post
       name={post ? 'Редактировать' : 'Добавить'}
     >
       <h1>Добавить объявление</h1>
-      {Object.entries(data).map(([name, {label, value, type, options}]) => {
+      {Object.entries(data).map(([name, { label, value, type, options }]) => {
         switch (type) {
           case 'select': {
             return (

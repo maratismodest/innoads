@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useOnScreen from '@/hooks/useOnScreen';
 import { PostDTO } from '@/types';
@@ -16,7 +16,7 @@ type Props = {
 export default function InfinitePosts({
                                         options,
                                         initPosts,
-                                        initPage
+                                        initPage,
                                       }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen(elementRef);
@@ -34,7 +34,7 @@ export default function InfinitePosts({
       const { content, totalPages } = await fetchPosts({
         ...options,
         page,
-        size: 20
+        size: 20,
       });
       setPosts([...posts, ...content]);
       setPage(prev => prev + 1);

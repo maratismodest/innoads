@@ -1,11 +1,11 @@
-'use client'
+'use client';
 import Dropdown from '@/components/Dropdown';
 import HeaderButtons from './HeaderButtons';
 import Button from '@/components/ui/Button';
 import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef';
-import {routes} from '@/utils/constants';
+import { routes } from '@/utils/constants';
 import Link from 'next/link';
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 
 export default function Header() {
 
@@ -34,14 +34,14 @@ export default function Header() {
 
           {dropdown && (
             <Dropdown closeToggle={() => openDropdown}>
-              <HeaderButtons className='flex-col mb-8' onClick={() => setDropdown(false)}/>
+              <HeaderButtons className='flex-col mb-8' onClick={() => setDropdown(false)} />
               {/*<Switcher/>*/}
             </Dropdown>
           )}
         </div>
         <div className='hidden items-center gap-2 lg:flex'>
           {/*<Switcher/>*/}
-          <HeaderButtons className='ml-4 flex items-center gap-1'/>
+          <HeaderButtons className='ml-4 flex items-center gap-1' />
         </div>
       </nav>
     </header>

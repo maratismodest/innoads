@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { UserDTO } from '@/types';
 import fetchUser from '@/utils/api/fetchUser';
 import * as jose from 'jose';
@@ -15,7 +15,7 @@ const authContextDefaultValues: authContextType = {
   login: () => {
   },
   logout: () => {
-  }
+  },
 };
 export const AuthContext = createContext<authContextType>(authContextDefaultValues);
 
@@ -66,7 +66,7 @@ export default function AuthProvider({ children }: Props) {
   const value = {
     user,
     login,
-    logout
+    logout,
   };
   return (
     <AuthContext.Provider value={value}>

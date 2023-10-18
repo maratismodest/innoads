@@ -64,7 +64,7 @@ const rules: Record<string, string> = {
   'т': 't',
   'ь': 'i',
   'б': 'b',
-  'ю': 'iu'
+  'ю': 'iu',
 };
 
 export default function slug(word: string) {

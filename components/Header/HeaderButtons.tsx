@@ -1,5 +1,5 @@
 import buttonStyles from '@/styles/buttonStyles';
-import {routes} from '@/utils/constants';
+import { routes } from '@/utils/constants';
 import Link from 'next/link';
 import React from 'react';
 
@@ -13,31 +13,31 @@ const menu: MenuProps[] = [
   {
     href: routes.profile,
     variant: 'secondary',
-    text: 'Профиль'
+    text: 'Профиль',
   },
   {
     href: routes.favourites,
     variant: 'secondary',
-    text: 'Избранное'
+    text: 'Избранное',
   },
   {
     href: routes.blog,
     variant: 'secondary',
-    text: 'Блог'
+    text: 'Блог',
   },
   {
     href: routes.add,
     variant: 'primary',
-    text: 'Добавить объявление'
-  }
+    text: 'Добавить объявление',
+  },
 ];
 
-export default function HeaderButtons({className, onClick}: { className?: string, onClick?: () => void }) {
+export default function HeaderButtons({ className, onClick }: { className?: string, onClick?: () => void }) {
   return (
     <ul className={className}>
-      {menu.map(({href, text, variant}) =>
+      {menu.map(({ href, text, variant }) =>
         <li key={href} className='mb-2 lg:mb-0' data-testid={href}>
-          <Link href={href} className={buttonStyles({variant: variant})} onClick={onClick}>
+          <Link href={href} className={buttonStyles({ variant: variant })} onClick={onClick}>
             {text}
           </Link>
         </li>)

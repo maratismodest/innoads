@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
 
 import Modal from '@/components/Modal';
@@ -16,7 +16,7 @@ const modalContextDefaultValues: modalContextType = {
   },
   modalValue: null,
   setModalValue: () => {
-  }
+  },
 };
 export const ModalContext = createContext<modalContextType>(modalContextDefaultValues);
 
@@ -29,7 +29,7 @@ export default function ModalProvider({ children }: Props) {
   const [modalValue, setModalValue] = useState(null);
 
   const value = {
-    modal, setModal, modalValue, setModalValue
+    modal, setModal, modalValue, setModalValue,
   };
 
   return (

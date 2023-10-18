@@ -29,7 +29,7 @@ const badPatterns = [
   '.*(д(о|а)лб(о|а)|разъ|разь|за|вы|по)ебы*.*',
   '.*пид(а|о|е)р.*',
   '.*хер.*',
-  '^жоп(а|ы|ой|ами).*'
+  '^жоп(а|ы|ой|ами).*',
 ];
 
 const goodPatterns = [
@@ -42,7 +42,7 @@ const goodPatterns = [
   '.*м(а|о)нд(а|о)рин.*',
   '.*р(а|о)ссл(а|о)блять.*',
   '.*п(о|а)тр(е|и)блять.*',
-  '.*@.*\\.(ру|сом|нет)$'
+  '.*@.*\\.(ру|сом|нет)$',
 ];
 
 const goodWords = [
@@ -50,7 +50,7 @@ const goodWords = [
   'застрахуйте',
   'одномандатный',
   'подстрахуй',
-  'психуй'
+  'психуй',
 ];
 
 const letters: Record<string, string> = {
@@ -79,7 +79,7 @@ const letters: Record<string, string> = {
   'z': 'з',
   'ё': 'е',
   '6': 'б',
-  '9': 'д'
+  '9': 'д',
 };
 
 interface curseWordsProps {
@@ -212,12 +212,12 @@ const curseWords: curseWordsProps = {
   },
   addGoodWord: function(pattern: string) {
     this.goodWords.push(pattern);
-  }
+  },
 };
 
 export default function hasCurseWords({
                                         title,
-                                        body
+                                        body,
                                       }: PostFormValues) {
   return curseWords.containsMat(title) || curseWords.containsMat(body);
 }

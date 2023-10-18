@@ -1,7 +1,7 @@
 import fetchUsers from '@/utils/api/fetchUsers';
 import Link from 'next/link';
 
-export const revalidate = 86400
+export const revalidate = 86400;
 
 export default async function UsersPage() {
   const users = await fetchUsers();
@@ -16,5 +16,5 @@ export default async function UsersPage() {
         ))}
       </ul>
     </>
-  )
+  );
 }

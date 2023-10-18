@@ -9,11 +9,11 @@ export const postDefaultValues: PostFormValues = {
   categoryId: 0,
   title: '',
   price: '',
-  body: ''
+  body: '',
 };
 
 export const messages = {
   forbiddenWords: 'Есть запрещенные слова!',
   postUpdated: 'Ваше объявление изменено!',
-  somethingWentWrong: 'Что-то пошло не так!'
+  somethingWentWrong: 'Что-то пошло не так!',
 };

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react';
 import { PostDTO } from '@/types';
 
@@ -10,7 +10,7 @@ type favouritesContextType = {
 const favouritesContextDefaultValues: favouritesContextType = {
   favourites: [],
   setFavourites: () => {
-  }
+  },
 };
 export const FavouriteContext = createContext<favouritesContextType>(favouritesContextDefaultValues);
 
@@ -31,7 +31,7 @@ export default function FavouriteProvider({ children }: Props) {
   }, []);
 
   const value = {
-    favourites, setFavourites
+    favourites, setFavourites,
   };
 
   return (

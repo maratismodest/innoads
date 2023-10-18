@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { clsx } from 'clsx';
 import Image from 'next/image';
@@ -17,7 +17,7 @@ interface PostFormImagesProps {
 
 const imageErrors = {
   noImages: 'Добавить хотя бы одно фото!',
-  manyImages: 'Не больше 4 фотографий!'
+  manyImages: 'Не больше 4 фотографий!',
 };
 
 export default function PostFormImages({ images, setImages }: PostFormImagesProps) {
@@ -91,7 +91,7 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
               src={NO_IMAGE}
               fill={true}
               style={{
-                objectFit: 'cover'
+                objectFit: 'cover',
               }}
             />
           </div>
@@ -122,7 +122,7 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
                 alt={image}
                 src={image}
                 style={{
-                  objectFit: 'cover'
+                  objectFit: 'cover',
                 }}
                 fill={true}
                 placeholder='blur'
@@ -136,7 +136,7 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
                     images,
                     index,
                     MoveImage.left,
-                    setImages
+                    setImages,
                   );
                 }}
               >
@@ -150,7 +150,7 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
                     images,
                     index,
                     MoveImage.right,
-                    setImages
+                    setImages,
                   );
                 }}
               >

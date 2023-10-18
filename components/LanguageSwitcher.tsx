@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
 import Switcher from '@/components/ui/Switcher';
-import {useRouter} from 'next/navigation'
-import React, {useMemo} from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useMemo } from 'react';
 
 export default function LanguageSwitcher() {
-  const router = useRouter()
+  const router = useRouter();
   // const {i18n} = useTranslation()
   // const {pathname, asPath, query} = router
   // const language = i18n.language
@@ -20,7 +20,7 @@ export default function LanguageSwitcher() {
     //   asPath,
     //   {locale: checked ? 'ru' : 'en'},
     // )
-  }
+  };
 
   return (
     <div className='inline-flex gap-2 relative cursor-pointer'>
@@ -28,5 +28,5 @@ export default function LanguageSwitcher() {
       {/*<label htmlFor='language'>{checked ? 'En' : 'Ru'}</label>*/}
     </div>
 
-  )
+  );
 }

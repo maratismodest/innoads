@@ -6,10 +6,10 @@ export interface CategoryProps {
 }
 
 export const categories: CategoryProps[] = [
-  {value: 1, label: 'Продам',},
-  {value: 3, label: 'Услуги'},
-  {value: 5, label: 'Недвижимость'},
-  {value: 2, label: 'Куплю'},
-  {value: 7, label: 'Даром'},
-  {value: 6, label: 'Одежда'}
+  { value: 1, label: 'Продам' },
+  { value: 3, label: 'Услуги' },
+  { value: 5, label: 'Недвижимость' },
+  { value: 2, label: 'Куплю' },
+  { value: 7, label: 'Даром' },
+  { value: 6, label: 'Одежда' },
 ];

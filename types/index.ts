@@ -1,13 +1,13 @@
 export type ArticleDTO = {
-  readonly id: number,
+  readonly id: number
   readonly title: string
   readonly slug: string
   readonly body: string
 }
 
 export interface Seo {
-  title: string,
-  description: string
+  title: string;
+  description: string;
 }
 
 export interface GetIdPath {
@@ -15,7 +15,7 @@ export interface GetIdPath {
 }
 
 export interface GetSlugPath {
-  params: { slug: string }
+  params: { slug: string };
 }
 
 export interface TelegramUser {

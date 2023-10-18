@@ -1,9 +1,9 @@
-'use client'
+'use client';
 import buttonStyles from '@/styles/buttonStyles';
-import {routes} from '@/utils/constants';
+import { routes } from '@/utils/constants';
 
 import Link from 'next/link';
-import React, {memo} from 'react';
+import React, { memo } from 'react';
 
 const GoToProfile = memo(() => {
   return (

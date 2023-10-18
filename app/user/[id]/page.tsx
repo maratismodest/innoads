@@ -1,45 +1,45 @@
 import Posts from '@/components/Posts';
 import Button from '@/components/ui/Button';
-import {GetIdPath} from '@/types';
+import { GetIdPath } from '@/types';
 import fetchPosts from '@/utils/api/fetchAds';
 import fetchUser from '@/utils/api/fetchUser';
 import fetchUsers from '@/utils/api/fetchUsers';
-import {tgLink} from '@/utils/constants';
-import {Metadata} from 'next';
+import { tgLink } from '@/utils/constants';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import React from 'react';
 
-export const revalidate = 86400
+export const revalidate = 86400;
 
 export async function generateStaticParams() {
   const users = await fetchUsers();
 
   return users.map((user) => ({
     id: user.id.toString(),
-  }))
+  }));
 }
 
 export async function generateMetadata({
-                                         params: {id},
+                                         params: { id },
                                        }: GetIdPath): Promise<Metadata> {
   const user = await fetchUser(id);
   return {
     title: `Пользователь ${user.username}`,
-    description: `Пользователь ${user.id}`
-  }
+    description: `Пользователь ${user.id}`,
+  };
 }
 
-export default async function PublicProfile<NextPage>({params: {id}}: GetIdPath) {
-  const user = await fetchUser(id)
-  const {content: posts} = await fetchPosts({
-    size: 10, userId: id
+export default async function PublicProfile<NextPage>({ params: { id } }: GetIdPath) {
+  const user = await fetchUser(id);
+  const { content: posts } = await fetchPosts({
+    size: 10, userId: id,
   });
 
   return (
     <>
       <h1>Профиль пользователя</h1>
       <p>Количество объявлений: <span>{posts.length}</span></p>
-      <Posts posts={posts} className='mt-10'/>
+      <Posts posts={posts} className='mt-10' />
       <Link href={tgLink + '/' + user.username} passHref className='mt-10 block'>
         <Button>Написать пользователю</Button>
       </Link>

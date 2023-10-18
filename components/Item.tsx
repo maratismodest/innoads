@@ -1,107 +1,107 @@
-'use client'
-import Price from '@/components/Price'
-import Button from '@/components/ui/Button'
-import {FavouriteContext} from '@/context/FavouritesContext'
+'use client';
+import Price from '@/components/Price';
+import Button from '@/components/ui/Button';
+import { FavouriteContext } from '@/context/FavouritesContext';
 import useAuth from '@/hooks/useAuth';
-import useModal from '@/hooks/useModal'
-import RedHeart from '@/assets/svg/heart-red.svg'
-import TransparentHeart from '@/assets/svg/heart.svg'
-import {PostDTO} from '@/types'
-import client, {beRoutes} from '@/utils/api/createRequest'
+import useModal from '@/hooks/useModal';
+import RedHeart from '@/assets/svg/heart-red.svg';
+import TransparentHeart from '@/assets/svg/heart.svg';
+import { PostDTO } from '@/types';
+import client, { beRoutes } from '@/utils/api/createRequest';
 import postTelegram from '@/utils/api/postTelegram';
-import {NO_IMAGE, routes} from '@/utils/constants'
-import {clsx} from 'clsx'
-import Image from 'next/image'
-import Link from 'next/link'
-import {useRouter} from 'next/navigation'
-import React, {useCallback, useContext, useEffect, useMemo} from 'react'
+import { NO_IMAGE, routes } from '@/utils/constants';
+import { clsx } from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 
 type Props = {
   post: PostDTO
   edit?: boolean
 }
 
-export default function Item({post, edit = false}: Props) {
-  const {setModal, setModalValue} = useModal()
-  const {favourites, setFavourites} = useContext(FavouriteContext)
-  const {user} = useAuth()
-  const {id, slug, title, preview, price, categoryId, body, images} = post
+export default function Item({ post, edit = false }: Props) {
+  const { setModal, setModalValue } = useModal();
+  const { favourites, setFavourites } = useContext(FavouriteContext);
+  const { user } = useAuth();
+  const { id, slug, title, preview, price, categoryId, body, images } = post;
 
-  const router = useRouter()
-  const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id])
+  const router = useRouter();
+  const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id]);
 
   const hideModal = () => {
-    setModalValue(null)
-    setModal(false)
-  }
+    setModalValue(null);
+    setModal(false);
+  };
 
   const showModal = (text: ItemModalText) => {
     setModalValue(
       <div className='flex flex-col text-center'>
         <h4>{text}</h4>
-        <hr/>
+        <hr />
         <div className='mt-12 flex justify-around'>
           <Button onClick={async () => await handleFunction(text)}>Да</Button>
           <Button onClick={hideModal}>Нет</Button>
         </div>
       </div>,
-    )
-    setModal(true)
-  }
+    );
+    setModal(true);
+  };
 
   const handleFunction = async (modalText: string) => {
     try {
       switch (modalText) {
         case ItemModalText.edit: {
-          await router.push(routes.edit + '/' + slug)
-          break
+          await router.push(routes.edit + '/' + slug);
+          break;
         }
         case ItemModalText.telegram: {
           await postTelegram({
-            title, body, price, slug, username: user?.username as string, categoryId, images
-          })
-          alert(success.telegram)
-          setModal(false)
-          await router.push(routes.profile)
-          break
+            title, body, price, slug, username: user?.username as string, categoryId, images,
+          });
+          alert(success.telegram);
+          setModal(false);
+          await router.push(routes.profile);
+          break;
         }
         case ItemModalText.delete: {
-          await client.delete(`${beRoutes.ads}/${id}`)
-          alert(success.deleted)
-          setModal(false)
-          await router.push(routes.profile)
-          break
+          await client.delete(`${beRoutes.ads}/${id}`);
+          alert(success.deleted);
+          setModal(false);
+          await router.push(routes.profile);
+          break;
         }
         default:
-          alert(errors.noCase)
+          alert(errors.noCase);
       }
     } catch (e) {
-      console.log(e)
-      alert(errors.wentWrong)
+      console.log(e);
+      alert(errors.wentWrong);
     }
-  }
+  };
 
   const handleFavourite = useCallback(
     (e: React.SyntheticEvent) => {
-      e.preventDefault()
-      const currentList = liked ? favourites.filter(x => x.id !== id) : [...favourites, post]
-      localStorage.setItem('favourites', JSON.stringify(currentList))
-      setFavourites(currentList)
+      e.preventDefault();
+      const currentList = liked ? favourites.filter(x => x.id !== id) : [...favourites, post];
+      localStorage.setItem('favourites', JSON.stringify(currentList));
+      setFavourites(currentList);
     },
     [id, favourites, liked, post, setFavourites],
-  )
+  );
 
   useEffect(() => {
     return () => {
-      setModalValue(null)
-      setModal(false)
-    }
+      setModalValue(null);
+      setModal(false);
+    };
 
-  }, [setModalValue, setModal])
+  }, [setModalValue, setModal]);
 
   return (
     <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow'
-        data-testid="item"
+        data-testid='item'
         data-category={categoryId}
     >
       {user && edit && (
@@ -109,7 +109,7 @@ export default function Item({post, edit = false}: Props) {
           <Button
             className={clsx('absolute z-10', 'right-0 top-0')}
             onClick={() => {
-              showModal(ItemModalText.delete)
+              showModal(ItemModalText.delete);
             }}
           >
             &#10008;
@@ -118,13 +118,13 @@ export default function Item({post, edit = false}: Props) {
             title='Редактировать'
             className={clsx('absolute z-10', 'left-0 top-0')}
             onClick={() => {
-              showModal(ItemModalText.edit)
+              showModal(ItemModalText.edit);
             }}
           >
             &#10000;
           </Button>
           <Button
-            title="Telegram"
+            title='Telegram'
             className={clsx('absolute z-10', 'right-0 bottom-0')}
             onClick={() => showModal(ItemModalText.telegram)}
           >
@@ -136,7 +136,7 @@ export default function Item({post, edit = false}: Props) {
         <div className='relative aspect-square transition-all hover:scale-105'>
           <Image
             fill={true}
-            style={{objectFit: 'cover'}}
+            style={{ objectFit: 'cover' }}
             sizes={'(max-width: 768px) 45vw,(max-width: 1024px) 25vw, 200px'}
             alt={title}
             src={preview}
@@ -147,28 +147,28 @@ export default function Item({post, edit = false}: Props) {
         </div>
 
         <div className='relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2'>
-          <Price price={price}/>
+          <Price price={price} />
           <h2 className='mt-auto text-ellipsis whitespace-nowrap font-normal'>{title}</h2>
           <button className='absolute top-0 right-0 z-10 cursor-pointer'
                   onClick={handleFavourite} aria-label='add to favorites'>
-            {liked ? <RedHeart/> : <TransparentHeart/>}
+            {liked ? <RedHeart /> : <TransparentHeart />}
           </button>
         </div>
 
       </Link>
     </li>
-  )
+  );
 }
 
 const success = {
   updated: 'Объявление поднято в поиске!',
   telegram: 'Объявление в канале InnoAds!',
   deleted: 'Объявление удалено! Перезагрузите страницу, чтобы вы увидели изменения',
-}
+};
 const errors = {
   wentWrong: 'Что-то пошло не так!',
   noCase: 'Нет таких значений',
-}
+};
 
 enum ItemModalText {
   edit = 'Редактировать объявление?',

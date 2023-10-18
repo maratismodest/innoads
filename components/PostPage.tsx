@@ -1,17 +1,17 @@
-'use client'
+'use client';
 import ImageInView from '@/components/ImageInView';
 import Item from '@/components/Item';
 import Price from '@/components/Price';
 import Button from '@/components/ui/Button';
 import useLockedBody from '@/hooks/useLockedBody';
-import type {PostDTO} from '@/types';
-import {categories} from '@/utils/categories';
-import {NO_IMAGE, routes, tgLink} from '@/utils/constants';
-import {clsx} from 'clsx';
+import type { PostDTO } from '@/types';
+import { categories } from '@/utils/categories';
+import { NO_IMAGE, routes, tgLink } from '@/utils/constants';
+import { clsx } from 'clsx';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 type Props = {
   post: PostDTO,
@@ -20,9 +20,9 @@ type Props = {
 
 const styles = 'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center';
 
-export default function PostPage<NextPage>({post, related}: Props) {
+export default function PostPage<NextPage>({ post, related }: Props) {
   const [current, setCurrent] = useState(0);
-  const [locked, setLocked] = useLockedBody(false, 'root')
+  const [locked, setLocked] = useLockedBody(false, 'root');
 
   const ul = useRef<HTMLUListElement>(null);
 
@@ -34,7 +34,7 @@ export default function PostPage<NextPage>({post, related}: Props) {
     price,
     createdAt,
     user,
-    slug
+    slug,
   } = post;
 
   const [open, setOpen] = useState(false);
@@ -46,24 +46,24 @@ export default function PostPage<NextPage>({post, related}: Props) {
   const category = useMemo(
     () =>
       categories.find((option) => option.value === categoryId) || categories[0],
-    [categoryId]
+    [categoryId],
   );
 
   const handleClick = (direction: 'left' | 'right') => {
     const res = direction === 'right' ? 1 : -1;
     setCurrent(prevState => prevState + res);
     if (ul.current) {
-      ul.current.scrollTo({left: ul.current.scrollLeft + ul.current.clientWidth * res, behavior: 'smooth'});
+      ul.current.scrollTo({ left: ul.current.scrollLeft + ul.current.clientWidth * res, behavior: 'smooth' });
     }
   };
 
   useEffect(() => {
     if (open) {
-      setLocked(true)
+      setLocked(true);
     } else {
-      setLocked(false)
+      setLocked(false);
     }
-    return () => setLocked(false)
+    return () => setLocked(false);
   }, [open]);
 
   return (
@@ -79,7 +79,7 @@ export default function PostPage<NextPage>({post, related}: Props) {
           alt='image'
           title={title}
           fill={true}
-          style={{objectFit: 'contain'}}
+          style={{ objectFit: 'contain' }}
           placeholder='blur'
           blurDataURL={NO_IMAGE}
         />
@@ -133,8 +133,8 @@ export default function PostPage<NextPage>({post, related}: Props) {
         </Link>
 
         <h1>{title}</h1>
-        <Price price={price}/>
-        <hr/>
+        <Price price={price} />
+        <hr />
         <p className='break-words'>{body}</p>
         <p className='mt-5'>
           Опубликовано:{' '}
@@ -154,7 +154,7 @@ export default function PostPage<NextPage>({post, related}: Props) {
           onClick={async () => await navigator.share({
             title: 'InnoAds',
             text: 'Поделиться ссылкой:',
-            url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug
+            url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug,
           })}
         >
           Поделиться
@@ -163,7 +163,7 @@ export default function PostPage<NextPage>({post, related}: Props) {
           <div className='mt-10'>
             <h2>Похожие объявления</h2>
             <ul className='grid grid-cols-2 gap-4'>
-              {related.map((post: PostDTO) => <Item key={post.slug} post={post}/>)}
+              {related.map((post: PostDTO) => <Item key={post.slug} post={post} />)}
             </ul>
           </div>
         )}

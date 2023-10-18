@@ -1,6 +1,6 @@
-'use client'
-import {PostOptions} from '@/modules/PostForm/PostForm';
-import {useEffect, useState} from 'react';
+'use client';
+import { PostOptions } from '@/modules/PostForm/PostForm';
+import { useEffect, useState } from 'react';
 
 export default function useValidation(value: any, validations: PostOptions) {
   const [error, setError] = useState('');

@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
 import Posts from '@/components/Posts';
 import Button from '@/components/ui/Button';
 import Spinner from '@/components/ui/Spinner';
 import useAuth from '@/hooks/useAuth';
 import buttonStyles from '@/styles/buttonStyles';
-import type {PostDTO, Seo, TelegramUser} from '@/types';
+import type { PostDTO, TelegramUser } from '@/types';
 import client from '@/utils/api/createRequest';
 import fetchPosts from '@/utils/api/fetchAds';
-import {routes} from '@/utils/constants';
+import { routes } from '@/utils/constants';
 import * as jose from 'jose';
 import Link from 'next/link';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import TelegramLoginButton from 'telegram-login-button';
 
 const error = 'Добавьте алиас у себя в аккаунте / Add alias into your account!';
@@ -19,15 +19,15 @@ const error = 'Добавьте алиас у себя в аккаунте / Add
 export default function Profile<NextPage>() {
   const [posts, setPosts] = useState<PostDTO[]>([]);
   const [fetching, setFetching] = useState(false);
-  const {user, login, logout} = useAuth();
+  const { user, login, logout } = useAuth();
 
-  const handleTelegram = async ({username, id}: TelegramUser) => {
+  const handleTelegram = async ({ username, id }: TelegramUser) => {
     if (!username) {
-      return alert({error});
+      return alert({ error });
     }
     try {
-      const user = {id, username};
-      const {data} = await client.post('/users/login', user);
+      const user = { id, username };
+      const { data } = await client.post('/users/login', user);
       const decoded = jose.decodeJwt(data.token);
       if (decoded) {
         login(user, data.token);
@@ -46,11 +46,11 @@ export default function Profile<NextPage>() {
       photo_url: process.env.NEXT_PUBLIC_PHOTO_URL as string,
       username: process.env.NEXT_PUBLIC_USERNAME as string,
       auth_date: 0,
-      hash: ''
+      hash: '',
     };
     try {
-      const user = {id: userTemplate.id, username: userTemplate.username};
-      const {data} = await client.post('/users/login', user);
+      const user = { id: userTemplate.id, username: userTemplate.username };
+      const { data } = await client.post('/users/login', user);
       const decoded = await jose.decodeJwt(data.token);
       if (decoded) {
         login(user, data.token);
@@ -63,7 +63,7 @@ export default function Profile<NextPage>() {
   useEffect(() => {
     if (user) {
       setFetching(true);
-      fetchPosts({userId: user.id}).then(({content}) => setPosts(content)).catch(e => alert(e.message)).finally(() => setFetching(false));
+      fetchPosts({ userId: user.id }).then(({ content }) => setPosts(content)).catch(e => alert(e.message)).finally(() => setFetching(false));
     }
   }, [user]);
 
@@ -73,10 +73,11 @@ export default function Profile<NextPage>() {
         <h2>Авторизация</h2>
         <TelegramLoginButton
           botName='InnoAdsPostBot'
+          // @ts-ignore
           dataOnauth={handleTelegram}
         />
         {process.env.NEXT_PUBLIC_NODE_ENV == 'development' &&
-            <Button onClick={handleTelegramImitate} data-testid='development-login-button'>Imitate</Button>}
+          <Button onClick={handleTelegramImitate} data-testid='development-login-button'>Imitate</Button>}
       </div>
     );
   }
@@ -88,8 +89,8 @@ export default function Profile<NextPage>() {
         <p>Добавить объявление</p>
       </div>
       <Link href={routes.add} className={buttonStyles()}>&#43;</Link>
-      {fetching && <Spinner/>}
-      {posts.length > 0 && !fetching && <Posts posts={posts} edit={true}/>}
+      {fetching && <Spinner />}
+      {posts.length > 0 && !fetching && <Posts posts={posts} edit={true} />}
       {posts.length === 0 && !fetching && <h2>Нет объявлений</h2>}
       <Button onClick={logout} data-testid='logout'>Выход</Button>
     </div>

@@ -5,11 +5,11 @@ export const beRoutes = {
   ads: '/ads',
   uploads: '/uploads',
   users: '/users',
-  articles: '/articles'
+  articles: '/articles',
 } as const;
 
 const client = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 client.interceptors.request.use((config) => {

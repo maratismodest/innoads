@@ -1,6 +1,6 @@
-import PostForm from '@/modules/PostForm/PostForm'
-import type {Seo} from '@/types';
-import React from 'react'
+import PostForm from '@/modules/PostForm/PostForm';
+import type { Seo } from '@/types';
+import React from 'react';
 
 type Props = {
   seo: Seo
@@ -11,9 +11,9 @@ export default function Page<NextPage>(
 ) {
   return (
     // <Layout {...seo}>
-      <PostForm/>
+    <PostForm />
     // </Layout>
-  )
+  );
 }
 
 // export const getStaticProps: GetStaticProps = async ({locale}) => {
