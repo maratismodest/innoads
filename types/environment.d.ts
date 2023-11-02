@@ -5,6 +5,7 @@ declare global {
     interface ProcessEnv {
       NEXT_PUBLIC_IMAGES_DOMAIN: string;
       NEXT_PUBLIC_APP_URL: string;
+      NEXT_PUBLIC_NODE_ENV: string;
     }
   }
 }

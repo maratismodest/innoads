@@ -4,61 +4,18 @@ import Posts from '@/components/Posts';
 import Button from '@/components/ui/Button';
 import Spinner from '@/components/ui/Spinner';
 import useAuth from '@/hooks/useAuth';
+import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
 import buttonStyles from '@/styles/buttonStyles';
-import type { PostDTO, TelegramUser } from '@/types';
-import client from '@/utils/api/createRequest';
+import type { PostDTO } from '@/types';
 import fetchPosts from '@/utils/api/fetchAds';
 import { routes } from '@/utils/constants';
-import * as jose from 'jose';
 import Link from 'next/link';
-import React, { useCallback, useEffect, useState } from 'react';
-import TelegramLoginButton from 'telegram-login-button';
-
-const error = 'Добавьте алиас у себя в аккаунте / Add alias into your account!';
+import React, { useEffect, useState } from 'react';
 
 export default function Profile<NextPage>() {
   const [posts, setPosts] = useState<PostDTO[]>([]);
   const [fetching, setFetching] = useState(false);
-  const { user, login, logout } = useAuth();
-
-  const handleTelegram = async ({ username, id }: TelegramUser) => {
-    if (!username) {
-      return alert({ error });
-    }
-    try {
-      const user = { id, username };
-      const { data } = await client.post('/users/login', user);
-      const decoded = jose.decodeJwt(data.token);
-      if (decoded) {
-        login(user, data.token);
-      }
-      return;
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const handleTelegramImitate = useCallback(async () => {
-    const userTemplate: TelegramUser = {
-      first_name: process.env.NEXT_PUBLIC_FIRST_NAME as string,
-      last_name: process.env.NEXT_PUBLIC_LAST_NAME as string,
-      id: Number(process.env.NEXT_PUBLIC_ID),
-      photo_url: process.env.NEXT_PUBLIC_PHOTO_URL as string,
-      username: process.env.NEXT_PUBLIC_USERNAME as string,
-      auth_date: 0,
-      hash: '',
-    };
-    try {
-      const user = { id: userTemplate.id, username: userTemplate.username };
-      const { data } = await client.post('/users/login', user);
-      const decoded = await jose.decodeJwt(data.token);
-      if (decoded) {
-        login(user, data.token);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, [login]);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     if (user) {
@@ -69,16 +26,7 @@ export default function Profile<NextPage>() {
 
   if (!user) {
     return (
-      <div className='flex flex-col items-center flex-1 justify-center'>
-        <h2>Авторизация</h2>
-        <TelegramLoginButton
-          botName='InnoAdsPostBot'
-          // @ts-ignore
-          dataOnauth={handleTelegram}
-        />
-        {process.env.NEXT_PUBLIC_NODE_ENV == 'development' &&
-          <Button onClick={handleTelegramImitate} data-testid='development-login-button'>Imitate</Button>}
-      </div>
+      <ProfileNoUser />
     );
   }
 
@@ -92,7 +40,7 @@ export default function Profile<NextPage>() {
       {fetching && <Spinner />}
       {posts.length > 0 && !fetching && <Posts posts={posts} edit={true} />}
       {posts.length === 0 && !fetching && <h2>Нет объявлений</h2>}
-      <Button onClick={logout} data-testid='logout'>Выход</Button>
+      <Button onClick={logout}>Выход</Button>
     </div>
   );
 }
