@@ -11,6 +11,7 @@ import client, { beRoutes } from '@/utils/api/createRequest';
 import postTelegram from '@/utils/api/postTelegram';
 import { NO_IMAGE, routes } from '@/utils/constants';
 import { clsx } from 'clsx';
+import { revalidatePath } from 'next/cache';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -68,8 +69,8 @@ export default function Item({ post, edit = false }: Props) {
         case ItemModalText.delete: {
           await client.delete(`${beRoutes.ads}/${id}`);
           alert(success.deleted);
+          revalidatePath('/profile');
           setModal(false);
-          await router.push(routes.profile);
           break;
         }
         default:
@@ -100,15 +101,39 @@ export default function Item({ post, edit = false }: Props) {
   }, [setModalValue, setModal]);
 
   return (
-    <li key={slug} className='relative flex-col overflow-hidden rounded-2xl shadow'
-        data-testid='item'
-        data-category={categoryId}
+    <Link href={`${routes.post}/${slug}`}
+          title={title}
+          className='relative flex-col overflow-hidden rounded-2xl shadow'
+          data-testid='item'
+          data-category={categoryId}
     >
+      <div className='relative aspect-square transition-all hover:scale-105'>
+        <Image
+          fill={true}
+          style={{ objectFit: 'cover' }}
+          sizes={'(max-width: 768px) 45vw,(max-width: 1024px) 25vw, 200px'}
+          alt={title}
+          src={preview}
+          placeholder='blur'
+          blurDataURL={NO_IMAGE}
+          title={title}
+        />
+      </div>
+
+      <div className='relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2'>
+        <Price price={price} />
+        <h2 className='mt-auto font-normal truncate'>{title}</h2>
+        <button className='absolute top-0 right-0 z-10 cursor-pointer'
+                onClick={handleFavourite} aria-label='add to favorites'>
+          {liked ? <RedHeart /> : <TransparentHeart />}
+        </button>
+      </div>
       {user && edit && (
         <>
           <Button
             className={clsx('absolute z-10', 'right-0 top-0')}
-            onClick={() => {
+            onClick={(event) => {
+              event.preventDefault();
               showModal(ItemModalText.delete);
             }}
           >
@@ -117,7 +142,8 @@ export default function Item({ post, edit = false }: Props) {
           <Button
             title='Редактировать'
             className={clsx('absolute z-10', 'left-0 top-0')}
-            onClick={() => {
+            onClick={(event) => {
+              event.preventDefault();
               showModal(ItemModalText.edit);
             }}
           >
@@ -126,44 +152,23 @@ export default function Item({ post, edit = false }: Props) {
           <Button
             title='Telegram'
             className={clsx('absolute z-10', 'right-0 bottom-0')}
-            onClick={() => showModal(ItemModalText.telegram)}
+            onClick={(event) => {
+              event.preventDefault();
+              showModal(ItemModalText.telegram);
+            }}
           >
             &#8482;
           </Button>
         </>
       )}
-      <Link href={`${routes.post}/${slug}`} title={title}>
-        <div className='relative aspect-square transition-all hover:scale-105'>
-          <Image
-            fill={true}
-            style={{ objectFit: 'cover' }}
-            sizes={'(max-width: 768px) 45vw,(max-width: 1024px) 25vw, 200px'}
-            alt={title}
-            src={preview}
-            placeholder='blur'
-            blurDataURL={NO_IMAGE}
-            title={title}
-          />
-        </div>
-
-        <div className='relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2'>
-          <Price price={price} />
-          <h2 className='mt-auto text-ellipsis whitespace-nowrap font-normal'>{title}</h2>
-          <button className='absolute top-0 right-0 z-10 cursor-pointer'
-                  onClick={handleFavourite} aria-label='add to favorites'>
-            {liked ? <RedHeart /> : <TransparentHeart />}
-          </button>
-        </div>
-
-      </Link>
-    </li>
+    </Link>
   );
 }
 
 const success = {
   updated: 'Объявление поднято в поиске!',
   telegram: 'Объявление в канале InnoAds!',
-  deleted: 'Объявление удалено! Перезагрузите страницу, чтобы вы увидели изменения',
+  deleted: 'Объявление удалено!',
 };
 const errors = {
   wentWrong: 'Что-то пошло не так!',

@@ -1,5 +1,5 @@
 import { categories, Category } from '@/utils/categories';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import buy from '@/assets/images/buy.png';
 import sell from '@/assets/images/sell.png';
@@ -9,7 +9,7 @@ import services from '@/assets/images/services.png';
 import clothes from '@/assets/images/clothes.png';
 import noImage from '@/assets/images/no-image.jpeg';
 
-const src = (label: Category) => {
+const src = (label: Category): StaticImageData => {
   switch (label) {
     case 'Куплю':
       return buy;
@@ -34,7 +34,6 @@ export default function Categories() {
       className='mb-1 flex snap-x snap-mandatory justify-between gap-12 overflow-scroll rounded-2xl bg-gray px-8 py-2'
     >
       {categories.map(({ value, label }, index) => {
-
         return (
           <li key={value} tabIndex={index + 1}>
             <Link

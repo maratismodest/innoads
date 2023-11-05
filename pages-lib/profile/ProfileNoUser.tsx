@@ -52,7 +52,7 @@ const ProfileNoUser = () => {
 
   return (
     <div className='flex flex-col items-center flex-1 justify-center'>
-      <h2>Авторизация</h2>
+      <h1>Авторизация</h1>
       <TelegramLoginButton
         botName='InnoAdsPostBot'
         // @ts-ignore

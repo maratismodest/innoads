@@ -22,9 +22,14 @@ export default function FavouriteProvider({ children }: Props) {
   const [favourites, setFavourites] = useState<PostDTO[]>([]);
 
   useEffect(() => {
-    const posts = localStorage.getItem('favourites');
-    if (posts) {
-      setFavourites(JSON.parse(posts));
+    const _posts = localStorage.getItem('favourites');
+    if (_posts) {
+      const posts = JSON.parse(_posts);
+      if (Array.isArray(posts)) {
+        setFavourites(posts);
+      } else {
+        localStorage.setItem('favourites', JSON.stringify(favourites));
+      }
     } else {
       localStorage.setItem('favourites', JSON.stringify(favourites));
     }
