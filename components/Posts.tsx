@@ -12,7 +12,11 @@ interface PostsInterface extends HTMLProps<HTMLUListElement> {
 export default function Posts({ posts, edit = false, className = '' }: PostsInterface) {
   return (
     <ul className={clsx('items', className)} data-testid='posts'>
-      {posts.map((post: PostDTO) => <Item key={post.id} post={post} edit={edit} />)}
+      {posts.map((post: PostDTO) =>
+        <li key={post.id}>
+          <Item post={post} edit={edit} />
+        </li>,
+      )}
     </ul>
   );
 }

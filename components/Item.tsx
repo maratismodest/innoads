@@ -103,7 +103,7 @@ export default function Item({ post, edit = false }: Props) {
   return (
     <Link href={`${routes.post}/${slug}`}
           title={title}
-          className='relative flex-col overflow-hidden rounded-2xl shadow'
+          className='relative flex flex-col overflow-hidden rounded-2xl shadow'
           data-testid='item'
           data-category={categoryId}
     >

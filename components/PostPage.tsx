@@ -29,7 +29,6 @@ export default function PostPage<NextPage>({ post, related }: Props) {
   const {
     title,
     body,
-    preview,
     categoryId,
     price,
     createdAt,
@@ -128,20 +127,16 @@ export default function PostPage<NextPage>({ post, related }: Props) {
         </div>
 
         <Link href={`${routes.main}search?categoryId=${categoryId}`}>
-          Категория:{' '}
-          <span>{category.label}</span>
+          Категория: {category.label}
         </Link>
 
         <h1>{title}</h1>
         <Price price={price} />
         <hr />
         <p className='break-words'>{body}</p>
-        <p className='mt-5'>
-          Опубликовано:{' '}
-          {dayjs(createdAt).format('DD.MM.YYYY')}
-        </p>
+        <p className='mt-5'>Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</p>
 
-        <Link href={tgLink + '/' + user?.username} passHref className='mt-8 block'>
+        <Link href={tgLink + '/' + user.username} passHref className='mt-8 block'>
           <Button>Написать автору</Button>
         </Link>
 
@@ -163,7 +158,10 @@ export default function PostPage<NextPage>({ post, related }: Props) {
           <div className='mt-10'>
             <h2>Похожие объявления</h2>
             <ul className='grid grid-cols-2 gap-4'>
-              {related.map((post: PostDTO) => <Item key={post.slug} post={post} />)}
+              {related.map((post: PostDTO) =>
+                <li key={post.slug}>
+                  <Item post={post} />
+                </li>)}
             </ul>
           </div>
         )}
