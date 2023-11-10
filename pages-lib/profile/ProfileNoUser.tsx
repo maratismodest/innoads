@@ -8,7 +8,7 @@ import TelegramLoginButton from 'telegram-login-button';
 
 const ERROR_MESSAGE = 'Добавьте алиас у себя в аккаунте!';
 
-const userTemplate: TelegramUser = {
+export const userTemplate: TelegramUser = {
   first_name: process.env.NEXT_PUBLIC_FIRST_NAME as string,
   last_name: process.env.NEXT_PUBLIC_LAST_NAME as string,
   id: Number(process.env.NEXT_PUBLIC_ID),

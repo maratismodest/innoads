@@ -51,10 +51,11 @@ export default function Item({ post, edit = false }: Props) {
   };
 
   const handleFunction = async (modalText: string) => {
-    try {
+    // try {
       switch (modalText) {
         case ItemModalText.edit: {
-          await router.push(routes.edit + '/' + slug);
+          router.push(routes.edit + '/' + slug);
+          hideModal()
           break;
         }
         case ItemModalText.telegram: {
@@ -62,24 +63,26 @@ export default function Item({ post, edit = false }: Props) {
             title, body, price, slug, username: user?.username as string, categoryId, images,
           });
           alert(success.telegram);
-          setModal(false);
-          await router.push(routes.profile);
+          hideModal()
+          router.push(routes.profile);
           break;
         }
         case ItemModalText.delete: {
           await client.delete(`${beRoutes.ads}/${id}`);
           alert(success.deleted);
-          revalidatePath('/profile');
+          hideModal()
           setModal(false);
+          revalidatePath('/profile');
           break;
         }
         default:
           alert(errors.noCase);
       }
-    } catch (e) {
+    // }
+/*    catch (e) {
       console.log(e);
       alert(errors.wentWrong);
-    }
+    }*/
   };
 
   const handleFavourite = useCallback(
