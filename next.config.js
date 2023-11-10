@@ -45,8 +45,8 @@ const nextConfig = {
     }
     return [
       {
-        source: '/about',
-        destination: '/',
+        source: '/admin',
+        destination: '/404',
         permanent: true,
       },
     ];

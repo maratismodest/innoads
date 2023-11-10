@@ -6,11 +6,6 @@ import fetchAds from '@/utils/api/fetchAds';
 import { clsx } from 'clsx';
 import React, { useEffect, useState } from 'react';
 
-const admin = {
-  username: 'username',
-  password: 'password',
-};
-
 const Page = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -18,15 +13,17 @@ const Page = () => {
   const [isLogged, setIsLogged] = useState(false);
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (admin.username === username && admin.password === password) {
+    if (username === process.env.NEXT_PUBLIC_ADMIN && password === process.env.NEXT_PUBLIC_ADMIN) {
       setIsLogged(true);
-      localStorage.setItem('isLogged', 'true');
+      localStorage.setItem('username', username);
+      localStorage.setItem('password', password);
     }
   };
 
   useEffect(() => {
-    const _isLogged = localStorage.getItem('isLogged');
-    if (_isLogged) {
+    const _username = localStorage.getItem('username');
+    const _password = localStorage.getItem('password');
+    if (_username === process.env.NEXT_PUBLIC_ADMIN && _password === process.env.NEXT_PUBLIC_ADMIN) {
       setIsLogged(true);
     }
   }, []);

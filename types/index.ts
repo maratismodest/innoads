@@ -41,6 +41,7 @@ export interface TelegramPostDTO {
 export interface UserDTO {
   readonly id: number,
   readonly username: string
+  readonly createdAt?: string
 }
 
 export interface PostDTO {
