@@ -39,18 +39,18 @@ const nextConfig = {
 
     return config;
   },
-  async redirects() {
-    if (process.env.NEXT_PUBLIC_NODE_ENV === 'development') {
-      return [];
-    }
-    return [
-      {
-        source: '/admin',
-        destination: '/404',
-        permanent: true,
-      },
-    ];
-  },
+  // async redirects() {
+  //   if (process.env.NEXT_PUBLIC_NODE_ENV === 'development') {
+  //     return [];
+  //   }
+  //   return [
+  //     {
+  //       source: '/admin',
+  //       destination: '/404',
+  //       permanent: true,
+  //     },
+  //   ];
+  // },
 };
 
 module.exports = nextConfig;
