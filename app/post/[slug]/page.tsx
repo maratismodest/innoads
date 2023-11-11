@@ -5,6 +5,7 @@ import fetchAds from '@/utils/api/fetchAds';
 import { categories } from '@/utils/categories';
 import { tgLink } from '@/utils/constants';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import React from 'react';
 
 type AdPageProps = {
@@ -15,9 +16,13 @@ type AdPageProps = {
 
 export async function generateMetadata({
                                          params: { slug },
-                                       }: AdPageProps): Promise<Metadata> {
+                                       }: AdPageProps): Promise<Metadata | null> {
 
-  const { categoryId, title, body, preview, user } = await fetchAd(slug);
+  const post = await fetchAd(slug);
+  if (!post) {
+    return null;
+  }
+  const { categoryId, title, body, preview, user } = post;
   const category = categories.find((option) => option.value === categoryId) || categories[0];
   return {
     title: `${category.label} ${title.slice(0, 50)} в городе Иннополис`,
@@ -46,6 +51,10 @@ export async function generateStaticParams() {
 
 export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) {
   const ad = await fetchAd(slug as string);
+
+  if (!ad) {
+    return notFound();
+  }
   const { content: related } = await fetchAds({ size: 7, categoryId: ad.categoryId });
   return (<PostPage post={ad} related={related.filter(x => x.id !== ad.id)} />);
 }

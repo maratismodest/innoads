@@ -52,37 +52,37 @@ export default function Item({ post, edit = false }: Props) {
 
   const handleFunction = async (modalText: string) => {
     // try {
-      switch (modalText) {
-        case ItemModalText.edit: {
-          router.push(routes.edit + '/' + slug);
-          hideModal()
-          break;
-        }
-        case ItemModalText.telegram: {
-          await postTelegram({
-            title, body, price, slug, username: user?.username as string, categoryId, images,
-          });
-          alert(success.telegram);
-          hideModal()
-          router.push(routes.profile);
-          break;
-        }
-        case ItemModalText.delete: {
-          await client.delete(`${beRoutes.ads}/${id}`);
-          alert(success.deleted);
-          hideModal()
-          setModal(false);
-          revalidatePath('/profile');
-          break;
-        }
-        default:
-          alert(errors.noCase);
+    switch (modalText) {
+      case ItemModalText.edit: {
+        router.push(routes.edit + '/' + slug);
+        hideModal();
+        break;
       }
+      case ItemModalText.telegram: {
+        await postTelegram({
+          title, body, price, slug, username: user?.username as string, categoryId, images,
+        });
+        alert(success.telegram);
+        hideModal();
+        router.push(routes.profile);
+        break;
+      }
+      case ItemModalText.delete: {
+        await client.delete(`${beRoutes.ads}/${id}`);
+        alert(success.deleted);
+        hideModal();
+        setModal(false);
+        revalidatePath('/profile');
+        break;
+      }
+      default:
+        alert(errors.noCase);
+    }
     // }
-/*    catch (e) {
-      console.log(e);
-      alert(errors.wentWrong);
-    }*/
+    /*    catch (e) {
+          console.log(e);
+          alert(errors.wentWrong);
+        }*/
   };
 
   const handleFavourite = useCallback(
@@ -107,12 +107,12 @@ export default function Item({ post, edit = false }: Props) {
     <Link href={`${routes.post}/${slug}`}
           title={title}
           className='relative flex flex-col overflow-hidden rounded-2xl shadow'
-          data-testid='item'
+          data-testid={`item-${id}`}
           data-category={categoryId}
     >
       <div className='relative aspect-square transition-all hover:scale-105'>
         <Image
-          fill={true}
+          fill
           style={{ objectFit: 'cover' }}
           sizes={'(max-width: 768px) 45vw,(max-width: 1024px) 25vw, 200px'}
           alt={title}

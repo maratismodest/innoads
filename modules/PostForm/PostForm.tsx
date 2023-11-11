@@ -43,6 +43,7 @@ interface Form {
 }
 
 const digitsRegex = /[^0-9]+/g;
+const SUCCESS_MESSAGE = 'Ваше объявление создано!'
 export default function PostForm({ defaultValues = postDefaultValues, post }: PostFormProps) {
 
   const [data, setData] = useState<Form>({
@@ -98,7 +99,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
       setSending(true);
       const res = await postAd(formData);
       await postTelegram({ ...res, username: user.username });
-      alert('Ваше объявление создано!');
+      alert(SUCCESS_MESSAGE);
       return router.push(routes.profile);
     } catch (e) {
       console.log(e);
