@@ -1,11 +1,13 @@
 'use client';
+import RedHeart from '@/assets/svg/heart-red.svg';
+import TransparentHeart from '@/assets/svg/heart.svg';
 import Price from '@/components/Price';
+import Toast from '@/components/Toast';
 import Button from '@/components/ui/Button';
 import { FavouriteContext } from '@/context/FavouritesContext';
 import useAuth from '@/hooks/useAuth';
 import useModal from '@/hooks/useModal';
-import RedHeart from '@/assets/svg/heart-red.svg';
-import TransparentHeart from '@/assets/svg/heart.svg';
+import useToast from '@/hooks/useToast';
 import { PostDTO } from '@/types';
 import client, { beRoutes } from '@/utils/api/createRequest';
 import postTelegram from '@/utils/api/postTelegram';
@@ -18,11 +20,12 @@ import { useRouter } from 'next/navigation';
 import React, { useCallback, useContext, useEffect, useMemo } from 'react';
 
 type Props = {
-  post: PostDTO
-  edit?: boolean
-}
+  post: PostDTO;
+  edit?: boolean;
+};
 
 export default function Item({ post, edit = false }: Props) {
+  const { toast, setToast } = useToast();
   const { setModal, setModalValue } = useModal();
   const { favourites, setFavourites } = useContext(FavouriteContext);
   const { user } = useAuth();
@@ -38,14 +41,14 @@ export default function Item({ post, edit = false }: Props) {
 
   const showModal = (text: ItemModalText) => {
     setModalValue(
-      <div className='flex flex-col text-center'>
+      <div className="flex flex-col text-center">
         <h4>{text}</h4>
         <hr />
-        <div className='mt-12 flex justify-around'>
+        <div className="mt-12 flex justify-around">
           <Button onClick={async () => await handleFunction(text)}>Да</Button>
           <Button onClick={hideModal}>Нет</Button>
         </div>
-      </div>,
+      </div>
     );
     setModal(true);
   };
@@ -60,7 +63,13 @@ export default function Item({ post, edit = false }: Props) {
       }
       case ItemModalText.telegram: {
         await postTelegram({
-          title, body, price, slug, username: user?.username as string, categoryId, images,
+          title,
+          body,
+          price,
+          slug,
+          username: user?.username as string,
+          categoryId,
+          images,
         });
         alert(success.telegram);
         hideModal();
@@ -69,9 +78,9 @@ export default function Item({ post, edit = false }: Props) {
       }
       case ItemModalText.delete: {
         await client.delete(`${beRoutes.ads}/${id}`);
-        alert(success.deleted);
         hideModal();
         setModal(false);
+        setToast(true);
         revalidatePath('/profile');
         break;
       }
@@ -92,7 +101,7 @@ export default function Item({ post, edit = false }: Props) {
       localStorage.setItem('favourites', JSON.stringify(currentList));
       setFavourites(currentList);
     },
-    [id, favourites, liked, post, setFavourites],
+    [id, favourites, liked, post, setFavourites]
   );
 
   useEffect(() => {
@@ -100,34 +109,37 @@ export default function Item({ post, edit = false }: Props) {
       setModalValue(null);
       setModal(false);
     };
-
   }, [setModalValue, setModal]);
 
   return (
-    <Link href={`${routes.post}/${slug}`}
-          title={title}
-          className='relative flex flex-col overflow-hidden rounded-2xl shadow'
-          data-testid={`item-${id}`}
-          data-category={categoryId}
+    <Link
+      href={`${routes.post}/${slug}`}
+      title={title}
+      className="relative flex flex-col overflow-hidden rounded-2xl shadow"
+      data-testid={`item-${id}`}
+      data-category={categoryId}
     >
-      <div className='relative aspect-square transition-all hover:scale-105'>
+      <div className="relative aspect-square transition-all hover:scale-105">
         <Image
           fill
           style={{ objectFit: 'cover' }}
           sizes={'(max-width: 768px) 45vw,(max-width: 1024px) 25vw, 200px'}
           alt={title}
           src={preview}
-          placeholder='blur'
+          placeholder="blur"
           blurDataURL={NO_IMAGE}
           title={title}
         />
       </div>
 
-      <div className='relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2'>
+      <div className="relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2">
         <Price price={price} />
-        <h2 className='mt-auto font-normal truncate'>{title}</h2>
-        <button className='absolute top-0 right-0 z-10 cursor-pointer'
-                onClick={handleFavourite} aria-label='add to favorites'>
+        <h2 className="mt-auto truncate font-normal">{title}</h2>
+        <button
+          className="absolute right-0 top-0 z-10 cursor-pointer"
+          onClick={handleFavourite}
+          aria-label="add to favorites"
+        >
           {liked ? <RedHeart /> : <TransparentHeart />}
         </button>
       </div>
@@ -135,7 +147,7 @@ export default function Item({ post, edit = false }: Props) {
         <>
           <Button
             className={clsx('absolute z-10', 'right-0 top-0')}
-            onClick={(event) => {
+            onClick={event => {
               event.preventDefault();
               showModal(ItemModalText.delete);
             }}
@@ -143,9 +155,9 @@ export default function Item({ post, edit = false }: Props) {
             &#10008;
           </Button>
           <Button
-            title='Редактировать'
+            title="Редактировать"
             className={clsx('absolute z-10', 'left-0 top-0')}
-            onClick={(event) => {
+            onClick={event => {
               event.preventDefault();
               showModal(ItemModalText.edit);
             }}
@@ -153,9 +165,9 @@ export default function Item({ post, edit = false }: Props) {
             &#10000;
           </Button>
           <Button
-            title='Telegram'
-            className={clsx('absolute z-10', 'right-0 bottom-0')}
-            onClick={(event) => {
+            title="Telegram"
+            className={clsx('absolute z-10', 'bottom-0 right-0')}
+            onClick={event => {
               event.preventDefault();
               showModal(ItemModalText.telegram);
             }}

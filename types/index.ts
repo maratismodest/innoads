@@ -1,9 +1,10 @@
 export type ArticleDTO = {
-  readonly id: number
-  readonly title: string
-  readonly slug: string
-  readonly body: string
-}
+  readonly id: number;
+  readonly title: string;
+  readonly slug: string;
+  readonly body: string;
+  readonly createdAt: string;
+};
 
 export interface Seo {
   title: string;
@@ -11,7 +12,7 @@ export interface Seo {
 }
 
 export interface GetIdPath {
-  params: { id: number },
+  params: { id: number };
 }
 
 export interface GetSlugPath {
@@ -39,9 +40,9 @@ export interface TelegramPostDTO {
 }
 
 export interface UserDTO {
-  readonly id: number,
-  readonly username: string
-  readonly createdAt?: string
+  readonly id: number;
+  readonly username: string;
+  readonly createdAt?: string;
 }
 
 export interface PostDTO {
@@ -81,4 +82,3 @@ export interface EditPostDTO {
   slug: string;
   categoryId: number;
 }
-
