@@ -1,9 +1,8 @@
 'use client';
 import Item from '@/components/Item';
 import Button from '@/components/ui/Button';
-import { PostDTO } from '@/types';
+import type { PostDTO } from '@/types';
 import fetchAds from '@/utils/api/fetchAds';
-import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 
 const Page = () => {
@@ -36,7 +35,7 @@ const Page = () => {
 
   useEffect(() => {
     if (isLogged) {
-      fetchAds({ size: 1000 }).then(res => {
+      fetchAds({ size: 500 }).then(res => {
         console.log('res', res);
         setPosts(res.content);
       });

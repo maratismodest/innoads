@@ -8,13 +8,9 @@ const Toast = ({
   setToast: Dispatch<SetStateAction<boolean>>;
 }) => {
   useEffect(() => {
-    const handleToast = (toast: boolean) => {
-      if (toast) {
-        setTimeout(() => setToast(false), 3000);
-      }
-    };
-
-    return () => handleToast(toast);
+    if (toast) {
+      setTimeout(() => setToast(false), 3000);
+    }
   }, [toast]);
   if (!toast) {
     return null;

@@ -23,7 +23,7 @@ type Props = {
 };
 
 export default function ToastProvider({ children }: Props) {
-  const [toast, setToast] = useState(true);
+  const [toast, setToast] = useState(false);
   const [toastValue, setToastValue] = useState(null);
 
   const value = {
