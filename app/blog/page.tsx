@@ -13,13 +13,13 @@ export default async function Articles<NextPage>() {
   return (
     <>
       <h1>Блог</h1>
-      <ul>
-        {articles.map((article) =>
-          <li key={article.id} className='mb-2'>
+      <ul className="grid grid-cols-1 gap-2">
+        {articles.map(article => (
+          <li key={article.id}>
             <Link href={routes.blog + '/' + article.slug}>{article.title}</Link>
-          </li>,
-        )}
+          </li>
+        ))}
       </ul>
     </>
   );
-};
+}

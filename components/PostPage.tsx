@@ -14,11 +14,12 @@ import Link from 'next/link';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 type Props = {
-  post: PostDTO,
-  related: PostDTO[]
-}
+  post: PostDTO;
+  related: PostDTO[];
+};
 
-const styles = 'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center';
+const styles =
+  'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center';
 
 export default function PostPage<NextPage>({ post, related }: Props) {
   const [current, setCurrent] = useState(0);
@@ -26,15 +27,7 @@ export default function PostPage<NextPage>({ post, related }: Props) {
 
   const ul = useRef<HTMLUListElement>(null);
 
-  const {
-    title,
-    body,
-    categoryId,
-    price,
-    createdAt,
-    user,
-    slug,
-  } = post;
+  const { title, body, categoryId, price, createdAt, user, slug } = post;
 
   const [open, setOpen] = useState(false);
 
@@ -43,16 +36,18 @@ export default function PostPage<NextPage>({ post, related }: Props) {
   const refs = useRef<HTMLLIElement[]>([]);
 
   const category = useMemo(
-    () =>
-      categories.find((option) => option.value === categoryId) || categories[0],
-    [categoryId],
+    () => categories.find(option => option.value === categoryId) || categories[0],
+    [categoryId]
   );
 
   const handleClick = (direction: 'left' | 'right') => {
     const res = direction === 'right' ? 1 : -1;
     setCurrent(prevState => prevState + res);
     if (ul.current) {
-      ul.current.scrollTo({ left: ul.current.scrollLeft + ul.current.clientWidth * res, behavior: 'smooth' });
+      ul.current.scrollTo({
+        left: ul.current.scrollLeft + ul.current.clientWidth * res,
+        behavior: 'smooth',
+      });
     }
   };
 
@@ -67,63 +62,82 @@ export default function PostPage<NextPage>({ post, related }: Props) {
 
   return (
     <>
-      {<dialog open={open}
-               className='z-40 w-screen fixed h-[calc(100vh_-_64px)] backdrop-grayscale max-w-full bg-black top-[64px]'>
-        <button className={clsx(styles, 'absolute right-4 top-4 z-50')} onClick={() => setOpen(false)}>
-          &#x2715;
-        </button>
-        <Image
-          draggable={false}
-          src={images[current]}
-          alt='image'
-          title={title}
-          fill={true}
-          style={{ objectFit: 'contain' }}
-          placeholder='blur'
-          blurDataURL={NO_IMAGE}
-        />
-      </dialog>
+      {
+        <dialog
+          open={open}
+          className="fixed top-[64px] z-40 h-[calc(100vh_-_64px)] w-screen max-w-full bg-black backdrop-grayscale"
+        >
+          <button
+            className={clsx(styles, 'absolute right-4 top-4 z-50')}
+            onClick={() => setOpen(false)}
+          >
+            &#x2715;
+          </button>
+          <Image
+            draggable={false}
+            src={images[current]}
+            alt="image"
+            title={title}
+            fill={true}
+            style={{ objectFit: 'contain' }}
+            placeholder="blur"
+            blurDataURL={NO_IMAGE}
+          />
+        </dialog>
       }
-      <div className='mx-auto max-w-[400px] w-full relative'>
-        <div className='relative'>
-          <ul className='relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll'
-              ref={ul}
+      <div className="relative mx-auto w-full max-w-[400px]">
+        <div className="relative">
+          <ul
+            className="relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll"
+            ref={ul}
           >
             {images.map((image: string, index: number) => {
               return (
                 <li
                   key={image}
-                  className='relative aspect-square h-full flex-none snap-center overflow-y-hidden'
-                  ref={(el: HTMLLIElement) => refs.current[index] = el}
+                  className="relative aspect-square h-full flex-none snap-center overflow-y-hidden"
+                  ref={(el: HTMLLIElement) => (refs.current[index] = el)}
                 >
-                  <ImageInView
-                    index={index}
-                    src={image}
-                    title={title}
-                    setCurrent={setCurrent}
-                  />
+                  <ImageInView index={index} src={image} title={title} setCurrent={setCurrent} />
                 </li>
               );
             })}
           </ul>
           <button
-            className={clsx(styles, 'absolute top-1/2 -translate-y-1/2 hidden', 'left-0', ((current !== 0) && (images.length > 1)) && '!block')}
+            className={clsx(
+              styles,
+              'absolute top-1/2 hidden -translate-y-1/2',
+              'left-0',
+              current !== 0 && images.length > 1 && '!block'
+            )}
             onClick={() => handleClick('left')}
-            hidden={(current === 0) || (images.length < 2)}
+            hidden={current === 0 || images.length < 2}
           >
             &larr;
           </button>
           <button
-            className={clsx(styles, 'absolute -translate-y-1/2 top-1/2 hidden', 'right-0', ((current + 1 < images.length) && (images.length > 1)) && '!block')}
+            className={clsx(
+              styles,
+              'absolute top-1/2 hidden -translate-y-1/2',
+              'right-0',
+              current + 1 < images.length && images.length > 1 && '!block'
+            )}
             onClick={() => handleClick('right')}
           >
             &rarr;
           </button>
-          <button onClick={() => setOpen(true)}
-                  className={clsx(styles, 'absolute top-0 left-1/2 -translate-x-1/2')}>&#x1F50D;
+          <button
+            onClick={() => setOpen(true)}
+            className={clsx(styles, 'absolute left-1/2 top-0 -translate-x-1/2')}
+          >
+            &#x1F50D;
           </button>
           <div
-            className={clsx('bg-[rgba(0,0,0,0.6)] text-white rounded text-sm bold p-1', 'absolute bottom-0 left-1/2 -translate-x-1/2')}>{`${current + 1} / ${images.length}`}</div>
+            className={clsx(
+              'bold rounded bg-[rgba(0,0,0,0.6)] p-1 text-sm text-white',
+              'absolute bottom-0 left-1/2 -translate-x-1/2'
+            )}
+          >{`${current + 1} / ${images.length}`}</div>
         </div>
 
         <Link href={`${routes.main}search?categoryId=${categoryId}`}>
@@ -133,35 +147,38 @@ export default function PostPage<NextPage>({ post, related }: Props) {
         <h1>{title}</h1>
         <Price price={price} />
         <hr />
-        <p className='break-words'>{body}</p>
-        <p className='mt-5'>Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</p>
+        <p className="break-words">{body}</p>
+        <time className="mt-5">Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</time>
 
-        <Link href={tgLink + '/' + user.username} passHref className='mt-8 block'>
+        <Link href={tgLink + '/' + user.username} passHref className="mt-8 block">
           <Button>Написать автору</Button>
         </Link>
 
-        <Link href={`/user/${post.userId}`} passHref className='mt-8 block'>
+        <Link href={`/user/${post.userId}`} passHref className="mt-8 block">
           <Button>Все объявления автора</Button>
         </Link>
 
         <Button
-          className='mt-8'
-          onClick={async () => await navigator.share({
-            title: 'InnoAds',
-            text: 'Поделиться ссылкой:',
-            url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug,
-          })}
+          className="mt-8"
+          onClick={async () =>
+            await navigator.share({
+              title: 'InnoAds',
+              text: 'Поделиться ссылкой:',
+              url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug,
+            })
+          }
         >
           Поделиться
         </Button>
         {related.length > 0 && (
-          <div className='mt-10'>
+          <div className="mt-10">
             <h2>Похожие объявления</h2>
-            <ul className='grid grid-cols-2 gap-4'>
-              {related.map((post: PostDTO) =>
+            <ul className="grid grid-cols-2 gap-4">
+              {related.map((post: PostDTO) => (
                 <li key={post.slug}>
                   <Item post={post} />
-                </li>)}
+                </li>
+              ))}
             </ul>
           </div>
         )}
@@ -177,4 +194,3 @@ export default function PostPage<NextPage>({ post, related }: Props) {
 //     document.body.style.overflow = 'unset';
 //   }
 // }, [open]);
-

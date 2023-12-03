@@ -3,9 +3,10 @@ import Item from '@/components/Item';
 import Button from '@/components/ui/Button';
 import type { PostDTO } from '@/types';
 import fetchAds from '@/utils/api/fetchAds';
+import { notFound } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-const Page = () => {
+export default function AdminPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [posts, setPosts] = useState<PostDTO[]>([]);
@@ -42,6 +43,10 @@ const Page = () => {
     }
   }, [isLogged]);
 
+  if (process.env.NODE_ENV !== 'development') {
+    return notFound();
+  }
+
   if (!isLogged) {
     return (
       <form onSubmit={onSubmit} className="mx-auto grid w-60 max-w-screen-lg grid-cols-1 gap-2">
@@ -61,6 +66,4 @@ const Page = () => {
       ))}
     </ul>
   );
-};
-
-export default Page;
+}

@@ -5,12 +5,14 @@ import FavouriteProvider from '@/context/FavouritesContext';
 import ModalProvider from '@/context/ModalContext';
 import ToastProvider from '@/context/ToastContext';
 import { seo } from '@/utils/constants';
+import dayjs from 'dayjs';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import React from 'react';
 import './globals.css';
-
+require('dayjs/locale/ru');
+dayjs.locale('ru');
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
