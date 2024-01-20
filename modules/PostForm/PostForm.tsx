@@ -4,14 +4,16 @@ import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import Select from '@/components/ui/Select';
 import Spinner from '@/components/ui/Spinner';
+import useApp from '@/hooks/useApp';
 import inputValidation from '@/modules/PostForm/inputValidation';
 import useAuth from '@/hooks/useAuth';
 import useValidation from '@/hooks/useValidation';
 import { CreatePostDTO, EditPostDTO, PostDTO } from '@/types';
+import { Option } from '@/types/global';
 import postAd from '@/utils/api/postPost';
 import postTelegram from '@/utils/api/postTelegram';
 import updateAd from '@/utils/api/updatePost';
-import { categories, CategoryProps } from '@/utils/categories';
+// import { categories, CategoryProps } from '@/utils/categories';
 import { routes } from '@/utils/constants';
 import slug from '@/utils/slug';
 import { AxiosError } from 'axios';
@@ -26,26 +28,26 @@ export interface PostFormProps {
   post?: PostDTO;
 }
 
-export type PostOptions = Record<string, string | number | boolean>
+export type PostOptions = Record<string, string | number | boolean>;
 
 interface FormField {
-  type: 'select' | 'number' | 'text' | 'textarea',
-  value: any,
-  label: string
-  options: PostOptions,
+  type: 'select' | 'number' | 'text' | 'textarea';
+  value: any;
+  label: string;
+  options: PostOptions;
 }
 
 interface Form {
-  categoryId: FormField,
-  price: FormField,
-  title: FormField,
-  description: FormField,
+  categoryId: FormField;
+  price: FormField;
+  title: FormField;
+  description: FormField;
 }
 
 const digitsRegex = /[^0-9]+/g;
-const SUCCESS_MESSAGE = 'Ваше объявление создано!'
+const SUCCESS_MESSAGE = 'Ваше объявление создано!';
 export default function PostForm({ defaultValues = postDefaultValues, post }: PostFormProps) {
-
+  const { categories } = useApp();
   const [data, setData] = useState<Form>({
     categoryId: {
       type: 'select',
@@ -77,7 +79,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
 
   const textAreaError = useValidation(data.description.value, data.description.options);
 
-  const [images, setImages] = useState<string[]>(() => post ? post.images.split('||') : []);
+  const [images, setImages] = useState<string[]>(() => (post ? post.images.split('||') : []));
   const router = useRouter();
 
   const { user } = useAuth();
@@ -181,15 +183,10 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
     };
     await handleCreate(createPostDto);
     return;
-
   };
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className='form'
-      name={post ? 'Редактировать' : 'Добавить'}
-    >
+    <form onSubmit={onSubmit} className="form" name={post ? 'Редактировать' : 'Добавить'}>
       <h1>Добавить объявление</h1>
       {Object.entries(data).map(([name, { label, value, type, options }]) => {
         switch (type) {
@@ -199,9 +196,10 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
                 label={label}
                 name={name}
                 value={categories.find(x => x.value === value)}
-                onChange={(option: CategoryProps) => {
+                onChange={(option: Option) => {
                   handleChange(name as keyof Form, Number(option.value));
                 }}
+                options={categories}
                 validations={options}
               />
             );
@@ -209,12 +207,15 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
           case 'number':
             return (
               <Input
-                type='text'
+                type="text"
                 label={label}
                 name={name}
                 value={value}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  handleChange(name as keyof Form, Number(event.target.value.replace(digitsRegex, '')));
+                  handleChange(
+                    name as keyof Form,
+                    Number(event.target.value.replace(digitsRegex, ''))
+                  );
                 }}
                 options={options}
               />
@@ -222,7 +223,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
           case 'text':
             return (
               <Input
-                type='text'
+                type="text"
                 name={name}
                 label={label}
                 value={value}
@@ -234,31 +235,28 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
             );
           case 'textarea':
             return (
-              <div className='grid'>
+              <div className="grid">
                 <label htmlFor={name}>{label}</label>
-                <textarea rows={5} cols={5}
-                          name={name} data-testid={name} value={value}
-                          {...options}
-                          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            handleChange(name as keyof Form, event.target.value);
-                          }}
+                <textarea
+                  rows={5}
+                  cols={5}
+                  name={name}
+                  data-testid={name}
+                  value={value}
+                  {...options}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    handleChange(name as keyof Form, event.target.value);
+                  }}
                 />
-                {textAreaError && <span className='text-red'>{textAreaError}</span>}
+                {textAreaError && <span className="text-red">{textAreaError}</span>}
               </div>
             );
           default:
             return null;
         }
       })}
-      <PostFormImages
-        images={images}
-        setImages={setImages}
-      />
-      <Button
-        type='submit'
-        disabled={sending}
-        className='mx-auto'
-      >
+      <PostFormImages images={images} setImages={setImages} />
+      <Button type="submit" disabled={sending} className="mx-auto">
         {post ? 'Редактировать' : 'Подать'}
       </Button>
     </form>

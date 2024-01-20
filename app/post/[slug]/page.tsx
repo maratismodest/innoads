@@ -2,8 +2,10 @@ import PostPage from '@/components/PostPage';
 import { GetSlugPath } from '@/types';
 import fetchAd from '@/utils/api/fetchAd';
 import fetchAds from '@/utils/api/fetchAds';
-import { categories } from '@/utils/categories';
+import fetchCategories from '@/utils/api/fetchCategories';
+// import { categories } from '@/utils/categories';
 import { tgLink } from '@/utils/constants';
+import mapCategories from '@/utils/mapCategories';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react';
@@ -15,15 +17,16 @@ type AdPageProps = {
 };
 
 export async function generateMetadata({
-                                         params: { slug },
-                                       }: AdPageProps): Promise<Metadata | null> {
-
+  params: { slug },
+}: AdPageProps): Promise<Metadata | null> {
   const post = await fetchAd(slug);
+  const _categories = await fetchCategories();
+  const categories = mapCategories(_categories);
   if (!post) {
     return null;
   }
   const { categoryId, title, body, preview, user } = post;
-  const category = categories.find((option) => option.value === categoryId) || categories[0];
+  const category = categories.find(option => option.value === categoryId) || categories[0];
   return {
     title: `${category.label} ${title.slice(0, 50)} в городе Иннополис`,
     description: body.slice(0, 320),
@@ -51,10 +54,13 @@ export async function generateStaticParams() {
 
 export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) {
   const ad = await fetchAd(slug as string);
-
-  if (!ad) {
+  const _categories = await fetchCategories();
+  const categories = mapCategories(_categories);
+  if (!ad || categories.length === 0) {
     return notFound();
   }
   const { content: related } = await fetchAds({ size: 7, categoryId: ad.categoryId });
-  return (<PostPage post={ad} related={related.filter(x => x.id !== ad.id)} />);
+  return (
+    <PostPage post={ad} related={related.filter(x => x.id !== ad.id)} categories={categories} />
+  );
 }

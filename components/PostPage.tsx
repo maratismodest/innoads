@@ -5,7 +5,8 @@ import Price from '@/components/Price';
 import Button from '@/components/ui/Button';
 import useLockedBody from '@/hooks/useLockedBody';
 import type { PostDTO } from '@/types';
-import { categories } from '@/utils/categories';
+import { Option } from '@/types/global';
+// import { categories } from '@/utils/categories';
 import { NO_IMAGE, routes, tgLink } from '@/utils/constants';
 import { clsx } from 'clsx';
 import dayjs from 'dayjs';
@@ -16,12 +17,13 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 type Props = {
   post: PostDTO;
   related: PostDTO[];
+  categories: Option[];
 };
 
 const styles =
   'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center';
 
-export default function PostPage<NextPage>({ post, related }: Props) {
+export default function PostPage<NextPage>({ post, related, categories }: Props) {
   const [current, setCurrent] = useState(0);
   const [locked, setLocked] = useLockedBody(false, 'root');
 
@@ -37,7 +39,7 @@ export default function PostPage<NextPage>({ post, related }: Props) {
 
   const category = useMemo(
     () => categories.find(option => option.value === categoryId) || categories[0],
-    [categoryId]
+    [categoryId, categories]
   );
 
   const handleClick = (direction: 'left' | 'right') => {

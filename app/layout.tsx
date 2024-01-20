@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header/Header';
+import AppProvider from '@/context/AppContext';
 import AuthProvider from '@/context/AuthContext';
 import FavouriteProvider from '@/context/FavouritesContext';
 import ModalProvider from '@/context/ModalContext';
@@ -11,6 +12,7 @@ import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import React from 'react';
 import './globals.css';
+
 require('dayjs/locale/ru');
 dayjs.locale('ru');
 const inter = Inter({ subsets: ['latin'] });
@@ -30,15 +32,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ru">
       <body className={inter.className}>
         <AuthProvider>
-          <ModalProvider>
-            <ToastProvider>
-              <FavouriteProvider>
-                <Header />
-                <main>{children}</main>
-                <Footer />
-              </FavouriteProvider>
-            </ToastProvider>
-          </ModalProvider>
+          <AppProvider>
+            <ModalProvider>
+              <ToastProvider>
+                <FavouriteProvider>
+                  <Header />
+                  <main>{children}</main>
+                  <Footer />
+                </FavouriteProvider>
+              </ToastProvider>
+            </ModalProvider>
+          </AppProvider>
         </AuthProvider>
         <Script src="/scripts/ym.js" strategy="afterInteractive" />
         <Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" />
