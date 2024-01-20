@@ -82,3 +82,10 @@ export interface EditPostDTO {
   slug: string;
   categoryId: number;
 }
+
+export interface CategoryDTO {
+  id: number;
+  name: string;
+  label: string;
+  image: string;
+}

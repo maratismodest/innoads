@@ -1,9 +1,9 @@
 // app/sitemap.js
 import fetchArticles from '@/utils/api/fetchArticles';
 import fetchUsers from '@/utils/api/fetchUsers';
-import fetchAds from '../utils/api/fetchAds';
+import fetchAds from '@/utils/api/fetchAds';
 
-const URL = 'https://innoads.ru';
+const URL = process.env.NEXT_PUBLIC_APP_URL;
 
 const mainRoutes = ['', '/blog', '/favourites', '/add', '/profile', '/search'] as const;
 
