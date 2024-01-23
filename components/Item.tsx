@@ -2,7 +2,6 @@
 import RedHeart from '@/assets/svg/heart-red.svg';
 import TransparentHeart from '@/assets/svg/heart.svg';
 import Price from '@/components/Price';
-import Toast from '@/components/Toast';
 import Button from '@/components/ui/Button';
 import { FavouriteContext } from '@/context/FavouritesContext';
 import useAuth from '@/hooks/useAuth';
@@ -182,7 +181,7 @@ export default function Item({ post, edit = false }: Props) {
 
 const success = {
   updated: 'Объявление поднято в поиске!',
-  telegram: 'Объявление в канале InnoAds!',
+  telegram: `Объявление в канале ${process.env.NEXT_PUBLIC_APP_NAME}!`,
   deleted: 'Объявление удалено!',
 };
 const errors = {
@@ -193,5 +192,5 @@ const errors = {
 enum ItemModalText {
   edit = 'Редактировать объявление?',
   delete = 'Удалить объявление?',
-  telegram = 'Опубликовать в канале InnoAds?',
+  telegram = 'Опубликовать в канале?',
 }

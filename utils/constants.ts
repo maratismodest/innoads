@@ -1,4 +1,4 @@
-import { Seo } from '@/types';
+import type { Seo } from '@/types';
 
 export const routes = {
   add: '/add',
@@ -42,8 +42,8 @@ export const seo: Record<string, Seo> = {
     description: 'Страница с объяалениями, которые вам понравились',
   },
   search: {
-    title: 'Поиск в InnoAds',
-    description: 'Ищите объявления города Иннополис в бесплатной доске InnoAds',
+    title: `Поиск в ${process.env.NEXT_PUBLIC_APP_NAME}`,
+    description: `Ищите объявления города Иннополис в бесплатной доске ${process.env.NEXT_PUBLIC_APP_NAME}`,
   },
   notFound: {
     title: 'Страница не найдена',

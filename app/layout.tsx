@@ -20,33 +20,36 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: seo.default.title,
   description: seo.default.description,
-  authors: [{ name: 'InnoAds' }],
-  publisher: 'InnoAds',
-  keywords: 'innoads, Иннополис, доска объявлений',
+  authors: [{ name: process.env.NEXT_PUBLIC_APP_NAME }],
+  publisher: process.env.NEXT_PUBLIC_APP_NAME,
+  keywords: process.env.NEXT_PUBLIC_KEY_WORDS,
   manifest: '/manifest.json',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
+  openGraph: {
+    images: ['/images/og-image.png'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru">
-      <body className={inter.className}>
-        <AuthProvider>
-          <AppProvider>
-            <ModalProvider>
-              <ToastProvider>
-                <FavouriteProvider>
-                  <Header />
-                  <main>{children}</main>
-                  <Footer />
-                </FavouriteProvider>
-              </ToastProvider>
-            </ModalProvider>
-          </AppProvider>
-        </AuthProvider>
-        <Script src="/scripts/ym.js" strategy="afterInteractive" />
-        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" />
-      </body>
+    <html lang='ru'>
+    <body className={inter.className}>
+    <AuthProvider>
+      <AppProvider>
+        <ModalProvider>
+          <ToastProvider>
+            <FavouriteProvider>
+              <Header />
+              <main>{children}</main>
+              <Footer />
+            </FavouriteProvider>
+          </ToastProvider>
+        </ModalProvider>
+      </AppProvider>
+    </AuthProvider>
+    <Script src='/scripts/ym.js' strategy='afterInteractive' />
+    <Script src='https://telegram.org/js/telegram-web-app.js' strategy='afterInteractive' />
+    </body>
     </html>
   );
 }

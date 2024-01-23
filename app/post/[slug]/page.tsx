@@ -39,7 +39,7 @@ export async function generateMetadata({
       description: body.slice(0, 320),
       type: 'article',
       url: `${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`,
-      siteName: 'InnoAds',
+      siteName: process.env.NEXT_PUBLIC_APP_NAME,
       images: preview,
       locale: 'ru',
     },
