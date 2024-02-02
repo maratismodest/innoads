@@ -88,7 +88,7 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
           />
         </dialog>
       }
-      <div className='relative mx-auto w-full max-w-[400px]'>
+      <div className='relative mx-auto w-full max-w-[400px]' itemScope itemType='https://schema.org/Product'>
         <div className='relative'>
           <ul
             className='relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll'
@@ -147,10 +147,10 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
           Категория: {category.label}
         </Link>
 
-        <h1>{title}</h1>
+        <h1 itemProp='name'>{title}</h1>
         <Price price={price} />
         <hr />
-        <p className='break-words'>{body}</p>
+        <p className='break-words' itemProp='description'>{body}</p>
         <time className='mt-5'>Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</time>
 
         <a href={tgLink + '/' + user.username} target='_blank' className={clsx(buttonStyles(), 'mt-8 !block')}>
