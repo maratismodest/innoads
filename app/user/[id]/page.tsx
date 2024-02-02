@@ -10,12 +10,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
-export const revalidate = 86400;
-
 export async function generateStaticParams() {
   const users = await fetchUsers();
-
-  return users.map((user) => ({
+  // @ts-ignore
+  return users.filter(x => x.userAd.length > 0).map((user) => ({
     id: user.id.toString(),
   }));
 }
@@ -32,6 +30,8 @@ export async function generateMetadata({
     description: `Пользователь ${user.id}`,
   };
 }
+
+export const revalidate = 86400;
 
 export default async function PublicProfile<NextPage>({ params: { id } }: GetIdPath) {
   const user = await fetchUser(id);

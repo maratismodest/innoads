@@ -1,11 +1,11 @@
 // app/sitemap.js
-import fetchArticles from '@/utils/api/fetchArticles';
-import fetchUsers from '@/utils/api/fetchUsers';
 import fetchAds from '@/utils/api/fetchAds';
+import fetchArticles from '@/utils/api/fetchArticles';
+import { routes } from '@/utils/constants';
 
 const URL = process.env.NEXT_PUBLIC_APP_URL;
 
-const mainRoutes = ['', '/blog', '/favourites', '/add', '/profile', '/search'] as const;
+const mainRoutes = [routes.main, routes.blog, routes.favourites, routes.add, routes.profile, routes.search];
 
 export default async function sitemap() {
   const routes = mainRoutes.map(route => ({
@@ -14,15 +14,10 @@ export default async function sitemap() {
   }));
 
   const { content } = await fetchAds({ size: 1000 });
-  const users = await fetchUsers();
+
   const posts = content.map(({ slug, updatedAt }) => ({
     url: `${URL}/post/${slug}`,
     lastModified: updatedAt,
-  }));
-
-  const userRoutes = users.map(({ id, createdAt }) => ({
-    url: `${URL}/user/${id}`,
-    lastModified: createdAt,
   }));
 
   const articles = await fetchArticles();
@@ -31,5 +26,5 @@ export default async function sitemap() {
     lastModified: createdAt,
   }));
 
-  return [...routes, ...posts, ...userRoutes, ...articleRoutes];
+  return [...routes, ...posts, ...articleRoutes];
 }
