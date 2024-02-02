@@ -11,6 +11,7 @@ declare global {
       NEXT_PUBLIC_BOT_NAME: string;
       NEXT_PUBLIC_APP_NAME: string;
       NEXT_PUBLIC_KEY_WORDS: string;
+      NEXT_PUBLIC_REVALIDATE: number;
     }
   }
 }
