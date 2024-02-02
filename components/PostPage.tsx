@@ -85,7 +85,6 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
             style={{ objectFit: 'contain' }}
             placeholder='blur'
             blurDataURL={NO_IMAGE}
-            priority={current === 0}
           />
         </dialog>
       }
