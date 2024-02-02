@@ -10,8 +10,6 @@
       {
         "avoidEscape": true
       }
-    ],
-    "jsx-quotes": [
-      "error", "prefer-double"]
+    ]
   }
 }

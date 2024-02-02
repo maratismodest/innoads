@@ -128,7 +128,6 @@ export default function Item({ post, edit = false }: Props) {
           placeholder="blur"
           blurDataURL={NO_IMAGE}
           title={title}
-          priority
         />
       </div>
 

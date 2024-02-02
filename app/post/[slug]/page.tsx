@@ -17,8 +17,8 @@ type AdPageProps = {
 };
 
 export async function generateMetadata({
-                                         params: { slug },
-                                       }: AdPageProps): Promise<Metadata | null> {
+  params: { slug },
+}: AdPageProps): Promise<Metadata | null> {
   const post = await fetchAd(slug);
   const _categories = await fetchCategories();
   const categories = mapCategories(_categories);
@@ -52,7 +52,7 @@ export async function generateStaticParams() {
   return posts.map(({ slug }) => ({ slug }));
 }
 
-export const revalidate = 86400;
+export const revalidate=86400
 
 export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) {
   const ad = await fetchAd(slug as string);

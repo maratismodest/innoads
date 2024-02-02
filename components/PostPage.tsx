@@ -39,7 +39,7 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
 
   const category = useMemo(
     () => categories.find(option => option.value === categoryId) || categories[0],
-    [categoryId, categories],
+    [categoryId, categories]
   );
 
   const handleClick = (direction: 'left' | 'right') => {
@@ -110,7 +110,7 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
               styles,
               'absolute top-1/2 hidden -translate-y-1/2',
               'left-0',
-              current !== 0 && images.length > 1 && '!block',
+              current !== 0 && images.length > 1 && '!block'
             )}
             onClick={() => handleClick('left')}
             hidden={current === 0 || images.length < 2}
@@ -122,7 +122,7 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
               styles,
               'absolute top-1/2 hidden -translate-y-1/2',
               'right-0',
-              current + 1 < images.length && images.length > 1 && '!block',
+              current + 1 < images.length && images.length > 1 && '!block'
             )}
             onClick={() => handleClick('right')}
           >
@@ -137,7 +137,7 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
           <div
             className={clsx(
               'bold rounded bg-[rgba(0,0,0,0.6)] p-1 text-sm text-white',
-              'absolute bottom-0 left-1/2 -translate-x-1/2',
+              'absolute bottom-0 left-1/2 -translate-x-1/2'
             )}
           >{`${current + 1} / ${images.length}`}</div>
         </div>
