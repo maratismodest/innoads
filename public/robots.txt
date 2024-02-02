@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /_next
-Disallow: /en/
+Disallow: /user/
 
 Sitemap: https://innoads.ru/sitemap.xml

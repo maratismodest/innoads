@@ -30,10 +30,13 @@ export async function generateMetadata({
       title: article.title,
       description,
       type: 'article',
-      url: `${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`,
+      url: `${process.env.NEXT_PUBLIC_APP_URL}/blog/${slug}`,
       siteName: process.env.NEXT_PUBLIC_APP_NAME,
       images: '/images/og-image.png',
       locale: 'ru',
+    },
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_APP_URL}/blog/${slug}`,
     },
   };
 }
