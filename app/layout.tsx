@@ -26,7 +26,12 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
   openGraph: {
+    type: 'website',
+    url: process.env.NEXT_PUBLIC_APP_URL,
     images: ['/images/og-image.png'],
+    title: seo.default.title,
+    description: seo.default.description,
+    locale: 'ru',
   },
 };
 
