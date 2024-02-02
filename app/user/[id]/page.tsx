@@ -28,6 +28,10 @@ export async function generateMetadata({
   return {
     title: `Пользователь ${user.username}`,
     description: `Пользователь ${user.id}`,
+    // robots: {
+    //   index: false,
+    //   follow: true,
+    // },
   };
 }
 

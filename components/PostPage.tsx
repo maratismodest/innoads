@@ -4,6 +4,7 @@ import Item from '@/components/Item';
 import Price from '@/components/Price';
 import Button from '@/components/ui/Button';
 import useLockedBody from '@/hooks/useLockedBody';
+import buttonStyles from '@/styles/buttonStyles';
 import type { PostDTO } from '@/types';
 import { Option } from '@/types/global';
 // import { categories } from '@/utils/categories';
@@ -153,9 +154,9 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
         <p className='break-words'>{body}</p>
         <time className='mt-5'>Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</time>
 
-        <Link href={tgLink + '/' + user.username} passHref className='mt-8 block'>
-          <Button>Написать автору</Button>
-        </Link>
+        <a href={tgLink + '/' + user.username} target='_blank' className={clsx(buttonStyles(), 'mt-8 !block')}>
+          Написать автору
+        </a>
 
         <Link href={`/user/${post.userId}`} passHref className='mt-8 block'>
           <Button>Все объявления автора</Button>

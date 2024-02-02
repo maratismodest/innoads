@@ -4,6 +4,7 @@ export type ArticleDTO = {
   readonly slug: string;
   readonly body: string;
   readonly createdAt: string;
+  readonly updatedAt: string;
 };
 
 export interface Seo {
