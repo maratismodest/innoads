@@ -8,13 +8,13 @@ export type FetchAdsProps = {
 }
 
 interface GetParams {
-  size?: number;
-  page?: number;
-  userId?: number;
-  categoryId?: number;
+  size: number;
+  page: number;
+  userId: number;
+  categoryId: number;
 }
 
-export default async function fetchAds(params: GetParams) {
+export default async function fetchAds(params: Partial<GetParams>) {
   const { data } = await client.get<FetchAdsProps>(beRoutes.ads, { params });
   return data;
 };
