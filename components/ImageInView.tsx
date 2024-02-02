@@ -30,6 +30,7 @@ export default function ImageInView({ title, src, setCurrent, index }: ImageInVi
       style={{ objectFit: 'cover' }}
       placeholder='blur'
       blurDataURL={NO_IMAGE}
+      priority={index === 0}
     />
   );
 };

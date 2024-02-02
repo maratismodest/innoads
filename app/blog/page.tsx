@@ -11,15 +11,15 @@ export const metadata: Metadata = {
 export default async function Articles<NextPage>() {
   const articles = await fetchArticles();
   return (
-    <>
+    <div itemScope itemType='https://schema.org/Blog'>
       <h1>Блог</h1>
-      <ul className="grid grid-cols-1 gap-2">
+      <ul className='grid grid-cols-1 gap-2'>
         {articles.map(article => (
-          <li key={article.id}>
+          <li key={article.id} itemType='blogPost'>
             <Link href={routes.blog + '/' + article.slug}>{article.title}</Link>
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
