@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-327c579b'], (function (workbox) { 'use strict';
+define(['./workbox-7144475a'], (function (workbox) { 'use strict';
 
   importScripts();
   self.skipWaiting();
@@ -76,26 +76,19 @@ define(['./workbox-327c579b'], (function (workbox) { 'use strict';
     "cacheName": "start-url",
     plugins: [{
       cacheWillUpdate: async ({
-        request,
-        response,
-        event,
-        state
-      }) => {
-        if (response && response.type === 'opaqueredirect') {
-          return new Response(response.body, {
-            status: 200,
-            statusText: 'OK',
-            headers: response.headers
-          });
-        }
-        return response;
-      }
+        response: e
+      }) => e && "opaqueredirect" === e.type ? new Response(e.body, {
+        status: 200,
+        statusText: "OK",
+        headers: e.headers
+      }) : e
     }]
   }), 'GET');
   workbox.registerRoute(/.*/i, new workbox.NetworkOnly({
     "cacheName": "dev",
     plugins: []
   }), 'GET');
+  self.__WB_DISABLE_DEV_LOGS = true;
 
 }));
 //# sourceMappingURL=sw.js.map
