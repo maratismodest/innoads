@@ -20,23 +20,26 @@ export default function Profile<NextPage>() {
   useEffect(() => {
     if (user) {
       setFetching(true);
-      fetchPosts({ userId: user.id }).then(({ content }) => setPosts(content)).catch(e => alert(e.message)).finally(() => setFetching(false));
+      fetchPosts({ userId: user.id })
+        .then(({ content }) => setPosts(content))
+        .catch(e => alert(e.message))
+        .finally(() => setFetching(false));
     }
   }, [user]);
 
   if (!user) {
-    return (
-      <ProfileNoUser />
-    );
+    return <ProfileNoUser />;
   }
 
   return (
-    <div className='flex flex-col items-center gap-8'>
-      <div className='text-center'>
+    <div className="flex flex-col items-center gap-8">
+      <div className="text-center">
         <h1>Профиль</h1>
         <p>Добавить объявление</p>
       </div>
-      <Link href={routes.add} className={buttonStyles()}>&#43;</Link>
+      <Link href={routes.add} className={buttonStyles()}>
+        &#43;
+      </Link>
       {fetching && <Spinner />}
       {posts.length > 0 && !fetching && <Posts posts={posts} edit={true} />}
       {posts.length === 0 && !fetching && <h2>Нет объявлений</h2>}

@@ -1,10 +1,12 @@
 import Posts from '@/components/Posts';
 import Button from '@/components/ui/Button';
+import buttonStyles from '@/styles/buttonStyles';
 import { GetIdPath } from '@/types';
 import fetchPosts from '@/utils/api/fetchAds';
 import fetchUser from '@/utils/api/fetchUser';
 import fetchUsers from '@/utils/api/fetchUsers';
 import { tgLink } from '@/utils/constants';
+import { clsx } from 'clsx';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -12,15 +14,13 @@ import React from 'react';
 
 export async function generateStaticParams() {
   const users = await fetchUsers();
-  // @ts-ignore
-  return users.filter(x => x.userAd.length > 0).map((user) => ({
+
+  return users.map(user => ({
     id: user.id.toString(),
   }));
 }
 
-export async function generateMetadata({
-                                         params: { id },
-                                       }: GetIdPath): Promise<Metadata | null> {
+export async function generateMetadata({ params: { id } }: GetIdPath): Promise<Metadata | null> {
   const user = await fetchUser(id);
   if (!user) {
     return null;
@@ -44,15 +44,18 @@ export default async function PublicProfile<NextPage>({ params: { id } }: GetIdP
   }
   const { content: posts } = await fetchPosts({
     userId: id,
+    size: 50,
   });
 
   return (
     <>
       <h1>Профиль пользователя</h1>
-      <p>Количество объявлений: <span>{posts.length}</span></p>
-      <Posts posts={posts} className='mt-10' />
-      <Link href={tgLink + '/' + user.username} passHref className='mt-10 block'>
-        <Button>Написать пользователю</Button>
+      <p>
+        Количество объявлений: <span>{posts.length}</span>
+      </p>
+      <Posts posts={posts} className="mt-10" />
+      <Link href={tgLink + '/' + user.username} className={clsx(buttonStyles(), 'mt-10 block')}>
+        Написать пользователю
       </Link>
     </>
   );

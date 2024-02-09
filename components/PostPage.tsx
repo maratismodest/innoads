@@ -40,7 +40,7 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
 
   const category = useMemo(
     () => categories.find(option => option.value === categoryId) || categories[0],
-    [categoryId, categories],
+    [categoryId, categories]
   );
 
   const handleClick = (direction: 'left' | 'right') => {
@@ -68,7 +68,7 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
       {
         <dialog
           open={open}
-          className='fixed top-[64px] z-40 h-[calc(100vh_-_64px)] w-screen max-w-full bg-black backdrop-grayscale'
+          className="fixed top-[64px] z-40 h-[calc(100vh_-_64px)] w-screen max-w-full bg-black backdrop-grayscale"
         >
           <button
             className={clsx(styles, 'absolute right-4 top-4 z-50')}
@@ -79,26 +79,30 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
           <Image
             draggable={false}
             src={images[current]}
-            alt='image'
+            alt="image"
             title={title}
             fill={true}
             style={{ objectFit: 'contain' }}
-            placeholder='blur'
+            placeholder="blur"
             blurDataURL={NO_IMAGE}
           />
         </dialog>
       }
-      <div className='relative mx-auto w-full max-w-[400px]' itemScope itemType='https://schema.org/Product'>
-        <div className='relative'>
+      <div
+        className="relative mx-auto w-full max-w-[400px]"
+        itemScope
+        itemType="https://schema.org/Product"
+      >
+        <div className="relative">
           <ul
-            className='relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll'
+            className="relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll"
             ref={ul}
           >
             {images.map((image: string, index: number) => {
               return (
                 <li
                   key={image}
-                  className='relative aspect-square h-full flex-none snap-center overflow-y-hidden'
+                  className="relative aspect-square h-full flex-none snap-center overflow-y-hidden"
                   ref={(el: HTMLLIElement) => (refs.current[index] = el)}
                 >
                   <ImageInView index={index} src={image} title={title} setCurrent={setCurrent} />
@@ -111,7 +115,7 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
               styles,
               'absolute top-1/2 hidden -translate-y-1/2',
               'left-0',
-              current !== 0 && images.length > 1 && '!block',
+              current !== 0 && images.length > 1 && '!block'
             )}
             onClick={() => handleClick('left')}
             hidden={current === 0 || images.length < 2}
@@ -123,7 +127,7 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
               styles,
               'absolute top-1/2 hidden -translate-y-1/2',
               'right-0',
-              current + 1 < images.length && images.length > 1 && '!block',
+              current + 1 < images.length && images.length > 1 && '!block'
             )}
             onClick={() => handleClick('right')}
           >
@@ -138,7 +142,7 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
           <div
             className={clsx(
               'bold rounded bg-[rgba(0,0,0,0.6)] p-1 text-sm text-white',
-              'absolute bottom-0 left-1/2 -translate-x-1/2',
+              'absolute bottom-0 left-1/2 -translate-x-1/2'
             )}
           >{`${current + 1} / ${images.length}`}</div>
         </div>
@@ -147,22 +151,28 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
           Категория: {category.label}
         </Link>
 
-        <h1 itemProp='name'>{title}</h1>
+        <h1 itemProp="name">{title}</h1>
         <Price price={price} />
         <hr />
-        <p className='break-words' itemProp='description'>{body}</p>
-        <time className='mt-5'>Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</time>
+        <p className="break-words" itemProp="description">
+          {body}
+        </p>
+        <time className="mt-5">Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</time>
 
-        <a href={tgLink + '/' + user.username} target='_blank' className={clsx(buttonStyles(), 'mt-8 !block')}>
+        <a
+          href={tgLink + '/' + user.username}
+          target="_blank"
+          className={clsx(buttonStyles(), 'mt-8 !block')}
+        >
           Написать автору
         </a>
 
-        <Link href={`/user/${post.userId}`} passHref className='mt-8 block'>
-          <Button>Все объявления автора</Button>
+        <Link href={`/user/${post.userId}`} className={clsx(buttonStyles(), 'mt-8 !block')}>
+          Все объявления автора
         </Link>
 
         <Button
-          className='mt-8'
+          className="mt-8"
           onClick={async () =>
             await navigator.share({
               title: process.env.NEXT_PUBLIC_APP_NAME,
@@ -174,9 +184,9 @@ export default function PostPage<NextPage>({ post, related, categories }: Props)
           Поделиться
         </Button>
         {related.length > 0 && (
-          <div className='mt-10'>
+          <div className="mt-10">
             <h2>Похожие объявления</h2>
-            <ul className='grid grid-cols-2 gap-4'>
+            <ul className="grid grid-cols-2 gap-4">
               {related.map((post: PostDTO) => (
                 <li key={post.slug}>
                   <Item post={post} />
