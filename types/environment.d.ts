@@ -12,6 +12,7 @@ declare global {
       NEXT_PUBLIC_APP_NAME: string;
       NEXT_PUBLIC_KEY_WORDS: string;
       NEXT_PUBLIC_REVALIDATE: number;
+      NEXT_PUBLIC_META_ADDITIONAL: string;
     }
   }
 }
