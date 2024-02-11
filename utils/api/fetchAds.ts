@@ -2,9 +2,9 @@ import { PostDTO } from '@/types';
 
 import client, { beRoutes } from './createRequest';
 
-export type FetchAdsProps = {
-  content: PostDTO[]
-  totalPages: number
+interface FetchAdsProps {
+  content: PostDTO[];
+  totalPages: number;
 }
 
 interface GetParams {
@@ -17,5 +17,4 @@ interface GetParams {
 export default async function fetchAds(params: Partial<GetParams>) {
   const { data } = await client.get<FetchAdsProps>(beRoutes.ads, { params });
   return data;
-};
-
+}
