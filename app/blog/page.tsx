@@ -18,8 +18,10 @@ export default async function ArticlesPage<NextPage>() {
       <h1>Блог</h1>
       <ul className="grid grid-cols-1 gap-2">
         {articles.map(({ id, title, slug }) => (
-          <li key={id} itemType="blogPost">
-            <Link href={routes.blog + '/' + slug}>{title}</Link>
+          <li key={id}>
+            <Link href={routes.blog + '/' + slug} itemType="blogPost">
+              {title}
+            </Link>
           </li>
         ))}
       </ul>
