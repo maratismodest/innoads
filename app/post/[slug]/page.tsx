@@ -62,6 +62,7 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
     return notFound();
   }
   const { content: related } = await fetchAds({ size: 7, categoryId: post.categoryId });
+
   return (
     <PostPage post={post} related={related.filter(x => x.id !== post.id)} categories={categories} />
   );
