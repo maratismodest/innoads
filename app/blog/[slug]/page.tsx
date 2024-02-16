@@ -5,6 +5,7 @@ import { dateFormat } from '@/utils/date';
 import dayjs from 'dayjs';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { BlogPosting, WebSite, WithContext } from 'schema-dts';
 
 export async function generateStaticParams() {
   const articles = await fetchArticles();
@@ -46,18 +47,48 @@ export default async function Article<NextPage>({ params: { slug } }: GetSlugPat
   if (!article) {
     return notFound();
   }
-  const { title, body, createdAt } = article;
+  const { title, body, createdAt, updatedAt } = article;
+
+  const jsonLd: WithContext<BlogPosting> = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${process.env.NEXT_PUBLIC_APP_URL}/blog/${slug}`,
+    },
+    headline: title,
+    description: title,
+    image: '',
+    author: {
+      '@type': 'Organization',
+      name: 'InnoAds',
+      url: `${process.env.NEXT_PUBLIC_APP_URL}`,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'InnoAds',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/icons/icon-512x512.png`,
+      },
+    },
+    datePublished: dayjs(createdAt).format(dateFormat.time),
+    dateModified: dayjs(updatedAt).format(dateFormat.time),
+  };
+
   return (
-    <section itemScope itemType="https://schema.org/Article">
-      <h1>{title}</h1>
-      <time dateTime={dayjs(createdAt).format(dateFormat.time)}>
-        {dayjs(createdAt).format(dateFormat.long)}
-      </time>
-      <article
-        itemProp="articleBody"
-        className="wysiwyg mt-2"
-        dangerouslySetInnerHTML={{ __html: body }}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-    </section>
+      <section>
+        <h1>{title}</h1>
+        <time dateTime={dayjs(createdAt).format(dateFormat.time)}>
+          {dayjs(createdAt).format(dateFormat.long)}
+        </time>
+        <article className="wysiwyg mt-2" dangerouslySetInnerHTML={{ __html: body }} />
+      </section>
+    </>
   );
 }
