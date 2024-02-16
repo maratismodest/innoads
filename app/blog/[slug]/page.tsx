@@ -2,10 +2,10 @@ import type { GetSlugPath } from '@/types';
 import fetchArticle from '@/utils/api/fetchArticle';
 import fetchArticles from '@/utils/api/fetchArticles';
 import { dateFormat } from '@/utils/date';
+import { getBlogPostJsonLd } from '@/utils/jsonLd';
 import dayjs from 'dayjs';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { BlogPosting, WebSite, WithContext } from 'schema-dts';
 
 export async function generateStaticParams() {
   const articles = await fetchArticles();
@@ -47,40 +47,13 @@ export default async function Article<NextPage>({ params: { slug } }: GetSlugPat
   if (!article) {
     return notFound();
   }
-  const { title, body, createdAt, updatedAt } = article;
-
-  const jsonLd: WithContext<BlogPosting> = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${process.env.NEXT_PUBLIC_APP_URL}/blog/${slug}`,
-    },
-    headline: title,
-    description: title,
-    image: '',
-    author: {
-      '@type': 'Organization',
-      name: 'InnoAds',
-      url: `${process.env.NEXT_PUBLIC_APP_URL}`,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'InnoAds',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${process.env.NEXT_PUBLIC_APP_URL}/icons/icon-512x512.png`,
-      },
-    },
-    datePublished: dayjs(createdAt).format(dateFormat.time),
-    dateModified: dayjs(updatedAt).format(dateFormat.time),
-  };
+  const { title, body, createdAt } = article;
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getBlogPostJsonLd(article)) }}
       />
       <section>
         <h1>{title}</h1>

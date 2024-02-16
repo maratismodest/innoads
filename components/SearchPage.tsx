@@ -4,7 +4,6 @@ import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
 import InfinitePosts from '@/modules/InfinitePosts';
 import { Option } from '@/types/global';
-// import { categories, CategoryProps } from '@/utils/categories';
 import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 

@@ -1,33 +1,7 @@
-// import buy from '@/assets/images/buy.png';
-// import clothes from '@/assets/images/clothes.png';
-// import estate from '@/assets/images/estate.png';
-// import free from '@/assets/images/free.png';
 import noImage from '@/assets/images/no-image.jpeg';
-// import sell from '@/assets/images/sell.png';
-// import services from '@/assets/images/services.png';
 import { CategoryDTO } from '@/types';
-// import { Category } from '@/utils/categories';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
-
-// const src = (label: Category): StaticImageData => {
-//   switch (label) {
-//     case 'Куплю':
-//       return buy;
-//     case 'Продам':
-//       return sell;
-//     case 'Одежда':
-//       return clothes;
-//     case 'Даром':
-//       return free;
-//     case 'Услуги':
-//       return services;
-//     case 'Недвижимость':
-//       return estate;
-//     default:
-//       return noImage;
-//   }
-// };
 
 interface CategoriesProp {
   categories: CategoryDTO[];
