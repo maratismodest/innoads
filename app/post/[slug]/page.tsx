@@ -4,6 +4,7 @@ import fetchAd from '@/utils/api/fetchAd';
 import fetchAds from '@/utils/api/fetchAds';
 import fetchCategories from '@/utils/api/fetchCategories';
 import { tgLink } from '@/utils/constants';
+import { getPostJsonLd } from '@/utils/jsonLd';
 import mapCategories from '@/utils/mapCategories';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -64,6 +65,16 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
   const { content: related } = await fetchAds({ size: 7, categoryId: post.categoryId });
 
   return (
-    <PostPage post={post} related={related.filter(x => x.id !== post.id)} categories={categories} />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getPostJsonLd(post)) }}
+      />
+      <PostPage
+        post={post}
+        related={related.filter(x => x.id !== post.id)}
+        categories={categories}
+      />
+    </>
   );
 }
