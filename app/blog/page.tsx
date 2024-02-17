@@ -1,5 +1,6 @@
 import fetchArticles from '@/utils/api/fetchArticles';
 import { routes, seo } from '@/utils/constants';
+import { getBlogJsonLd } from '@/utils/jsonLd';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -14,14 +15,16 @@ export const metadata: Metadata = {
 export default async function ArticlesPage<NextPage>() {
   const articles = await fetchArticles();
   return (
-    <section itemScope itemType="https://schema.org/Blog">
+    <section>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getBlogJsonLd(articles)) }}
+      />
       <h1>Блог</h1>
       <ul className="grid grid-cols-1 gap-2">
         {articles.map(({ id, title, slug }) => (
           <li key={id}>
-            <Link href={routes.blog + '/' + slug} itemType="blogPost">
-              {title}
-            </Link>
+            <Link href={routes.blog + '/' + slug}>{title}</Link>
           </li>
         ))}
       </ul>

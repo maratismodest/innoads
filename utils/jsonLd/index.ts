@@ -1,7 +1,7 @@
 import { ArticleDTO, PostDTO } from '@/types';
 import { dateFormat } from '@/utils/date';
 import dayjs from 'dayjs';
-import { BlogPosting, Product, WebSite, WithContext } from 'schema-dts';
+import { Blog, BlogPosting, Product, WebSite, WithContext } from 'schema-dts';
 
 const getMainPageJsonLd = (): WithContext<WebSite> => ({
   ['@context']: 'https://schema.org',
@@ -52,4 +52,9 @@ const getBlogPostJsonLd = (article: ArticleDTO): WithContext<BlogPosting> => ({
   dateModified: dayjs(article.updatedAt).format(dateFormat.time),
 });
 
-export { getMainPageJsonLd, getPostJsonLd, getBlogPostJsonLd };
+const getBlogJsonLd = (articles: ArticleDTO[]): WithContext<Blog> => ({
+  ['@context']: 'https://schema.org',
+  '@type': 'Blog',
+});
+
+export { getMainPageJsonLd, getPostJsonLd, getBlogPostJsonLd, getBlogJsonLd };
