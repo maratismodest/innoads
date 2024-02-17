@@ -118,8 +118,8 @@ export default function Item({ post, edit = false }: Props) {
       className="relative flex flex-col overflow-hidden rounded-2xl shadow"
       data-testid={`item-${id}`}
       data-category={categoryId}
-      itemScope
-      itemType="https://schema.org/Product"
+      // itemScope
+      // itemType="https://schema.org/Product"
     >
       <div className="relative aspect-square transition-all hover:scale-105">
         <Image
@@ -131,13 +131,16 @@ export default function Item({ post, edit = false }: Props) {
           placeholder="blur"
           blurDataURL={NO_IMAGE}
           title={title}
-          itemProp="image"
+          // itemProp="image"
         />
       </div>
 
       <div className="relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2">
         <Price price={price} />
-        <h2 className="mt-auto truncate font-normal" itemProp="name">
+        <h2
+          className="mt-auto truncate font-normal"
+          // itemProp="name"
+        >
           {title}
         </h2>
         <button
