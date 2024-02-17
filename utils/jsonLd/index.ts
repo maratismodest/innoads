@@ -1,7 +1,8 @@
-import { ArticleDTO, PostDTO } from '@/types';
+import { ArticleDTO, PostDTO, UserDTO } from '@/types';
+import { tgLink } from '@/utils/constants';
 import { dateFormat } from '@/utils/date';
 import dayjs from 'dayjs';
-import { Blog, BlogPosting, Product, WebSite, WithContext } from 'schema-dts';
+import { Blog, BlogPosting, Person, Product, WebSite, WithContext } from 'schema-dts';
 
 const getMainPageJsonLd = (): WithContext<WebSite> => ({
   ['@context']: 'https://schema.org',
@@ -57,4 +58,10 @@ const getBlogJsonLd = (articles: ArticleDTO[]): WithContext<Blog> => ({
   '@type': 'Blog',
 });
 
-export { getMainPageJsonLd, getPostJsonLd, getBlogPostJsonLd, getBlogJsonLd };
+const getPersonJsonLd = (user: UserDTO): WithContext<Person> => ({
+  ['@context']: 'https://schema.org',
+  '@type': 'Person',
+  '@id': tgLink + '/' + user.username,
+});
+
+export { getMainPageJsonLd, getPostJsonLd, getBlogPostJsonLd, getBlogJsonLd, getPersonJsonLd };
