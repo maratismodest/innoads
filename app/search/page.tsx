@@ -16,12 +16,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: process.env.NEXT_PUBLIC_APP_URL + routes.search,
   },
-
 };
 
 export default function Search() {
   return (
     <Suspense fallback={<Spinner />}>
+      <h1>Поиск</h1>
+      <hr />
       <SearchPage />
     </Suspense>
   );
