@@ -3,20 +3,21 @@ import RedHeart from '@/assets/svg/heart-red.svg';
 import TransparentHeart from '@/assets/svg/heart.svg';
 import Price from '@/components/Price';
 import Button from '@/components/ui/Button';
-import { FavouriteContext } from '@/context/FavouritesContext';
 import useAuth from '@/hooks/useAuth';
 import useModal from '@/hooks/useModal';
 import useToast from '@/hooks/useToast';
+import favouritesAtom from '@/state';
 import type { PostDTO } from '@/types';
 import deleteAd from '@/utils/api/deleteAd';
 import postTelegram from '@/utils/api/postTelegram';
 import { NO_IMAGE, routes } from '@/utils/constants';
 import clsx from 'clsx';
+import { useAtom } from 'jotai';
 import { revalidatePath } from 'next/cache';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useCallback, useContext, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { errors, ItemModalText, success } from './utils';
 
 type Props = {
@@ -27,7 +28,7 @@ type Props = {
 export default function Item({ post, edit = false }: Props) {
   const { toast, setToast } = useToast();
   const { setModal, setModalValue } = useModal();
-  const { favourites, setFavourites } = useContext(FavouriteContext);
+  const [favourites, setFavourites] = useAtom(favouritesAtom);
   const { user } = useAuth();
   const { id, slug, title, preview, price, categoryId, body, images } = post;
 
@@ -98,7 +99,6 @@ export default function Item({ post, edit = false }: Props) {
     (e: React.SyntheticEvent) => {
       e.preventDefault();
       const currentList = liked ? favourites.filter(x => x.id !== id) : [...favourites, post];
-      localStorage.setItem('favourites', JSON.stringify(currentList));
       setFavourites(currentList);
     },
     [id, favourites, liked, post, setFavourites]

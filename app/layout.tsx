@@ -12,6 +12,7 @@ import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import React from 'react';
 import './globals.css';
+import { Provider } from 'jotai';
 
 require('dayjs/locale/ru');
 dayjs.locale('ru');
@@ -37,24 +38,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='ru'>
-    <body className={inter.className}>
-    <AuthProvider>
-      <AppProvider>
-        <ModalProvider>
-          <ToastProvider>
-            <FavouriteProvider>
-              <Header />
-              <main>{children}</main>
-              <Footer />
-            </FavouriteProvider>
-          </ToastProvider>
-        </ModalProvider>
-      </AppProvider>
-    </AuthProvider>
-    <Script src='/scripts/ym.js' strategy='afterInteractive' />
-    <Script src='https://telegram.org/js/telegram-web-app.js' strategy='afterInteractive' />
-    </body>
+    <html lang="ru">
+      <body className={inter.className}>
+        <AuthProvider>
+          <AppProvider>
+            <ModalProvider>
+              <ToastProvider>
+                {/*<FavouriteProvider>*/}
+                <Provider>
+                  <Header />
+                  <main>{children}</main>
+                  <Footer />
+                </Provider>
+                {/*</FavouriteProvider>*/}
+              </ToastProvider>
+            </ModalProvider>
+          </AppProvider>
+        </AuthProvider>
+        <Script src="/scripts/ym.js" strategy="afterInteractive" />
+        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" />
+      </body>
     </html>
   );
 }
