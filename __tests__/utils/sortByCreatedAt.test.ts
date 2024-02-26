@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import sortByCreatedAt from '@/utils/sortByUpdatedAt'; // Adjust the import path as needed
+import sortByCreatedAt from '@/utils/sortByCreatedAt'; // Adjust the import path as needed
 
 describe('sortByCreatedAt function', () => {
   it('should sort items by createdAt in descending order', () => {
@@ -33,10 +33,7 @@ describe('sortByCreatedAt function', () => {
   });
 
   it('should handle items with the same createdAt date', () => {
-    const items = [
-      { createdAt: '2023-11-01T12:00:00' },
-      { createdAt: '2023-11-01T12:00:00' },
-    ];
+    const items = [{ createdAt: '2023-11-01T12:00:00' }, { createdAt: '2023-11-01T12:00:00' }];
 
     const sortedItems = sortByCreatedAt(items);
 

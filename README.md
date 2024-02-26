@@ -22,7 +22,3 @@ Innopolis City Classified
 ## Author
 
 - [@Marat Faizerakhmanov](https://www.github.com/maratismodest)
-
-pm2 start npm --name "innoads-site" -- start
-pm2 unstartup systemd
-pm2 save

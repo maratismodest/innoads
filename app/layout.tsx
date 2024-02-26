@@ -2,17 +2,16 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header/Header';
 import AppProvider from '@/context/AppContext';
 import AuthProvider from '@/context/AuthContext';
-import FavouriteProvider from '@/context/FavouritesContext';
 import ModalProvider from '@/context/ModalContext';
 import ToastProvider from '@/context/ToastContext';
 import { seo } from '@/utils/constants';
 import dayjs from 'dayjs';
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import React from 'react';
 import './globals.css';
-import { Provider } from 'jotai';
+import { Provider as FavouritesProvider } from 'jotai';
 
 require('dayjs/locale/ru');
 dayjs.locale('ru');
@@ -44,13 +43,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AppProvider>
             <ModalProvider>
               <ToastProvider>
-                {/*<FavouriteProvider>*/}
-                <Provider>
+                <FavouritesProvider>
                   <Header />
                   <main>{children}</main>
                   <Footer />
-                </Provider>
-                {/*</FavouriteProvider>*/}
+                </FavouritesProvider>
               </ToastProvider>
             </ModalProvider>
           </AppProvider>
