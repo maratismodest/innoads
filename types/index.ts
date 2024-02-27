@@ -1,11 +1,11 @@
-export type ArticleDTO = {
-  readonly id: number;
-  readonly title: string;
-  readonly slug: string;
-  readonly body: string;
-  readonly createdAt: string;
-  readonly updatedAt: string;
-};
+export type ArticleDTO = Required<{
+  id: number;
+  title: string;
+  slug: string;
+  body: string;
+  createdAt: string;
+  updatedAt: string;
+}>;
 
 export interface Seo {
   title: string;
