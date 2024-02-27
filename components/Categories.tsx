@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 interface CategoriesProp {
-  categories: CategoryDTO[];
+  categories: Readonly<CategoryDTO>[];
 }
 
 export default function Categories({ categories }: CategoriesProp) {
