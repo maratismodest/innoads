@@ -21,7 +21,7 @@ export interface GetSlugPath {
 }
 
 export interface TelegramUser {
-  id: number;
+  readonly id: number;
   first_name: string;
   last_name: string;
   username: string;
@@ -48,7 +48,7 @@ export interface UserDTO {
 }
 
 export interface PostDTO {
-  id: number;
+  readonly id: number;
   title: string;
   body: string;
   price: number;
@@ -74,11 +74,11 @@ export interface CreatePostDTO {
 }
 
 export interface EditPostDTO {
-  id: number;
+  readonly id: number;
   title: string;
   body: string;
   price: number;
-  userId: number;
+  readonly userId: number;
   preview: string;
   images: string;
   slug: string;
@@ -86,7 +86,7 @@ export interface EditPostDTO {
 }
 
 export interface CategoryDTO {
-  id: number;
+  readonly id: number;
   name: string;
   label: string;
   image: string;
