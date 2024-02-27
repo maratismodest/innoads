@@ -73,16 +73,9 @@ export interface CreatePostDTO {
   categoryId: number;
 }
 
-export interface EditPostDTO {
+export interface EditPostDTO extends CreatePostDTO {
   readonly id: number;
-  title: string;
-  body: string;
-  price: number;
   readonly userId: number;
-  preview: string;
-  images: string;
-  slug: string;
-  categoryId: number;
 }
 
 export interface CategoryDTO {
