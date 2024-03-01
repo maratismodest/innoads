@@ -68,6 +68,7 @@ export default function Item({ post, edit = false }: Props) {
         await deleteAd(id);
         setToast(true);
         revalidatePath('/profile');
+        return;
       }
     } catch (e) {
       console.log(e);
