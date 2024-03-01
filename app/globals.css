@@ -77,6 +77,10 @@
         @apply my-2 border-gray
     }
 
+    img {
+        height: inherit;
+    }
+
 }
 
 @layer components {
