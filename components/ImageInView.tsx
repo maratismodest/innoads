@@ -1,16 +1,15 @@
 import useOnScreen from '@/hooks/useOnScreen';
 import { NO_IMAGE } from '@/utils/constants';
 import Image from 'next/image';
-import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface ImageInViewProps {
-  title: string,
-  src: string,
-  setCurrent: Dispatch<SetStateAction<number>>
-  index: number
+  src: string;
+  setCurrent: (index: number) => void;
+  index: number;
 }
 
-export default function ImageInView({ title, src, setCurrent, index }: ImageInViewProps) {
+export default function ImageInView({ src, setCurrent, index }: ImageInViewProps) {
   const ref = useRef<HTMLImageElement>(null);
   const inView = useOnScreen(ref);
 
@@ -19,18 +18,20 @@ export default function ImageInView({ title, src, setCurrent, index }: ImageInVi
       setCurrent(index);
     }
   }, [inView]);
+
   return (
     <Image
       ref={ref}
       draggable={false}
       src={src}
-      alt='image'
-      title={title}
-      fill={true}
+      alt="image"
+      // fill={true}
+      width={400}
+      height={400}
       style={{ objectFit: 'cover' }}
-      placeholder='blur'
+      placeholder="blur"
       blurDataURL={NO_IMAGE}
       priority={index === 0}
     />
   );
-};
+}

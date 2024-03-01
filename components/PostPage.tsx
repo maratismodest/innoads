@@ -64,8 +64,7 @@ export default function PostPage<NextPage>({ post }: Props) {
           <Image
             draggable={false}
             src={images[current]}
-            alt="image"
-            title={title}
+            alt={title}
             fill={true}
             style={{ objectFit: 'contain' }}
             placeholder="blur"
@@ -85,7 +84,7 @@ export default function PostPage<NextPage>({ post }: Props) {
                 className="relative aspect-square h-full flex-none snap-center overflow-y-hidden"
                 ref={(el: HTMLLIElement) => (refs.current[index] = el)}
               >
-                <ImageInView index={index} src={image} title={title} setCurrent={setCurrent} />
+                <ImageInView index={index} src={image} setCurrent={setCurrent} />
               </li>
             );
           })}

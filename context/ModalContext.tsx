@@ -1,22 +1,14 @@
 'use client';
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
 
-import Modal from '@/components/Modal';
-
 type modalContextType = {
   modal: boolean;
   setModal: Dispatch<SetStateAction<boolean>>;
-  modalValue: any;
-  setModalValue: Dispatch<SetStateAction<any>>;
 };
 
 const modalContextDefaultValues: modalContextType = {
   modal: false,
-  setModal: () => {
-  },
-  modalValue: null,
-  setModalValue: () => {
-  },
+  setModal: () => {},
 };
 export const ModalContext = createContext<modalContextType>(modalContextDefaultValues);
 
@@ -26,18 +18,11 @@ type Props = {
 
 export default function ModalProvider({ children }: Props) {
   const [modal, setModal] = useState(false);
-  const [modalValue, setModalValue] = useState(null);
 
   const value = {
-    modal, setModal, modalValue, setModalValue,
+    modal,
+    setModal,
   };
 
-  return (
-    <ModalContext.Provider value={value}>
-      <Modal visible={modal}>
-        {modalValue}
-      </Modal>
-      {children}
-    </ModalContext.Provider>
-  );
+  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 }

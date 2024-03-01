@@ -1,7 +1,7 @@
 import useValidation from '@/hooks/useValidation';
 import { Option } from '@/types/global';
 // import { categories } from '@/utils/categories';
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 import React from 'react';
 import ReactSelect from 'react-select';
 
