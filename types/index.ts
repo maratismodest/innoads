@@ -20,15 +20,15 @@ export interface GetSlugPath {
   params: { slug: string };
 }
 
-export interface TelegramUser {
-  readonly id: number;
-  first_name: string;
-  last_name: string;
-  username: string;
-  photo_url: string;
-  auth_date: number;
-  hash: string;
-}
+// export interface TelegramUser {
+//   readonly id: number;
+//   first_name: string;
+//   last_name: string;
+//   username: string;
+//   photo_url: string;
+//   auth_date: number;
+//   hash: string;
+// }
 
 export interface TelegramPostDTO {
   title: string;
