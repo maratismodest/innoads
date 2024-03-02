@@ -18,7 +18,7 @@ export default function Profile<NextPage>() {
   const { user, logout } = useAuth();
 
   useEffect(() => {
-    if (user) {
+    if (user && user.id) {
       setFetching(true);
       fetchPosts({ userId: user.id })
         .then(({ content }) => setPosts(content))
