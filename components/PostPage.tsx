@@ -61,15 +61,17 @@ export default function PostPage<NextPage>({ post }: Props) {
           >
             &#x2715;
           </button>
-          <Image
-            draggable={false}
-            src={images[current]}
-            alt={title}
-            fill={true}
-            style={{ objectFit: 'contain' }}
-            placeholder="blur"
-            blurDataURL={NO_IMAGE}
-          />
+          <div className="relative h-full w-full">
+            <Image
+              draggable={false}
+              src={images[current]}
+              alt={title}
+              fill={true}
+              style={{ objectFit: 'contain' }}
+              placeholder="blur"
+              blurDataURL={NO_IMAGE}
+            />
+          </div>
         </dialog>
       }
       <div className="relative">

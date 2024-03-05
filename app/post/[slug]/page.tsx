@@ -106,7 +106,7 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
           <div className="mt-10">
             <h2>Похожие объявления</h2>
             <ul className="grid grid-cols-2 gap-4">
-              {related.map((post: PostDTO) => (
+              {related.slice(0, 4).map((post: PostDTO) => (
                 <li key={post.slug}>
                   <Item post={post} />
                 </li>
