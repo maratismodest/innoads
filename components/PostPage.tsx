@@ -82,7 +82,7 @@ export default function PostPage<NextPage>({ post }: Props) {
             return (
               <li
                 key={image}
-                className="relative aspect-square h-full flex-none snap-center overflow-y-hidden"
+                className="relative flex aspect-square h-full flex-none snap-center overflow-y-hidden"
                 ref={(el: HTMLLIElement) => (refs.current[index] = el)}
               >
                 <ImageInView index={index} src={image} setCurrent={setCurrent} />

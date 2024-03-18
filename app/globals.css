@@ -77,9 +77,9 @@
         @apply my-2 border-gray
     }
 
-    img {
-        height: inherit;
-    }
+    /*img {*/
+    /*    height: inherit;*/
+    /*}*/
 
 }
 
