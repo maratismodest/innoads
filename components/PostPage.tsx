@@ -67,6 +67,7 @@ export default function PostPage<NextPage>({ post }: Props) {
             alt="image"
             title={title}
             fill={true}
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             style={{ objectFit: 'contain' }}
             placeholder="blur"
             blurDataURL={NO_IMAGE}
@@ -83,6 +84,7 @@ export default function PostPage<NextPage>({ post }: Props) {
               <li
                 key={image}
                 className="relative flex aspect-square h-full flex-none snap-center overflow-y-hidden"
+                // @ts-ignore
                 ref={(el: HTMLLIElement) => (refs.current[index] = el)}
               >
                 <ImageInView index={index} src={image} setCurrent={setCurrent} />

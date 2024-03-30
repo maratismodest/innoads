@@ -32,6 +32,7 @@ export default function ImageInView({ src, setCurrent, index }: ImageInViewProps
       placeholder="blur"
       blurDataURL={NO_IMAGE}
       priority={index === 0}
+      className="h-full"
     />
   );
 }
