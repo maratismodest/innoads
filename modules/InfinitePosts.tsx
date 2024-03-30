@@ -8,16 +8,12 @@ import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
 
 type Props = {
-  options: Record<string, number>
-  initPosts: PostDTO[],
-  initPage: number
-}
+  options: Record<string, number>;
+  initPosts: PostDTO[];
+  initPage: number;
+};
 
-export default function InfinitePosts({
-                                        options,
-                                        initPosts,
-                                        initPage,
-                                      }: Props) {
+export default function InfinitePosts({ options, initPosts, initPage }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen(elementRef);
   const [posts, setPosts] = useState<PostDTO[]>(initPosts);
@@ -66,7 +62,8 @@ export default function InfinitePosts({
     <>
       <Posts posts={posts} />
       {fetching && <Spinner />}
-      <div ref={elementRef} data-testid='scroll' />
+      {!fetching && posts.length === 0 && !hasMore && <h2 className="text-center">Пусто</h2>}
+      <div ref={elementRef} data-testid="scroll" />
     </>
   );
 }
