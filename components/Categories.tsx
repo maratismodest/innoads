@@ -1,4 +1,3 @@
-import noImage from '@/assets/images/no-image.jpeg';
 import { CategoryDTO } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,7 +20,7 @@ export default function Categories({ categories }: CategoriesProp) {
               className="flex w-10 snap-center flex-col items-center justify-between"
             >
               <Image
-                src={image ?? noImage}
+                src={image}
                 alt={label}
                 width={40}
                 height={40}

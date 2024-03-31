@@ -14,7 +14,7 @@ import deleteAd from '@/utils/api/deleteAd';
 import postTelegram from '@/utils/api/postTelegram';
 import { NO_IMAGE, routes } from '@/utils/constants';
 import { useAtom } from 'jotai';
-import { revalidatePath } from 'next/cache';
+// import { revalidatePath } from 'next/cache';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -67,7 +67,8 @@ export default function Item({ post, edit = false }: Props) {
       if (modalText === ItemModalText.delete) {
         await deleteAd(id);
         setToast(true);
-        revalidatePath('/profile');
+        // revalidatePath('/profile');
+        window.location.reload();
         return;
       }
     } catch (e) {

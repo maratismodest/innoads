@@ -201,6 +201,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
                 }}
                 options={categories}
                 validations={options}
+                key={name}
               />
             );
           }
@@ -218,6 +219,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
                   );
                 }}
                 options={options}
+                key={name}
               />
             );
           case 'text':
@@ -231,6 +233,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
                   handleChange(name as keyof Form, event.target.value);
                 }}
                 options={options}
+                key={name}
               />
             );
           case 'textarea':
@@ -247,6 +250,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     handleChange(name as keyof Form, event.target.value);
                   }}
+                  key={name}
                 />
                 {textAreaError && <span className="text-red">{textAreaError}</span>}
               </div>
