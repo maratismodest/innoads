@@ -1,7 +1,9 @@
 'use client';
 
+import Arrow from '@/components/Arrow';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import NewSelect from '@/components/ui/NewSelect';
 import Select from '@/components/ui/Select';
 import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
@@ -16,9 +18,11 @@ import updateAd from '@/utils/api/updatePost';
 // import { categories, CategoryProps } from '@/utils/categories';
 import { routes } from '@/utils/constants';
 import slug from '@/utils/slug';
+import { Listbox } from '@headlessui/react';
 import { AxiosError } from 'axios';
+import { clsx } from 'clsx';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import PostFormImages from './PostFormImages';
 import { messages, postDefaultValues, PostFormValues } from './utils';
@@ -192,17 +196,70 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
         switch (type) {
           case 'select': {
             return (
-              <Select
-                label={label}
-                name={name}
-                value={categories.find(x => x.value === value)}
-                onChange={(option: Option) => {
-                  handleChange(name as keyof Form, Number(option.value));
-                }}
-                options={categories}
-                validations={options}
-                key={name}
-              />
+              // <Select
+              //   label={label}
+              //   name={name}
+              //   value={categories.find(x => x.value === value)}
+              //   onChange={(option: Option) => {
+              //     handleChange(name as keyof Form, Number(option.value));
+              //   }}
+              //   options={categories}
+              //   validations={options}
+              //   key={name}
+              // />
+              <div>
+                <label htmlFor={name}>{label}</label>
+                <NewSelect
+                  options={categories}
+                  onChange={(option: Option) => {
+                    handleChange(name as keyof Form, Number(option.value));
+                  }}
+                  value={categories.find(x => x.value === value)}
+                />
+                {/*<div className="relative">*/}
+                {/*  <Listbox*/}
+                {/*    // value={category}*/}
+                {/*    value={categories.find(x => x.value === value)}*/}
+                {/*    // onChange={handleSelect}*/}
+                {/*    onChange={(option: Option) => {*/}
+                {/*      handleChange(name as keyof Form, Number(option.value));*/}
+                {/*    }}*/}
+                {/*    key={name}*/}
+                {/*    name={name}*/}
+                {/*  >*/}
+                {/*    {({ open }) => (*/}
+                {/*      <>*/}
+                {/*        <Listbox.Button className="flex h-9 w-full items-center justify-between rounded border border-inputBorder px-4 text-start">*/}
+                {/*          /!*{category.label}*!/*/}
+                {/*          {categories.find(x => x.value === value)?.label}*/}
+                {/*          <div*/}
+                {/*            className={clsx('ml-auto', open && 'rotate-180 transition ease-in-out')}*/}
+                {/*          >*/}
+                {/*            <Arrow />*/}
+                {/*          </div>*/}
+                {/*        </Listbox.Button>*/}
+                {/*        <Listbox.Options className="absolute top-10 z-50 w-full rounded bg-white p-2 drop-shadow-md">*/}
+                {/*          {categories.map(category => (*/}
+                {/*            <Listbox.Option key={category.value} value={category} as={Fragment}>*/}
+                {/*              {({ active, selected }) => (*/}
+                {/*                <li*/}
+                {/*                  className={clsx(*/}
+                {/*                    'cursor-pointer rounded p-2',*/}
+                {/*                    active && 'bg-blue text-white'*/}
+                {/*                  )}*/}
+                {/*                >*/}
+                {/*                  {category.label}*/}
+                {/*                </li>*/}
+                {/*              )}*/}
+                {/*            </Listbox.Option>*/}
+                {/*          ))}*/}
+                {/*        </Listbox.Options>*/}
+                {/*      </>*/}
+                {/*    )}*/}
+                {/*  </Listbox>*/}
+                {/*</div>*/}
+                {!value && <span className="text-red">Поле обязательное</span>}
+              </div>
             );
           }
           case 'number':
