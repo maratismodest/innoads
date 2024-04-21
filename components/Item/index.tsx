@@ -2,19 +2,17 @@
 import RedHeart from '@/assets/svg/heart-red.svg';
 import TransparentHeart from '@/assets/svg/heart.svg';
 import ItemButtons from '@/components/Item/item-buttons';
-import Modal from '@/components/Modal';
 import Price from '@/components/Price';
 import Button from '@/components/ui/Button';
 import useAuth from '@/hooks/useAuth';
-import useModal from '@/hooks/useModal';
 import useToast from '@/hooks/useToast';
 import favouritesAtom from '@/state';
 import type { PostDTO } from '@/types';
 import deleteAd from '@/utils/api/deleteAd';
 import postTelegram from '@/utils/api/postTelegram';
 import { NO_IMAGE, routes } from '@/utils/constants';
+import { Dialog } from '@headlessui/react';
 import { useAtom } from 'jotai';
-// import { revalidatePath } from 'next/cache';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -27,21 +25,22 @@ type Props = {
 };
 
 export default function Item({ post, edit = false }: Props) {
+  const [isOpen, setIsOpen] = useState(true);
+
   const router = useRouter();
   const [modalText, setModalText] = useState<ItemModalText | undefined>();
   const { toast, setToast } = useToast();
-  const { setModal, modal } = useModal();
   const [favourites, setFavourites] = useAtom(favouritesAtom);
   const { user } = useAuth();
   const { id, slug, title, preview, price, categoryId, body, images } = post;
 
   const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id]);
 
-  const hideModal = () => setModal(false);
+  const hideModal = () => setIsOpen(false);
 
   const showModal = (text: ItemModalText) => {
     setModalText(text);
-    setModal(true);
+    setIsOpen(true);
   };
 
   const handleFunction = async () => {
@@ -69,13 +68,14 @@ export default function Item({ post, edit = false }: Props) {
         setToast(true);
         // revalidatePath('/profile');
         window.location.reload();
+        alert(success.deleted);
         return;
       }
     } catch (e) {
       console.log(e);
       alert(errors.wentWrong);
     } finally {
-      setModal(false);
+      setIsOpen(false);
     }
   };
 
@@ -90,22 +90,42 @@ export default function Item({ post, edit = false }: Props) {
 
   useEffect(() => {
     return () => {
-      setModal(false);
+      setIsOpen(false);
     };
   }, []);
 
   return (
     <>
-      <Modal visible={modal}>
-        <div className="flex flex-col text-center">
-          <h4>{modalText}</h4>
-          <hr />
-          <div className="mt-12 flex justify-around">
-            <Button onClick={handleFunction}>Да</Button>
-            <Button onClick={hideModal}>Нет</Button>
+      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
+        {/* The backdrop, rendered as a fixed sibling to the panel container */}
+        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+
+        {/* Full-screen scrollable container */}
+        <div className="fixed inset-0 w-screen overflow-y-auto">
+          {/* Container to center the panel */}
+          <div className="flex min-h-full items-center justify-center p-4">
+            {/* The actual dialog panel  */}
+            <Dialog.Panel className="mx-auto max-w-sm rounded bg-white p-4">
+              <Dialog.Title>{modalText}</Dialog.Title>
+              <hr />
+              <div className="mt-12 flex justify-around">
+                <Button onClick={handleFunction}>Да</Button>
+                <Button onClick={hideModal}>Нет</Button>
+              </div>
+            </Dialog.Panel>
           </div>
         </div>
-      </Modal>
+      </Dialog>
+      {/*<Modal visible={modal}>*/}
+      {/*  <div className="flex flex-col text-center">*/}
+      {/*    <h4>{modalText}</h4>*/}
+      {/*    <hr />*/}
+      {/*    <div className="mt-12 flex justify-around">*/}
+      {/*      <Button onClick={handleFunction}>Да</Button>*/}
+      {/*      <Button onClick={hideModal}>Нет</Button>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</Modal>*/}
       <Link
         href={`${routes.post}/${slug}`}
         title={title}

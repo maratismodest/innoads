@@ -207,7 +207,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
               //   validations={options}
               //   key={name}
               // />
-              <div>
+              <div key={name}>
                 <label htmlFor={name}>{label}</label>
                 <NewSelect
                   options={categories}
@@ -216,48 +216,6 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
                   }}
                   value={categories.find(x => x.value === value)}
                 />
-                {/*<div className="relative">*/}
-                {/*  <Listbox*/}
-                {/*    // value={category}*/}
-                {/*    value={categories.find(x => x.value === value)}*/}
-                {/*    // onChange={handleSelect}*/}
-                {/*    onChange={(option: Option) => {*/}
-                {/*      handleChange(name as keyof Form, Number(option.value));*/}
-                {/*    }}*/}
-                {/*    key={name}*/}
-                {/*    name={name}*/}
-                {/*  >*/}
-                {/*    {({ open }) => (*/}
-                {/*      <>*/}
-                {/*        <Listbox.Button className="flex h-9 w-full items-center justify-between rounded border border-inputBorder px-4 text-start">*/}
-                {/*          /!*{category.label}*!/*/}
-                {/*          {categories.find(x => x.value === value)?.label}*/}
-                {/*          <div*/}
-                {/*            className={clsx('ml-auto', open && 'rotate-180 transition ease-in-out')}*/}
-                {/*          >*/}
-                {/*            <Arrow />*/}
-                {/*          </div>*/}
-                {/*        </Listbox.Button>*/}
-                {/*        <Listbox.Options className="absolute top-10 z-50 w-full rounded bg-white p-2 drop-shadow-md">*/}
-                {/*          {categories.map(category => (*/}
-                {/*            <Listbox.Option key={category.value} value={category} as={Fragment}>*/}
-                {/*              {({ active, selected }) => (*/}
-                {/*                <li*/}
-                {/*                  className={clsx(*/}
-                {/*                    'cursor-pointer rounded p-2',*/}
-                {/*                    active && 'bg-blue text-white'*/}
-                {/*                  )}*/}
-                {/*                >*/}
-                {/*                  {category.label}*/}
-                {/*                </li>*/}
-                {/*              )}*/}
-                {/*            </Listbox.Option>*/}
-                {/*          ))}*/}
-                {/*        </Listbox.Options>*/}
-                {/*      </>*/}
-                {/*    )}*/}
-                {/*  </Listbox>*/}
-                {/*</div>*/}
                 {!value && <span className="text-red">Поле обязательное</span>}
               </div>
             );
@@ -295,7 +253,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
             );
           case 'textarea':
             return (
-              <div className="grid">
+              <div className="grid" key={name}>
                 <label htmlFor={name}>{label}</label>
                 <textarea
                   rows={5}
@@ -307,7 +265,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     handleChange(name as keyof Form, event.target.value);
                   }}
-                  key={name}
+                  // key={name}
                 />
                 {textAreaError && <span className="text-red">{textAreaError}</span>}
               </div>
