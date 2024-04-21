@@ -25,7 +25,7 @@ type Props = {
 };
 
 export default function Item({ post, edit = false }: Props) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const router = useRouter();
   const [modalText, setModalText] = useState<ItemModalText | undefined>();
