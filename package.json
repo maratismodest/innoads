@@ -11,11 +11,11 @@
     "generate-types": "npx swagger-typescript-api -p ./types/swagger.yaml -o ./types -n index.ts"
   },
   "dependencies": {
-    "@ducanh2912/next-pwa": "^10.2.5",
-    "@headlessui/react": "^1.7.18",
-    "@types/node": "20.12.2",
-    "@types/react": "^18.2.73",
-    "@types/react-dom": "18.2.23",
+    "@ducanh2912/next-pwa": "^10.2.6",
+    "@headlessui/react": "^1.7.19",
+    "@types/node": "20.12.7",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "18.2.25",
     "autoprefixer": "10.4.19",
     "axios": "^1.6.8",
     "browser-image-compression": "^2.0.2",
@@ -44,9 +44,9 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.5.13",
+    "prettier-plugin-tailwindcss": "^0.5.14",
     "swagger-typescript-api": "^13.0.3",
     "tailwindcss": "3.4.3",
-    "typescript": "5.3.3"
+    "typescript": "5.4.5"
   }
 }

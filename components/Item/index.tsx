@@ -116,16 +116,6 @@ export default function Item({ post, edit = false }: Props) {
           </div>
         </div>
       </Dialog>
-      {/*<Modal visible={modal}>*/}
-      {/*  <div className="flex flex-col text-center">*/}
-      {/*    <h4>{modalText}</h4>*/}
-      {/*    <hr />*/}
-      {/*    <div className="mt-12 flex justify-around">*/}
-      {/*      <Button onClick={handleFunction}>Да</Button>*/}
-      {/*      <Button onClick={hideModal}>Нет</Button>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</Modal>*/}
       <Link
         href={`${routes.post}/${slug}`}
         title={title}
@@ -133,11 +123,11 @@ export default function Item({ post, edit = false }: Props) {
         data-testid={`item-${id}`}
         data-category={categoryId}
       >
-        <div className="relative aspect-square transition-all hover:scale-105">
+        <div className="relative block aspect-square transition-all hover:scale-105">
           <Image
             fill
             style={{ objectFit: 'cover' }}
-            sizes={'(max-width: 768px) 45vw,(max-width: 1024px) 25vw, 200px'}
+            sizes="(max-width: 768px) 45vw, (max-width: 1024px) 25vw, 200px"
             alt={title}
             src={preview}
             placeholder="blur"

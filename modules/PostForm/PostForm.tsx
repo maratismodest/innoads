@@ -1,28 +1,23 @@
 'use client';
 
-import Arrow from '@/components/Arrow';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import NewSelect from '@/components/ui/NewSelect';
-import Select from '@/components/ui/Select';
 import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
-import inputValidation from '@/modules/PostForm/inputValidation';
 import useAuth from '@/hooks/useAuth';
 import useValidation from '@/hooks/useValidation';
+import inputValidation from '@/modules/PostForm/inputValidation';
 import { CreatePostDTO, EditPostDTO, PostDTO } from '@/types';
 import { Option } from '@/types/global';
 import postAd from '@/utils/api/postPost';
 import postTelegram from '@/utils/api/postTelegram';
 import updateAd from '@/utils/api/updatePost';
-// import { categories, CategoryProps } from '@/utils/categories';
 import { routes } from '@/utils/constants';
 import slug from '@/utils/slug';
-import { Listbox } from '@headlessui/react';
 import { AxiosError } from 'axios';
-import { clsx } from 'clsx';
 import { useRouter } from 'next/navigation';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PostFormImages from './PostFormImages';
 import { messages, postDefaultValues, PostFormValues } from './utils';
