@@ -9,6 +9,7 @@ interface NewSelectProps {
   onChange: (active: Option) => void;
   value?: Option;
 }
+
 const NewSelect = ({ options, onChange, value }: NewSelectProps) => {
   return (
     <div className="relative">

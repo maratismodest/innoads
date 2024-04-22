@@ -22,14 +22,14 @@ export async function generateMetadata({
   if (!article) {
     return null;
   }
-  const metaDescription = article.body.slice(0, 256);
+  // const metaDescription = article.body.slice(0, 256);
 
   return {
     title: article.title,
-    description: metaDescription,
+    // description: metaDescription,
     openGraph: {
       title: article.title,
-      description: metaDescription,
+      // description: metaDescription,
       type: 'article',
       url: `${process.env.NEXT_PUBLIC_APP_URL}/blog/${slug}`,
       siteName: process.env.NEXT_PUBLIC_APP_NAME,
