@@ -2,7 +2,7 @@
 
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import NewSelect from '@/components/ui/NewSelect';
+import Select from '@/components/ui/Select';
 import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
@@ -77,6 +77,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   });
 
   const textAreaError = useValidation(data.description.value, data.description.options);
+  const categoryError = useValidation(data.categoryId.value, data.categoryId.options);
 
   const [images, setImages] = useState<string[]>(() => (post ? post.images.split('||') : []));
   const router = useRouter();
@@ -191,27 +192,16 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
         switch (type) {
           case 'select': {
             return (
-              // <Select
-              //   label={label}
-              //   name={name}
-              //   value={categories.find(x => x.value === value)}
-              //   onChange={(option: Option) => {
-              //     handleChange(name as keyof Form, Number(option.value));
-              //   }}
-              //   options={categories}
-              //   validations={options}
-              //   key={name}
-              // />
-              <div key={name}>
+              <div key={name} className="grid">
                 <label htmlFor={name}>{label}</label>
-                <NewSelect
+                <Select
                   options={categories}
                   onChange={(option: Option) => {
                     handleChange(name as keyof Form, Number(option.value));
                   }}
                   value={categories.find(x => x.value === value)}
                 />
-                {!value && <span className="text-red">Поле обязательное</span>}
+                {categoryError && <span className="text-red">{categoryError}</span>}
               </div>
             );
           }
@@ -270,6 +260,13 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
         }
       })}
       <PostFormImages images={images} setImages={setImages} />
+      {/*<label>*/}
+      {/*  <input type="checkbox" checked /> Соглашаюсь с&nbsp;*/}
+      {/*  <a href="/blog/rules" className="underline" target="_blank" rel="noopener noreferrer">*/}
+      {/*    правилами и условиями*/}
+      {/*  </a>*/}
+      {/*</label>*/}
+
       <Button type="submit" disabled={sending} className="mx-auto">
         {post ? 'Редактировать' : 'Подать'}
       </Button>

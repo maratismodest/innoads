@@ -4,13 +4,14 @@ import { Listbox } from '@headlessui/react';
 import { clsx } from 'clsx';
 import React, { Fragment } from 'react';
 
-interface NewSelectProps {
+interface SelectProps {
   options: Option[];
   onChange: (active: Option) => void;
   value?: Option;
+  name?: string;
 }
 
-const NewSelect = ({ options, onChange, value }: NewSelectProps) => {
+const Select = ({ options, onChange, value, name }: SelectProps) => {
   return (
     <div className="relative">
       <Listbox value={value} onChange={onChange}>
@@ -42,4 +43,4 @@ const NewSelect = ({ options, onChange, value }: NewSelectProps) => {
   );
 };
 
-export default NewSelect;
+export default Select;

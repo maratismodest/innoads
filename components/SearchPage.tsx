@@ -1,5 +1,5 @@
 'use client';
-import NewSelect from '@/components/ui/NewSelect';
+import Select from '@/components/ui/Select';
 import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
 import InfinitePosts from '@/modules/InfinitePosts';
@@ -32,7 +32,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <NewSelect options={categories} onChange={handleSelect} value={category} />
+      <Select options={categories} onChange={handleSelect} value={category} />
       <hr />
       <InfinitePosts initPage={0} initPosts={[]} options={{ categoryId: category.value }} />
     </>

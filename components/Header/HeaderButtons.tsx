@@ -4,10 +4,10 @@ import Link from 'next/link';
 import React from 'react';
 
 type MenuProps = {
-  href: string,
-  variant: 'primary' | 'secondary',
-  text: string
-}
+  href: string;
+  variant: 'primary' | 'secondary';
+  text: string;
+};
 
 const menu: MenuProps[] = [
   {
@@ -32,16 +32,21 @@ const menu: MenuProps[] = [
   },
 ];
 
-export default function HeaderButtons({ className, onClick }: { className?: string, onClick?: () => void }) {
+interface HeaderButtonsProps {
+  className?: string;
+  onClick?: () => void;
+}
+
+export default function HeaderButtons({ className, onClick }: HeaderButtonsProps) {
   return (
     <ul className={className}>
-      {menu.map(({ href, text, variant }) =>
-        <li key={href} className='mb-2 lg:mb-0' data-testid={href}>
+      {menu.map(({ href, text, variant }) => (
+        <li key={href} className="mb-2 lg:mb-0" data-testid={href}>
           <Link href={href} className={buttonStyles({ variant: variant })} onClick={onClick}>
             {text}
           </Link>
-        </li>)
-      }
+        </li>
+      ))}
     </ul>
   );
-};
+}

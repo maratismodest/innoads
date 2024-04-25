@@ -1,16 +1,18 @@
+import { clsx } from 'clsx';
 import React from 'react';
-import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef';
 
 interface DropdownProps extends React.HTMLProps<HTMLDivElement> {
-  closeToggle: (e: Event) => void;
+  dropdown: boolean;
 }
 
-export default function Dropdown({ closeToggle, children }: DropdownProps) {
-  const modalRef = useOnClickOutsideRef(() => closeToggle);
-
+export default function Dropdown({ dropdown, children }: DropdownProps) {
   return (
-    <div className='absolute right-0 top-0 min-h-[100vh] min-w-[50vw] rounded-l-md bg-white px-6 py-10 shadow'
-         ref={modalRef}>
+    <div
+      className={clsx(
+        'absolute top-0 min-h-[100vh] min-w-[50vw] rounded-l-md bg-white px-6 py-10 shadow transition-all duration-300 ease-out',
+        dropdown ? 'right-0' : '-right-full'
+      )}
+    >
       {children}
     </div>
   );
