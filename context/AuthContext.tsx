@@ -1,5 +1,6 @@
 'use client';
 import { UserDTO } from '@/types';
+import checkBan from '@/utils/api/checkBan';
 import fetchUser from '@/utils/api/fetchUser';
 import * as jose from 'jose';
 import { createContext, ReactNode, useEffect, useState } from 'react';
@@ -12,10 +13,8 @@ type authContextType = {
 
 const authContextDefaultValues: authContextType = {
   user: undefined,
-  login: () => {
-  },
-  logout: () => {
-  },
+  login: () => {},
+  logout: () => {},
 };
 export const AuthContext = createContext<authContextType>(authContextDefaultValues);
 
@@ -31,23 +30,29 @@ export default function AuthProvider({ children }: Props) {
       const token = localStorage.getItem('token');
       if (token) {
         const decoded: jose.JWTPayload = await jose.decodeJwt(token);
+        const banned = await checkBan(decoded.id as number);
+        if (banned) {
+          logout();
+          alert(banned.description ?? 'Вы забанены!');
+          return;
+        }
         const fetchedUser = await fetchUser(decoded.id as number);
         if (fetchedUser) {
           login(fetchedUser, token);
         } else {
           logout();
-          alert('Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново');
+          alert(
+            'Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново'
+          );
         }
       }
       return;
-
-    } catch
-      (e) {
+    } catch (e) {
       console.log('e', e);
     }
   };
 
-// @ts-ignore
+  // @ts-ignore
   useEffect(() => {
     checkToken();
     return () => checkToken();
@@ -68,9 +73,5 @@ export default function AuthProvider({ children }: Props) {
     login,
     logout,
   };
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

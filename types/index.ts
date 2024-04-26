@@ -91,3 +91,9 @@ export interface CategoryDTO {
   label: string;
   image: string;
 }
+
+export interface BanDTO {
+  readonly id: number;
+  readonly userId: number;
+  readonly description?: string;
+}
