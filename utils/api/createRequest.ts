@@ -7,6 +7,7 @@ export const beRoutes = {
   users: '/users',
   articles: '/articles',
   categories: '/categories',
+  ban: '/ban',
 } as const;
 
 const client = axios.create({

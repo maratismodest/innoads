@@ -1,5 +1,6 @@
 import Button from '@/components/ui/Button';
 import useAuth from '@/hooks/useAuth';
+import checkBan from '@/utils/api/checkBan';
 import loginTelegram from '@/utils/api/loginTelegram';
 import { ERROR_ALIAS_MESSAGE, userTemplate, ERROR_TOKEN_MESSAGE } from './utils';
 // import { TelegramUser } from '@/types';
@@ -8,7 +9,7 @@ import React from 'react';
 import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
 
 export default function ProfileNoUser() {
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
 
   const handleTelegram = async (user: TelegramUser) => {
     if (!user.username) {
@@ -19,6 +20,12 @@ export default function ProfileNoUser() {
       if (token) {
         const decoded = jose.decodeJwt(token);
         if (decoded) {
+          const banned = await checkBan(decoded.id as number);
+          if (banned) {
+            logout();
+            alert(banned.description ?? 'Вы забанены!');
+            return;
+          }
           login(userTemplate, token);
         } else {
           return alert({ ERROR_TOKEN_MESSAGE });
