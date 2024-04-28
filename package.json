@@ -11,7 +11,6 @@
     "generate-types": "npx swagger-typescript-api -p ./types/swagger.yaml -o ./types -n index.ts"
   },
   "dependencies": {
-    "@ducanh2912/next-pwa": "^10.2.6",
     "@headlessui/react": "^1.7.19",
     "@types/node": "20.12.7",
     "@types/react": "^18.2.79",
