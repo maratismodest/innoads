@@ -83,6 +83,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   const router = useRouter();
 
   const { user } = useAuth();
+  console.log('user', user);
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
@@ -165,7 +166,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
         body: form.body,
         preview: images[0],
         images: images.join('||'),
-        userId: user.id,
+        userId: Number(user.id),
         slug: post.slug,
       };
       await handleEdit(editPostDto);
