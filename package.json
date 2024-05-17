@@ -8,7 +8,8 @@
     "lint": "next lint",
     "test": "jest --watch",
     "test:ci": "jest --ci",
-    "generate-types": "npx swagger-typescript-api -p ./types/swagger.yaml -o ./types -n index.ts"
+    "generate-types": "npx swagger-typescript-api -p ./types/swagger.yaml -o ./types -n index.ts",
+    "prisma-seed": "tsx prisma/seeds.ts"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.19",
@@ -49,6 +50,7 @@
     "swagger-typescript-api": "^13.0.3",
     "tailwindcss": "3.4.3",
     "ts-node": "^10.9.2",
+    "tsx": "^4.10.4",
     "typescript": "^5.4.5"
   }
 }
