@@ -86,7 +86,6 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
-    console.log('process.env.REACT_APP_BOT_TOKEN', process.env.REACT_APP_BOT_TOKEN);
     if (!user) {
       router.push(routes.profile);
       return;

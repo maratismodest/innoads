@@ -15,8 +15,6 @@ export default async function Home() {
     size: 20,
   });
 
-  console.log('posts', posts);
-
   const categories = await getAllCategories();
 
   return (
