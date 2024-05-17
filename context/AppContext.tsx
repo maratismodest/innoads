@@ -1,6 +1,6 @@
 'use client';
 import { Option } from '@/types/global';
-import fetchCategories from '@/utils/api/fetchCategories';
+import fetchCategories from '@/utils/api/prisma/fetchCategories';
 import mapCategories from '@/utils/mapCategories';
 import { createContext, Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react';
 

@@ -1,22 +1,23 @@
 'use client';
+import { Post } from '@prisma/client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useOnScreen from '@/hooks/useOnScreen';
 import { PostDTO } from '@/types';
-import fetchPosts from '@/utils/api/fetchAds';
+import fetchPosts from '@/utils/api/prisma/fetchAds';
 
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
 
 type Props = {
   options: Record<string, number>;
-  initPosts: PostDTO[];
+  initPosts: PostDTO[] | Post[];
   initPage: number;
 };
 
 export default function InfinitePosts({ options, initPosts, initPage }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen(elementRef);
-  const [posts, setPosts] = useState<PostDTO[]>(initPosts);
+  const [posts, setPosts] = useState<PostDTO[] | Post[]>(initPosts);
   const [page, setPage] = useState<number>(initPage);
   const [hasMore, setHasMore] = useState(true);
   const [fetching, setFetching] = useState(false);
@@ -27,14 +28,16 @@ export default function InfinitePosts({ options, initPosts, initPage }: Props) {
     }
     setFetching(true);
     try {
-      const { content, totalPages } = await fetchPosts({
+      const content = await fetchPosts({
         ...options,
         page,
         size: 20,
       });
+      // @ts-ignore
       setPosts([...posts, ...content]);
       setPage(prev => prev + 1);
-      setHasMore(page + 1 < totalPages);
+      // setHasMore(page + 1 < totalPages);
+      setHasMore(content.length > 0);
     } catch (e) {
       console.log(e);
     } finally {

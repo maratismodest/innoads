@@ -1,10 +1,10 @@
 'use client';
 import Button from '@/components/ui/Button';
-import type { PostDTO } from '@/types';
+import type { CommonPost, PostDTO } from '@/types';
 import React from 'react';
 
 interface ShareButtonProps {
-  post: PostDTO;
+  post: CommonPost;
 }
 
 const ShareButton = ({ post }: ShareButtonProps) => {

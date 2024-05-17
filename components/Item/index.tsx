@@ -8,10 +8,11 @@ import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
 import favouritesAtom from '@/state';
 import type { PostDTO } from '@/types';
-import deleteAd from '@/utils/api/deleteAd';
+import deleteAd from '@/utils/api/prisma/deleteAd';
 import postTelegram from '@/utils/api/postTelegram';
 import { NO_IMAGE, routes } from '@/utils/constants';
 import { Dialog } from '@headlessui/react';
+import { Post } from '@prisma/client';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,7 +21,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { errors, ItemModalText, success } from './utils';
 
 type Props = {
-  post: PostDTO;
+  post: PostDTO | Post;
   edit?: boolean;
 };
 
@@ -83,7 +84,7 @@ export default function Item({ post, edit = false }: Props) {
     (e: React.SyntheticEvent) => {
       e.preventDefault();
       const currentList = liked ? favourites.filter(x => x.id !== id) : [...favourites, post];
-      setFavourites(currentList);
+      setFavourites(currentList as any);
     },
     [id, favourites, liked, post, setFavourites]
   );

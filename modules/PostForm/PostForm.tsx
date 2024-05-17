@@ -10,8 +10,8 @@ import useValidation from '@/hooks/useValidation';
 import inputValidation from '@/modules/PostForm/inputValidation';
 import { CreatePostDTO, EditPostDTO, PostDTO } from '@/types';
 import { Option } from '@/types/global';
-import postAd from '@/utils/api/postPost';
-import postTelegram from '@/utils/api/postTelegram';
+import postAd from '@/utils/api/prisma/postPost';
+import postTelegram from '@/utils/api/prisma/postTelegram';
 import updateAd from '@/utils/api/updatePost';
 import { routes } from '@/utils/constants';
 import slug from '@/utils/slug';
@@ -86,6 +86,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
+    console.log('process.env.REACT_APP_BOT_TOKEN', process.env.REACT_APP_BOT_TOKEN);
     if (!user) {
       router.push(routes.profile);
       return;
@@ -99,8 +100,9 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   const handleCreate = async (formData: CreatePostDTO) => {
     try {
       setSending(true);
-      const res = await postAd(formData);
-      await postTelegram({ ...res, username: user.username });
+      console.log('here', formData);
+      const post = await postAd(formData);
+      await postTelegram(post, user, categories);
       alert(SUCCESS_MESSAGE);
       return router.push(routes.profile);
     } catch (e) {

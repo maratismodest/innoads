@@ -2,12 +2,12 @@ import Item from '@/components/Item';
 import PostPage from '@/components/PostPage';
 import Price from '@/components/Price';
 import ShareButton from '@/pages-lib/post/ShareButton';
+import { getAllCategories } from '@/prisma/services/categories';
 import buttonStyles from '@/styles/buttonStyles';
-import { PostDTO } from '@/types';
+import { CommonPost, PostDTO } from '@/types';
 import type { GetSlugPath } from '@/types';
-import fetchAd from '@/utils/api/fetchAd';
-import fetchAds from '@/utils/api/fetchAds';
-import fetchCategories from '@/utils/api/fetchCategories';
+import fetchAd from '@/utils/api/prisma/fetchAd';
+import fetchAds from '@/utils/api/prisma/fetchAds';
 import fetchRelatedAds from '@/utils/api/fetchRelatedAds';
 import { routes, tgLink } from '@/utils/constants';
 import { getPostJsonLd } from '@/utils/jsonLd';
@@ -29,11 +29,24 @@ export async function generateMetadata({
   params: { slug },
 }: AdPageProps): Promise<Metadata | null> {
   const post = await fetchAd(slug);
-  const _categories = await fetchCategories();
-  const categories = mapCategories(_categories);
   if (!post) {
-    return null;
+    return {
+      title: 'Post not found',
+      description: 'The requested post does not exist.',
+    };
   }
+
+  const _categories = await getAllCategories();
+
+  if (!_categories.length) {
+    return {
+      title: 'Categories not found',
+      description: 'The requested categories does not exist.',
+    };
+  }
+
+  const categories = mapCategories(_categories);
+
   const { categoryId, title, body, preview, user } = post;
   const category = categories.find(option => option.value === categoryId) || categories[0];
   const metaTitle = `${category.label} ${title.slice(0, 50)} ${process.env.NEXT_PUBLIC_META_ADDITIONAL ?? ''}`;
@@ -58,7 +71,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const { content: posts } = await fetchAds({ size: 1000 });
+  const posts = await fetchAds({ size: 1000 });
 
   return posts.map(({ slug }) => ({ slug }));
 }
@@ -67,12 +80,12 @@ export const revalidate = 86400;
 
 export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) {
   const post = await fetchAd(slug);
-  const _categories = await fetchCategories();
+  const _categories = await getAllCategories();
   const categories = mapCategories(_categories);
   if (!post || categories.length === 0) {
     return notFound();
   }
-  const related = await fetchRelatedAds({ categoryId: post.categoryId });
+  // const related = await fetchRelatedAds({ categoryId: post.categoryId });
 
   const { categoryId, title, body, preview, user, price, createdAt } = post;
   return (
@@ -102,18 +115,18 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
           Все объявления автора
         </Link>
         <ShareButton post={post} />
-        {related.length > 0 && (
-          <div className="mt-10">
-            <h2>Похожие объявления</h2>
-            <ul className="grid grid-cols-2 gap-4">
-              {related.slice(0, 4).map((post: PostDTO) => (
-                <li key={post.slug}>
-                  <Item post={post} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        {/*{related.length > 0 && (*/}
+        {/*  <div className="mt-10">*/}
+        {/*    <h2>Похожие объявления</h2>*/}
+        {/*    <ul className="grid grid-cols-2 gap-4">*/}
+        {/*      {related.slice(0, 4).map((post: PostDTO) => (*/}
+        {/*        <li key={post.slug}>*/}
+        {/*          <Item post={post} />*/}
+        {/*        </li>*/}
+        {/*      ))}*/}
+        {/*    </ul>*/}
+        {/*  </div>*/}
+        {/*)}*/}
       </div>
     </>
   );
