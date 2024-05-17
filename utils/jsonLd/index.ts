@@ -1,6 +1,7 @@
 import { ArticleDTO, PostDTO, UserDTO } from '@/types';
 import { tgLink } from '@/utils/constants';
 import { dateFormat } from '@/utils/date';
+import { Article } from '@prisma/client';
 import dayjs from 'dayjs';
 import { Blog, BlogPosting, Person, Product, WebSite, WithContext } from 'schema-dts';
 
@@ -26,7 +27,7 @@ const getPostJsonLd = (post: PostDTO): WithContext<Product> => ({
   },
 });
 
-const getBlogPostJsonLd = (article: ArticleDTO): WithContext<BlogPosting> => ({
+const getBlogPostJsonLd = (article: ArticleDTO | Article): WithContext<BlogPosting> => ({
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   mainEntityOfPage: {
@@ -54,7 +55,7 @@ const getBlogPostJsonLd = (article: ArticleDTO): WithContext<BlogPosting> => ({
   inLanguage: 'ru',
 });
 
-const getBlogJsonLd = (articles: ArticleDTO[]): WithContext<Blog> => ({
+const getBlogJsonLd = (articles: ArticleDTO[] | Article[]): WithContext<Blog> => ({
   ['@context']: 'https://schema.org',
   '@type': 'Blog',
 });

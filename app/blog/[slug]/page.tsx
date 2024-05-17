@@ -1,6 +1,7 @@
+import { getAllArticles, getArticleBySlug } from '@/prisma/services/articles';
 import type { GetSlugPath } from '@/types';
 import fetchArticle from '@/utils/api/fetchArticle';
-import fetchArticles from '@/utils/api/fetchArticles';
+// import fetchArticles from '@/utils/api/fetchArticles';
 import { dateFormat } from '@/utils/date';
 import { getBlogPostJsonLd } from '@/utils/jsonLd';
 import dayjs from 'dayjs';
@@ -8,7 +9,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
-  const articles = await fetchArticles();
+  const articles = await getAllArticles();
 
   return articles.map(article => ({
     params: { slug: article.slug },
@@ -18,7 +19,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params: { slug },
 }: GetSlugPath): Promise<Metadata | null> {
-  const article = await fetchArticle(slug);
+  const article = await getArticleBySlug(slug);
   if (!article) {
     return null;
   }

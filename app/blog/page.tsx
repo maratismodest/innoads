@@ -1,4 +1,5 @@
-import fetchArticles from '@/utils/api/fetchArticles';
+// import fetchArticles from '@/utils/api/fetchArticles';
+import { getAllArticles } from '@/prisma/services/articles';
 import { routes, seo } from '@/utils/constants';
 import { getBlogJsonLd } from '@/utils/jsonLd';
 import { Metadata } from 'next';
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ArticlesPage<NextPage>() {
-  const articles = await fetchArticles();
+  const articles = await getAllArticles();
   return (
     <section>
       <script
