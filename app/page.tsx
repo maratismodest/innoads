@@ -1,7 +1,7 @@
 import Categories from '@/components/Categories';
 import InfinitePosts from '@/modules/InfinitePosts';
+import { getAllCategories } from '@/prisma/services/categories';
 import fetchAds from '@/utils/api/fetchAds';
-import fetchCategories from '@/utils/api/fetchCategories';
 import { getMainPageJsonLd } from '@/utils/jsonLd';
 
 export const revalidate = 3600;
@@ -11,7 +11,7 @@ export default async function Home() {
     size: 20,
   });
 
-  const categories = await fetchCategories();
+  const categories = await getAllCategories();
 
   return (
     <>
