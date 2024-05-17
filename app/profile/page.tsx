@@ -7,13 +7,14 @@ import useAuth from '@/hooks/useAuth';
 import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
 import buttonStyles from '@/styles/buttonStyles';
 import type { PostDTO } from '@/types';
-import fetchPosts from '@/utils/api/fetchAds';
+import fetchPosts from '@/utils/api/prisma/fetchAds';
 import { routes } from '@/utils/constants';
+import { Post } from '@prisma/client';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 export default function Profile<NextPage>() {
-  const [posts, setPosts] = useState<PostDTO[]>([]);
+  const [posts, setPosts] = useState<PostDTO[] | Post[]>([]);
   const [fetching, setFetching] = useState(false);
   const { user, logout } = useAuth();
 
@@ -21,7 +22,7 @@ export default function Profile<NextPage>() {
     if (user && user.id) {
       setFetching(true);
       fetchPosts({ userId: user.id })
-        .then(({ content }) => setPosts(content))
+        .then(content => setPosts(content))
         .catch(e => alert(e.message))
         .finally(() => setFetching(false));
     }

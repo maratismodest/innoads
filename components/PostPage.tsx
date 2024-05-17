@@ -3,12 +3,13 @@ import ImageInView from '@/components/ImageInView';
 import useLockedBody from '@/hooks/useLockedBody';
 import type { PostDTO } from '@/types';
 import { NO_IMAGE } from '@/utils/constants';
+import { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Image from 'next/image';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 type Props = {
-  post: PostDTO;
+  post: PostDTO | Post;
 };
 
 const styles =
@@ -20,7 +21,7 @@ export default function PostPage<NextPage>({ post }: Props) {
 
   const ul = useRef<HTMLUListElement>(null);
 
-  const { title, body, categoryId, price, createdAt, user, slug } = post;
+  const { title } = post;
 
   const [open, setOpen] = useState(false);
 

@@ -1,7 +1,7 @@
 import { ArticleDTO, PostDTO, UserDTO } from '@/types';
 import { tgLink } from '@/utils/constants';
 import { dateFormat } from '@/utils/date';
-import { Article } from '@prisma/client';
+import { Article, Post, User } from '@prisma/client';
 import dayjs from 'dayjs';
 import { Blog, BlogPosting, Person, Product, WebSite, WithContext } from 'schema-dts';
 
@@ -13,7 +13,7 @@ const getMainPageJsonLd = (): WithContext<WebSite> => ({
   url: `${process.env.NEXT_PUBLIC_APP_URL}`,
 });
 
-const getPostJsonLd = (post: PostDTO): WithContext<Product> => ({
+const getPostJsonLd = (post: PostDTO | Post): WithContext<Product> => ({
   ['@context']: 'https://schema.org',
   '@type': 'Product',
   name: post.title,
@@ -60,7 +60,7 @@ const getBlogJsonLd = (articles: ArticleDTO[] | Article[]): WithContext<Blog> =>
   '@type': 'Blog',
 });
 
-const getPersonJsonLd = (user: UserDTO): WithContext<Person> => ({
+const getPersonJsonLd = (user: UserDTO | User): WithContext<Person> => ({
   ['@context']: 'https://schema.org',
   '@type': 'Person',
   '@id': tgLink + '/' + user.username,
