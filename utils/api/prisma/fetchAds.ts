@@ -1,6 +1,7 @@
 'use server';
 import prisma from '@/lib/prisma';
 import { PostDTO } from '@/types';
+import { Post } from '@prisma/client';
 
 interface FetchAdsProps {
   content: PostDTO[];
@@ -14,7 +15,7 @@ interface GetParams {
   categoryId: number;
 }
 
-export default async function fetchAds(params: Partial<GetParams>) {
+export default async function fetchPosts(params: Partial<GetParams>): Promise<Post[]> {
   const { size = 20, page = 0, categoryId, userId } = params;
 
   const posts = await prisma.post.findMany({

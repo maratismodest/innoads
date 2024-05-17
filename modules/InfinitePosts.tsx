@@ -2,7 +2,6 @@
 import { Post } from '@prisma/client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useOnScreen from '@/hooks/useOnScreen';
-import { PostDTO } from '@/types';
 import fetchPosts from '@/utils/api/prisma/fetchAds';
 
 import Posts from '@/components/Posts';
@@ -10,14 +9,14 @@ import Spinner from '@/components/ui/Spinner';
 
 type Props = {
   options: Record<string, number>;
-  initPosts: PostDTO[] | Post[];
+  initPosts: Post[];
   initPage: number;
 };
 
 export default function InfinitePosts({ options, initPosts, initPage }: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen(elementRef);
-  const [posts, setPosts] = useState<PostDTO[] | Post[]>(initPosts);
+  const [posts, setPosts] = useState<Post[]>(initPosts);
   const [page, setPage] = useState<number>(initPage);
   const [hasMore, setHasMore] = useState(true);
   const [fetching, setFetching] = useState(false);
@@ -33,7 +32,6 @@ export default function InfinitePosts({ options, initPosts, initPage }: Props) {
         page,
         size: 20,
       });
-      // @ts-ignore
       setPosts([...posts, ...content]);
       setPage(prev => prev + 1);
       // setHasMore(page + 1 < totalPages);
