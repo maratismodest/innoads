@@ -25,7 +25,9 @@ type Props = {
 
 export default function AuthProvider({ children }: Props) {
   const [user, setUser] = useState<UserDTO | User | undefined>(undefined);
-
+  useEffect(() => {
+    console.log('user', user);
+  }, [user]);
   const checkToken = async () => {
     try {
       const token = localStorage.getItem('token');
