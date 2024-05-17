@@ -31,4 +31,8 @@ client.interceptors.request.use(
   }
 );
 
+export const clientPrisma = axios.create({
+  baseURL: '/api',
+});
+
 export default client;

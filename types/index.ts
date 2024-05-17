@@ -1,3 +1,5 @@
+import { Post } from '@prisma/client';
+
 export type ArticleDTO = Required<{
   id: number;
   title: string;
@@ -97,3 +99,5 @@ export interface BanDTO {
   readonly userId: number;
   readonly description?: string;
 }
+
+export type CommonPost = PostDTO | Post;
