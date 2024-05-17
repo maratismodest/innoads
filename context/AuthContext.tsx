@@ -1,14 +1,12 @@
 'use client';
-import { UserDTO } from '@/types';
-// import checkBan from '@/utils/api/checkBan';
 import fetchUser from '@/utils/api/prisma/fetchUser';
 import { User } from '@prisma/client';
 import * as jose from 'jose';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 
 type authContextType = {
-  user: UserDTO | User | undefined;
-  login: (user: UserDTO | User, token: string) => void | undefined;
+  user: User | undefined;
+  login: (user: User, token: string) => void | undefined;
   logout: () => void | undefined;
 };
 
@@ -24,7 +22,7 @@ type Props = {
 };
 
 export default function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState<UserDTO | User | undefined>(undefined);
+  const [user, setUser] = useState<User | undefined>(undefined);
   useEffect(() => {
     console.log('user', user);
   }, [user]);
@@ -55,7 +53,7 @@ export default function AuthProvider({ children }: Props) {
     return () => checkToken();
   }, []);
 
-  const login = (user: UserDTO | User, token: string) => {
+  const login = (user: User, token: string) => {
     localStorage.setItem('token', token);
     setUser(user);
   };
