@@ -31,13 +31,7 @@ export default function AuthProvider({ children }: Props) {
       const token = localStorage.getItem('token');
       if (token) {
         const decoded: jose.JWTPayload = await jose.decodeJwt(token);
-        // const banned = await checkBan(decoded.id as number);
-        // if (banned) {
-        //   logout();
-        //   alert(banned.description ?? 'Вы забанены!');
-        //   return;
-        // }
-        const fetchedUser = (await fetchUser(decoded.id as number)) as User;
+        const fetchedUser = await fetchUser(decoded.id as number);
         if (fetchedUser) {
           login(fetchedUser, token);
         } else {

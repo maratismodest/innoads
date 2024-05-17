@@ -83,7 +83,6 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   const router = useRouter();
 
   const { user } = useAuth();
-  console.log('user', user);
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
@@ -100,7 +99,6 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   const handleCreate = async (formData: CreatePostDTO) => {
     try {
       setSending(true);
-      console.log('here', formData);
       const post = await postAd(formData);
       await postTelegram(post, user, categories);
       alert(SUCCESS_MESSAGE);
