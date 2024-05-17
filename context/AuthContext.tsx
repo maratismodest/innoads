@@ -1,13 +1,14 @@
 'use client';
 import { UserDTO } from '@/types';
-import checkBan from '@/utils/api/checkBan';
-import fetchUser from '@/utils/api/fetchUser';
+// import checkBan from '@/utils/api/checkBan';
+import fetchUser from '@/utils/api/prisma/fetchUser';
+import { User } from '@prisma/client';
 import * as jose from 'jose';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 
 type authContextType = {
-  user: UserDTO | undefined;
-  login: (user: UserDTO, token: string) => void | undefined;
+  user: UserDTO | User | undefined;
+  login: (user: UserDTO | User, token: string) => void | undefined;
   logout: () => void | undefined;
 };
 
@@ -23,20 +24,20 @@ type Props = {
 };
 
 export default function AuthProvider({ children }: Props) {
-  const [user, setUser] = useState<UserDTO | undefined>(undefined);
+  const [user, setUser] = useState<UserDTO | User | undefined>(undefined);
 
   const checkToken = async () => {
     try {
       const token = localStorage.getItem('token');
       if (token) {
         const decoded: jose.JWTPayload = await jose.decodeJwt(token);
-        const banned = await checkBan(decoded.id as number);
-        if (banned) {
-          logout();
-          alert(banned.description ?? 'Вы забанены!');
-          return;
-        }
-        const fetchedUser = await fetchUser(decoded.id as number);
+        // const banned = await checkBan(decoded.id as number);
+        // if (banned) {
+        //   logout();
+        //   alert(banned.description ?? 'Вы забанены!');
+        //   return;
+        // }
+        const fetchedUser = (await fetchUser(decoded.id as number)) as User;
         if (fetchedUser) {
           login(fetchedUser, token);
         } else {
@@ -58,7 +59,7 @@ export default function AuthProvider({ children }: Props) {
     return () => checkToken();
   }, []);
 
-  const login = (user: UserDTO, token: string) => {
+  const login = (user: UserDTO | User, token: string) => {
     localStorage.setItem('token', token);
     setUser(user);
   };
