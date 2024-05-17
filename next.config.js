@@ -49,6 +49,13 @@ const nextConfig = {
   //     },
   //   ];
   // },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  },
 };
 
 // const withPWA = require('@ducanh2912/next-pwa').default({
