@@ -4,11 +4,9 @@ import Price from '@/components/Price';
 import ShareButton from '@/pages-lib/post/ShareButton';
 import { getAllCategories } from '@/prisma/services/categories';
 import buttonStyles from '@/styles/buttonStyles';
-import { CommonPost, PostDTO } from '@/types';
 import type { GetSlugPath } from '@/types';
 import fetchAd from '@/utils/api/prisma/fetchAd';
 import fetchAds from '@/utils/api/prisma/fetchAds';
-import fetchRelatedAds from '@/utils/api/fetchRelatedAds';
 import { routes, tgLink } from '@/utils/constants';
 import { getPostJsonLd } from '@/utils/jsonLd';
 import mapCategories from '@/utils/mapCategories';
@@ -29,6 +27,7 @@ export async function generateMetadata({
   params: { slug },
 }: AdPageProps): Promise<Metadata | null> {
   const post = await fetchAd(slug);
+
   if (!post) {
     return {
       title: 'Post not found',
