@@ -29,7 +29,7 @@ export default async function loginTelegram(user: TelegramUser) {
       .setProtectedHeader({ alg: 'HS256' })
       .setExpirationTime(60 * 60 * 24 * 365 * 1000)
       .sign(secret);
-    return token;
+    return { token, upsertUser };
   } catch (e) {
     console.log(e);
   }

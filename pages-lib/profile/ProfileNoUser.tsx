@@ -9,18 +9,20 @@ import React from 'react';
 import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
 
 export default function ProfileNoUser() {
-  const { login, logout } = useAuth();
+  const { login } = useAuth();
 
   const handleTelegram = async (user: TelegramUser) => {
     if (!user.username) {
       return alert({ ERROR_ALIAS_MESSAGE });
     }
     try {
-      const token = await loginTelegram(user);
-      if (token) {
-        const decoded = jose.decodeJwt(token);
+      const response = await loginTelegram(user);
+      console.log('token', response);
+      if (response) {
+        const decoded = jose.decodeJwt(response.token);
+        console.log('decoded', decoded);
         if (decoded) {
-          login(userTemplate, token);
+          login(response.upsertUser, response.token);
         } else {
           return alert({ ERROR_TOKEN_MESSAGE });
         }
