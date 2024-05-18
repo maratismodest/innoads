@@ -5,7 +5,7 @@ import type { ITelegramUser, IWebApp } from '@/types';
 
 export interface ITelegramContext {
   webApp?: IWebApp;
-  user?: ITelegramUser;
+  tgUser?: ITelegramUser;
 }
 
 export const TelegramContext = createContext<ITelegramContext>({});
@@ -26,7 +26,7 @@ export const TelegramProvider = ({ children }: { children: React.ReactNode }) =>
       ? {
           webApp,
           unsafeData: webApp.initDataUnsafe,
-          user: webApp.initDataUnsafe.user,
+          tgUser: webApp.initDataUnsafe.user,
         }
       : {};
   }, [webApp]);
@@ -34,7 +34,7 @@ export const TelegramProvider = ({ children }: { children: React.ReactNode }) =>
   return (
     <TelegramContext.Provider value={value}>
       {/* Make sure to include script tag with "beforeInteractive" strategy to pre-load web-app script */}
-      <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />{' '}
+      <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       {children}
     </TelegramContext.Provider>
   );

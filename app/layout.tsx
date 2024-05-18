@@ -3,7 +3,7 @@ import Header from '@/components/Header/Header';
 import AppProvider from '@/context/AppContext';
 import AuthProvider from '@/context/AuthContext';
 import ModalProvider from '@/context/ModalContext';
-import { TelegramContext, TelegramProvider } from '@/context/TelegramContext';
+import { TelegramProvider } from '@/context/TelegramContext';
 import ToastProvider from '@/context/ToastContext';
 import { seo } from '@/utils/constants';
 import dayjs from 'dayjs';

@@ -149,6 +149,12 @@ export interface IWebApp {
     isActive: boolean;
     setParams: ({ text }: { text: string }) => void;
     show: () => void;
+    hide: () => void;
   };
   HapticFeedback: any;
+  close: () => void;
+  ready: () => void;
+  sendData: (str: string) => void;
+  onEvent: (actionName: string, onSendData: unknown) => void;
+  offEvent: (actionName: string, onSendData: unknown) => void;
 }
