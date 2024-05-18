@@ -3,6 +3,7 @@ import Header from '@/components/Header/Header';
 import AppProvider from '@/context/AppContext';
 import AuthProvider from '@/context/AuthContext';
 import ModalProvider from '@/context/ModalContext';
+import { TelegramContext, TelegramProvider } from '@/context/TelegramContext';
 import ToastProvider from '@/context/ToastContext';
 import { seo } from '@/utils/constants';
 import dayjs from 'dayjs';
@@ -41,22 +42,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         {/* eslint-disable-next-line react/jsx-no-undef */}
         <Suspense>
-          <AuthProvider>
-            <AppProvider>
-              <ModalProvider>
-                <ToastProvider>
-                  <FavouritesProvider>
-                    <Header />
-                    <main>{children}</main>
-                    <Footer />
-                  </FavouritesProvider>
-                </ToastProvider>
-              </ModalProvider>
-            </AppProvider>
-          </AuthProvider>
+          <TelegramProvider>
+            <AuthProvider>
+              <AppProvider>
+                <ModalProvider>
+                  <ToastProvider>
+                    <FavouritesProvider>
+                      <Header />
+                      <main>{children}</main>
+                      <Footer />
+                    </FavouritesProvider>
+                  </ToastProvider>
+                </ModalProvider>
+              </AppProvider>
+            </AuthProvider>
+          </TelegramProvider>
         </Suspense>
         <Script src="/scripts/ym.js" strategy="afterInteractive" />
-        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" />
+        {/*<Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" />*/}
       </body>
     </html>
   );
