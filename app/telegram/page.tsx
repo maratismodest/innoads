@@ -4,9 +4,9 @@ import { checkToken } from '@/context/AuthContext';
 import useAuth from '@/hooks/useAuth';
 import PostForm from '@/modules/PostForm/PostForm';
 import { useSearchParams } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 
-export default function TelegramPage<NextPage>() {
+function TelegramPage() {
   const { login, logout } = useAuth();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
@@ -22,4 +22,13 @@ export default function TelegramPage<NextPage>() {
   }
 
   return <PostForm />;
+}
+
+export default function TelegramPageWrapper() {
+  return (
+    // You could have a loading skeleton as the `fallback` too
+    <Suspense>
+      <TelegramPage />
+    </Suspense>
+  );
 }
