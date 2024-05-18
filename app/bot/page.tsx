@@ -1,30 +1,24 @@
 'use client';
 import Spinner from '@/components/ui/Spinner';
-import { checkToken } from '@/context/AuthContext';
 import useAuth from '@/hooks/useAuth';
 import PostForm from '@/modules/PostForm/PostForm';
-import { useSearchParams } from 'next/navigation';
-import React, { useEffect, Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 
 function TelegramPage() {
   const [loading, setLoading] = useState(true);
-  const { login, logout, user } = useAuth();
-  const searchParams = useSearchParams();
-  const token = searchParams.get('token');
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (token) {
-      localStorage.setItem('token', token);
-      checkToken(login, logout);
-    }
-    setLoading(false);
-  }, [token]);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [user]);
 
   if (loading) {
     return <Spinner />;
   }
 
-  if (!token || !user) {
+  if (!user) {
     return (
       <div>
         <h1>Не получили ваших данных для авторизации</h1>

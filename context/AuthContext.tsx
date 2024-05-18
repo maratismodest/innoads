@@ -2,7 +2,8 @@
 import fetchUser from '@/utils/api/prisma/fetchUser';
 import { User } from '@prisma/client';
 import * as jose from 'jose';
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { createContext, ReactNode, Suspense, useEffect, useState } from 'react';
 
 type authContextType = {
   user: User | undefined;
@@ -43,10 +44,15 @@ export const checkToken = async (login: any, logout: any) => {
 };
 
 export default function AuthProvider({ children }: Props) {
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
   const [user, setUser] = useState<User | undefined>(undefined);
 
   // @ts-ignore
   useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token);
+    }
     checkToken(login, logout);
     return () => checkToken(login, logout);
   }, []);
@@ -66,5 +72,9 @@ export default function AuthProvider({ children }: Props) {
     login,
     logout,
   };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      <Suspense>{children}</Suspense>
+    </AuthContext.Provider>
+  );
 }
