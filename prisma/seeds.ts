@@ -1,4 +1,4 @@
-import { Article, Category, Post, PrismaClient } from '@prisma/client';
+import { Article, Category, Post, PrismaClient, User } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -117,14 +117,23 @@ const initialPosts: Post[] = [
   },
 ];
 
+const initialUsers: User[] = [
+  {
+    id: 71233480,
+    username: 'maratfaizer',
+    createdAt: new Date('2024-05-17T10:56:53.893Z'),
+    updatedAt: new Date('2024-05-17T10:56:53.893Z'),
+  },
+];
+
 const seed = async () => {
-  // await prisma.category.deleteMany();
-  //
-  // for (const category of initialCategories) {
-  //   await prisma.category.create({
-  //     data: category,
-  //   });
-  // }
+  await prisma.category.deleteMany();
+
+  for (const category of initialCategories) {
+    await prisma.category.create({
+      data: category,
+    });
+  }
   // await prisma.article.deleteMany();
   //
   // for (const article of initialArticles) {
@@ -132,6 +141,13 @@ const seed = async () => {
   //     data: article,
   //   });
   // }
+
+  await prisma.user.deleteMany();
+  for (const user of initialUsers) {
+    await prisma.user.create({
+      data: user,
+    });
+  }
 
   await prisma.post.deleteMany();
   for (const post of initialPosts) {
