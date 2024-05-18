@@ -75,7 +75,7 @@ export async function generateStaticParams() {
   return posts.map(({ slug }) => ({ slug }));
 }
 
-export const revalidate = 86400;
+export const revalidate = 3600;
 
 export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) {
   const post = await fetchAd(slug);
