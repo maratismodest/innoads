@@ -13,29 +13,23 @@ function TelegramPage() {
   const token = searchParams.get('token');
 
   useEffect(() => {
-    if (user) {
-      setLoading(false);
-    }
-  }, [user]);
-
-  useEffect(() => {
     if (token) {
       localStorage.setItem('token', token);
-      checkToken(login, logout);
+      checkToken(login, logout).finally(() => setLoading(false));
     }
   }, [token]);
 
-  if (!token) {
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (!token || !user) {
     return (
       <div>
         <h1>Не получили ваших данных для авторизации</h1>
         <p>Скорее всего, бот работает некорректно. Поробуйте перезапустить бота.</p>
       </div>
     );
-  }
-
-  if (loading) {
-    return <Spinner />;
   }
 
   return <PostForm />;
