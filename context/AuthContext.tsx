@@ -3,7 +3,7 @@ import fetchUser from '@/utils/api/prisma/fetchUser';
 import { User } from '@prisma/client';
 import * as jose from 'jose';
 import { useSearchParams } from 'next/navigation';
-import { createContext, ReactNode, Suspense, useEffect, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 
 type authContextType = {
   user: User | undefined;
@@ -72,9 +72,5 @@ export default function AuthProvider({ children }: Props) {
     login,
     logout,
   };
-  return (
-    <AuthContext.Provider value={value}>
-      <Suspense>{children}</Suspense>
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

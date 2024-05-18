@@ -9,7 +9,7 @@ import dayjs from 'dayjs';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
-import React from 'react';
+import React, { Suspense } from 'react';
 import './globals.css';
 import { Provider as FavouritesProvider } from 'jotai';
 
@@ -39,19 +39,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru">
       <body className={inter.className}>
-        <AuthProvider>
-          <AppProvider>
-            <ModalProvider>
-              <ToastProvider>
-                <FavouritesProvider>
-                  <Header />
-                  <main>{children}</main>
-                  <Footer />
-                </FavouritesProvider>
-              </ToastProvider>
-            </ModalProvider>
-          </AppProvider>
-        </AuthProvider>
+        {/* eslint-disable-next-line react/jsx-no-undef */}
+        <Suspense>
+          <AuthProvider>
+            <AppProvider>
+              <ModalProvider>
+                <ToastProvider>
+                  <FavouritesProvider>
+                    <Header />
+                    <main>{children}</main>
+                    <Footer />
+                  </FavouritesProvider>
+                </ToastProvider>
+              </ModalProvider>
+            </AppProvider>
+          </AuthProvider>
+        </Suspense>
         <Script src="/scripts/ym.js" strategy="afterInteractive" />
         <Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" />
       </body>
