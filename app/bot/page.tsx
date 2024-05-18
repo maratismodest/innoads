@@ -1,6 +1,6 @@
 'use client';
 import Spinner from '@/components/ui/Spinner';
-import { useTelegram } from '@/context/TelegramContext';
+// import { useTelegram } from '@/context/TelegramContext';
 import useAuth from '@/hooks/useAuth';
 import PostForm from '@/modules/PostForm/PostForm';
 import React, { Suspense, useEffect, useState } from 'react';
@@ -8,20 +8,23 @@ import React, { Suspense, useEffect, useState } from 'react';
 function TelegramPage() {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  const { webApp } = useTelegram();
+  // const { webApp } = useTelegram();
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+    setTimeout(
+      () => {
+        setLoading(false);
+      },
+      user ? 0 : 1000
+    );
   }, [user]);
 
-  useEffect(() => {
-    webApp?.MainButton.setParams({
-      text: 'Закрыть окно',
-    });
-    webApp?.MainButton.show();
-  }, [webApp?.MainButton]);
+  // useEffect(() => {
+  //   webApp?.MainButton.setParams({
+  //     text: 'Закрыть окно',
+  //   });
+  //   webApp?.MainButton.show();
+  // }, [webApp?.MainButton]);
 
   if (loading) {
     return <Spinner />;
