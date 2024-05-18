@@ -1,9 +1,10 @@
 'use client';
-import { TelegramProvider } from '@/context/TelegramContext';
+import { TelegramProviderNew } from '@/context/TelegramContextNew';
+// import { TelegramProvider } from '@/context/TelegramContext';
 import React from 'react';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  return <TelegramProvider>{children}</TelegramProvider>;
+  return <TelegramProviderNew>{children}</TelegramProviderNew>;
 };
 
 export default Layout;

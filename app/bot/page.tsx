@@ -1,6 +1,7 @@
 'use client';
 import Spinner from '@/components/ui/Spinner';
-import { useTelegram } from '@/context/TelegramContext';
+// import { useTelegram } from '@/context/TelegramContext';
+import { useTelegramNew } from '@/context/TelegramContextNew';
 import useAuth from '@/hooks/useAuth';
 import PostForm from '@/modules/PostForm/PostForm';
 import React, { Suspense, useCallback, useEffect, useState } from 'react';
@@ -8,7 +9,7 @@ import React, { Suspense, useCallback, useEffect, useState } from 'react';
 function TelegramPage() {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  const { tg, tgUser } = useTelegram();
+  const { tg } = useTelegramNew();
 
   useEffect(() => {
     setTimeout(
@@ -28,7 +29,7 @@ function TelegramPage() {
       tg?.MainButton.setParams({
         text: 'Закрыть окно',
       });
-      tg?.MainButton.show();
+      // tg?.MainButton.show();
     }
   }, [tg?.MainButton]);
 
@@ -61,11 +62,15 @@ function TelegramPage() {
   }
 
   return (
-    <PostForm
-      additionalAction={() => {
-        onSendData();
-      }}
-    />
+    <>
+      <div>{JSON.stringify(tg?.MainButton)}</div>
+      <PostForm
+        additionalAction={() => {
+          tg?.MainButton.show();
+          onSendData();
+        }}
+      />
+    </>
   );
 }
 
