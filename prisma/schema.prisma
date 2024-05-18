@@ -47,6 +47,15 @@ model User {
   // profile   Profile?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Ban       Ban[]
+}
+
+model Ban {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Article {

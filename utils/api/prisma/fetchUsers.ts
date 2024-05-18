@@ -1,8 +1,7 @@
 import prisma from '@/lib/prisma';
-import { UserDTO } from '@/types';
 import { User } from '@prisma/client';
 
-export default async function fetchUsers(): Promise<UserDTO[] | User[]> {
+export default async function fetchUsers(): Promise<User[]> {
   const users = await prisma.user.findMany();
   return users;
 }

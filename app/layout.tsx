@@ -42,21 +42,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         {/* eslint-disable-next-line react/jsx-no-undef */}
         <Suspense>
-          <TelegramProvider>
-            <AuthProvider>
-              <AppProvider>
-                <ModalProvider>
-                  <ToastProvider>
-                    <FavouritesProvider>
-                      <Header />
-                      <main>{children}</main>
-                      <Footer />
-                    </FavouritesProvider>
-                  </ToastProvider>
-                </ModalProvider>
-              </AppProvider>
-            </AuthProvider>
-          </TelegramProvider>
+          {/*<TelegramProvider>*/}
+          <AuthProvider>
+            <AppProvider>
+              <ModalProvider>
+                <ToastProvider>
+                  <FavouritesProvider>
+                    <Header />
+                    <main>{children}</main>
+                    <Footer />
+                  </FavouritesProvider>
+                </ToastProvider>
+              </ModalProvider>
+            </AppProvider>
+          </AuthProvider>
+          {/*</TelegramProvider>*/}
         </Suspense>
         <Script src="/scripts/ym.js" strategy="afterInteractive" />
         {/*<Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" />*/}
