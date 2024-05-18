@@ -16,7 +16,7 @@ const mainRoutes = [
   routes.search,
 ];
 
-const formatDate = (date: string) => dayjs(date).format(dateFormat.time);
+// const formatDate = (date: string) => dayjs(date).format(dateFormat.time);
 
 export default async function sitemap() {
   // const routes = mainRoutes.map(route => ({
