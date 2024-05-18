@@ -27,13 +27,13 @@ function TelegramPage() {
     });
   }, [tg?.MainButton]);
 
-  const onSendData = useCallback(() => {
+  const onSendData = () => {
     const data = {
       type: 'success',
       text: 'Объявление подано в канал!',
     };
     tg?.sendData(JSON.stringify(data));
-  }, [tg]);
+  };
 
   useEffect(() => {
     tg?.onEvent('mainButtonClicked', onSendData);
