@@ -3,22 +3,25 @@ import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
 import PostForm from '@/modules/PostForm/PostForm';
 import { postDefaultValues, PostFormValues } from '@/modules/PostForm/utils';
-import type { PostDTO } from '@/types';
-import fetchPost from '@/utils/api/fetchAd';
-// import { categories } from '@/utils/categories';
+import fetchPost from '@/utils/api/prisma/fetchAd';
+import { Post } from '@prisma/client';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 export default function Edit<NextPage>() {
   const { categories } = useApp();
   const { slug } = useParams();
-  const [post, setPost] = useState<PostDTO | undefined>(undefined);
+  const [post, setPost] = useState<Post | undefined>(undefined);
 
   useEffect(() => {
     if (slug) {
-      fetchPost(slug as string).then(res => setPost(res));
+      fetchPost(slug as string).then(res => {
+        if (res) {
+          setPost(res);
+        }
+      });
     }
-  }, [slug]);
+  }, []);
 
   if (!post) {
     return <Spinner />;

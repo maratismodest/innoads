@@ -1,6 +1,5 @@
-// import { TelegramUser } from '@/types';
 import { TelegramUser } from 'telegram-login-button';
-import client from './createRequest';
+import client from '../createRequest';
 
 export default async function loginTelegram(user: TelegramUser) {
   try {

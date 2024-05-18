@@ -1,6 +1,6 @@
 import { PostDTO } from '@/types';
 
-import client, { beRoutes } from './createRequest';
+import client, { beRoutes } from '../createRequest';
 
 interface FetchAdsProps {
   content: PostDTO[];

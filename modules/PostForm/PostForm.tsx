@@ -8,13 +8,15 @@ import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
 import useValidation from '@/hooks/useValidation';
 import inputValidation from '@/modules/PostForm/inputValidation';
-import { CreatePostDTO, EditPostDTO, PostDTO } from '@/types';
+import { CreatePostDTO, EditPostDTO } from '@/types';
 import { Option } from '@/types/global';
 import postAd from '@/utils/api/prisma/postPost';
 import postTelegram from '@/utils/api/prisma/postTelegram';
-import updateAd from '@/utils/api/updatePost';
+import updateAd from '@/utils/api/backend/updatePost';
+import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import { routes } from '@/utils/constants';
 import slug from '@/utils/slug';
+import { Post } from '@prisma/client';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -24,7 +26,7 @@ import { messages, postDefaultValues, PostFormValues } from './utils';
 
 export interface PostFormProps {
   defaultValues?: PostFormValues;
-  post?: PostDTO;
+  post?: Post;
 }
 
 export type PostOptions = Record<string, string | number | boolean>;
@@ -90,7 +92,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
       router.push(routes.profile);
       return;
     }
-  }, []);
+  }, [user]);
 
   if (!user) {
     return <Spinner />;
@@ -117,7 +119,8 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   const handleEdit = async (formData: EditPostDTO) => {
     try {
       setSending(true);
-      await updateAd(formData);
+      console.log('formData', formData);
+      await updatePostPrisma(formData);
       alert(messages.postUpdated);
       return router.push(routes.profile);
     } catch (e) {

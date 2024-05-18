@@ -9,7 +9,7 @@ import useToast from '@/hooks/useToast';
 import favouritesAtom from '@/state';
 import type { PostDTO } from '@/types';
 import deleteAd from '@/utils/api/prisma/deleteAd';
-import postTelegram from '@/utils/api/postTelegram';
+import postTelegram from '@/utils/api/backend/postTelegram';
 import { NO_IMAGE, routes } from '@/utils/constants';
 import { Dialog } from '@headlessui/react';
 import { Post } from '@prisma/client';
