@@ -107,8 +107,8 @@ export default function PostForm({
       setSending(true);
       const post = await postAd(formData);
       await postTelegram(post, user, categories);
-      additionalAction();
       alert(SUCCESS_MESSAGE);
+      additionalAction();
       return router.push(routes.profile);
     } catch (e) {
       console.log(e);
