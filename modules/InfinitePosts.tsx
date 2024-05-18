@@ -2,13 +2,13 @@
 import { Post } from '@prisma/client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useOnScreen from '@/hooks/useOnScreen';
-import fetchPosts from '@/utils/api/prisma/fetchAds';
+import fetchPosts, { GetPostsParams } from '@/utils/api/prisma/fetchAds';
 
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
 
 type Props = {
-  options: Record<string, number>;
+  options: Partial<GetPostsParams>;
   initPosts: Post[];
   initPage: number;
 };
@@ -47,7 +47,7 @@ export default function InfinitePosts({ options, initPosts, initPage }: Props) {
     if (isOnScreen && hasMore) {
       loadMore();
     }
-  }, [isOnScreen, hasMore, options]);
+  }, [isOnScreen, hasMore, options.categoryId]);
 
   //just reset component to initial state
   useEffect(() => {

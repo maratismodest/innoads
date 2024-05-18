@@ -8,14 +8,14 @@ interface FetchAdsProps {
   totalPages: number;
 }
 
-interface GetParams {
+export interface GetPostsParams {
   size: number;
   page: number;
   userId: number;
   categoryId: number;
 }
 
-export default async function fetchPosts(params: Partial<GetParams>): Promise<Post[]> {
+export default async function fetchPosts(params: Partial<GetPostsParams>): Promise<Post[]> {
   const { size = 20, page = 0, categoryId, userId } = params;
 
   const posts = await prisma.post.findMany({
