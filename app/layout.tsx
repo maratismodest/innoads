@@ -3,7 +3,6 @@ import Header from '@/components/Header/Header';
 import AppProvider from '@/context/AppContext';
 import AuthProvider from '@/context/AuthContext';
 import ModalProvider from '@/context/ModalContext';
-import { TelegramProvider } from '@/context/TelegramContext';
 import ToastProvider from '@/context/ToastContext';
 import { seo } from '@/utils/constants';
 import dayjs from 'dayjs';
@@ -40,7 +39,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ru">
       <body className={inter.className}>
-        {/* eslint-disable-next-line react/jsx-no-undef */}
         <Suspense>
           {/*<TelegramProvider>*/}
           <AuthProvider>

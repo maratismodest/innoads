@@ -12,7 +12,6 @@ import { CreatePostDTO, EditPostDTO } from '@/types';
 import { Option } from '@/types/global';
 import postAd from '@/utils/api/prisma/postPost';
 import postTelegram from '@/utils/api/prisma/postTelegram';
-import updateAd from '@/utils/api/backend/updatePost';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import { routes } from '@/utils/constants';
 import slug from '@/utils/slug';
@@ -27,6 +26,7 @@ import { messages, postDefaultValues, PostFormValues } from './utils';
 export interface PostFormProps {
   defaultValues?: PostFormValues;
   post?: Post;
+  additionalAction?: () => void;
 }
 
 export type PostOptions = Record<string, string | number | boolean>;
@@ -47,7 +47,11 @@ interface Form {
 
 const digitsRegex = /[^0-9]+/g;
 const SUCCESS_MESSAGE = 'Ваше объявление создано!';
-export default function PostForm({ defaultValues = postDefaultValues, post }: PostFormProps) {
+export default function PostForm({
+  defaultValues = postDefaultValues,
+  post,
+  additionalAction = () => {},
+}: PostFormProps) {
   const { categories } = useApp();
   const [data, setData] = useState<Form>({
     categoryId: {
@@ -103,6 +107,7 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
       setSending(true);
       const post = await postAd(formData);
       await postTelegram(post, user, categories);
+      additionalAction();
       alert(SUCCESS_MESSAGE);
       return router.push(routes.profile);
     } catch (e) {

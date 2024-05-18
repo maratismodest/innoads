@@ -1,14 +1,16 @@
 'use client';
 import Spinner from '@/components/ui/Spinner';
+import { useTelegram } from '@/context/TelegramContext';
 // import { useTelegram } from '@/context/TelegramContext';
 import useAuth from '@/hooks/useAuth';
+// import { useTelegram } from '@/hooks/useTelegram';
 import PostForm from '@/modules/PostForm/PostForm';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 
 function TelegramPage() {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  // const { webApp } = useTelegram();
+  const { tg, tgUser } = useTelegram();
 
   useEffect(() => {
     setTimeout(
@@ -19,12 +21,26 @@ function TelegramPage() {
     );
   }, [user]);
 
-  // useEffect(() => {
-  //   webApp?.MainButton.setParams({
-  //     text: 'Закрыть окно',
-  //   });
-  //   webApp?.MainButton.show();
-  // }, [webApp?.MainButton]);
+  useEffect(() => {
+    tg?.MainButton.setParams({
+      text: 'Закрыть окно',
+    });
+  }, [tg?.MainButton]);
+
+  const onSendData = useCallback(() => {
+    const data = {
+      type: 'success',
+      text: 'Объявление подано в канал!',
+    };
+    tg?.sendData(JSON.stringify(data));
+  }, [tg]);
+
+  useEffect(() => {
+    tg?.onEvent('mainButtonClicked', onSendData);
+    return () => {
+      tg?.offEvent('mainButtonClicked', onSendData);
+    };
+  }, [onSendData, tg]);
 
   if (loading) {
     return <Spinner />;
@@ -39,7 +55,16 @@ function TelegramPage() {
     );
   }
 
-  return <PostForm />;
+  return (
+    <>
+      <PostForm
+        additionalAction={() => {
+          tg?.MainButton.show();
+          onSendData();
+        }}
+      />
+    </>
+  );
 }
 
 export default function TelegramPageWrapper() {

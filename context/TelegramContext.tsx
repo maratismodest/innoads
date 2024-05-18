@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { ITelegramUser, IWebApp } from '@/types';
 
 export interface ITelegramContext {
-  webApp?: IWebApp;
+  tg?: IWebApp;
   tgUser?: ITelegramUser;
 }
 
@@ -24,7 +24,7 @@ export const TelegramProvider = ({ children }: { children: React.ReactNode }) =>
   const value = useMemo(() => {
     return webApp
       ? {
-          webApp,
+          tg: webApp,
           unsafeData: webApp.initDataUnsafe,
           tgUser: webApp.initDataUnsafe.user,
         }
