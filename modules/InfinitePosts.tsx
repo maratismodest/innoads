@@ -14,7 +14,6 @@ type Props = {
 };
 
 export default function InfinitePosts({ options, initPosts, initPage }: Props) {
-  console.log('options', options);
   const elementRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen(elementRef);
   const [posts, setPosts] = useState<Post[]>(initPosts);
@@ -48,7 +47,7 @@ export default function InfinitePosts({ options, initPosts, initPage }: Props) {
     if (isOnScreen && hasMore) {
       loadMore();
     }
-  }, [isOnScreen, hasMore, initPosts]);
+  }, [isOnScreen, hasMore]);
 
   //just reset component to initial state
   useEffect(() => {
