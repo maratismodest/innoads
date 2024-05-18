@@ -109,7 +109,8 @@ export default function PostForm({
       await postTelegram(post, user, categories);
       alert(SUCCESS_MESSAGE);
       additionalAction();
-      return router.push(routes.profile);
+      // return router.push(routes.profile);
+      return;
     } catch (e) {
       console.log(e);
       if (e instanceof AxiosError) {
