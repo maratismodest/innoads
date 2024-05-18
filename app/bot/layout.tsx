@@ -1,10 +1,9 @@
 'use client';
 import { TelegramProviderNew } from '@/context/TelegramContextNew';
+// import { TelegramProvider } from '@/context/TelegramContext';
+import React from 'react';
 
-interface TelegramLayout {
-  children: React.ReactNode;
-}
-const Layout = ({ children }: TelegramLayout) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   return <TelegramProviderNew>{children}</TelegramProviderNew>;
 };
 
