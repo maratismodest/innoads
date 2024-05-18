@@ -61,11 +61,15 @@ function TelegramPage() {
   }
 
   return (
-    <PostForm
-      additionalAction={() => {
-        onSendData();
-      }}
-    />
+    <>
+      <div>{JSON.stringify(tg?.MainButton)}</div>
+      <PostForm
+        additionalAction={() => {
+          tg?.MainButton.show();
+          onSendData();
+        }}
+      />
+    </>
   );
 }
 
