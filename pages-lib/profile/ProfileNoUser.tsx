@@ -1,6 +1,5 @@
 import Button from '@/components/ui/Button';
 import useAuth from '@/hooks/useAuth';
-import checkBan from '@/utils/api/checkBan';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 import { ERROR_ALIAS_MESSAGE, userTemplate, ERROR_TOKEN_MESSAGE } from './utils';
 // import { TelegramUser } from '@/types';

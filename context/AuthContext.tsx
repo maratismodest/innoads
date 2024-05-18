@@ -21,36 +21,34 @@ type Props = {
   children: ReactNode;
 };
 
+export const checkToken = async (login: any, logout: any) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded: jose.JWTPayload = await jose.decodeJwt(token);
+      const fetchedUser = await fetchUser(decoded.id as number);
+      if (fetchedUser) {
+        login(fetchedUser, token);
+      } else {
+        logout();
+        alert(
+          'Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново'
+        );
+      }
+    }
+    return;
+  } catch (e) {
+    console.log('e', e);
+  }
+};
+
 export default function AuthProvider({ children }: Props) {
   const [user, setUser] = useState<User | undefined>(undefined);
-  useEffect(() => {
-    console.log('user', user);
-  }, [user]);
-  const checkToken = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const decoded: jose.JWTPayload = await jose.decodeJwt(token);
-        const fetchedUser = await fetchUser(decoded.id as number);
-        if (fetchedUser) {
-          login(fetchedUser, token);
-        } else {
-          logout();
-          alert(
-            'Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново'
-          );
-        }
-      }
-      return;
-    } catch (e) {
-      console.log('e', e);
-    }
-  };
 
   // @ts-ignore
   useEffect(() => {
-    checkToken();
-    return () => checkToken();
+    checkToken(login, logout);
+    return () => checkToken(login, logout);
   }, []);
 
   const login = (user: User, token: string) => {
