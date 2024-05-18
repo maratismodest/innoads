@@ -9,7 +9,6 @@ export default async function postTelegram(post: Post, user: User, categories: O
 
   try {
     const bodyText = body.length > 800 ? body.substring(0, 800) + '...' : body;
-    // const text = `Категория: #${categoryLabel}\n\n${bodyText} \nЦена: ${price}\n\nавтор: @${user.username}`;
     const text = `Категория: #${categoryLabel}\nЦена: ${price} \n\n${title} \n\n${bodyText} \n\nПодробнее: ${process.env.NEXT_PUBLIC_APP_URL}/post/${slug} \n\nавтор: @${user.username}`;
 
     const sendPhoto = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_BOT_TOKEN}/sendMediaGroup?chat_id=${process.env.NEXT_PUBLIC_CHAT_NAME}`;
