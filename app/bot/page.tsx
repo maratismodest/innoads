@@ -15,8 +15,9 @@ function TelegramPage() {
   useEffect(() => {
     if (token) {
       localStorage.setItem('token', token);
-      checkToken(login, logout).finally(() => setLoading(false));
+      checkToken(login, logout);
     }
+    setLoading(false);
   }, [token]);
 
   if (loading) {

@@ -86,10 +86,10 @@ export default function PostForm({ defaultValues = postDefaultValues, post }: Po
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
-    // if (!user) {
-    //   router.push(routes.profile);
-    //   return;
-    // }
+    if (!user) {
+      router.push(routes.profile);
+      return;
+    }
   }, []);
 
   if (!user) {
