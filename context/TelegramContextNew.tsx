@@ -1,16 +1,18 @@
 'use client';
 import Script from 'next/script';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-// import type { ITelegramUser, IWebApp } from '@/types';
 import { TelegramWebApps } from 'telegram-webapps';
+
+type TgType = TelegramWebApps.WebApp;
+
 export interface ITelegramContext {
-  tg?: TelegramWebApps.WebApp;
+  tg?: TgType;
 }
 
 export const TelegramContextNew = createContext<ITelegramContext>({});
 
 export const TelegramProviderNew = ({ children }: { children: React.ReactNode }) => {
-  const [webApp, setWebApp] = useState<TelegramWebApps.WebApp | null>(null);
+  const [webApp, setWebApp] = useState<TgType | null>(null);
 
   useEffect(() => {
     const app = (window as any).Telegram.WebApp;
