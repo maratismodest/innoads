@@ -19,9 +19,9 @@ function TelegramPage() {
     );
   }, [user]);
 
-  useEffect(() => {
-    tg?.MainButton.show();
-  }, []);
+  // useEffect(() => {
+  //   tg?.MainButton.show();
+  // }, []);
 
   useEffect(() => {
     if (tg && tg.MainButton) {
