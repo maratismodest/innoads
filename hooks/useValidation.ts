@@ -1,5 +1,5 @@
 'use client';
-import { PostOptions } from '@/modules/PostForm/PostForm';
+import { PostOptions } from '@/__deprecated__/modules/PostForm/PostForm';
 import { useEffect, useState } from 'react';
 
 export default function useValidation(value: any, validations: PostOptions) {
@@ -37,7 +37,6 @@ export default function useValidation(value: any, validations: PostOptions) {
           setError('');
       }
     }
-
   }, [value, validations]);
 
   return error;

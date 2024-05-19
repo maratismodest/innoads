@@ -5,15 +5,30 @@ const positive = 'Цена должна быть больше 0';
 const too_short = 'Слишком короткое';
 const too_long = 'Слишком длинное';
 const required_image = 'Добавить хотя бы одно фото!';
+const too_many_images = 'Не больше 4 фотографий!';
 
 export const schema = object({
   categoryId: number().required(required).integer().typeError(required),
   price: number().required(required).positive(positive).integer().typeError(required),
-  title: string().required(required).min(10, too_short).max(100, too_long),
+  title: string().required(required).min(4, too_short).max(100, too_long),
   body: string().required(required).min(10, too_short).max(800, too_long),
   agreement: boolean().oneOf([true], required),
-  images: array().min(1, required_image).max(4, 'Не больше 4 фотографий!').required(required_image),
+  images: array()
+    .of(string())
+    .min(1, required_image)
+    .max(4, too_many_images)
+    .required(required_image),
   post: boolean(),
 });
+
+export const defaultValues = {
+  categoryId: undefined,
+  price: undefined,
+  title: undefined,
+  body: undefined,
+  images: [],
+  agreement: true,
+  post: false,
+};
 
 export type IFormInput = InferType<typeof schema>;

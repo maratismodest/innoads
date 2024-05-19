@@ -3,7 +3,7 @@
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import moveImage, { MoveImage } from '@/modules/PostForm/moveImage';
+import moveImage, { MoveImage } from '@/__deprecated__/modules/PostForm/moveImage';
 import deleteImage from '@/utils/api/deleteImage';
 import { NO_IMAGE } from '@/utils/constants';
 import getCompressedImagesLinks from '@/utils/getCompressedImagesLinks';
@@ -62,7 +62,7 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
   const handleDeleteImage = async (current: string) => {
     setLoading(true);
     try {
-      const res = images.filter((image) => image !== current);
+      const res = images.filter(image => image !== current);
       setImages(res);
       return await deleteImage(current);
     } catch (e) {
@@ -70,7 +70,6 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
     } finally {
       setLoading(false);
     }
-
   };
 
   return (
@@ -79,7 +78,7 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
         <div>
           <h4>Добавить фото</h4>
           <div
-            className='relative mb-2 aspect-square w-[48%] cursor-pointer hover:shadow lg:mr-2'
+            className="relative mb-2 aspect-square w-[48%] cursor-pointer hover:shadow lg:mr-2"
             onClick={() => {
               if (ref.current) {
                 ref.current.click();
@@ -87,7 +86,7 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
             }}
           >
             <Image
-              alt='image'
+              alt="image"
               src={NO_IMAGE}
               fill={true}
               style={{
@@ -97,26 +96,23 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
           </div>
         </div>
         <input
-          id='upload'
-          type='file'
+          id="upload"
+          type="file"
           onChange={imageHandler}
           hidden
           multiple
-          accept='.jpg, .jpeg, .png'
+          accept=".jpg, .jpeg, .png"
           ref={ref}
         />
       </div>
-      {!loading && error && <span className='text-red'>{error}</span>}
+      {!loading && error && <span className="text-red">{error}</span>}
       <h4>Предварительный просмотр</h4>
-      <ul
-        className='grid grid-cols-2 gap-4'
-        data-testid='post-form-images'
-      >
+      <ul className="grid grid-cols-2 gap-4" data-testid="post-form-images">
         {images.map((image: string, index: number) => {
           return (
             <li
               key={image}
-              className='relative aspect-square cursor-pointer shadow hover:shadow-2xl'
+              className="relative aspect-square cursor-pointer shadow hover:shadow-2xl"
             >
               <Image
                 alt={image}
@@ -125,39 +121,27 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
                   objectFit: 'cover',
                 }}
                 fill={true}
-                placeholder='blur'
+                placeholder="blur"
                 blurDataURL={NO_IMAGE}
               />
               <Button
-                className='absolute top-1/2 left-0 -translate-y-1/2'
-                onClick={(e) => {
-                  moveImage(
-                    e,
-                    images,
-                    index,
-                    MoveImage.left,
-                    setImages,
-                  );
+                className="absolute left-0 top-1/2 -translate-y-1/2"
+                onClick={e => {
+                  moveImage(e, images, index, MoveImage.left, setImages);
                 }}
               >
                 &larr;
               </Button>
               <Button
-                className='absolute top-1/2 right-0 -translate-y-1/2	'
-                onClick={(e) => {
-                  moveImage(
-                    e,
-                    images,
-                    index,
-                    MoveImage.right,
-                    setImages,
-                  );
+                className="absolute right-0 top-1/2 -translate-y-1/2	"
+                onClick={e => {
+                  moveImage(e, images, index, MoveImage.right, setImages);
                 }}
               >
                 &rarr;
               </Button>
               <Button
-                className='absolute top-0 right-0'
+                className="absolute right-0 top-0"
                 onClick={async () => {
                   await handleDeleteImage(image);
                 }}
@@ -168,10 +152,8 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
           );
         })}
         {loading && (
-          <li
-            className={clsx('relative aspect-square cursor-pointer shadow hover:shadow-2xl')}
-          >
-            <p className='flex justify-center items-center text-red h-full p-4 text-center'>
+          <li className={clsx('relative aspect-square cursor-pointer shadow hover:shadow-2xl')}>
+            <p className="flex h-full items-center justify-center p-4 text-center text-red">
               Загружаем изображение
             </p>
           </li>
@@ -180,5 +162,3 @@ export default function PostFormImages({ images, setImages }: PostFormImagesProp
     </>
   );
 }
-
-

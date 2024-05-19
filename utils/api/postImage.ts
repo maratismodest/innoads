@@ -1,4 +1,4 @@
-import { messages } from '@/modules/PostForm/utils';
+import { messages } from '@/__deprecated__/modules/PostForm/utils';
 
 import client, { beRoutes } from './createRequest';
 
@@ -9,14 +9,11 @@ interface PostImageProps {
 
 export default async function postImage(formData: FormData): Promise<PostImageProps> {
   try {
-    const res = await client.post(beRoutes.uploads,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+    const res = await client.post(beRoutes.uploads, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    );
+    });
     return {
       status: 'ok',
       value: res.data.link as string,
@@ -28,4 +25,4 @@ export default async function postImage(formData: FormData): Promise<PostImagePr
       value: messages.somethingWentWrong,
     };
   }
-};
+}

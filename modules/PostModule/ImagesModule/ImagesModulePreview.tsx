@@ -1,15 +1,16 @@
-import { handleDeleteImage } from '@/app/bot/_utils';
+import { handleDeleteImage } from '@/modules/PostModule/utils';
 import Button from '@/components/ui/Button';
-import moveImage, { MoveImage } from '@/modules/PostForm/moveImage';
+import moveImage, { MoveImage } from '@/__deprecated__/modules/PostForm/moveImage';
 import { NO_IMAGE } from '@/utils/constants';
 import React from 'react';
 import Image from 'next/image';
+
 interface Props {
   images: string[];
   setImages: (images: string[]) => void;
 }
 
-const PostImages = ({ images, setImages }: Props) => {
+const ImagesModulePreview = ({ images, setImages }: Props) => {
   const deleteImage = async (current: string) => {
     setImages(images.filter(x => x !== current));
     return await handleDeleteImage(current);
@@ -66,4 +67,4 @@ const PostImages = ({ images, setImages }: Props) => {
   );
 };
 
-export default PostImages;
+export default ImagesModulePreview;

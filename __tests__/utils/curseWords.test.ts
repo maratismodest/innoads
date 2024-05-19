@@ -1,4 +1,4 @@
-import { PostFormValues } from '@/modules/PostForm/utils';
+import { PostFormValues } from '@/__deprecated__/modules/PostForm/utils';
 import { describe, expect, it } from '@jest/globals';
 import hasCurseWords from '@/utils/curseWords'; // Adjust the import path as needed
 

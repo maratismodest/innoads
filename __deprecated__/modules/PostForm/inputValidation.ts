@@ -1,4 +1,4 @@
-import { PostOptions } from '@/modules/PostForm/PostForm';
+import { PostOptions } from '@/__deprecated__/modules/PostForm/PostForm';
 
 export default function inputValidation(value: any, validations: PostOptions) {
   for (const validation in validations) {

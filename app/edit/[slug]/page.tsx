@@ -1,15 +1,15 @@
 'use client';
 import Spinner from '@/components/ui/Spinner';
-import useApp from '@/hooks/useApp';
-import PostForm from '@/modules/PostForm/PostForm';
-import { postDefaultValues, PostFormValues } from '@/modules/PostForm/utils';
+import EditPostModule from '@/modules/PostModule/EditPostModule/EditPostModule';
 import fetchPost from '@/utils/api/prisma/fetchAd';
+import { routes } from '@/utils/constants';
 import { Post } from '@prisma/client';
-import { useParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import React, { useCallback, useEffect, useState } from 'react';
 
 export default function Edit<NextPage>() {
-  const { categories } = useApp();
+  const router = useRouter();
+  const onSubmitOptional = useCallback(async () => router.push(routes.profile), []);
   const { slug } = useParams();
   const [post, setPost] = useState<Post | undefined>(undefined);
 
@@ -27,14 +27,5 @@ export default function Edit<NextPage>() {
     return <Spinner />;
   }
 
-  const { categoryId, title, body, price } = post;
-  const editValues: PostFormValues = {
-    ...postDefaultValues,
-    categoryId: categories.find(category => category.value === categoryId)?.value || 1,
-    body,
-    title,
-    price,
-  };
-
-  return <PostForm defaultValues={editValues} post={post} />;
+  return <EditPostModule item={post} onSubmitOptional={onSubmitOptional} />;
 }

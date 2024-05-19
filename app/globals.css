@@ -9,7 +9,8 @@
     }
 
     html {
-        @apply scroll-smooth
+        @apply scroll-smooth;
+        scrollbar-gutter: stable;
     }
 
     html,
@@ -80,6 +81,10 @@
     /*img {*/
     /*    height: inherit;*/
     /*}*/
+
+    li {
+        list-style: none;
+    }
 
 }
 

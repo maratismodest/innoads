@@ -3,7 +3,7 @@ import { convertLinksToMedia } from '@/utils/convertLinksToMedia';
 import type { Post, User } from '@prisma/client';
 import axios from 'axios';
 
-export default async function postTelegram(post: Post, user: User, categories: Option[]) {
+export default async function postTelegramDeprecated(post: Post, user: User, categories: Option[]) {
   const { body, price, categoryId, images, title, userId, slug } = post;
   const categoryLabel = categories.find(x => x.value === Number(categoryId))?.label;
 
