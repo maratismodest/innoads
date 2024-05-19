@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.19",
+    "@hookform/resolvers": "^3.4.0",
     "@prisma/client": "^5.14.0",
     "@types/react": "^18.2.79",
     "@types/react-dom": "18.2.25",
@@ -31,10 +32,12 @@
     "postcss": "8.4.38",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.51.4",
     "schema-dts": "^1.1.2",
     "sharp": "^0.33.3",
     "telegram-login-button": "^0.1.0",
-    "tsx": "^4.10.4"
+    "tsx": "^4.10.4",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
