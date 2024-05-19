@@ -23,35 +23,36 @@ type Props = {
   children: ReactNode;
 };
 
-export const checkToken = async (login: any, logout: any) => {
-  try {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decoded: jose.JWTPayload = await jose.decodeJwt(token);
-      if (decoded) {
-        const user = await loginTelegram(decoded as User);
-        if (user) {
-          login(user, token);
+export default function AuthProvider({ children }: Props) {
+  const checkToken = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decoded: jose.JWTPayload = await jose.decodeJwt(token);
+        if (decoded) {
+          const res = await loginTelegram(decoded as User);
+          if (res) {
+            const { token, upsertUser } = res;
+            login(upsertUser, token);
+          } else {
+            logout();
+          }
         } else {
           logout();
+          alert(
+            'Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново'
+          );
         }
-      } else {
-        logout();
-        alert(
-          'Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново'
-        );
       }
+      return;
+    } catch (e) {
+      console.log('e', e);
     }
-    return;
-  } catch (e) {
-    console.log('e', e);
-  }
-};
-
-export default function AuthProvider({ children }: Props) {
+  };
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const [user, setUser] = useState<User | undefined>(undefined);
+  console.log('user', user);
 
   // @ts-ignore
   useEffect(() => {
