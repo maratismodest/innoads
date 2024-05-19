@@ -28,7 +28,7 @@ function TelegramPage() {
       tg?.MainButton.setParams({
         text: 'Закрыть окно',
       });
-      tg?.MainButton.show();
+      // tg?.MainButton.show();
     }
   }, [tg?.MainButton]);
 
