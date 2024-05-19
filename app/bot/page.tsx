@@ -1,14 +1,14 @@
 'use client';
 import Spinner from '@/components/ui/Spinner';
-import { useTelegram } from '@/context/TelegramContext';
 import useAuth from '@/hooks/useAuth';
+import { useTelegram } from '@/hooks/useTelegram';
 import PostForm from '@/modules/PostForm/PostForm';
 import React, { Suspense, useCallback, useEffect, useState } from 'react';
 
 function TelegramPage() {
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
-  const { tg, tgUser } = useTelegram();
+  const { tg } = useTelegram();
 
   useEffect(() => {
     setTimeout(
@@ -19,9 +19,9 @@ function TelegramPage() {
     );
   }, [user]);
 
-  // useEffect(() => {
-  //   tg?.MainButton.show();
-  // }, []);
+  useEffect(() => {
+    tg?.MainButton.show();
+  }, []);
 
   useEffect(() => {
     if (tg && tg.MainButton) {
