@@ -73,6 +73,7 @@ export interface CreatePostDTO {
   images: string;
   slug: string;
   categoryId: number;
+  published?: boolean;
 }
 
 export interface EditPostDTO {
@@ -85,6 +86,7 @@ export interface EditPostDTO {
   images: string;
   slug: string;
   categoryId: number;
+  published?: boolean;
 }
 
 export interface CategoryDTO {
