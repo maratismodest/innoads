@@ -1,5 +1,6 @@
 'use client';
-import fetchUser from '@/utils/api/prisma/fetchUser';
+// import fetchUser from '@/utils/api/prisma/fetchUser';
+import loginTelegram from '@/utils/api/prisma/loginTelegram';
 import { User } from '@prisma/client';
 import * as jose from 'jose';
 import { useSearchParams } from 'next/navigation';
@@ -27,9 +28,13 @@ export const checkToken = async (login: any, logout: any) => {
     const token = localStorage.getItem('token');
     if (token) {
       const decoded: jose.JWTPayload = await jose.decodeJwt(token);
-      const fetchedUser = await fetchUser(decoded.id as number);
-      if (fetchedUser) {
-        login(fetchedUser, token);
+      if (decoded) {
+        const user = await loginTelegram(decoded as User);
+        if (user) {
+          login(user, token);
+        } else {
+          logout();
+        }
       } else {
         logout();
         alert(

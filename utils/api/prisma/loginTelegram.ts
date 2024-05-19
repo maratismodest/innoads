@@ -1,12 +1,13 @@
 // import { TelegramUser } from '@/types';
 'use server';
 import prisma from '@/lib/prisma';
+import { User } from '@prisma/client';
 import * as jose from 'jose';
 import { TelegramUser } from 'telegram-login-button';
 
 const secret = new TextEncoder().encode('Kazan2023!');
 
-export default async function loginTelegram(user: TelegramUser) {
+export default async function loginTelegram(user: TelegramUser | User) {
   try {
     const { id, username } = user;
     const upsertUser = await prisma.user.upsert({
