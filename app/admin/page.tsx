@@ -1,7 +1,9 @@
 'use client';
 import Users from '@/pages-lib/admin/users';
-import fetchBans from '@/utils/api/prisma/fetchBans';
-import fetchUsers from '@/utils/api/prisma/fetchUsers';
+import fetchBansApi from '@/utils/api/fetchBansApi';
+import fetchUsersApi from '@/utils/api/fetchUsersApi';
+// import fetchBans from '@/utils/api/prisma/fetchBans';
+// import fetchUsers from '@/utils/api/prisma/fetchUsers';
 import { Ban, User } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 
@@ -9,9 +11,12 @@ export default function Page() {
   const [users, setUsers] = useState<User[]>([]);
   const [bans, setBans] = useState<Ban[]>([]);
 
+  console.log('users', users);
+  console.log('bans', bans);
+
   useEffect(() => {
-    fetchUsers().then(res => setUsers(res));
-    fetchBans().then(res => setBans(res));
+    fetchUsersApi().then(res => setUsers(res));
+    fetchBansApi().then(res => setBans(res));
   }, []);
 
   return (
