@@ -62,7 +62,7 @@ function TelegramPage() {
 
   return (
     <>
-      <div>{JSON.stringify(tg?.MainButton)}</div>
+      {/*<div>{JSON.stringify(tg?.MainButton)}</div>*/}
       <PostForm
         additionalAction={() => {
           tg?.MainButton.show();
@@ -76,8 +76,8 @@ function TelegramPage() {
 export default function TelegramPageWrapper() {
   return (
     // You could have a loading skeleton as the `fallback` too
-    <Suspense>
-      <TelegramPage />
-    </Suspense>
+    // <Suspense>
+    <TelegramPage />
+    // </Suspense>
   );
 }
