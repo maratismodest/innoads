@@ -1,4 +1,4 @@
-import { handleDeleteImage } from '@/app/web/_utils';
+import { handleDeleteImage } from '@/app/bot/_utils';
 import Button from '@/components/ui/Button';
 import moveImage, { MoveImage } from '@/modules/PostForm/moveImage';
 import { NO_IMAGE } from '@/utils/constants';
