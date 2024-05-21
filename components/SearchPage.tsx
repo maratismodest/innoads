@@ -34,7 +34,11 @@ const SearchPage = () => {
     <>
       <Select options={categories} onChange={handleSelect} value={category} />
       <hr />
-      <InfinitePosts initPage={0} initPosts={[]} options={{ categoryId: category.value }} />
+      <InfinitePosts
+        initPage={0}
+        initPosts={[]}
+        options={{ categoryId: category.value, published: true }}
+      />
     </>
   );
 };
