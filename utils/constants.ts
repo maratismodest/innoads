@@ -47,7 +47,7 @@ export const seo: Record<string, Seo> = {
   },
   search: {
     title: `Поиск в ${process.env.NEXT_PUBLIC_APP_NAME}`,
-    description: `Ищите объявления города Иннополис в бесплатной доске ${process.env.NEXT_PUBLIC_APP_NAME}`,
+    description: `Ищите объявления города ${process.env.NEXT_PUBLIC_APP_NAME} в бесплатной доске ${process.env.NEXT_PUBLIC_APP_NAME}`,
   },
   notFound: {
     title: 'Страница не найдена',

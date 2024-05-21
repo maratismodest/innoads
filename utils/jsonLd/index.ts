@@ -9,7 +9,7 @@ const getMainPageJsonLd = (): WithContext<WebSite> => ({
   ['@context']: 'https://schema.org',
   '@type': 'WebSite',
   name: 'InnoAds',
-  alternateName: 'Доска объявлений города Иннополис',
+  alternateName: `Доска объявлений города ${process.env.NEXT_PUBLIC_APP_NAME}`,
   url: `${process.env.NEXT_PUBLIC_APP_URL}`,
 });
 

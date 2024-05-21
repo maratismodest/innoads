@@ -11,7 +11,9 @@ export default function Header() {
         <Link href={routes.main} className="flex items-center gap-2">
           <span className="text-2xl uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span>
           <span className="hidden lg:inline">|</span>
-          <span className="hidden lg:inline">Доска объявлений города София</span>
+          <span className="hidden lg:inline">
+            Доска объявлений города {process.env.NEXT_PUBLIC_CITY_NAME}
+          </span>
         </Link>
         <HeaderMobileMenu />
         <div className="hidden items-center gap-2 lg:flex">
