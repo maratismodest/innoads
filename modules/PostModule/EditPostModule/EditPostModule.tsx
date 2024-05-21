@@ -1,4 +1,5 @@
 'use client';
+import { getCurrencySymbol } from '@/components/Price/utils';
 import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
@@ -126,7 +127,7 @@ export default function EditPostModule({
         </Field>
 
         <div>
-          <label>Цена</label>
+          <label>Цена ({getCurrencySymbol()})</label>
           <input
             type="number"
             {...register('price')}

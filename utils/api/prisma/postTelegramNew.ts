@@ -1,3 +1,4 @@
+import { getFormattedPrice } from '@/components/Price/utils';
 import { CreatePostDTO, EditPostDTO } from '@/types';
 import { Option } from '@/types/global';
 import { convertLinksToMediaNew } from '@/utils/convertLinksToMediaNew';
@@ -15,7 +16,7 @@ export default async function postTelegramNew(
   try {
     const bodyText = body.length > 800 ? body.substring(0, 800) + '...' : body;
     // const text = `Категория: #${categoryLabel}\n\n${bodyText} \nЦена: ${price}\n\nавтор: @${user.username}`;
-    const text = `Категория: #${categoryLabel} \n${title} \nЦена: <b>${price}</b> \n\n${bodyText} \n\n${published ? `Подробнее: ${process.env.NEXT_PUBLIC_APP_URL}/post/${slug} \n\n` : ''} автор: @${user.username}`;
+    const text = `Категория: #${categoryLabel} \n${title} \nЦена: <b>${getFormattedPrice(price)}</b> \n\n${bodyText} \n\n${published ? `Подробнее: ${process.env.NEXT_PUBLIC_APP_URL}/post/${slug} \n\n` : ''} автор: @${user.username}`;
 
     const sendPhoto = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_BOT_TOKEN}/sendMediaGroup?chat_id=${process.env.NEXT_PUBLIC_CHAT_NAME}`;
     const media = convertLinksToMediaNew(images.split('||'), text);

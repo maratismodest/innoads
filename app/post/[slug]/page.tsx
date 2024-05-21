@@ -1,6 +1,6 @@
 import Item from '@/components/Item';
 import PostPage from '@/components/PostPage';
-import Price from '@/components/Price';
+import Index from '@/components/Price';
 import ShareButton from '@/pages-lib/post/ShareButton';
 import { getAllCategories } from '@/prisma/services/categories';
 import buttonStyles from '@/styles/buttonStyles';
@@ -99,7 +99,7 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
           Категория: {categories.find(x => x.value === categoryId)?.label}
         </Link>
         <h1>{title}</h1>
-        <Price price={price} />
+        <Index price={price} />
         <hr />
         <p className="break-words">{body}</p>
         <time className="mt-5">Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</time>

@@ -19,7 +19,7 @@ import clsx from 'clsx';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { defaultValues, IFormInput, schema } from '../yup';
-
+import { getCurrencySymbol } from '@/components/Price/utils';
 interface PostModuleProps {
   onSubmitOptional?: () => Promise<void>;
 }
@@ -109,7 +109,7 @@ export default function CreatePostModule({
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="form gap-2">
-        <h1>Новое объявление</h1>
+        <h1 className="sr-only">Новое объявление</h1>
         <Field>
           <Label>Выберите категорию</Label>
           <SelectHeadlessUi options={categories} name="categoryId" />
@@ -117,7 +117,7 @@ export default function CreatePostModule({
         </Field>
 
         <div>
-          <label>Цена</label>
+          <label>Цена ({getCurrencySymbol()})</label>
           <input
             type="number"
             {...register('price')}

@@ -2,7 +2,7 @@
 import RedHeart from '@/assets/svg/heart-red.svg';
 import TransparentHeart from '@/assets/svg/heart.svg';
 import ItemButtons from '@/components/Item/item-buttons';
-import Price from '@/components/Price';
+import Index from '@/components/Price';
 import Button from '@/components/ui/Button';
 import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
@@ -138,7 +138,7 @@ export default function Item({ post, edit = false }: Props) {
         </div>
 
         <div className="relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2">
-          <Price price={price} />
+          <Index price={price} />
           <h2 className="mt-auto truncate font-normal">{title}</h2>
           <button
             className="absolute right-0 top-0 z-10 cursor-pointer"
