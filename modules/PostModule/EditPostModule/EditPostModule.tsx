@@ -11,7 +11,7 @@ import imageHandler from '@/modules/PostModule/ImagesModule/utils';
 import buttonStyles from '@/styles/buttonStyles';
 import inputStyles from '@/styles/inputStyles';
 import { EditPostDTO } from '@/types';
-import updatePostPrisma from '@/api/prisma/updatePost';
+import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Post } from '@prisma/client';

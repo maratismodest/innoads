@@ -1,5 +1,5 @@
 import React, { Dispatch } from 'react';
-import postImage from '@/api/postImage';
+import postImage from '@/utils/api/postImage';
 import handleImageResize from '@/utils/handleImageResize';
 
 export default async function getCompressedImagesLinks(

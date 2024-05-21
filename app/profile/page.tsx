@@ -6,7 +6,7 @@ import Spinner from '@/components/ui/Spinner';
 import useAuth from '@/hooks/useAuth';
 import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
 import buttonStyles from '@/styles/buttonStyles';
-import fetchPosts from '@/api/prisma/fetchAds';
+import fetchPosts from '@/utils/api/prisma/fetchAds';
 import { routes } from '@/utils/constants';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Post } from '@prisma/client';

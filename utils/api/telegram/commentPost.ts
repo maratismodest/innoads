@@ -1,5 +1,5 @@
 'use server';
-import { clientTelegram } from '@/api/createRequest';
+import { clientTelegram } from '@/utils/api/createRequest';
 
 export default async function commentPost(
   messageId: number,

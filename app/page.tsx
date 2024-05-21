@@ -1,7 +1,7 @@
 import Categories from '@/components/Categories';
 import InfinitePosts from '@/modules/InfinitePosts';
 import { getAllCategories } from '@/prisma/services/categories';
-import fetchPosts from '@/api/prisma/fetchAds';
+import fetchPosts from '@/utils/api/prisma/fetchAds';
 import { getMainPageJsonLd } from '@/utils/jsonLd';
 
 export const revalidate = 3600;

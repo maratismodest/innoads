@@ -2,7 +2,7 @@
 import { Post } from '@prisma/client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useOnScreen from '@/hooks/useOnScreen';
-import fetchPosts, { GetPostsParams } from '@/api/prisma/fetchAds';
+import fetchPosts, { GetPostsParams } from '@/utils/api/prisma/fetchAds';
 
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';

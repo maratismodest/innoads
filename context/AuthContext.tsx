@@ -1,5 +1,5 @@
 'use client';
-import loginTelegram from '@/api/prisma/loginTelegram';
+import loginTelegram from '@/utils/api/prisma/loginTelegram';
 import { User } from '@prisma/client';
 import * as jose from 'jose';
 import { useSearchParams } from 'next/navigation';

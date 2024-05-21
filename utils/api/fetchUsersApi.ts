@@ -1,4 +1,4 @@
-import { beRoutes, clientPrisma } from '@/api/createRequest';
+import { beRoutes, clientPrisma } from '@/utils/api/createRequest';
 import { User } from '@prisma/client';
 
 export default async function fetchUsersApi(): Promise<User[]> {

@@ -1,4 +1,4 @@
-import { clientTelegram } from '@/api/createRequest';
+import { clientTelegram } from '@/utils/api/createRequest';
 import { getFormattedPrice } from '@/components/Price/utils';
 import { CreatePostDTO, EditPostDTO } from '@/types';
 import { Option } from '@/types/global';
