@@ -11,8 +11,8 @@ export default function Page() {
   const [users, setUsers] = useState<User[]>([]);
   const [bans, setBans] = useState<Ban[]>([]);
 
-  console.log('users', users);
-  console.log('bans', bans);
+  // console.log('users', users);
+  // console.log('bans', bans);
 
   useEffect(() => {
     fetchUsersApi().then(res => setUsers(res));

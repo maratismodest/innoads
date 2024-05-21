@@ -92,7 +92,7 @@ export default function CreatePostModule({
       await postTelegramNew(createPostDto, user, categories);
       if (data.post) {
         const post = await postAd(createPostDto);
-        console.log('post', post);
+        // console.log('post', post);
       }
       reset();
       tg.MainButton.show();

@@ -124,7 +124,7 @@ export default function PostForm({
   const handleEdit = async (formData: EditPostDTO) => {
     try {
       setSending(true);
-      console.log('formData', formData);
+      // console.log('formData', formData);
       await updatePostPrisma(formData);
       alert(messages.postUpdated);
       return router.push(routes.profile);

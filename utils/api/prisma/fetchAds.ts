@@ -25,6 +25,9 @@ export default async function fetchPosts(params: Partial<GetPostsParams>): Promi
       categoryId,
       userId,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
   return posts;
 }

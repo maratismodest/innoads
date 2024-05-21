@@ -13,7 +13,7 @@ const Users = ({ users, bans }: { users: User[]; bans: Ban[] }) => {
       <ul className="grid grid-cols-2 gap-2">
         {users.map(user => {
           const isBanned = Boolean(bans.find(ban => ban.userId == user.id));
-          console.log('isBanned', isBanned);
+          // console.log('isBanned', isBanned);
           return (
             <li key={user.id} className="relative">
               <span>{user.username}</span>
@@ -25,7 +25,7 @@ const Users = ({ users, bans }: { users: User[]; bans: Ban[] }) => {
                 className={clsx('absolute z-10', 'right-0 top-0')}
                 onClick={event => {
                   event.preventDefault();
-                  console.log('user.id', user.id);
+                  // console.log('user.id', user.id);
                   if (isBanned) {
                     deleteBanPrisma(user.id);
                   } else {
