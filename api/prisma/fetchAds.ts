@@ -13,10 +13,11 @@ export interface GetPostsParams {
   page: number;
   userId: number;
   categoryId: number;
+  published: boolean;
 }
 
 export default async function fetchPosts(params: Partial<GetPostsParams>): Promise<Post[]> {
-  const { size = 20, page = 0, categoryId, userId } = params;
+  const { size = 20, page = 0, categoryId, userId, published } = params;
 
   const posts = await prisma.post.findMany({
     skip: size * page,
@@ -24,6 +25,7 @@ export default async function fetchPosts(params: Partial<GetPostsParams>): Promi
     where: {
       categoryId,
       userId,
+      published,
     },
     orderBy: {
       createdAt: 'desc',

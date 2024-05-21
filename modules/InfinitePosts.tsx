@@ -2,7 +2,7 @@
 import { Post } from '@prisma/client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useOnScreen from '@/hooks/useOnScreen';
-import fetchPosts, { GetPostsParams } from '@/utils/api/prisma/fetchAds';
+import fetchPosts, { GetPostsParams } from '@/api/prisma/fetchAds';
 
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
@@ -32,6 +32,7 @@ export default function InfinitePosts({ options, initPosts, initPage }: Props) {
         page,
         size: 20,
       });
+      console.log('content', content);
       setPosts([...posts, ...content]);
       setPage(prev => prev + 1);
       // setHasMore(page + 1 < totalPages);

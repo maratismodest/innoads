@@ -1,7 +1,7 @@
 'use client';
 import Spinner from '@/components/ui/Spinner';
 import EditPostModule from '@/modules/PostModule/EditPostModule/EditPostModule';
-import fetchPost from '@/utils/api/prisma/fetchAd';
+import fetchPost from '@/api/prisma/fetchAd';
 import { routes } from '@/utils/constants';
 import { Post } from '@prisma/client';
 import { useParams, useRouter } from 'next/navigation';

@@ -1,4 +1,4 @@
-import { beRoutes } from '@/utils/api/createRequest';
+import { beRoutes } from '@/api/createRequest';
 import { Article } from '@prisma/client';
 import axios from 'axios';
 

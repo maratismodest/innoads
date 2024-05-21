@@ -1,7 +1,7 @@
 'use client';
 import Users from '@/pages-lib/admin/users';
-import fetchBansApi from '@/utils/api/fetchBansApi';
-import fetchUsersApi from '@/utils/api/fetchUsersApi';
+import fetchBansApi from '@/api/fetchBansApi';
+import fetchUsersApi from '@/api/fetchUsersApi';
 // import fetchBans from '@/utils/api/prisma/fetchBans';
 // import fetchUsers from '@/utils/api/prisma/fetchUsers';
 import { Ban, User } from '@prisma/client';

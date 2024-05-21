@@ -11,6 +11,7 @@ const ItemButtons = ({ showModal }: ItemButtonsProps) => {
   return (
     <>
       <Button
+        title="Снять с публикации"
         className={clsx('absolute z-10', 'right-0 top-0')}
         onClick={event => {
           event.preventDefault();

@@ -1,8 +1,11 @@
 import React, { Dispatch } from 'react';
-import postImage from '@/utils/api/postImage';
+import postImage from '@/api/postImage';
 import handleImageResize from '@/utils/handleImageResize';
 
-export default async function getCompressedImagesLinks(imagesFromInput: FileList, setImages: Dispatch<React.SetStateAction<string[]>>) {
+export default async function getCompressedImagesLinks(
+  imagesFromInput: FileList,
+  setImages: Dispatch<React.SetStateAction<string[]>>
+) {
   for (let i = 0; i < imagesFromInput.length; i++) {
     const initialImage: File = imagesFromInput[i];
     const resizedImage = await handleImageResize(initialImage);

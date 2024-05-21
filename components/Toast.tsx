@@ -39,7 +39,7 @@ const Toast = ({
         </svg>
         <span className="sr-only">Fire icon</span>
       </div>
-      <div className="ms-3 text-sm font-normal">Объявление удалено!</div>
+      <div className="ms-3 text-sm font-normal">Объявление в архиве!</div>
       <button
         type="button"
         className="text-gray-400 hover:text-gray-900 focus:ring-gray-300 hover:bg-gray-100 dark:text-gray-500 dark:bg-gray-800 dark:hover:bg-gray-700 -mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-white p-1.5 focus:ring-2 dark:hover:text-white"

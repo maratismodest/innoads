@@ -5,8 +5,8 @@ import ShareButton from '@/pages-lib/post/ShareButton';
 import { getAllCategories } from '@/prisma/services/categories';
 import buttonStyles from '@/styles/buttonStyles';
 import type { GetSlugPath } from '@/types';
-import fetchAd from '@/utils/api/prisma/fetchAd';
-import fetchAds from '@/utils/api/prisma/fetchAds';
+import fetchAd from '@/api/prisma/fetchAd';
+import fetchAds from '@/api/prisma/fetchAds';
 import { routes, tgLink } from '@/utils/constants';
 import { getPostJsonLd } from '@/utils/jsonLd';
 import mapCategories from '@/utils/mapCategories';
@@ -79,6 +79,7 @@ export const revalidate = 3600;
 
 export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) {
   const post = await fetchAd(slug);
+  console.log('post', post);
   const _categories = await getAllCategories();
   const categories = mapCategories(_categories);
   if (!post || categories.length === 0) {

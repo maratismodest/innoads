@@ -8,10 +8,12 @@ import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
 import favouritesAtom from '@/state';
 import type { PostDTO } from '@/types';
-import deleteAd from '@/utils/api/prisma/deleteAd';
-import postTelegram from '@/utils/api/backend/postTelegram';
+import postTelegram from '@/api/backend/postTelegram';
+import fetchMessage from '@/api/prisma/fetchMessage';
+import updatePostPrisma from '@/api/prisma/updatePost';
+import commentPost from '@/api/telegram/commentPost';
 import { NO_IMAGE, routes } from '@/utils/constants';
-import { Dialog } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { Post } from '@prisma/client';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
@@ -65,11 +67,19 @@ export default function Item({ post, edit = false }: Props) {
         return;
       }
       if (modalText === ItemModalText.delete) {
-        await deleteAd(id);
+        // await deleteAd(id);
+
+        await updatePostPrisma({ ...post, published: false });
+        const message = await fetchMessage(post.id);
+        console.log('message', message);
+        if (message) {
+          const res = await commentPost(message.id);
+          console.log('res', res);
+        }
         setToast(true);
         // revalidatePath('/profile');
         window.location.reload();
-        alert(success.deleted);
+        alert(success.archive);
         return;
       }
     } catch (e) {
@@ -106,14 +116,14 @@ export default function Item({ post, edit = false }: Props) {
           {/* Container to center the panel */}
           <div className="flex min-h-full items-center justify-center p-4">
             {/* The actual dialog panel  */}
-            <Dialog.Panel className="mx-auto max-w-sm rounded bg-white p-4">
-              <Dialog.Title>{modalText}</Dialog.Title>
+            <DialogPanel className="mx-auto max-w-sm rounded bg-white p-4">
+              <DialogTitle>{modalText}</DialogTitle>
               <hr />
               <div className="mt-12 flex justify-around">
                 <Button onClick={handleFunction}>Да</Button>
                 <Button onClick={hideModal}>Нет</Button>
               </div>
-            </Dialog.Panel>
+            </DialogPanel>
           </div>
         </div>
       </Dialog>

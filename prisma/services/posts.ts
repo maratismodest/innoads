@@ -11,7 +11,7 @@ export function createPost(formData: CreatePostDTO) {
   });
 }
 
-export function updatePost(formData: EditPostDTO) {
+export function updatePost(formData: Partial<EditPostDTO>) {
   return prisma.post.update({
     where: {
       id: formData.id,

@@ -10,8 +10,9 @@ import imageHandler from '@/modules/PostModule/ImagesModule/utils';
 import buttonStyles from '@/styles/buttonStyles';
 import inputStyles from '@/styles/inputStyles';
 import { CreatePostDTO } from '@/types';
-import postAd from '@/utils/api/prisma/postPost';
-import postTelegramNew from '@/utils/api/prisma/postTelegramNew';
+import postMessage from '@/api/prisma/postMessage';
+import postAd from '@/api/prisma/postPost';
+import postTelegram, { TelegramResponseProps } from '@/api/telegram/postTelegram';
 import slug from '@/utils/slug';
 import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,6 +21,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { defaultValues, IFormInput, schema } from '../yup';
 import { getCurrencySymbol } from '@/components/Price/utils';
+
 interface PostModuleProps {
   onSubmitOptional?: () => Promise<void>;
 }
@@ -45,6 +47,8 @@ export default function CreatePostModule({
     trigger,
     control,
   } = methods;
+
+  console.log('errors', errors);
 
   const [loading, setLoading] = useState(false);
 
@@ -87,13 +91,18 @@ export default function CreatePostModule({
         images: images.join('||'),
         slug: slug(data.title) + '-' + Math.floor(Math.random() * 100),
         userId: user.id,
-        published: data.post ? true : false,
+        published: Boolean(data.post),
       };
-      await postTelegramNew(createPostDto, user, categories);
-      if (data.post) {
-        const post = await postAd(createPostDto);
-        // console.log('post', post);
-      }
+
+      const post = await postAd(createPostDto);
+
+      const { result }: TelegramResponseProps = (await postTelegram(
+        createPostDto,
+        user,
+        categories
+      )) as TelegramResponseProps;
+      const telegram = await postMessage({ id: result[0]?.message_id, postId: post.id });
+      console.log('_telegram', telegram);
       reset();
       tg.MainButton.show();
       alert('Объявление создано!');
@@ -161,7 +170,7 @@ export default function CreatePostModule({
           <span className="block text-red">{errors.agreement?.message}</span>
         </div>
 
-        <div>
+        <div className="sr-only">
           <input type="checkbox" {...register('post')} name="post" id="post" />
           <label htmlFor="post"> Автоматически подать на сайт</label>
         </div>

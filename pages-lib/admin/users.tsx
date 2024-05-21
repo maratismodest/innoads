@@ -1,7 +1,7 @@
 'use client';
 import Button from '@/components/ui/Button';
-import createBanPrisma from '@/utils/api/prisma/createBanPrisma';
-import deleteBanPrisma from '@/utils/api/prisma/deleteBanPrisma';
+import createBanPrisma from '@/api/prisma/createBanPrisma';
+import deleteBanPrisma from '@/api/prisma/deleteBanPrisma';
 import { Ban, User } from '@prisma/client';
 import { clsx } from 'clsx';
 import React from 'react';

@@ -1,6 +1,6 @@
 import moveImage, { MoveImage } from '@/modules/PostModule/ImagesModule/moveImage';
 import Button from '@/components/ui/Button';
-import deleteImageByFilename from '@/utils/api/deleteImageByFilename';
+import deleteImageByFilename from '@/api/deleteImageByFilename';
 import { NO_IMAGE } from '@/utils/constants';
 import Image from 'next/image';
 import React from 'react';

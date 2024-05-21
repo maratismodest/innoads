@@ -1,4 +1,3 @@
-import { ArticleDTO, PostDTO, UserDTO } from '@/types';
 import { tgLink } from '@/utils/constants';
 import { dateFormat } from '@/utils/date';
 import { Article, Post, User } from '@prisma/client';
@@ -8,12 +7,12 @@ import { Blog, BlogPosting, Person, Product, WebSite, WithContext } from 'schema
 const getMainPageJsonLd = (): WithContext<WebSite> => ({
   ['@context']: 'https://schema.org',
   '@type': 'WebSite',
-  name: 'InnoAds',
-  alternateName: `Доска объявлений города ${process.env.NEXT_PUBLIC_APP_NAME}`,
+  name: process.env.NEXT_PUBLIC_APP_NAME,
+  alternateName: `Доска объявлений города ${process.env.NEXT_PUBLIC_CITY_NAME}`,
   url: `${process.env.NEXT_PUBLIC_APP_URL}`,
 });
 
-const getPostJsonLd = (post: PostDTO | Post): WithContext<Product> => ({
+const getPostJsonLd = (post: Post): WithContext<Product> => ({
   ['@context']: 'https://schema.org',
   '@type': 'Product',
   name: post.title,
@@ -22,12 +21,12 @@ const getPostJsonLd = (post: PostDTO | Post): WithContext<Product> => ({
   offers: {
     '@type': 'Offer',
     url: `${process.env.NEXT_PUBLIC_APP_URL}/posts/${post.slug}`,
-    priceCurrency: 'RUB',
+    priceCurrency: process.env.NEXT_PUBLIC_CURRENCY,
     price: post.price,
   },
 });
 
-const getBlogPostJsonLd = (article: ArticleDTO | Article): WithContext<BlogPosting> => ({
+const getBlogPostJsonLd = (article: Article): WithContext<BlogPosting> => ({
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   mainEntityOfPage: {
@@ -55,12 +54,12 @@ const getBlogPostJsonLd = (article: ArticleDTO | Article): WithContext<BlogPosti
   inLanguage: 'ru',
 });
 
-const getBlogJsonLd = (articles: ArticleDTO[] | Article[]): WithContext<Blog> => ({
+const getBlogJsonLd = (articles: Article[]): WithContext<Blog> => ({
   ['@context']: 'https://schema.org',
   '@type': 'Blog',
 });
 
-const getPersonJsonLd = (user: UserDTO | User): WithContext<Person> => ({
+const getPersonJsonLd = (user: User): WithContext<Person> => ({
   ['@context']: 'https://schema.org',
   '@type': 'Person',
   '@id': tgLink + '/' + user.username,

@@ -28,7 +28,7 @@ export const defaultValues = {
   body: undefined,
   images: [],
   agreement: true,
-  post: false,
+  post: true,
 };
 
 export type IFormInput = InferType<typeof schema>;

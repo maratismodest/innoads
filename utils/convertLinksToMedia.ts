@@ -5,6 +5,7 @@ export const convertLinksToMedia = (images: string[], caption: string) =>
           type: 'photo',
           media,
           caption,
+          parse_mode: 'HTML',
         }
       : {
           type: 'photo',

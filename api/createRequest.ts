@@ -35,4 +35,8 @@ export const clientPrisma = axios.create({
   baseURL: '/api',
 });
 
+export const clientTelegram = axios.create({
+  baseURL: `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_BOT_TOKEN}`,
+});
+
 export default client;

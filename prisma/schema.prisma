@@ -37,7 +37,15 @@ model Post {
   user      User    @relation(fields: [userId], references: [id])
   userId    Int
 
+  messages Message[]
+
   @@index(userId)
+}
+
+model Message {
+  id     Int  @id @unique
+  post   Post @relation(fields: [postId], references: [id])
+  postId Int
 }
 
 model User {
@@ -47,7 +55,7 @@ model User {
   // profile   Profile?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Ban       Ban[]
+  bans      Ban[]
 }
 
 model Ban {
