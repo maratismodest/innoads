@@ -10,15 +10,6 @@ const compressionOptions = {
   useWebWorker: true,
 };
 
-const handleDeleteImage = async (link: string) => {
-  try {
-    const { data } = await axios.delete(link);
-    return data;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 const handlePostImage = async (formData: FormData) => {
   try {
     const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/uploads`, formData, {
@@ -33,4 +24,4 @@ const handlePostImage = async (formData: FormData) => {
   }
 };
 
-export { handlePostImage, ACCEPTED_IMAGE_FORMAT, compressionOptions, handleDeleteImage };
+export { handlePostImage, ACCEPTED_IMAGE_FORMAT, compressionOptions };

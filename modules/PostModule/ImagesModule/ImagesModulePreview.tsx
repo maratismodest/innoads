@@ -1,9 +1,15 @@
-import { handleDeleteImage } from '@/modules/PostModule/utils';
+import moveImage, { MoveImage } from '@/modules/PostModule/ImagesModule/moveImage';
 import Button from '@/components/ui/Button';
-import moveImage, { MoveImage } from '@/__deprecated__/modules/PostForm/moveImage';
+import deleteImageByFilename from '@/utils/api/deleteImageByFilename';
 import { NO_IMAGE } from '@/utils/constants';
-import React from 'react';
 import Image from 'next/image';
+import React from 'react';
+
+const regexpAfterLastSlash = /([^\/]+$)/gm;
+
+export const getNameFromUrl = (url: string) => {
+  return url.match(regexpAfterLastSlash)?.[0];
+};
 
 interface Props {
   images: string[];
@@ -11,9 +17,13 @@ interface Props {
 }
 
 const ImagesModulePreview = ({ images, setImages }: Props) => {
-  const deleteImage = async (current: string) => {
+  const _deleteImage = async (current: string) => {
     setImages(images.filter(x => x !== current));
-    return await handleDeleteImage(current);
+    const filename = getNameFromUrl(current);
+    if (filename) {
+      console.log('filename', filename);
+      return await deleteImageByFilename(filename);
+    }
   };
   return (
     <>
@@ -54,7 +64,7 @@ const ImagesModulePreview = ({ images, setImages }: Props) => {
               <Button
                 className="absolute right-0 top-0"
                 onClick={async () => {
-                  await deleteImage(image);
+                  await _deleteImage(image);
                 }}
               >
                 &times;

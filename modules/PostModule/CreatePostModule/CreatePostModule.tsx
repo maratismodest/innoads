@@ -149,7 +149,12 @@ export default function CreatePostModule({
           <input type="checkbox" {...register('agreement')} name="agreement" id="agreement" />
           <label htmlFor="agreement">
             &nbsp;<span>Соглашаюсь с</span>&nbsp;
-            <a href={`${process.env.NEXT_PUBLIC_APP_URL}/blog/rules`} className="!underline">
+            <a
+              href={`${process.env.NEXT_PUBLIC_APP_URL}/blog/rules`}
+              className="!underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               правилами и условиями
             </a>
           </label>

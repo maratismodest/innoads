@@ -11,7 +11,6 @@ import inputValidation from '@/__deprecated__/modules/PostForm/inputValidation';
 import { CreatePostDTO, EditPostDTO } from '@/types';
 import { Option } from '@/types/global';
 import postAd from '@/utils/api/prisma/postPost';
-import postTelegram from '@/__deprecated__/utils/api/postTelegram';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import { routes } from '@/utils/constants';
 import slug from '@/utils/slug';
@@ -20,7 +19,6 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-import PostFormImages from './PostFormImages';
 import { messages, postDefaultValues, PostFormValues } from './utils';
 
 export interface PostFormProps {
@@ -106,7 +104,7 @@ export default function PostForm({
     try {
       setSending(true);
       const post = await postAd(formData);
-      await postTelegram(post, user, categories);
+      // await postTelegram(post, user, categories);
       additionalAction();
       alert(SUCCESS_MESSAGE);
       return router.push(routes.profile);
@@ -267,7 +265,7 @@ export default function PostForm({
             return null;
         }
       })}
-      <PostFormImages images={images} setImages={setImages} />
+      {/*<PostFormImages images={images} setImages={setImages} />*/}
       {/*<label>*/}
       {/*  <input type="checkbox" checked /> Соглашаюсь с&nbsp;*/}
       {/*  <a href="/blog/rules" className="underline" target="_blank" rel="noopener noreferrer">*/}
