@@ -71,7 +71,6 @@ export default function Item({ post, edit = false }: Props) {
 
         await updatePostPrisma({ ...post, published: false });
         const message = await fetchMessage(post.id);
-        console.log('message', message);
         if (message) {
           const res = await commentPost(message.id);
           console.log('res', res);

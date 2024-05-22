@@ -1,4 +1,3 @@
-import Item from '@/components/Item';
 import PostPage from '@/components/PostPage';
 import Index from '@/components/Price';
 import ShareButton from '@/pages-lib/post/ShareButton';
@@ -79,7 +78,6 @@ export const revalidate = 3600;
 
 export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) {
   const post = await fetchAd(slug);
-  console.log('post', post);
   const _categories = await getAllCategories();
   const categories = mapCategories(_categories);
   if (!post || categories.length === 0) {

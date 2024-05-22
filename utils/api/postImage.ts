@@ -1,5 +1,3 @@
-import { messages } from '@/__deprecated__/modules/PostForm/utils';
-
 import client, { beRoutes } from './createRequest';
 
 interface PostImageProps {
@@ -22,7 +20,7 @@ export default async function postImage(formData: FormData): Promise<PostImagePr
     console.log(e);
     return {
       status: 'error',
-      value: messages.somethingWentWrong,
+      value: 'Что-то пошло не так при отправке изображения',
     };
   }
 }

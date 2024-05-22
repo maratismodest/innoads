@@ -6,7 +6,6 @@ export default async function commentPost(
   text: string = '<u>Это объявление снято с публикации</u>'
 ) {
   try {
-    console.log('here');
     const { data } = await clientTelegram.post('/sendMessage', {
       chat_id: process.env.NEXT_PUBLIC_CHAT_NAME,
       text: text,

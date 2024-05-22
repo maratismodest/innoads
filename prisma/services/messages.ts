@@ -7,7 +7,6 @@ export function getAllMessage() {
 
 export function getMessageByPostId(postId: number) {
   const message = prisma.message.findFirst({ where: { postId } });
-  console.log('message', postId);
   return message;
 }
 

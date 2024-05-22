@@ -6,7 +6,7 @@ import buttonStyles from '@/styles/buttonStyles';
 import fetchBansApi from '@/utils/api/fetchBansApi';
 import fetchUsersApi from '@/utils/api/fetchUsersApi';
 import fetchPosts from '@/utils/api/prisma/fetchAds';
-import { Ban, Post, User } from '@prisma/client';
+import { Ban, Post, User, Role } from '@prisma/client';
 import React, { useEffect, useState } from 'react';
 
 export default function Page() {
@@ -22,12 +22,12 @@ export default function Page() {
     fetchPosts({ size: 500 }).then(res => setPosts(res));
   };
   useEffect(() => {
-    if (user && user.role === 'ADMIN') {
+    if (user && user.role === Role.ADMIN) {
       onClick();
     }
   }, [user]);
 
-  if (!user || user.role !== 'ADMIN') {
+  if (!user || user.role !== Role.ADMIN) {
     return (
       <div>
         <h1>У вас нет доступа к этой странице!</h1>

@@ -29,7 +29,6 @@ export default function AuthProvider({ children }: Props) {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const [user, setUser] = useState<UserWithBans | undefined>(undefined);
-  console.log('user', user);
 
   const checkToken = useCallback(async () => {
     try {
@@ -42,7 +41,6 @@ export default function AuthProvider({ children }: Props) {
             const { token, upsertUser } = res;
             login(upsertUser, token);
             if (upsertUser.bans.length > 0) {
-              console.log('res', upsertUser.bans);
               setIsOpen(true);
               return;
             }

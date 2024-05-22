@@ -32,7 +32,6 @@ export default function InfinitePosts({ options, initPosts, initPage }: Props) {
         page,
         size: 20,
       });
-      console.log('content', content);
       setPosts([...posts, ...content]);
       setPage(prev => prev + 1);
       // setHasMore(page + 1 < totalPages);
