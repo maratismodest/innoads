@@ -1,4 +1,5 @@
 'use client';
+import Accordion from '@/components/Accordion';
 import Posts from '@/components/Posts';
 import useAuth from '@/hooks/useAuth';
 import Users from '@/pages-lib/admin/users';
@@ -43,14 +44,19 @@ export default function Page() {
           Обновить данные
         </button>
       </div>
-      <Users users={users} bans={bans} />
+      <Accordion title="Пользователи">
+        <Users users={users} bans={bans} />
+      </Accordion>
+
       <hr />
-      <h2>Посты</h2>
-      <p>Можно с помощью крестика снять объявление из публикации</p>
-      <Posts posts={posts.filter(x => x.published === true)} edit={true} />
+      <Accordion title="Активные объявления">
+        <Posts posts={posts.filter(x => x.published === true)} edit={true} />
+      </Accordion>
+
       <hr />
-      <h2>Архивные</h2>
-      <Posts posts={posts.filter(x => x.published === false)} edit={true} />
+      <Accordion title="Архивные объявления">
+        <Posts posts={posts.filter(x => x.published === false)} edit={true} />
+      </Accordion>
     </>
   );
 }
