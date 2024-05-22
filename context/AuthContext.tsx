@@ -39,6 +39,9 @@ const decodeToken = async (token: string) => {
   }
 };
 
+const TOKEN =
+  'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NjM4NTE1NzE4NSwidXNlcm5hbWUiOiJJbG51ck1hc3Rlcklubm8iLCJleHAiOjMxNTM2MDAwMDAwfQ.8DXYHcMgs4pRCys8niAfV4ZWaaPRL6p4CrEnw74iAS4';
+
 export default function AuthProvider({ children }: Props) {
   const [message, setMessage] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
@@ -54,11 +57,12 @@ export default function AuthProvider({ children }: Props) {
       if (token) {
         // пытаемся понять, валидный ли токен
         const decoded = await decodeToken(token);
-        console.log('decoded', decoded);
         // если токен валидный
         if (decoded) {
+          console.log('decoded', decoded);
           // создаем/обновляем пользователя
           const res = await loginTelegram(decoded as User);
+
           // если получилось, то
           if (res) {
             // получаем новый токен и нового пользователя
