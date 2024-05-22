@@ -23,12 +23,12 @@ export default function Page() {
     fetchPosts({ size: 500 }).then(res => setPosts(res));
   };
   useEffect(() => {
-    if (user && user.role === Role.ADMIN) {
+    if (user && user.role == Role.ADMIN) {
       onClick();
     }
   }, [user]);
 
-  if (!user || user.role !== Role.ADMIN) {
+  if (!user || user.role != Role.ADMIN) {
     return (
       <div>
         <h1>У вас нет доступа к этой странице!</h1>
