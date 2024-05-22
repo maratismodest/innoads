@@ -1,14 +1,14 @@
-import { PostFormValues } from '@/__deprecated__/modules/PostForm/utils';
 import { describe, expect, it } from '@jest/globals';
 import hasCurseWords from '@/utils/curseWords'; // Adjust the import path as needed
+import { Post } from '@prisma/client';
 
 describe('hasCurseWords function', () => {
   it('should detect curse words in title and body', () => {
-    const postWithCurseWords: PostFormValues = {
+    const postWithCurseWords: Partial<Post> = {
       title: 'Avoiding curse words',
       body: 'This body contains a bad word like онанист',
-      price: '',
-      categoryId: 0,
+      price: 100,
+      categoryId: 1,
     };
 
     expect(hasCurseWords(postWithCurseWords)).toBe(true);
