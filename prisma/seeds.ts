@@ -153,7 +153,7 @@ const initialPosts: Post[] = [
     preview: 'https://chamala.tatar/uploads/1715943397663.jpeg',
     images: 'https://chamala.tatar/uploads/free.png',
     slug: 'test-99',
-    userId: 71233480,
+    userId: '71233480',
     createdAt: new Date('2024-05-17T10:56:53.893Z'),
     updatedAt: new Date('2024-05-17T10:56:53.893Z'),
     published: true,
@@ -162,7 +162,7 @@ const initialPosts: Post[] = [
 
 const initialUsers: User[] = [
   {
-    id: 71233480,
+    id: '71233480',
     username: 'maratfaizer',
     createdAt: new Date('2024-05-17T10:56:53.893Z'),
     updatedAt: new Date('2024-05-17T10:56:53.893Z'),

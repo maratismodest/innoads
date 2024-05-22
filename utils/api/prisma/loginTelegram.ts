@@ -12,13 +12,13 @@ export default async function loginTelegram(user: TelegramUser | User) {
     const { id, username } = user;
     const upsertUser = await prisma.user.upsert({
       where: {
-        id: id,
+        id: String(id),
       },
       update: {
         username: username,
       },
       create: {
-        id: id,
+        id: String(id),
         username: username,
       },
       include: {

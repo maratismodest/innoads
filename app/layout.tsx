@@ -3,16 +3,16 @@ import Header from '@/components/Header/Header';
 import AppProvider from '@/context/AppContext';
 import AuthProvider from '@/context/AuthContext';
 import ModalProvider from '@/context/ModalContext';
-// import { TelegramProvider } from '@/context/TelegramContext';
+import QueryProvider from '@/context/QueryContext';
 import ToastProvider from '@/context/ToastContext';
 import { seo } from '@/utils/constants';
 import dayjs from 'dayjs';
+import { Provider as FavouritesProvider } from 'jotai';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import React, { Suspense } from 'react';
 import './globals.css';
-import { Provider as FavouritesProvider } from 'jotai';
 
 require('dayjs/locale/ru');
 dayjs.locale('ru');
@@ -41,21 +41,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ru">
       <body className={inter.className}>
         <Suspense>
-          {/*<TelegramProvider>*/}
-          <AuthProvider>
-            <AppProvider>
-              <ModalProvider>
-                <ToastProvider>
-                  <FavouritesProvider>
-                    <Header />
-                    <main>{children}</main>
-                    <Footer />
-                  </FavouritesProvider>
-                </ToastProvider>
-              </ModalProvider>
-            </AppProvider>
-          </AuthProvider>
-          {/*</TelegramProvider>*/}
+          <QueryProvider>
+            {/*<TelegramProvider>*/}
+            <AuthProvider>
+              <AppProvider>
+                <ModalProvider>
+                  <ToastProvider>
+                    <FavouritesProvider>
+                      <Header />
+                      <main>{children}</main>
+                      <Footer />
+                    </FavouritesProvider>
+                  </ToastProvider>
+                </ModalProvider>
+              </AppProvider>
+            </AuthProvider>
+            {/*</TelegramProvider>*/}
+          </QueryProvider>
         </Suspense>
         <Script src="/scripts/ym.js" strategy="afterInteractive" />
         <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />

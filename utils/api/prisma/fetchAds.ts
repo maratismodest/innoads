@@ -1,17 +1,11 @@
 'use server';
 import prisma from '@/lib/prisma';
-import { PostDTO } from '@/types';
 import { Post } from '@prisma/client';
-
-interface FetchAdsProps {
-  content: PostDTO[];
-  totalPages: number;
-}
 
 export interface GetPostsParams {
   size: number;
   page: number;
-  userId: number;
+  userId: string;
   categoryId: number;
   published: boolean;
 }

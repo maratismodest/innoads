@@ -1,4 +1,4 @@
-import { PostFormValues } from '@/__deprecated__/modules/PostForm/utils';
+import { Post } from '@prisma/client';
 
 const badPatterns = [
   '^(о|а)н(о|а)нист.*',
@@ -196,6 +196,6 @@ const curseWords: curseWordsProps = {
   },
 };
 
-export default function hasCurseWords({ title, body }: PostFormValues) {
+export default function hasCurseWords({ title, body }: Pick<Post, 'title' | 'body'>) {
   return curseWords.containsMat(title) || curseWords.containsMat(body);
 }

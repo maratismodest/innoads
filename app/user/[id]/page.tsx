@@ -14,7 +14,7 @@ export async function generateStaticParams() {
   const users = await fetchUsers();
 
   return users.map(user => ({
-    id: user.id.toString(),
+    id: user.id,
   }));
 }
 
@@ -40,7 +40,7 @@ export default async function PublicProfile<NextPage>({ params: { id } }: GetIdP
   if (!user) {
     return notFound();
   }
-  const posts = await fetchPosts({ userId: Number(id) });
+  const posts = await fetchPosts({ userId: id });
 
   return (
     <>

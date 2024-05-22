@@ -9,11 +9,11 @@ export function loginUsers(): Promise<User[]> {
   return prisma.user.findMany();
 }
 
-export function getUserById(id: number) {
+export function getUserById(id: string) {
   try {
     return prisma.user.findUnique({
       where: {
-        id: Number(id),
+        id,
       },
       include: {
         bans: true,

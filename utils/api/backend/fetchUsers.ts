@@ -1,8 +1,7 @@
-import { UserDTO } from '@/types';
+import { beRoutes, clientPrisma } from '@/utils/api/createRequest';
+import { User } from '@prisma/client';
 
-import client, { beRoutes } from '../createRequest';
-
-export default async function fetchUsers(): Promise<UserDTO[]> {
-  const { data } = await client.get<UserDTO[]>(beRoutes.users);
+export default async function fetchUsers(): Promise<User[]> {
+  const { data } = await clientPrisma.get<User[]>(beRoutes.users);
   return data;
 }

@@ -39,9 +39,6 @@ const decodeToken = async (token: string) => {
   }
 };
 
-const TOKEN =
-  'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6NjM4NTE1NzE4NSwidXNlcm5hbWUiOiJJbG51ck1hc3Rlcklubm8iLCJleHAiOjMxNTM2MDAwMDAwfQ.8DXYHcMgs4pRCys8niAfV4ZWaaPRL6p4CrEnw74iAS4';
-
 export default function AuthProvider({ children }: Props) {
   const [message, setMessage] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);

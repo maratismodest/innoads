@@ -1,4 +1,4 @@
-import { Post, User, Prisma } from '@prisma/client';
+import { Post, Prisma } from '@prisma/client';
 
 export type ArticleDTO = Required<{
   id: number;
@@ -15,7 +15,7 @@ export interface Seo {
 }
 
 export interface GetIdPath {
-  params: { id: number };
+  params: { id: string };
 }
 
 export interface GetSlugPath {
@@ -68,7 +68,7 @@ export interface CreatePostDTO {
   title: string;
   body: string;
   price: number;
-  userId: number;
+  userId: string;
   preview: string;
   images: string;
   slug: string;
@@ -81,7 +81,7 @@ export interface EditPostDTO {
   title: string;
   body: string;
   price: number;
-  readonly userId: number;
+  readonly userId: string;
   preview: string;
   images: string;
   readonly slug: string;
