@@ -123,6 +123,7 @@ const initialUsers: User[] = [
     username: 'maratfaizer',
     createdAt: new Date('2024-05-17T10:56:53.893Z'),
     updatedAt: new Date('2024-05-17T10:56:53.893Z'),
+    role: 'USER',
   },
 ];
 

@@ -21,6 +21,9 @@ export default async function loginTelegram(user: TelegramUser | User) {
         id: id,
         username: username,
       },
+      include: {
+        bans: true,
+      },
     });
 
     const token = await new jose.SignJWT({

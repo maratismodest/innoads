@@ -63,6 +63,7 @@ model Ban {
   id        Int      @id @default(autoincrement())
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
+  reason    String?  @default("Нарушение правил")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

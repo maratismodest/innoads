@@ -79,6 +79,10 @@ export default function CreatePostModule({
     return <Spinner />;
   }
 
+  if (user.bans.length > 0) {
+    return <div>Ваш аккаут заблокирован!</div>;
+  }
+
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
       setLoading(true);

@@ -1,6 +1,7 @@
 'use client';
 import Posts from '@/components/Posts';
 import useAuth from '@/hooks/useAuth';
+import Users from '@/pages-lib/admin/users';
 import buttonStyles from '@/styles/buttonStyles';
 import fetchBansApi from '@/utils/api/fetchBansApi';
 import fetchUsersApi from '@/utils/api/fetchUsersApi';
@@ -35,21 +36,21 @@ export default function Page() {
   }
 
   return (
-    <div>
-      {/*<Users users={users} bans={bans} />*/}
-      {/*<hr />*/}
+    <>
       <div className="mb-2 flex justify-between">
-        <h1>Посты</h1>
+        <h1>Панель администрирования</h1>
         <button className={buttonStyles()} onClick={onClick}>
           Обновить данные
         </button>
       </div>
-
+      <Users users={users} bans={bans} />
+      <hr />
+      <h2>Посты</h2>
       <p>Можно с помощью крестика снять объявление из публикации</p>
       <Posts posts={posts.filter(x => x.published === true)} edit={true} />
       <hr />
       <h2>Архивные</h2>
       <Posts posts={posts.filter(x => x.published === false)} edit={true} />
-    </div>
+    </>
   );
 }

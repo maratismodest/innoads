@@ -1,13 +1,15 @@
 'use client';
+import Popup from '@/components/ui/Popup';
+import { UserWithBans } from '@/types';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 import { User } from '@prisma/client';
 import * as jose from 'jose';
 import { useSearchParams } from 'next/navigation';
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import { createContext, ReactNode, useCallback, useState, useEffect } from 'react';
 
 type authContextType = {
-  user: User | undefined;
-  login: (user: User, token: string) => void | undefined;
+  user: UserWithBans | undefined;
+  login: (user: UserWithBans, token: string) => void | undefined;
   logout: () => void | undefined;
 };
 
@@ -23,7 +25,13 @@ type Props = {
 };
 
 export default function AuthProvider({ children }: Props) {
-  const checkToken = async () => {
+  let [isOpen, setIsOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
+  const [user, setUser] = useState<UserWithBans | undefined>(undefined);
+  console.log('user', user);
+
+  const checkToken = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       if (token) {
@@ -33,6 +41,11 @@ export default function AuthProvider({ children }: Props) {
           if (res) {
             const { token, upsertUser } = res;
             login(upsertUser, token);
+            if (upsertUser.bans.length > 0) {
+              console.log('res', upsertUser.bans);
+              setIsOpen(true);
+              return;
+            }
           } else {
             logout();
           }
@@ -47,11 +60,7 @@ export default function AuthProvider({ children }: Props) {
     } catch (e) {
       console.log('e', e);
     }
-  };
-  const searchParams = useSearchParams();
-  const token = searchParams.get('token');
-  const [user, setUser] = useState<User | undefined>(undefined);
-  console.log('user', user);
+  }, []);
 
   // @ts-ignore
   useEffect(() => {
@@ -63,7 +72,7 @@ export default function AuthProvider({ children }: Props) {
     return () => checkToken();
   }, []);
 
-  const login = (user: User, token: string) => {
+  const login = (user: UserWithBans, token: string) => {
     localStorage.setItem('token', token);
     setUser(user);
   };
@@ -78,5 +87,15 @@ export default function AuthProvider({ children }: Props) {
     login,
     logout,
   };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      <Popup
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        text="Ваш аккаунт заблокирован"
+        buttons={[{ text: 'ОК', onClick: () => setIsOpen(false) }]}
+      />
+      {children}
+    </AuthContext.Provider>
+  );
 }

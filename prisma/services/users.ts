@@ -15,6 +15,9 @@ export function getUserById(id: number) {
       where: {
         id: Number(id),
       },
+      include: {
+        bans: true,
+      },
     });
   } catch (e) {
     console.error(JSON.stringify(e));

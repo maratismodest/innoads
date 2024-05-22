@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client';
+import { Post, User, Prisma } from '@prisma/client';
 
 export type ArticleDTO = Required<{
   id: number;
@@ -160,3 +160,7 @@ export interface IWebApp {
   onEvent: (actionName: string, onSendData: unknown) => void;
   offEvent: (actionName: string, onSendData: unknown) => void;
 }
+
+export type UserWithBans = Prisma.UserGetPayload<{
+  include: { bans: true };
+}>;
