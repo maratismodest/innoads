@@ -11,12 +11,14 @@ type authContextType = {
   user: UserWithBans | undefined;
   login: (user: UserWithBans, token: string) => void | undefined;
   logout: () => void | undefined;
+  loading: boolean;
 };
 
 const authContextDefaultValues: authContextType = {
   user: undefined,
   login: () => {},
   logout: () => {},
+  loading: false,
 };
 export const AuthContext = createContext<authContextType>(authContextDefaultValues);
 
@@ -24,39 +26,68 @@ type Props = {
   children: ReactNode;
 };
 
+const MESSAGE_TOKEN_ERROR =
+  'Что-то пошло не так: попробуйте перезапустить сайт/бота и авторизоваться заново';
+const MESSAGE_USER_BANNED = 'Ваш аккаунт заблокирован';
+
+const decodeToken = async (token: string) => {
+  try {
+    const decoded: jose.JWTPayload = await jose.decodeJwt(token);
+    return decoded;
+  } catch (error) {
+    console.error('decodeToken', error);
+  }
+};
+
 export default function AuthProvider({ children }: Props) {
-  let [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState<string>('');
+  const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const [user, setUser] = useState<UserWithBans | undefined>(undefined);
-
+  const [loading, setLoading] = useState(false);
   const checkToken = useCallback(async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem('token');
+      // проверим наличие токена
       if (token) {
-        const decoded: jose.JWTPayload = await jose.decodeJwt(token);
+        // пытаемся понять, валидный ли токен
+        const decoded = await decodeToken(token);
+        console.log('decoded', decoded);
+        // если токен валидный
         if (decoded) {
+          // создаем/обновляем пользователя
           const res = await loginTelegram(decoded as User);
+          // если получилось, то
           if (res) {
+            // получаем новый токен и нового пользователя
             const { token, upsertUser } = res;
+            // токен - в localStorage, пользователя в state
             login(upsertUser, token);
+            // дополнительно проверяем, забанен ли пользователь
             if (upsertUser.bans.length > 0) {
+              // если да, то сообщаем ему об этом
               setIsOpen(true);
-              return;
+              setMessage(MESSAGE_USER_BANNED);
             }
           } else {
             logout();
           }
-        } else {
+        }
+        // если токен не валидный - предлагаем пользователю авторизоваться заново
+        else {
+          // токен - удаляем из localStorage, пользователь - undefined
+          setIsOpen(true);
+          setMessage(MESSAGE_TOKEN_ERROR);
           logout();
-          alert(
-            'Вы слишком давно авторизовывались: попробуйте перезапустить страницу и авторизоваться заново'
-          );
         }
       }
       return;
     } catch (e) {
       console.log('e', e);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -84,13 +115,14 @@ export default function AuthProvider({ children }: Props) {
     user,
     login,
     logout,
+    loading,
   };
   return (
     <AuthContext.Provider value={value}>
       <Popup
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        text="Ваш аккаунт заблокирован"
+        text={message}
         buttons={[{ text: 'ОК', onClick: () => setIsOpen(false) }]}
       />
       {children}

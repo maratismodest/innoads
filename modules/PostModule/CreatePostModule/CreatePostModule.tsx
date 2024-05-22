@@ -30,7 +30,7 @@ export default function CreatePostModule({
   onSubmitOptional = async () => undefined,
 }: PostModuleProps) {
   const { categories } = useApp();
-  const { user } = useAuth();
+  const { user, loading: userLoading } = useAuth();
   const { tg } = useTelegram();
 
   const methods = useForm<IFormInput>({
@@ -75,8 +75,17 @@ export default function CreatePostModule({
     };
   }, [onSendData, tg]);
 
-  if (!user) {
+  if (userLoading) {
     return <Spinner />;
+  }
+
+  if (!user) {
+    return (
+      <div>
+        <h1>Вы не авторизованы!</h1>
+        <p>Попробуйте перезайти на сайте или перезапустить бота</p>
+      </div>
+    );
   }
 
   if (user.bans.length > 0) {
