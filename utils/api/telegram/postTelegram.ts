@@ -33,7 +33,7 @@ export default async function postTelegram(
   try {
     const bodyText = body.length > 800 ? body.substring(0, 800) + '...' : body;
     // const text = `Категория: #${categoryLabel} \n${title} \nЦена: <b>${getFormattedPrice(price)}</b> \n\n${bodyText} \n\n${published ? `Подробнее: ${process.env.NEXT_PUBLIC_APP_URL}/post/${slug} \n\n` : ''} автор: @${user.username}`;
-    const text = `Категория: #${categoryLabel} \n${title} \nЦена: <b>${getFormattedPrice(price)}</b> \n\n${bodyText} \n\nавтор: @${user.username}`;
+    const text = `Категория: #${categoryLabel} \n${title} \nЦена: <b>${getFormattedPrice(price)}</b> \n\n💬 ${bodyText} \n\n👤 @${user.username}`;
 
     const sendPhoto = `/sendMediaGroup?chat_id=${process.env.NEXT_PUBLIC_CHAT_NAME}`;
     const media = convertLinksToMedia(images.split('||'), text);
