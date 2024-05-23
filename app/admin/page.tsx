@@ -8,32 +8,43 @@ import buttonStyles from '@/styles/buttonStyles';
 import fetchBansApi from '@/utils/api/client/fetchBansApi';
 import fetchPosts from '@/utils/api/prisma/fetchAds';
 import fetchUsers from '@/utils/api/client/fetchUsers';
-import { Ban, Post, Role } from '@prisma/client';
+import { Post, Role } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 
 export default function AdminPage() {
-  const { data: users, isLoading, error } = useQuery({ queryKey: ['users'], queryFn: fetchUsers });
   const { user, loading } = useAuth();
-  // const { users, getUsers, loadingUsers } = useUsersStore();
-  const [bans, setBans] = useState<Ban[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
+  const {
+    data: users,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({ queryKey: ['users'], queryFn: fetchUsers });
+  const {
+    data: bans,
+    isLoading: isLoadingBans,
+    error: errorBans,
+    refetch: refetchBans,
+  } = useQuery({ queryKey: ['bans'], queryFn: fetchBansApi });
 
   const onClick = () => {
-    fetchBansApi().then(res => setBans(res));
+    refetch();
+    refetchBans();
     fetchPosts({ size: 500 }).then(res => setPosts(res));
   };
+
   useEffect(() => {
     if (user && user.role === Role.ADMIN) {
       onClick();
     }
   }, [user]);
 
-  if (loading || isLoading) {
+  if (loading || isLoading || isLoadingBans) {
     return <Spinner />;
   }
 
-  if (error || !users) {
+  if (error || !users || !bans || errorBans) {
     return <h1>Что пошло не так при получении пользователей</h1>;
   }
 
@@ -45,13 +56,9 @@ export default function AdminPage() {
     );
   }
 
-  console.log('users', users);
-
   return (
     <>
       <div className="mb-2 flex justify-between">
-        {/*{bears}*/}
-        {/*<button onClick={increasePopulation}>one up</button>*/}
         <h1>Панель администрирования</h1>
         <button className={buttonStyles()} onClick={onClick}>
           Обновить данные
