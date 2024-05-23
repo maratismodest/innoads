@@ -36,6 +36,8 @@ export const metadata: Metadata = {
   },
 };
 
+const yandexScriptUrl = `/scripts/ym_${process.env.NEXT_PUBLIC_YANDEX_COUNTER}.js`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru">
@@ -59,7 +61,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/*</TelegramProvider>*/}
           </QueryProvider>
         </Suspense>
-        <Script src="/scripts/ym.js" strategy="afterInteractive" />
+        <Script src={yandexScriptUrl} strategy="afterInteractive" />
         <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       </body>
     </html>
