@@ -1,6 +1,6 @@
 'use server';
 import { deleteBan } from '@/prisma/services/bans';
 
-export default async function deleteBanPrisma(userId: bigint) {
+export default async function deleteBanPrisma(userId: string) {
   return await deleteBan(userId);
 }

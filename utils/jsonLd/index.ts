@@ -1,6 +1,6 @@
 import { tgLink } from '@/utils/constants';
 import { dateFormat } from '@/utils/date';
-import { Article, Post, User } from '@prisma/client';
+import type { Article, Post, User } from '@prisma/client';
 import dayjs from 'dayjs';
 import { Blog, BlogPosting, Person, Product, WebSite, WithContext } from 'schema-dts';
 
@@ -38,12 +38,12 @@ const getBlogPostJsonLd = (article: Article): WithContext<BlogPosting> => ({
   image: '',
   author: {
     '@type': 'Organization',
-    name: 'InnoAds',
-    url: `${process.env.NEXT_PUBLIC_APP_URL}`,
+    name: process.env.NEXT_PUBLIC_APP_NAME,
+    url: process.env.NEXT_PUBLIC_APP_URL,
   },
   publisher: {
     '@type': 'Organization',
-    name: 'InnoAds',
+    name: process.env.NEXT_PUBLIC_APP_NAME,
     logo: {
       '@type': 'ImageObject',
       url: `${process.env.NEXT_PUBLIC_APP_URL}/icons/icon-512x512.png`,

@@ -1,9 +1,11 @@
-import client, { beRoutes } from './createRequest';
+import client, { beRoutes } from '../createRequest';
 
 interface PostImageProps {
   status: 'ok' | 'error';
   value: string;
 }
+
+const ERROR_MESSAGE = 'Что-то пошло не так при отправке изображения';
 
 export default async function postImage(formData: FormData): Promise<PostImageProps> {
   try {
@@ -20,7 +22,7 @@ export default async function postImage(formData: FormData): Promise<PostImagePr
     console.log(e);
     return {
       status: 'error',
-      value: 'Что-то пошло не так при отправке изображения',
+      value: ERROR_MESSAGE,
     };
   }
 }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import imageCompression from 'browser-image-compression';
 
 const formats = ['.jpg', '.jpeg', '.png'] as const;
 
@@ -8,6 +9,10 @@ const compressionOptions = {
   maxSizeMB: 1,
   maxWidthOrHeight: 800,
   useWebWorker: true,
+};
+
+const handleImageResize = async (imageFile: File) => {
+  return await imageCompression(imageFile, compressionOptions);
 };
 
 const handlePostImage = async (formData: FormData) => {
@@ -24,4 +29,4 @@ const handlePostImage = async (formData: FormData) => {
   }
 };
 
-export { handlePostImage, ACCEPTED_IMAGE_FORMAT, compressionOptions };
+export { handlePostImage, ACCEPTED_IMAGE_FORMAT, compressionOptions, handleImageResize };

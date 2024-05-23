@@ -4,17 +4,19 @@ import TransparentHeart from '@/assets/svg/heart.svg';
 import ItemButtons from '@/components/Item/item-buttons';
 import Index from '@/components/Price';
 import Button from '@/components/ui/Button';
+import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
 import favouritesAtom from '@/state';
 import type { PostDTO } from '@/types';
-import postTelegram from '@/utils/api/backend/postTelegram';
+import fetchUsers from '@/utils/api/client/fetchUsers';
 import fetchMessage from '@/utils/api/prisma/fetchMessage';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import commentPost from '@/utils/api/telegram/commentPost';
+import postTelegram from '@/utils/api/telegram/postTelegram';
 import { NO_IMAGE, routes } from '@/utils/constants';
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
-import { Post } from '@prisma/client';
+import { Post, User } from '@prisma/client';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,13 +25,13 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { errors, ItemModalText, success } from './utils';
 
 type Props = {
-  post: PostDTO | Post;
+  post: Post;
   edit?: boolean;
 };
 
 export default function Item({ post, edit = false }: Props) {
+  const { categories } = useApp();
   const [isOpen, setIsOpen] = useState(false);
-
   const router = useRouter();
   const [modalText, setModalText] = useState<ItemModalText | undefined>();
   const { toast, setToast } = useToast();
@@ -53,15 +55,7 @@ export default function Item({ post, edit = false }: Props) {
         return;
       }
       if (modalText === ItemModalText.telegram) {
-        await postTelegram({
-          title,
-          body,
-          price,
-          slug,
-          username: user?.username as string,
-          categoryId,
-          images,
-        });
+        await postTelegram(post, user as User, categories);
         alert(success.telegram);
         router.push(routes.profile);
         return;

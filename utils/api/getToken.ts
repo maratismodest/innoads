@@ -2,7 +2,7 @@
 import { User } from '@prisma/client';
 import * as jose from 'jose';
 
-const secret = new TextEncoder().encode('Kazan2023!');
+const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
 
 export default async function getToken(user: Pick<User, 'id' | 'username'>) {
   try {

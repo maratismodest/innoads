@@ -7,14 +7,15 @@ export const beRoutes = {
   users: '/users',
   articles: '/articles',
   categories: '/categories',
-  ban: '/ban',
+  bans: '/bans',
 } as const;
 
-const client = axios.create({
+// https://chamala.tatar - теперь только для crud images
+const clientBackend = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
-client.interceptors.request.use(
+clientBackend.interceptors.request.use(
   config => {
     // Do something before request is sent
     if (typeof window !== 'undefined') {
@@ -39,4 +40,4 @@ export const clientTelegram = axios.create({
   baseURL: `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_BOT_TOKEN}`,
 });
 
-export default client;
+export default clientBackend;

@@ -1,6 +1,6 @@
+import { handleImageResize } from '@/modules/PostModule/utils';
 import React, { Dispatch } from 'react';
-import postImage from '@/utils/api/postImage';
-import handleImageResize from '@/utils/handleImageResize';
+import postImage from '@/utils/api/backend/postImage';
 
 export default async function getCompressedImagesLinks(
   imagesFromInput: FileList,
