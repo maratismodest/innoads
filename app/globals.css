@@ -16,7 +16,9 @@
     html,
     body {
         font-family: Roboto, sans-serif;
-        /*@apply text-black*/
+    }
+
+    body {
         background: var(--tg-theme-bg-color);
         color: var(--tg-theme-text-color);
     }
