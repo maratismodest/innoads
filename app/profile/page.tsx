@@ -47,39 +47,44 @@ export default function ProfilePage<NextPage>() {
 
   return (
     <div className="flex flex-col items-center gap-8">
+      <button
+        className={clsx(buttonStyles(), 'sr-only')}
+        onClick={() => {
+          console.log('refetch posts');
+          postsRefetch();
+        }}
+        id="refetch-posts"
+      >
+        Обновить данные
+      </button>
       <div className="text-center">
         <h1>Профиль</h1>
         <p>Добавить объявление</p>
+        <Link href={routes.add} className={buttonStyles()}>
+          &#43;
+        </Link>
       </div>
-      <Link href={routes.add} className={buttonStyles()}>
-        &#43;
-      </Link>
       {postsLoading && <Spinner />}
       {!postsLoading && posts.length > 0 && (
         <>
           <Posts posts={posts.filter(({ published }) => published === true)} edit={true} />
           {archived.length > 0 && (
-            <>
-              <hr />
-              <div className="w-full">
-                <div className="text-center">
-                  <h2>Архивные</h2>
-                  <p>
-                    Вы отметили их как не актуальные: для пользовтелей сайта они не отображаются.
-                  </p>
-                </div>
-                <Disclosure>
-                  <DisclosureButton className="w-full py-2">
-                    <p className={clsx(buttonStyles({ size: 'small' }), '!mx-auto')}>
-                      показать/скрыть
-                    </p>
-                  </DisclosureButton>
-                  <DisclosurePanel className="text-gray-500">
-                    <Posts posts={archived} edit={false} className="pointer-events-none bg-gray" />
-                  </DisclosurePanel>
-                </Disclosure>
+            <div className="w-full">
+              <div className="text-center">
+                <h2>Архивные</h2>
+                <p>Вы отметили их как не актуальные: для пользовтелей сайта они не отображаются.</p>
               </div>
-            </>
+              <Disclosure>
+                <DisclosureButton className="w-full py-2">
+                  <p className={clsx(buttonStyles({ size: 'small' }), '!mx-auto')}>
+                    показать/скрыть
+                  </p>
+                </DisclosureButton>
+                <DisclosurePanel className="text-gray-500">
+                  <Posts posts={archived} edit={false} className="pointer-events-none bg-gray" />
+                </DisclosurePanel>
+              </Disclosure>
+            </div>
           )}
         </>
       )}

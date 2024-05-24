@@ -64,14 +64,19 @@ export default function Item({ post, edit = false }: Props) {
         // await deleteAd(id);
 
         await updatePostPrisma({ ...post, published: false });
-        const message = await fetchMessage(post.id);
-        if (message) {
-          const res = await commentPost(message.id);
-          console.log('res', res);
-        }
+        // const message = await fetchMessage(post.id);
+        // if (message) {
+        //   const res = await commentPost(message.id);
+        //   console.log('res', res);
+        // }
         setToast(true);
         // revalidatePath('/profile');
-        window.location.reload();
+        // window.location.reload();
+        const refetchButton = document.getElementById('refetch-posts');
+        if (refetchButton) {
+          console.log('refetchButton', refetchButton);
+          refetchButton.click();
+        }
         alert(success.archive);
         return;
       }
