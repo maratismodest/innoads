@@ -23,6 +23,10 @@
         color: var(--tg-theme-text-color);
     }
 
+    input {
+        color: var(--tg-theme-text-color);
+    }
+
     pre {
         font-family: Roboto, sans-serif;
     }
