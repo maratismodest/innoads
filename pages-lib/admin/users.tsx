@@ -12,11 +12,9 @@ interface AdminUsersProps {
 }
 
 const AdminUsers = ({ users, bans }: AdminUsersProps) => {
-  console.log('users users', users);
   return (
     <ul className="grid grid-cols-1 gap-1">
       {users.map(user => {
-        console.log('user', user);
         const isBanned = Boolean(bans.find(ban => ban.userId == user.id));
         const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
           event.preventDefault();
@@ -27,15 +25,18 @@ const AdminUsers = ({ users, bans }: AdminUsersProps) => {
           }
         };
         return (
-          <li key={user.id} className="relative grid grid-cols-3 rounded border border-blue p-1">
-            <span>{user.username}</span>
+          <li
+            key={user.id}
+            className="relative grid grid-cols-3 items-center rounded-2xl border border-blue px-4 py-1"
+          >
+            <span className="truncate">{user.username}</span>
             <p>
-              Banned: <span>{isBanned ? 'true' : 'false'}</span>
+              бан: <span>{isBanned ? 'да' : 'нет'}</span>
             </p>
             <div className="ml-auto flex items-center gap-1">
-              <span>Поменять статус?</span>
+              <span>поменять?</span>
               <button className={clsx(buttonStyles({ size: 'small' }))} onClick={handleClick}>
-                Click
+                Да
               </button>
             </div>
           </li>

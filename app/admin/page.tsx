@@ -1,5 +1,5 @@
 'use client';
-import Accordion from '@/components/Accordion';
+
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
 import useAuth from '@/hooks/useAuth';
@@ -9,9 +9,23 @@ import useUsersQuery from '@/hooks/query/useUsersQuery';
 import Users from '@/pages-lib/admin/users';
 import buttonStyles from '@/styles/buttonStyles';
 import { Role } from '@prisma/client';
-import React, { useEffect } from 'react';
+import clsx from 'clsx';
+import React, { useEffect, useState } from 'react';
+import {
+  Checkbox,
+  Field,
+  Label,
+  Switch,
+  Tab,
+  TabGroup,
+  TabList,
+  TabPanel,
+  TabPanels,
+} from '@headlessui/react';
 
 export default function AdminPage() {
+  const [enabled, setEnabled] = useState(false);
+
   const { user, loading } = useAuth();
   const { users, usersLoading, usersError, usersRefetch } = useUsersQuery();
   const { bans, bansLoading, bansError, bansRefetch } = useBansQuery();
@@ -62,19 +76,56 @@ export default function AdminPage() {
           Обновить данные
         </button>
       </div>
-      <Accordion title="Пользователи">
-        <Users users={users} bans={bans} />
-      </Accordion>
-
-      <hr />
-      <Accordion title="Активные объявления">
-        <Posts posts={posts.filter(x => x.published === true)} edit={true} />
-      </Accordion>
-
-      <hr />
-      <Accordion title="Архивные объявления">
-        <Posts posts={posts.filter(x => x.published === false)} edit={true} />
-      </Accordion>
+      <TabGroup>
+        <TabList className="flex gap-2">
+          <Tab
+            className={clsx(
+              buttonStyles({ size: 'small' }),
+              '!rounded-full data-[selected]:underline'
+            )}
+          >
+            Пользователи
+          </Tab>
+          <Tab
+            className={clsx(
+              buttonStyles({ size: 'small' }),
+              '!rounded-full data-[selected]:underline'
+            )}
+          >
+            Объявления
+          </Tab>
+        </TabList>
+        <TabPanels className="mt-3">
+          <TabPanel>
+            <Users users={users} bans={bans} />
+          </TabPanel>
+          <TabPanel>
+            <Field className="mb-2 flex items-center gap-1 hover:cursor-pointer">
+              <Checkbox
+                checked={enabled}
+                onChange={setEnabled}
+                className="group block size-4 rounded border bg-gray data-[checked]:bg-white"
+              >
+                {/* Checkmark icon */}
+                <svg
+                  className="stroke-black opacity-0 group-data-[checked]:opacity-100"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                >
+                  <path
+                    d="M3 8L6 11L11 3.5"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Checkbox>
+              <Label>показать только активные</Label>
+            </Field>
+            <Posts posts={enabled ? posts.filter(x => x.published === false) : posts} edit={true} />
+          </TabPanel>
+        </TabPanels>
+      </TabGroup>
     </>
   );
 }
