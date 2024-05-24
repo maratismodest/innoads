@@ -1,9 +1,9 @@
 'use client';
 import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import Spinner from '@/components/ui/Spinner';
+import { useTelegramNew } from '@/context/TelegramContext';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
-import { useTelegram } from '@/hooks/useTelegram';
 import ImagesModuleInput from '@/modules/PostModule/ImagesModule/ImagesModuleInput';
 import ImagesModulePreview from '@/modules/PostModule/ImagesModule/ImagesModulePreview';
 import imageHandler from '@/modules/PostModule/ImagesModule/utils';
@@ -31,11 +31,13 @@ export default function CreatePostModule({
 }: PostModuleProps) {
   const { categories } = useApp();
   const { user, loading: userLoading } = useAuth();
-  const { tg } = useTelegram();
+  const { tg } = useTelegramNew();
 
   useEffect(() => {
-    localStorage.setItem('theme', tg.colorScheme);
-  }, [tg.colorScheme]);
+    if (tg?.colorScheme) {
+      localStorage.setItem('colorScheme', tg.colorScheme);
+    }
+  }, [tg?.colorScheme]);
 
   const methods = useForm<IFormInput>({
     resolver: yupResolver(schema),
@@ -59,23 +61,23 @@ export default function CreatePostModule({
   const images = useWatch({ name: 'images', control }) as string[];
 
   useEffect(() => {
-    tg.MainButton.setParams({
+    tg?.MainButton.setParams({
       text: 'Закрыть окно',
     });
-  }, [tg.MainButton]);
+  }, [tg?.MainButton]);
 
   const onSendData = useCallback(() => {
     const data = {
       type: 'success',
       text: 'Объявление создано!',
     };
-    tg.sendData(JSON.stringify(data));
+    tg?.sendData(JSON.stringify(data));
   }, [tg]);
 
   useEffect(() => {
-    tg.onEvent('mainButtonClicked', onSendData);
+    tg?.onEvent('mainButtonClicked', onSendData);
     return () => {
-      tg.offEvent('mainButtonClicked', onSendData);
+      tg?.offEvent('mainButtonClicked', onSendData);
     };
   }, [onSendData, tg]);
 
@@ -121,7 +123,7 @@ export default function CreatePostModule({
       const telegram = await postMessage({ id: result[0]?.message_id, postId: post.id });
       console.log('_telegram', telegram);
       reset();
-      tg.MainButton.show();
+      tg?.MainButton.show();
       alert('Объявление создано!');
       await onSubmitOptional();
     } catch (e) {

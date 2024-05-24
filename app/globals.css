@@ -16,15 +16,7 @@
     html,
     body {
         font-family: Roboto, sans-serif;
-    }
-
-    body {
-        background: var(--tg-theme-bg-color);
-        color: var(--tg-theme-text-color);
-    }
-
-    input {
-        color: var(--tg-theme-text-color);
+        @apply text-black;
     }
 
     pre {
@@ -89,6 +81,7 @@
     /*img {*/
     /*    height: inherit;*/
     /*}*/
+
     li {
         list-style: none;
     }
