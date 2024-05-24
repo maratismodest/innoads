@@ -1,6 +1,5 @@
 'use client';
 import { WebApp } from '@/types/telegram';
-import Script from 'next/script';
 import React, { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 
 type TgContextType = {
@@ -39,5 +38,3 @@ export default function TelegramProvider({ children }: Props) {
     </TelegramContext.Provider>
   );
 }
-
-export const useTelegramNew = () => useContext(TelegramContext);

@@ -1,24 +1,6 @@
-'use client';
-// const tg = window.Telegram.WebApp;
+import { TelegramContext } from '@/context/TelegramContext';
+import { useContext } from 'react';
 
-export function useTelegram() {
-  const onClose = () => {
-    // tg.close();
-  };
-
-  const onToggleButton = () => {
-    // if (tg.MainButton.isVisible) {
-    //   tg.MainButton.hide();
-    // } else {
-    //   tg.MainButton.show();
-    // }
-  };
-
-  return {
-    onClose,
-    onToggleButton,
-    tg: window.Telegram.WebApp,
-    // user: tg.initDataUnsafe?.user,
-    // queryId: tg.initDataUnsafe?.query_id,
-  };
+export default function useTelegram() {
+  return useContext(TelegramContext);
 }

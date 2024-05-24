@@ -1,9 +1,10 @@
 'use client';
+import { getCurrencySymbol } from '@/components/Price/utils';
 import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import Spinner from '@/components/ui/Spinner';
-import { useTelegramNew } from '@/context/TelegramContext';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
+import useTelegram from '@/hooks/useTelegram';
 import ImagesModuleInput from '@/modules/PostModule/ImagesModule/ImagesModuleInput';
 import ImagesModulePreview from '@/modules/PostModule/ImagesModule/ImagesModulePreview';
 import imageHandler from '@/modules/PostModule/ImagesModule/utils';
@@ -20,7 +21,6 @@ import clsx from 'clsx';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { defaultValues, IFormInput, schema } from '../yup';
-import { getCurrencySymbol } from '@/components/Price/utils';
 
 interface PostModuleProps {
   onSubmitOptional?: () => Promise<void>;
@@ -31,7 +31,7 @@ export default function CreatePostModule({
 }: PostModuleProps) {
   const { categories } = useApp();
   const { user, loading: userLoading } = useAuth();
-  const { tg } = useTelegramNew();
+  const { tg } = useTelegram();
 
   useEffect(() => {
     if (tg?.colorScheme) {
