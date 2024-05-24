@@ -35,7 +35,7 @@ export default function TelegramProvider({ children }: Props) {
   return (
     <TelegramContext.Provider value={value}>
       {children}
-      <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
+      {/*<Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />*/}
     </TelegramContext.Provider>
   );
 }

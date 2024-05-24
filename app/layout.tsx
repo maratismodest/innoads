@@ -63,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </QueryProvider>
         </Suspense>
         <Script src={yandexScriptUrl} strategy="afterInteractive" />
-        {/*<Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />*/}
+        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
       </body>
     </html>
   );
