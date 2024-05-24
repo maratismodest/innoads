@@ -33,6 +33,10 @@ export default function CreatePostModule({
   const { user, loading: userLoading } = useAuth();
   const { tg } = useTelegram();
 
+  useEffect(() => {
+    localStorage.setItem('theme', tg.colorScheme);
+  }, [tg.colorScheme]);
+
   const methods = useForm<IFormInput>({
     resolver: yupResolver(schema),
     defaultValues: defaultValues,

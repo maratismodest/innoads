@@ -16,7 +16,7 @@
     html,
     body {
         font-family: Roboto, sans-serif;
-        @apply text-black
+        @apply text-black dark:text-white;
     }
 
     pre {
@@ -81,7 +81,6 @@
     /*img {*/
     /*    height: inherit;*/
     /*}*/
-
     li {
         list-style: none;
     }

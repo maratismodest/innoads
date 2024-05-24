@@ -19,6 +19,7 @@ declare global {
         sendData: (str: string) => void;
         onEvent: (actionName: string, onSendData: unknown) => void;
         offEvent: (actionName: string, onSendData: unknown) => void;
+        colorScheme: 'light' | 'dark';
       };
     };
   }
