@@ -3,38 +3,47 @@
 import Posts from '@/components/Posts';
 import Button from '@/components/ui/Button';
 import Spinner from '@/components/ui/Spinner';
+import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useAuth from '@/hooks/useAuth';
 import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
 import buttonStyles from '@/styles/buttonStyles';
-import fetchPosts from '@/utils/api/prisma/fetchAds';
 import { routes } from '@/utils/constants';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Post } from '@prisma/client';
 import { clsx } from 'clsx';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 
-export default function Profile<NextPage>() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [fetching, setFetching] = useState(false);
-  const { user, logout } = useAuth();
+export default function ProfilePage<NextPage>() {
+  const { user, logout, loading } = useAuth();
+  const userId = user?.id;
+  const {
+    posts = [],
+    postsLoading,
+    postsError,
+    postsRefetch,
+  } = usePostsQuery({ userId }, Boolean(userId));
 
-  useEffect(() => {
-    if (user && user.id) {
-      setFetching(true);
-      fetchPosts({ userId: user.id })
-        .then(content => setPosts(content))
-        // .then(content => setPosts(content.filter(({ published }) => published === true)))
-        .catch(e => alert(e.message))
-        .finally(() => setFetching(false));
-    }
-  }, [user]);
+  const archived: Post[] = useMemo(() => posts.filter(post => post.published === false), [posts]);
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   if (!user) {
     return <ProfileNoUser />;
   }
 
-  const archived = posts.filter(post => post.published === false);
+  if (postsError) {
+    return (
+      <div className="flex flex-col items-center gap-8">
+        <h1>Что-то пошло не так</h1>
+        <button className={buttonStyles()} onClick={() => postsRefetch()}>
+          Попробовать снова
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center gap-8">
@@ -45,8 +54,8 @@ export default function Profile<NextPage>() {
       <Link href={routes.add} className={buttonStyles()}>
         &#43;
       </Link>
-      {fetching && <Spinner />}
-      {posts.length > 0 && !fetching && (
+      {postsLoading && <Spinner />}
+      {!postsLoading && posts.length > 0 && (
         <>
           <Posts posts={posts.filter(({ published }) => published === true)} edit={true} />
           {archived.length > 0 && (
@@ -74,7 +83,7 @@ export default function Profile<NextPage>() {
           )}
         </>
       )}
-      {posts.length === 0 && !fetching && <h2>Нет объявлений</h2>}
+      {!postsLoading && posts.length === 0 && <h2>Нет объявлений</h2>}
       <Button onClick={logout}>Выход</Button>
     </div>
   );

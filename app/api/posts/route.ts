@@ -18,7 +18,7 @@ export async function GET(req: Request, res: NextResponse) {
   const searchParams = new URLSearchParams(url.searchParams);
   const size = Number(searchParams.get('size'));
   const page = Number(searchParams.get('page'));
-  const userId = Number(searchParams.get('userId'));
+  const userId = searchParams.get('userId');
   const categoryId = Number(searchParams.get('categoryId'));
   const _published = searchParams.get('published');
   const published = _published ? Boolean(_published) : null;

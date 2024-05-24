@@ -15,7 +15,9 @@ export default function AdminPage() {
   const { user, loading } = useAuth();
   const { users, usersLoading, usersError, usersRefetch } = useUsersQuery();
   const { bans, bansLoading, bansError, bansRefetch } = useBansQuery();
-  const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery({ size: 500 });
+  const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery({
+    size: 500,
+  });
 
   const onClick = async () => {
     usersRefetch();
