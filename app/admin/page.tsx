@@ -72,7 +72,7 @@ export default function AdminPage() {
     <>
       <div className="mb-2 flex justify-between">
         <h1>Панель администрирования</h1>
-        <button className={buttonStyles()} onClick={onClick}>
+        <button className={buttonStyles()} onClick={onClick} id="refetch">
           Обновить данные
         </button>
       </div>
