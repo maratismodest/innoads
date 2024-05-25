@@ -7,7 +7,7 @@ import HeaderButtons, { menu } from './HeaderButtons';
 
 export default function Header() {
   return (
-    <header className="standalone:h-[80px] fixed inset-x-0 bottom-0 z-50 h-[52px] bg-gray text-black md:top-0">
+    <header className="standalone:h-[80px] fixed inset-x-0 bottom-0 z-50 h-[80px] bg-gray text-black md:top-0 md:h-[52px]">
       {/*Desktop*/}
       <nav
         className={clsx(
@@ -31,7 +31,7 @@ export default function Header() {
       {/*Mobile*/}
       <nav
         className={clsx(
-          'mx-auto flex w-full max-w-[1100px] justify-between gap-1 px-3 py-2',
+          'standalone:h-fit mx-auto flex h-full w-full max-w-[1100px] justify-between gap-1 px-3 py-2',
           'md:hidden'
         )}
       >
