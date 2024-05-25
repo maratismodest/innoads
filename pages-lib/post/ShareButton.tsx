@@ -19,7 +19,7 @@ const ShareButton = ({ post }: ShareButtonProps) => {
   };
 
   return (
-    <Button className="mt-8" onClick={onClick}>
+    <Button className="mt-4" onClick={onClick}>
       Поделиться
     </Button>
   );

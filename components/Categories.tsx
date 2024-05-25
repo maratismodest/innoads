@@ -8,7 +8,7 @@ interface CategoriesProp {
 
 export default function Categories({ categories }: CategoriesProp) {
   return (
-    <ul className="mb-1 flex snap-x snap-mandatory justify-between gap-12 overflow-scroll rounded-2xl bg-gray px-8 py-2">
+    <ul className="mb-1 flex snap-x snap-mandatory justify-between gap-12 overflow-scroll rounded-2xl bg-gray px-8 py-1">
       {categories.map(({ id, name, label, image }, index) => {
         return (
           <li key={id} tabIndex={index + 1}>
@@ -26,7 +26,7 @@ export default function Categories({ categories }: CategoriesProp) {
                 height={40}
                 className="relative rounded-[50%] bg-white p-2 shadow transition-all hover:scale-110"
               />
-              <h5>{label}</h5>
+              <h5 className="mb-0">{label}</h5>
             </Link>
           </li>
         );

@@ -105,11 +105,11 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
         <a
           href={tgLink + '/' + post.user.username}
           target="_blank"
-          className={clsx(buttonStyles(), 'mt-8 !block')}
+          className={clsx(buttonStyles(), 'mt-4 !block')}
         >
           Написать автору
         </a>
-        <Link href={`/user/${post.userId}`} className={clsx(buttonStyles(), 'mt-8 !block')}>
+        <Link href={`/user/${post.userId}`} className={clsx(buttonStyles(), 'mt-4 !block')}>
           Все объявления автора
         </Link>
         <ShareButton post={post} />
