@@ -42,6 +42,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     if (category) {
+      console.log('HERE', options);
       postsRefetch(options);
     }
   }, [category, searchText]);
@@ -52,6 +53,8 @@ const SearchPage = () => {
       setCategory(res);
     }
   }, [categories, categoryId]);
+
+  console.log('options', options);
 
   return (
     <>

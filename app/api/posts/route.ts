@@ -22,6 +22,9 @@ export async function GET(req: Request, res: NextResponse) {
   const categoryId = Number(searchParams.get('categoryId'));
   const _published = searchParams.get('published');
   const published = _published ? Boolean(_published) : null;
-  const response = await fetchPosts(cleanObject({ size, page, categoryId, userId, published }));
+  const search = searchParams.get('search');
+  const response = await fetchPosts(
+    cleanObject({ size, page, categoryId, userId, published, search })
+  );
   return NextResponse.json(response);
 }

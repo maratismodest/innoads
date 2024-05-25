@@ -7,6 +7,7 @@ export interface GetPostsParams {
   userId: string;
   categoryId: number;
   published: boolean;
+  search?: string;
 }
 
 export default async function fetchApiPosts(params: Partial<GetPostsParams>) {
