@@ -5,6 +5,9 @@
 @layer base {
     :root {
         --header-height: 52px;
+        @media (display-mode: standalone) {
+            --header-height: 80px;
+        }
     }
 
     ul::-webkit-scrollbar {
