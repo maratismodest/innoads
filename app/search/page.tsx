@@ -20,10 +20,12 @@ export const metadata: Metadata = {
 
 export default function Search() {
   return (
-    <Suspense fallback={<Spinner />}>
+    // <Suspense fallback={<Spinner />}>
+    <>
       <h1>Поиск</h1>
       <hr />
       <SearchPage />
-    </Suspense>
+    </>
+    // </Suspense>
   );
 }

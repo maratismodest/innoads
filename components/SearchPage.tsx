@@ -1,22 +1,22 @@
 'use client';
 import { cleanObject } from '@/app/api/posts/route';
+import PostsReadOnly from '@/components/PostsReadOnly';
 import Select from '@/components/ui/Select';
-import Spinner from '@/components/ui/Spinner';
+import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useApp from '@/hooks/useApp';
 import useDebounce from '@/hooks/useDebounce';
-import InfinitePosts from '@/modules/InfinitePosts';
 import inputStyles from '@/styles/inputStyles';
 import { Option } from '@/types/global';
 import { routes } from '@/utils/constants';
 import clsx from 'clsx';
-import { useSearchParams, useRouter } from 'next/navigation';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 const SearchPage = () => {
   const router = useRouter();
   const { categories } = useApp();
   const searchParams = useSearchParams();
-  const search = searchParams.get('categoryId');
+  const categoryId = searchParams.get('categoryId');
   const [category, setCategory] = useState<Option | undefined>();
   const [text, setText] = useState<string>('');
   const searchText = useDebounce(text, 1000);
@@ -25,16 +25,33 @@ const SearchPage = () => {
     router.push(routes.search + '?categoryId=' + active.value);
   }, []);
 
+  const options = useMemo(
+    () =>
+      cleanObject({
+        published: true,
+        categoryId: category?.value,
+        search: searchText,
+      }),
+    [category, searchText]
+  );
+
+  const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery(
+    options,
+    Boolean(category)
+  );
+
+  useEffect(() => {
+    if (category) {
+      postsRefetch(options);
+    }
+  }, [category, searchText]);
+
   useEffect(() => {
     if (categories.length > 0) {
-      const res = categories.find(category => category.value === Number(search)) || categories[0];
+      const res = categories.find(category => category.value === Number(categoryId));
       setCategory(res);
     }
-  }, [categories, search]);
-
-  if (categories.length === 0 || !category) {
-    return <Spinner />;
-  }
+  }, [categories, categoryId]);
 
   return (
     <>
@@ -45,11 +62,7 @@ const SearchPage = () => {
         onChange={e => setText(e.target.value)}
       />
       <hr />
-      <InfinitePosts
-        initPage={0}
-        initPosts={[]}
-        options={cleanObject({ categoryId: category.value, published: true, search: searchText })}
-      />
+      <PostsReadOnly posts={posts} loading={postsLoading} error={postsError} />
     </>
   );
 };
