@@ -21,7 +21,7 @@ export default async function ArticlesPage<NextPage>() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getBlogJsonLd(articles)) }}
       />
-      <h1>Блог</h1>
+      <h1 className="text-center">Блог</h1>
       <ul className="grid grid-cols-1 gap-2">
         {articles.map(({ id, title, slug }) => (
           <li key={id}>
