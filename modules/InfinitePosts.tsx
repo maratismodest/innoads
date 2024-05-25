@@ -47,7 +47,7 @@ export default function InfinitePosts({ options, initPosts, initPage }: Props) {
     if (isOnScreen && hasMore) {
       loadMore();
     }
-  }, [isOnScreen, hasMore, options.categoryId]);
+  }, [isOnScreen, hasMore, options.categoryId, options.search]);
 
   //just reset component to initial state
   useEffect(() => {
