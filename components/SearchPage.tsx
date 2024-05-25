@@ -19,7 +19,7 @@ const SearchPage = () => {
   const categoryId = searchParams.get('categoryId');
   const [category, setCategory] = useState<Option | undefined>();
   const [text, setText] = useState<string>('');
-  const searchText = useDebounce(text, 1000);
+  const searchText = useDebounce(text);
 
   const handleSelect = useCallback((active: Option) => {
     router.push(routes.search + '?categoryId=' + active.value);
