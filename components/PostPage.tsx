@@ -1,15 +1,14 @@
 'use client';
 import ImageInView from '@/components/ImageInView';
 import useLockedBody from '@/hooks/useLockedBody';
-import type { PostDTO } from '@/types';
 import { NO_IMAGE } from '@/utils/constants';
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Image from 'next/image';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 type Props = {
-  post: PostDTO | Post;
+  post: Post;
 };
 
 const styles =

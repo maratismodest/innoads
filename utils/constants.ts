@@ -10,6 +10,7 @@ export const routes = {
   favourites: '/favourites',
   blog: '/blog',
   articles: '/articles',
+  users: '/users',
 } as const;
 
 export const seo: Record<string, Seo> = {

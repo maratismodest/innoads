@@ -79,12 +79,12 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
   const post = await fetchAd(slug);
   const _categories = await getAllCategories();
   const categories = mapCategories(_categories);
+
   if (!post || categories.length === 0) {
     return notFound();
   }
-  // const related = await fetchRelatedAds({ categoryId: post.categoryId });
 
-  const { categoryId, title, body, preview, user, price, createdAt } = post;
+  const { categoryId, title, body, preview, user, price, createdAt, userId } = post;
   return (
     <>
       <script
@@ -93,7 +93,12 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
       />
       <div className="relative mx-auto w-full max-w-[400px]">
         <PostPage post={post} />
-        <Link href={`${routes.main}search?categoryId=${categoryId}`}>
+        <Link
+          href={{
+            pathname: routes.search,
+            query: { categoryId },
+          }}
+        >
           Категория: {categories.find(x => x.value === categoryId)?.label}
         </Link>
         <h1>{title}</h1>
@@ -102,28 +107,16 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
         <p className="break-words">{body}</p>
         <time className="mt-5">Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</time>
         <a
-          href={tgLink + '/' + post.user.username}
+          href={tgLink + '/' + user.username}
           target="_blank"
           className={clsx(buttonStyles(), 'mt-4 !block')}
         >
           Написать автору
         </a>
-        <Link href={`/user/${post.userId}`} className={clsx(buttonStyles(), 'mt-4 !block')}>
+        <Link href={routes.users + '/' + userId} className={clsx(buttonStyles(), 'mt-4 block')}>
           Все объявления автора
         </Link>
         <ShareButton post={post} />
-        {/*{related.length > 0 && (*/}
-        {/*  <div className="mt-10">*/}
-        {/*    <h2>Похожие объявления</h2>*/}
-        {/*    <ul className="grid grid-cols-2 gap-4">*/}
-        {/*      {related.slice(0, 4).map((post: PostDTO) => (*/}
-        {/*        <li key={post.slug}>*/}
-        {/*          <Item post={post} />*/}
-        {/*        </li>*/}
-        {/*      ))}*/}
-        {/*    </ul>*/}
-        {/*  </div>*/}
-        {/*)}*/}
       </div>
     </>
   );

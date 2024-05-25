@@ -102,8 +102,6 @@ export interface BanDTO {
   readonly description?: string;
 }
 
-export type CommonPost = PostDTO | Post;
-
 // types.ts
 export interface ITelegramUser {
   id: number;
