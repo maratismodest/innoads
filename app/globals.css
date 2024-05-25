@@ -39,7 +39,7 @@
         flex-direction: column;
 
         @media (display-mode: standalone) {
-            margin: var(--header-height) auto 0;
+            margin: 0 auto var(--header-height);
         }
     }
 
