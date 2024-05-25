@@ -25,7 +25,12 @@ export default async function sitemap() {
     lastModified: formatDate(new Date().toISOString()),
   }));
 
-  const _posts = await prisma.post.findMany({ take: 1000 });
+  const _posts = await prisma.post.findMany({
+    take: 1000,
+    where: {
+      published: true,
+    },
+  });
 
   const posts = _posts.map(({ slug, updatedAt }) => ({
     url: `${URL}/post/${slug}`,

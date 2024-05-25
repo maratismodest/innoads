@@ -1,5 +1,5 @@
 import PostPage from '@/components/PostPage';
-import Index from '@/components/Price';
+import Price from '@/components/Price';
 import ShareButton from '@/pages-lib/post/ShareButton';
 import { getAllCategories } from '@/prisma/services/categories';
 import buttonStyles from '@/styles/buttonStyles';
@@ -14,7 +14,6 @@ import dayjs from 'dayjs';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import React from 'react';
 
 interface AdPageProps {
   params: {
@@ -71,7 +70,7 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const posts = await fetchAds({ size: 1000 });
 
-  return posts.map(({ slug }) => ({ slug }));
+  return posts.map(({ slug }) => ({ slug, published: true }));
 }
 
 export const revalidate = 3600;
@@ -98,7 +97,7 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
           Категория: {categories.find(x => x.value === categoryId)?.label}
         </Link>
         <h1>{title}</h1>
-        <Index price={price} />
+        <Price price={price} />
         <hr />
         <p className="break-words">{body}</p>
         <time className="mt-5">Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</time>
