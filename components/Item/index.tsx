@@ -2,20 +2,17 @@
 import RedHeart from '@/assets/svg/heart-red.svg';
 import TransparentHeart from '@/assets/svg/heart.svg';
 import ItemButtons from '@/components/Item/item-buttons';
-import Index from '@/components/Price';
-import Button from '@/components/ui/Button';
+import Price from '@/components/Price';
+import Popup from '@/components/ui/Popup';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
 import favouritesAtom from '@/state';
-import type { PostDTO } from '@/types';
-import fetchUsers from '@/utils/api/client/fetchUsers';
 import fetchMessage from '@/utils/api/prisma/fetchMessage';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import commentPost from '@/utils/api/telegram/commentPost';
 import postTelegram from '@/utils/api/telegram/postTelegram';
 import { NO_IMAGE, routes } from '@/utils/constants';
-import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { Post, User } from '@prisma/client';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
@@ -24,12 +21,12 @@ import { useRouter } from 'next/navigation';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { errors, ItemModalText, success } from './utils';
 
-type Props = {
+type ItemProps = {
   post: Post;
   edit?: boolean;
 };
 
-export default function Item({ post, edit = false }: Props) {
+export default function Item({ post, edit = false }: ItemProps) {
   const { categories } = useApp();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -41,7 +38,7 @@ export default function Item({ post, edit = false }: Props) {
 
   const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id]);
 
-  const hideModal = () => setIsOpen(false);
+  const hideModal = useCallback(() => setIsOpen(false), []);
 
   const showModal = (text: ItemModalText) => {
     setModalText(text);
@@ -63,7 +60,8 @@ export default function Item({ post, edit = false }: Props) {
       if (modalText === ItemModalText.delete) {
         // await deleteAd(id);
 
-        await updatePostPrisma({ ...post, published: false });
+        const _updatedPost = await updatePostPrisma({ ...post, published: false });
+        console.log('_updatedPost', _updatedPost);
         const message = await fetchMessage(post.id);
         if (message) {
           const res = await commentPost(message.id);
@@ -102,28 +100,22 @@ export default function Item({ post, edit = false }: Props) {
     };
   }, []);
 
+  const buttons = useMemo(
+    () => [
+      { text: 'Да', onClick: handleFunction },
+      { text: 'Нет', onClick: hideModal },
+    ],
+    [handleFunction]
+  );
+
   return (
     <>
-      <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
-        {/* The backdrop, rendered as a fixed sibling to the panel container */}
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-
-        {/* Full-screen scrollable container */}
-        <div className="fixed inset-0 w-screen overflow-y-auto">
-          {/* Container to center the panel */}
-          <div className="flex min-h-full items-center justify-center p-4">
-            {/* The actual dialog panel  */}
-            <DialogPanel className="mx-auto max-w-sm rounded bg-white p-4">
-              <DialogTitle>{modalText}</DialogTitle>
-              <hr />
-              <div className="mt-12 flex justify-around">
-                <Button onClick={handleFunction}>Да</Button>
-                <Button onClick={hideModal}>Нет</Button>
-              </div>
-            </DialogPanel>
-          </div>
-        </div>
-      </Dialog>
+      <Popup
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        text={modalText ?? 'InnoAds'}
+        buttons={buttons}
+      />
       <Link
         href={`${routes.post}/${slug}`}
         title={title}
@@ -145,7 +137,7 @@ export default function Item({ post, edit = false }: Props) {
         </div>
 
         <div className="relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2">
-          <Index price={price} />
+          <Price price={price} />
           <h2 className="mt-auto truncate font-normal">{title}</h2>
           <button
             className="absolute right-0 top-0 z-10 cursor-pointer"

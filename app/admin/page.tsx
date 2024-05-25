@@ -28,14 +28,12 @@ export default function AdminPage() {
 
   const { user, loading } = useAuth();
   const { users, usersLoading, usersError, usersRefetch } = useUsersQuery();
-  const { bans, bansLoading, bansError, bansRefetch } = useBansQuery();
   const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery({
     size: 500,
   });
 
   const onClick = async () => {
     usersRefetch();
-    bansRefetch();
     postsRefetch();
   };
 
@@ -45,11 +43,11 @@ export default function AdminPage() {
     }
   }, [user]);
 
-  if (loading || usersLoading || bansLoading || postsLoading) {
+  if (loading || usersLoading || postsLoading) {
     return <Spinner />;
   }
 
-  if (!users || usersError || !bans || bansError || !posts || postsError) {
+  if (!users || usersError || !posts || postsError) {
     return (
       <>
         <h1>Что пошло не так при получении пользователей</h1>
@@ -97,7 +95,7 @@ export default function AdminPage() {
         </TabList>
         <TabPanels className="mt-3">
           <TabPanel>
-            <Users users={users} bans={bans} />
+            <Users users={users} />
           </TabPanel>
           <TabPanel>
             <Field className="mb-2 flex items-center gap-1 hover:cursor-pointer">
@@ -122,7 +120,7 @@ export default function AdminPage() {
               </Checkbox>
               <Label>показать только активные</Label>
             </Field>
-            <Posts posts={enabled ? posts.filter(x => x.published === false) : posts} edit={true} />
+            <Posts posts={enabled ? posts.filter(x => x.published === true) : posts} edit={true} />
           </TabPanel>
         </TabPanels>
       </TabGroup>

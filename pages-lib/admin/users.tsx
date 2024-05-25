@@ -1,24 +1,24 @@
 'use client';
-import buttonStyles from '@/styles/buttonStyles';
+import { UserWithBans } from '@/types';
 import createBanPrisma from '@/utils/api/prisma/createBanPrisma';
 import deleteBanPrisma from '@/utils/api/prisma/deleteBanPrisma';
-import { Ban, User } from '@prisma/client';
-import { clsx } from 'clsx';
+import { Switch } from '@headlessui/react';
+import { User } from '@prisma/client';
 import React from 'react';
 
 interface AdminUsersProps {
-  users: User[];
-  bans: Ban[];
+  users: User[] | UserWithBans[];
 }
 
-const AdminUsers = ({ users, bans }: AdminUsersProps) => {
+const AdminUsers = ({ users }: AdminUsersProps) => {
   return (
     <ul className="grid grid-cols-1 gap-1">
       {users.map(user => {
-        const isBanned = Boolean(bans.find(ban => ban.userId == user.id));
-        const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
-          event.preventDefault();
-          if (isBanned) {
+        const { id, bans } = user as UserWithBans;
+        // const isBanned = Boolean(bans.find(ban => ban.userId == user.id));
+        const handleClick = async (checked: boolean) => {
+          console.log('here', checked);
+          if (bans.length) {
             await deleteBanPrisma(user.id);
           } else {
             await createBanPrisma(user.id);
@@ -32,29 +32,21 @@ const AdminUsers = ({ users, bans }: AdminUsersProps) => {
         return (
           <li
             key={user.id}
-            className="relative grid grid-cols-3 items-center rounded-2xl border border-blue px-4 py-1"
+            className="relative grid grid-cols-2 items-center rounded-2xl border border-blue px-4 py-1"
           >
             <span className="truncate">{user.username}</span>
-            <p>
-              бан: <span>{isBanned ? 'да' : 'нет'}</span>
-            </p>
             <div className="ml-auto flex items-center gap-1">
-              <button className={clsx(buttonStyles({ size: 'small' }))} onClick={handleClick}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
-                  />
-                </svg>
-              </button>
+              <span>бан</span>
+              <Switch
+                checked={bans.length > 0}
+                onChange={handleClick}
+                className="group relative flex h-7 w-14 cursor-pointer rounded-full bg-blue/10 p-1 transition-colors duration-200 ease-in-out focus:outline-none data-[checked]:bg-blue data-[focus]:outline-1 data-[focus]:outline-white"
+              >
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none inline-block size-5 translate-x-0 rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out group-data-[checked]:translate-x-7"
+                />
+              </Switch>
             </div>
           </li>
         );
