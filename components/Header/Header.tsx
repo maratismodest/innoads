@@ -7,7 +7,12 @@ import HeaderButtons, { menu } from './HeaderButtons';
 
 export default function Header() {
   return (
-    <header className="standalone:h-[80px] fixed inset-x-0 bottom-0 z-50 h-[52px] bg-gray text-black md:top-0">
+    <header
+      className={clsx(
+        'fixed inset-x-0 top-0 z-50 h-[52px] bg-gray text-black',
+        'standalone:bottom-0 standalone:h-[80px]'
+      )}
+    >
       {/*Desktop*/}
       <nav
         className={clsx(
