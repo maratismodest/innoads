@@ -172,7 +172,7 @@ export default function EditPostModule({
         </div>
 
         <button
-          className={clsx(buttonStyles(), 'mt-6 w-full')}
+          className={clsx(buttonStyles({ size: 'medium' }), 'mt-6 w-full')}
           type="submit"
           disabled={loading || categories.length === 0}
         >

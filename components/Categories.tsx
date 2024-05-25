@@ -26,7 +26,7 @@ export default function Categories({ categories }: CategoriesProp) {
                 height={40}
                 className="relative rounded-[50%] bg-white p-2 shadow transition-all hover:scale-110"
               />
-              <h5 className="mb-0">{label}</h5>
+              <h6 className="mb-0">{label}</h6>
             </Link>
           </li>
         );

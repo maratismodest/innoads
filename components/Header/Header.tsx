@@ -6,8 +6,8 @@ import HeaderButtons from './HeaderButtons';
 
 export default function Header() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 h-[66px] bg-gray text-black">
-      <nav className="mx-auto flex w-full max-w-[1100px] justify-between p-3">
+    <header className="fixed inset-x-0 top-0 z-50 h-[52px] bg-gray text-black">
+      <nav className="mx-auto flex w-full max-w-[1100px] justify-between px-3 py-2">
         <Link href={routes.main} className="flex items-center gap-2">
           <span className="text-2xl uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span>
           <span className="hidden lg:inline">|</span>
