@@ -40,10 +40,6 @@
         @media (min-width: 768px) {
             margin: var(--header-height) auto 0;
         }
-
-        @media (display-mode: standalone) {
-            margin: 0 auto 80px;
-        }
     }
 
 
