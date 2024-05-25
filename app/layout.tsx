@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                       <FavouritesProvider>
                         <Header />
                         <main>{children}</main>
-                        <Footer />
+                        {/*<Footer />*/}
                       </FavouritesProvider>
                     </ToastProvider>
                   </ModalProvider>
