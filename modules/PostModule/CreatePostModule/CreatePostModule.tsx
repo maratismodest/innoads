@@ -66,13 +66,13 @@ export default function CreatePostModule({
     });
   }, [tg?.MainButton]);
 
-  const onSendData = useCallback(() => {
+  const onSendData = () => {
     const data = {
       type: 'success',
       text: 'Объявление создано!',
     };
     tg?.sendData(JSON.stringify(data));
-  }, [tg]);
+  };
 
   useEffect(() => {
     tg?.onEvent('mainButtonClicked', onSendData);
