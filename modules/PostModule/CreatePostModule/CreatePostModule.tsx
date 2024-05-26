@@ -18,12 +18,12 @@ import slug from '@/utils/slug';
 import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { defaultValues, IFormInput, schema } from '../yup';
 
 interface PostModuleProps {
-  onSubmitOptional?: () => Promise<void>;
+  onSubmitOptional?: () => Promise<void> | void;
 }
 
 export default function CreatePostModule({
@@ -31,13 +31,6 @@ export default function CreatePostModule({
 }: PostModuleProps) {
   const { categories } = useApp();
   const { user, loading: userLoading } = useAuth();
-  const { tg } = useTelegram();
-
-  useEffect(() => {
-    if (tg?.colorScheme) {
-      localStorage.setItem('colorScheme', tg.colorScheme);
-    }
-  }, [tg?.colorScheme]);
 
   const methods = useForm<IFormInput>({
     resolver: yupResolver(schema),
@@ -59,27 +52,6 @@ export default function CreatePostModule({
   const [loading, setLoading] = useState(false);
 
   const images = useWatch({ name: 'images', control }) as string[];
-
-  useEffect(() => {
-    tg?.MainButton.setParams({
-      text: 'Закрыть окно',
-    });
-  }, [tg?.MainButton]);
-
-  const onSendData = () => {
-    const data = {
-      type: 'success',
-      text: 'Объявление создано!',
-    };
-    tg?.sendData(JSON.stringify(data));
-  };
-
-  useEffect(() => {
-    tg?.onEvent('mainButtonClicked', onSendData);
-    return () => {
-      tg?.offEvent('mainButtonClicked', onSendData);
-    };
-  }, [onSendData, tg]);
 
   if (userLoading) {
     return <Spinner />;
@@ -123,7 +95,6 @@ export default function CreatePostModule({
       const telegram = await postMessage({ id: result[0]?.message_id, postId: post.id });
       console.log('_telegram', telegram);
       reset();
-      tg?.MainButton.show();
       alert('Объявление создано!');
       await onSubmitOptional();
     } catch (e) {
