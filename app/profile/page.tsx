@@ -63,7 +63,10 @@ export default function ProfilePage<NextPage>() {
         <p>Добавить объявление</p>
         <Link
           href={source === '1' ? routes.bot : routes.add}
-          className={buttonStyles({ size: 'medium' })}
+          className={clsx(
+            buttonStyles({ size: 'medium' }),
+            'flex h-16 w-full items-center justify-center !text-3xl'
+          )}
         >
           &#43;
         </Link>
@@ -93,7 +96,7 @@ export default function ProfilePage<NextPage>() {
         </>
       )}
       {!postsLoading && posts.length === 0 && <h2>Нет объявлений</h2>}
-      <Button onClick={logout}>Выход</Button>
+      {/*<Button onClick={logout}>Выход</Button>*/}
     </div>
   );
 }

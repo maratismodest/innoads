@@ -29,6 +29,7 @@ interface PostModuleProps {
 export default function CreatePostModule({
   onSubmitOptional = async () => undefined,
 }: PostModuleProps) {
+  const isTelegram = localStorage.getItem('telegram');
   const { categories } = useApp();
   const { user, loading: userLoading } = useAuth();
 
@@ -108,7 +109,7 @@ export default function CreatePostModule({
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="form gap-2">
-        <h1>Новое объявление</h1>
+        <h1>Новое объявление{isTelegram === '1' ? '.' : ''}</h1>
         <Field>
           <Label>Выберите категорию</Label>
           <SelectHeadlessUi options={categories} name="categoryId" />
