@@ -53,7 +53,7 @@ export default function PostPage<NextPage>({ post }: Props) {
       {
         <dialog
           open={open}
-          className="fixed top-[64px] z-40 h-[calc(100vh_-_64px)] w-screen max-w-full bg-black backdrop-grayscale"
+          className="fixed top-[52px] z-40 h-[calc(100vh_-_52px)] w-screen max-w-full bg-black backdrop-grayscale"
         >
           <button
             className={clsx(styles, 'absolute right-4 top-4 z-50')}
@@ -79,18 +79,16 @@ export default function PostPage<NextPage>({ post }: Props) {
           className="relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll"
           ref={ul}
         >
-          {images.map((image: string, index: number) => {
-            return (
-              <li
-                key={image}
-                className="relative flex aspect-square h-full flex-none snap-center overflow-y-hidden"
-                // @ts-ignore
-                ref={(el: HTMLLIElement) => (refs.current[index] = el)}
-              >
-                <ImageInView index={index} src={image} setCurrent={setCurrent} />
-              </li>
-            );
-          })}
+          {images.map((image: string, index: number) => (
+            <li
+              key={image}
+              className="relative flex aspect-square h-full flex-none snap-center overflow-y-hidden"
+              // @ts-ignore
+              ref={(el: HTMLLIElement) => (refs.current[index] = el)}
+            >
+              <ImageInView index={index} src={image} setCurrent={setCurrent} />
+            </li>
+          ))}
         </ul>
         <button
           className={clsx(
