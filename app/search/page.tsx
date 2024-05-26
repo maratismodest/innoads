@@ -23,7 +23,6 @@ export default function Search() {
     // <Suspense fallback={<Spinner />}>
     <>
       <h1>Поиск</h1>
-      <hr />
       <SearchPage />
     </>
     // </Suspense>

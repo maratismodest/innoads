@@ -61,7 +61,7 @@ const SearchPage = () => {
       <Select options={categories} onChange={handleSelect} value={category} />
       <input
         placeholder="Поиск по заголовкам"
-        className={clsx(inputStyles(), 'mt-4')}
+        className={clsx(inputStyles(), 'mt-2')}
         onChange={e => setText(e.target.value)}
       />
       <hr />

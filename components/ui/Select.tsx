@@ -1,6 +1,6 @@
 import Arrow from '@/components/Arrow';
 import { Option } from '@/types/global';
-import { Listbox } from '@headlessui/react';
+import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react';
 import { clsx } from 'clsx';
 import React, { Fragment } from 'react';
 
@@ -11,19 +11,19 @@ interface SelectProps {
   name?: string;
 }
 
-const Select = ({ options, onChange, value, name }: SelectProps) => {
+export default function Select({ options, onChange, value, name }: SelectProps) {
   return (
     <div className="relative">
       <Listbox value={value} onChange={onChange}>
         {({ open }) => (
           <>
-            <Listbox.Button className="flex h-9 w-full items-center justify-between rounded border border-inputBorder px-4 text-start">
-              {value?.label}
+            <ListboxButton className="flex h-9 w-full items-center justify-between rounded border border-inputBorder px-4 text-start">
+              {value?.label ?? <span className="text-gray-dark">Выберите категорию</span>}
               <div className={clsx('ml-auto', open && 'rotate-180 transition ease-in-out')}>
                 <Arrow />
               </div>
-            </Listbox.Button>
-            <Listbox.Options className="absolute top-10 z-50 w-full rounded bg-white p-2 drop-shadow-md">
+            </ListboxButton>
+            <ListboxOptions className="absolute top-10 z-50 w-full rounded bg-white p-2 drop-shadow-md">
               {options.map(category => (
                 <Listbox.Option key={category.value} value={category} as={Fragment}>
                   {({ active, selected }) => (
@@ -35,12 +35,10 @@ const Select = ({ options, onChange, value, name }: SelectProps) => {
                   )}
                 </Listbox.Option>
               ))}
-            </Listbox.Options>
+            </ListboxOptions>
           </>
         )}
       </Listbox>
     </div>
   );
-};
-
-export default Select;
+}

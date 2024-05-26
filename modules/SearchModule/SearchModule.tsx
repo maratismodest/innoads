@@ -11,27 +11,27 @@ import React, { useEffect, useRef, useState } from 'react';
 const SearchModule = () => {
   const [text, setText] = useState<string>('');
   const searchText = useDebounce(text);
-  const ref = useRef<HTMLInputElement>(null);
+  // const ref = useRef<HTMLInputElement>(null);
 
   const {
     posts = [],
     postsLoading,
     postsError,
     postsRefetch,
-  } = usePostsQuery({ search: searchText }, Boolean(searchText));
+  } = usePostsQuery({ search: searchText, published: true }, Boolean(searchText));
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.focus();
-    }
+    // if (ref.current) {
+    //   ref.current.focus();
+    // }
     return () => {
       setText('');
     };
-  }, [ref.current]);
+  }, []);
 
   useEffect(() => {
     if (searchText) {
-      postsRefetch(cleanObject({ search: searchText }));
+      postsRefetch(cleanObject({ search: searchText, published: true }));
     }
   }, [searchText]);
 
@@ -40,20 +40,24 @@ const SearchModule = () => {
   return (
     <section className="relative mt-1">
       <input
-        ref={ref}
+        // ref={ref}
         placeholder="Поиск по объявлениям"
         className={clsx(inputStyles(), 'w-full')}
         onChange={e => setText(e.target.value)}
       />
-      {searchText && posts.length > 0 && !postsError && (
+      {searchText && !postsError && !postsLoading && (
         <ul className="absolute -bottom-1 z-50 w-full translate-y-full rounded-lg border-2 border-inputBorder bg-white px-2 py-1">
-          {posts?.map(x => (
-            <li key={x.id} className="truncate">
-              <Link href={routes.post + '/' + x.slug} className="">
-                {x.title}: {x.body}
-              </Link>
-            </li>
-          ))}
+          {posts && posts.length ? (
+            posts.map(x => (
+              <li key={x.id} className="truncate">
+                <Link href={routes.post + '/' + x.slug} className="">
+                  {x.title}: {x.body}
+                </Link>
+              </li>
+            ))
+          ) : (
+            <li>нет совпадений</li>
+          )}
         </ul>
       )}
     </section>
