@@ -17,7 +17,7 @@ import React, { useMemo } from 'react';
 export default function ProfilePage<NextPage>() {
   const { user, logout, loading } = useAuth();
   const userId = user?.id;
-  const source = localStorage.getItem('token');
+  const source = localStorage.getItem('telegram');
   const {
     posts = [],
     postsLoading,
