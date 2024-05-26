@@ -137,7 +137,7 @@ export default function CreatePostModule({
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="form gap-2">
-        <h1 className="sr-only">Новое объявление</h1>
+        <h1>Новое объявление</h1>
         <Field>
           <Label>Выберите категорию</Label>
           <SelectHeadlessUi options={categories} name="categoryId" />

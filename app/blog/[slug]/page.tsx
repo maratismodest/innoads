@@ -1,10 +1,14 @@
+import Breadcrumbs, { Breadcrumb } from '@/components/Breadcrumbs';
 import { getAllArticles, getArticleBySlug } from '@/prisma/services/articles';
 import type { GetSlugPath } from '@/types';
+import { Option } from '@/types/global';
+import { routes } from '@/utils/constants';
 import { dateFormat } from '@/utils/date';
 import { getBlogPostJsonLd } from '@/utils/jsonLd';
 import dayjs from 'dayjs';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import React from 'react';
 
 export async function generateStaticParams() {
   const articles = await getAllArticles();
@@ -48,19 +52,26 @@ export default async function Article<NextPage>({ params: { slug } }: GetSlugPat
   }
   const { title, body, createdAt } = article;
 
+  const breadcrumbs: Breadcrumb[] = [
+    { value: routes.main, label: 'Главная' },
+    { value: routes.blog, label: 'Блог' },
+    { value: routes.blog + '/' + slug, label: title },
+  ];
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getBlogPostJsonLd(article)) }}
       />
-      <section>
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <article>
         <h1>{title}</h1>
         <time dateTime={dayjs(createdAt).format(dateFormat.time)}>
           {dayjs(createdAt).format(dateFormat.long)}
         </time>
-        <article className="wysiwyg mt-2" dangerouslySetInnerHTML={{ __html: body }} />
-      </section>
+        <article className="wysiwyg" dangerouslySetInnerHTML={{ __html: body }} />
+      </article>
     </>
   );
 }

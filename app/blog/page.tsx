@@ -1,4 +1,5 @@
 // import fetchArticles from '@/utils/api/fetchArticles';
+import Breadcrumbs, { Breadcrumb } from '@/components/Breadcrumbs';
 import { getAllArticles } from '@/prisma/services/articles';
 import { routes, seo } from '@/utils/constants';
 import { getBlogJsonLd } from '@/utils/jsonLd';
@@ -15,13 +16,20 @@ export const metadata: Metadata = {
 
 export default async function ArticlesPage<NextPage>() {
   const articles = await getAllArticles();
+
+  const breadcrumbs: Breadcrumb[] = [
+    { value: routes.main, label: 'Главная' },
+    { value: routes.blog, label: 'Блог' },
+  ];
+
   return (
     <section>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getBlogJsonLd(articles)) }}
       />
-      <h1 className="text-center">Блог</h1>
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <h1>Блог</h1>
       <ul className="grid grid-cols-1 gap-2">
         {articles.map(({ id, title, slug }) => (
           <li key={id}>
