@@ -97,6 +97,7 @@ export default function AuthProvider({ children }: Props) {
     console.log('token', token);
     if (token) {
       localStorage.setItem('token', token);
+      localStorage.setItem('telegram', '1');
     }
     checkToken();
     return () => checkToken();

@@ -11,6 +11,7 @@ export const routes = {
   blog: '/blog',
   articles: '/articles',
   users: '/users',
+  bot: '/bot',
 } as const;
 
 export const seo: Record<string, Seo> = {

@@ -17,6 +17,7 @@ import React, { useMemo } from 'react';
 export default function ProfilePage<NextPage>() {
   const { user, logout, loading } = useAuth();
   const userId = user?.id;
+  const source = localStorage.getItem('token');
   const {
     posts = [],
     postsLoading,
@@ -60,7 +61,10 @@ export default function ProfilePage<NextPage>() {
       <div className="text-center">
         <h1>Профиль</h1>
         <p>Добавить объявление</p>
-        <Link href={routes.add} className={buttonStyles()}>
+        <Link
+          href={source === '1' ? routes.bot : routes.add}
+          className={buttonStyles({ size: 'medium' })}
+        >
           &#43;
         </Link>
       </div>
