@@ -125,7 +125,7 @@ export default function CreatePostModule({
       reset();
       tg?.MainButton.show();
       alert('Объявление создано!');
-      await onSubmitOptional();
+      // await onSubmitOptional();
     } catch (e) {
       console.log(e);
       alert('Что-то пошло не так');
