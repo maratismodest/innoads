@@ -1,6 +1,7 @@
 'use client';
 
 import Posts from '@/components/Posts';
+import Button from '@/components/ui/Button';
 import Spinner from '@/components/ui/Spinner';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useAuth from '@/hooks/useAuth';
@@ -18,7 +19,7 @@ import React, { useMemo } from 'react';
 export default function ProfilePage<NextPage>() {
   const { user, logout, loading } = useAuth();
   const userId = user?.id;
-  const source = useAtomValue(stateAtom);
+  const isTelegram = useAtomValue(stateAtom);
   const {
     posts = [],
     postsLoading,
@@ -63,7 +64,7 @@ export default function ProfilePage<NextPage>() {
         <h1>Профиль</h1>
         <p>Добавить объявление</p>
         <Link
-          href={source === 1 ? routes.bot : routes.add}
+          href={isTelegram === 1 ? routes.bot : routes.add}
           className={clsx(
             buttonStyles({ size: 'medium' }),
             'flex h-12 w-full items-center justify-center !text-3xl'
@@ -97,7 +98,7 @@ export default function ProfilePage<NextPage>() {
         </>
       )}
       {!postsLoading && posts.length === 0 && <h2>Нет объявлений</h2>}
-      {/*<Button onClick={logout}>Выход</Button>*/}
+      {isTelegram !== 1 && <Button onClick={logout}>Выход</Button>}
     </div>
   );
 }
