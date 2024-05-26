@@ -1,5 +1,6 @@
 import Categories from '@/components/Categories';
 import InfinitePosts from '@/modules/InfinitePosts';
+import SearchModule from '@/modules/SearchModule/SearchModule';
 import { getAllCategories } from '@/prisma/services/categories';
 // import fetchPosts from '@/utils/api/prisma/fetchAds';
 import { getMainPageJsonLd } from '@/utils/jsonLd';
@@ -16,7 +17,11 @@ export default async function Home<NextPage>() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getMainPageJsonLd()) }}
       />
-      <Categories categories={categories} />
+      <div>
+        <Categories categories={categories} />
+        <SearchModule />
+      </div>
+
       <div className="flex justify-between align-baseline">
         <h1>Последние объявления</h1>
         {/*<span>{totalPages * 20} объявлений</span>*/}

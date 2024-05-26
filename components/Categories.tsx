@@ -8,7 +8,7 @@ interface CategoriesProp {
 
 export default function Categories({ categories }: CategoriesProp) {
   return (
-    <ul className="mb-1 flex snap-x snap-mandatory justify-between gap-12 overflow-scroll rounded-2xl bg-gray px-8 py-1">
+    <ul className="flex snap-x snap-mandatory justify-between gap-12 overflow-scroll rounded-2xl bg-gray px-8 py-1">
       {categories.map(({ id, name, label, image }, index) => {
         return (
           <li key={id} tabIndex={index + 1}>
