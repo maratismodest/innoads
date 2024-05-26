@@ -113,7 +113,7 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
         >
           Написать автору
         </a>
-        <Link href={routes.users + '/' + userId} className={clsx(buttonStyles(), 'mt-4 block')}>
+        <Link href={routes.users + '/' + userId} className={clsx(buttonStyles(), 'mt-4 !block')}>
           Все объявления автора
         </Link>
         <ShareButton post={post} />
