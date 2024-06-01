@@ -53,7 +53,7 @@ export default function AdminPage() {
     if (user && user.role === Role.ADMIN) {
       onClick().then(res => console.log('onClick'));
     }
-  }, [user, onClick]);
+  }, [user]);
 
   if (loading || usersLoading || postsLoading) {
     return <Spinner />;
