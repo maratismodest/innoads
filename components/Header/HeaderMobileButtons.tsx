@@ -1,12 +1,13 @@
+import clsx from 'clsx';
 import { menu, menuHome } from './HeaderButtons';
 import Link from 'next/link';
-import React from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
 
 const mobileMenu = [menuHome].concat(menu);
 
-export default function HeaderMobileButtons() {
+export default function HeaderMobileButtons({ className }: ComponentPropsWithoutRef<'ul'>) {
   return (
-    <ul className="grid w-full grid-cols-5 items-center">
+    <ul className={clsx('grid w-full grid-cols-5 items-center', className)}>
       {mobileMenu.map(({ text, href, logo }) => (
         <li key={href} className="flex flex-col justify-center">
           <Link href={href} title={text}>

@@ -21,9 +21,6 @@ const SearchModule = () => {
   } = usePostsQuery({ search: searchText, published: true }, Boolean(searchText));
 
   useEffect(() => {
-    // if (ref.current) {
-    //   ref.current.focus();
-    // }
     return () => {
       setText('');
     };

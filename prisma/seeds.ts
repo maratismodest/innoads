@@ -147,15 +147,71 @@ const initialPosts: Post[] = [
   {
     id: 1,
     categoryId: 1,
-    price: 99,
+    price: 10,
     title: 'Тестовое объявление',
     body: 'Описание объявления',
-    preview: 'https://chamala.tatar/uploads/1715943397663.jpeg',
-    images: 'https://chamala.tatar/uploads/free.png',
-    slug: 'test-99',
+    preview: 'https://innoads.ru/images/og-image.png',
+    images: 'https://innoads.ru/images/og-image.png',
+    slug: 'test-01',
     userId: '71233480',
     createdAt: new Date('2024-05-17T10:56:53.893Z'),
     updatedAt: new Date('2024-05-17T10:56:53.893Z'),
+    published: true,
+  },
+  {
+    id: 2,
+    categoryId: 1,
+    price: 20,
+    title: 'Тестовое объявление',
+    body: 'Описание объявления',
+    preview: 'https://innoads.ru/images/og-image.png',
+    images: 'https://innoads.ru/images/og-image.png',
+    slug: 'test-02',
+    userId: '71233480',
+    createdAt: new Date('2024-05-17T10:57:53.893Z'),
+    updatedAt: new Date('2024-05-17T10:57:53.893Z'),
+    published: true,
+  },
+  {
+    id: 3,
+    categoryId: 1,
+    price: 30,
+    title: 'Тестовое объявление',
+    body: 'Описание объявления',
+    preview: 'https://innoads.ru/images/og-image.png',
+    images: 'https://innoads.ru/images/og-image.png',
+    slug: 'test-03',
+    userId: '71233480',
+    createdAt: new Date('2024-05-17T10:58:53.893Z'),
+    updatedAt: new Date('2024-05-17T10:58:53.893Z'),
+    published: true,
+  },
+  {
+    id: 4,
+    categoryId: 1,
+    price: 40,
+    title: 'Тестовое объявление',
+    body: 'Описание объявления',
+    preview: 'https://innoads.ru/images/og-image.png',
+    images: 'https://innoads.ru/images/og-image.png',
+    slug: 'test-04',
+    userId: '71233480',
+    createdAt: new Date('2024-05-17T10:59:53.893Z'),
+    updatedAt: new Date('2024-05-17T10:59:53.893Z'),
+    published: true,
+  },
+  {
+    id: 5,
+    categoryId: 1,
+    price: 50,
+    title: 'Тестовое объявление',
+    body: 'Описание объявления',
+    preview: 'https://innoads.ru/images/og-image.png',
+    images: 'https://innoads.ru/images/og-image.png',
+    slug: 'test-05',
+    userId: '71233480',
+    createdAt: new Date('2024-05-17T11:56:53.893Z'),
+    updatedAt: new Date('2024-05-17T11:56:53.893Z'),
     published: true,
   },
 ];
@@ -179,13 +235,13 @@ const seed = async () => {
   //   });
   // }
 
-  await prisma.article.deleteMany();
-
-  for (const article of initialArticlesSofia) {
-    await prisma.article.create({
-      data: article,
-    });
-  }
+  // await prisma.article.deleteMany();
+  //
+  // for (const article of initialArticlesSofia) {
+  //   await prisma.article.create({
+  //     data: article,
+  //   });
+  // }
 
   // await prisma.user.deleteMany();
   // for (const user of initialUsers) {
@@ -194,12 +250,15 @@ const seed = async () => {
   //   });
   // }
   //
-  // await prisma.post.deleteMany();
-  // for (const post of initialPosts) {
-  //   await prisma.post.create({
-  //     data: post,
-  //   });
-  // }
+
+  await prisma.message.deleteMany();
+
+  await prisma.post.deleteMany();
+  for (const post of initialPosts) {
+    await prisma.post.create({
+      data: post,
+    });
+  }
 };
 
 seed();

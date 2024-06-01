@@ -7,17 +7,27 @@ import fetchPosts, { GetPostsParams } from '@/utils/api/prisma/fetchAds';
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
 
+export type InitOptions = Partial<GetPostsParams> & Required<{ page: number }>;
+
 type Props = {
-  options: Partial<GetPostsParams>;
+  initOptions: InitOptions;
   initPosts: Post[];
-  initPage: number;
+  // initPage: number;
 };
 
-export default function InfinitePosts({ options, initPosts, initPage }: Props) {
+export default function InfinitePosts({
+  initOptions,
+  initPosts,
+  // initPage
+}: Props) {
   const elementRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen(elementRef);
   const [posts, setPosts] = useState<Post[]>(initPosts);
-  const [page, setPage] = useState<number>(initPage);
+  const [options, setOptions] = useState<InitOptions>(initOptions);
+
+  console.log('options', options);
+  // const [page, setPage] = useState<number>(initPage);
+
   const [hasMore, setHasMore] = useState(true);
   const [fetching, setFetching] = useState(false);
 
@@ -29,35 +39,34 @@ export default function InfinitePosts({ options, initPosts, initPage }: Props) {
     try {
       const content = await fetchPosts({
         ...options,
-        page,
-        size: 20,
       });
       setPosts([...posts, ...content]);
-      setPage(prev => prev + 1);
+      setOptions(prev => ({ ...prev, page: prev.page + 1 }));
       // setHasMore(page + 1 < totalPages);
       setHasMore(content.length > 0);
+      console.log('page', options.page);
     } catch (e) {
       console.log(e);
     } finally {
       setFetching(false);
     }
-  }, [posts, fetching, page, hasMore, options]);
+  }, [posts, fetching, hasMore, options]);
 
   useEffect(() => {
     if (isOnScreen && hasMore) {
       loadMore();
     }
-  }, [isOnScreen, hasMore, options.categoryId, options.search]);
+  }, [isOnScreen, hasMore, options.categoryId, options.search, options.page]);
 
-  //just reset component to initial state
+  // just reset component to initial state
   useEffect(() => {
     if (Object.keys(options).length) {
-      setPosts([]);
+      setPosts(initPosts);
       setHasMore(true);
-      setPage(initPage);
+      setOptions(initOptions);
       setFetching(false);
     }
-  }, [options]);
+  }, [initOptions]);
 
   return (
     <>
