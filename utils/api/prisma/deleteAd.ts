@@ -14,8 +14,8 @@ export default async function deleteAd(id: number) {
   _images.map(async image => {
     const filename = getNameFromUrl(image);
     if (filename) {
-      const numFruit = await deleteImageByFilename(filename);
-      return numFruit;
+      const file = await deleteImageByFilename(filename);
+      return file;
     }
   });
 

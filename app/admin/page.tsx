@@ -2,26 +2,25 @@
 
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
-import useAuth from '@/hooks/useAuth';
-import useBansQuery from '@/hooks/query/useBansQuery';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useUsersQuery from '@/hooks/query/useUsersQuery';
+import useAuth from '@/hooks/useAuth';
 import Users from '@/pages-lib/admin/users';
 import buttonStyles from '@/styles/buttonStyles';
-import { Role } from '@prisma/client';
-import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
+import deleteAd from '@/utils/api/prisma/deleteAd';
 import {
   Checkbox,
   Field,
   Label,
-  Switch,
   Tab,
   TabGroup,
   TabList,
   TabPanel,
   TabPanels,
 } from '@headlessui/react';
+import { Role } from '@prisma/client';
+import clsx from 'clsx';
+import React, { useEffect, useState } from 'react';
 
 export default function AdminPage() {
   const [enabled, setEnabled] = useState(false);
@@ -31,6 +30,19 @@ export default function AdminPage() {
   const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery({
     size: 500,
   });
+
+  const handleDeleteAllArchived = async () => {
+    try {
+      if (posts) {
+        const _delete = posts.filter(x => !x.published);
+        for (const post of _delete) {
+          await deleteAd(post.id);
+        }
+      }
+    } catch (e) {
+      console.error('e', e);
+    }
+  };
 
   const onClick = async () => {
     usersRefetch();
@@ -72,6 +84,9 @@ export default function AdminPage() {
         <h1>Панель администрирования</h1>
         <button className={buttonStyles()} onClick={onClick} id="refetch">
           Обновить данные
+        </button>
+        <button className={buttonStyles()} onClick={handleDeleteAllArchived}>
+          Удалить все архивные посты
         </button>
       </div>
       <TabGroup>
