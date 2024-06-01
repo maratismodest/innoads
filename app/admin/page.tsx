@@ -36,7 +36,8 @@ export default function AdminPage() {
       if (posts) {
         const _delete = posts.filter(x => !x.published);
         for (const post of _delete) {
-          await deleteAd(post.id);
+          const deleted = await deleteAd(post.id);
+          console.warn('deleted', deleted);
         }
       }
     } catch (e) {
