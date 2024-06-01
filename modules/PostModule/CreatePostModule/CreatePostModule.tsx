@@ -11,6 +11,7 @@ import { stateAtom } from '@/state';
 import buttonStyles from '@/styles/buttonStyles';
 import inputStyles from '@/styles/inputStyles';
 import { CreatePostDTO } from '@/types';
+import postLog from '@/utils/api/prisma/postLog';
 import postMessage from '@/utils/api/prisma/postMessage';
 import postAd from '@/utils/api/prisma/postPost';
 import postTelegram, { TelegramResponseProps } from '@/utils/api/telegram/postTelegram';
@@ -19,7 +20,6 @@ import slug from '@/utils/slug';
 import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import clsx from 'clsx';
-import { useAtomValue } from 'jotai';
 import React, { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { defaultValues, IFormInput, schema } from '../yup';
@@ -75,14 +75,15 @@ export default function CreatePostModule({
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
       setLoading(true);
+      const _title = data.title.trim();
       const createPostDto: CreatePostDTO = {
         categoryId: data.categoryId,
         price: data.price,
-        title: data.title,
-        body: data.body,
+        title: _title,
+        body: data.body.trim(),
         preview: images[0],
         images: images.join('||'),
-        slug: slug(data.title) + '-' + Math.floor(Math.random() * 100),
+        slug: slug(_title) + '-' + Math.floor(Math.random() * 100),
         userId: user.id,
         published: Boolean(data.post),
       };
@@ -100,7 +101,9 @@ export default function CreatePostModule({
       alert('Объявление создано!');
       await onSubmitOptional();
     } catch (e) {
-      console.log(e);
+      console.error(e);
+      // @ts-ignore
+      postLog(JSON.stringify(e.message ?? JSON.stringify(data)));
       alert(messages.somethingWentWrong);
     } finally {
       setLoading(false);
