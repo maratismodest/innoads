@@ -6,7 +6,7 @@ const formats = ['.jpg', '.jpeg', '.png'] as const;
 const ACCEPTED_IMAGE_FORMAT = formats.join(', ');
 
 const compressionOptions = {
-  maxSizeMB: 0.9,
+  maxSizeMB: 0.8,
   maxWidthOrHeight: 800,
   useWebWorker: true,
 };
