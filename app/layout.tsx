@@ -24,7 +24,6 @@ export const metadata: Metadata = {
   description: seo.default.description,
   authors: [{ name: process.env.NEXT_PUBLIC_APP_NAME }],
   publisher: process.env.NEXT_PUBLIC_APP_NAME,
-  keywords: process.env.NEXT_PUBLIC_KEY_WORDS,
   manifest: '/manifest.json',
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
   openGraph: {

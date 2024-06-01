@@ -46,7 +46,7 @@ export async function generateMetadata({
 
   const { categoryId, title, body, preview, user } = post;
   const category = categories.find(option => option.value === categoryId) || categories[0];
-  const metaTitle = `${category.label} ${title.slice(0, 50)} ${process.env.NEXT_PUBLIC_META_ADDITIONAL ?? ''}`;
+  const metaTitle = `${category.label} ${title.slice(0, 50)} ${process.env.NEXT_PUBLIC_META_ADDITIONAL}`;
 
   return {
     title: metaTitle,
