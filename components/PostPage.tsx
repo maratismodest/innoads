@@ -67,7 +67,7 @@ export default function PostPage<NextPage>({ post }: Props) {
             alt="image"
             title={title}
             fill={true}
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+            sizes="(max-width: 640px) 400px, (max-width: 768px) 600px, 800px"
             style={{ objectFit: 'contain' }}
             placeholder="blur"
             blurDataURL={NO_IMAGE}
