@@ -1,6 +1,6 @@
 'use client';
 
-import Item from '@/components/Item';
+import Posts from '@/components/Posts';
 import favouritesAtom from '@/state';
 import { useAtomValue } from 'jotai';
 
@@ -12,13 +12,7 @@ export default function Favourites<NextPage>() {
       <h1>Избранное</h1>
       <div className="mt-4">
         {favourites.length > 0 ? (
-          <ul className="items">
-            {favourites.map(post => (
-              <li key={post.id}>
-                <Item post={post} />
-              </li>
-            ))}
-          </ul>
+          <Posts posts={favourites} />
         ) : (
           <h2>Нет добавленных в избранное</h2>
         )}

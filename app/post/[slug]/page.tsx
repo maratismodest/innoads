@@ -68,7 +68,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const posts = await fetchAds({ size: 1000 });
+  const posts = await fetchAds({ size: 1000, published: true });
 
   return posts.map(({ slug }) => ({ slug, published: true }));
 }
@@ -116,7 +116,7 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
         <Link href={routes.users + '/' + userId} className={clsx(buttonStyles(), 'mt-4 !block')}>
           Все объявления автора
         </Link>
-        <ShareButton post={post} />
+        <ShareButton post={post} className="mt-4" />
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import Arrow from '@/components/Arrow';
+import ArrowSvg from '@/public/svg/arrow.svg';
 import { Option } from '@/types/global';
 import {
   Listbox,
@@ -30,7 +30,7 @@ export default function SelectHeadlessUi({ name, options }: { name: string; opti
             <ListboxButton className="flex h-9 w-full items-center justify-between rounded border border-inputBorder px-4 text-start">
               {options.find(x => x.value === value)?.label}
               <div className={clsx('ml-auto', open && 'rotate-180 transition ease-in-out')}>
-                <Arrow />
+                <ArrowSvg className="size-6" />
               </div>
             </ListboxButton>
             <Transition

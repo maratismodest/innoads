@@ -196,6 +196,6 @@ const curseWords: curseWordsProps = {
   },
 };
 
-export default function hasCurseWords({ title, body }: Pick<Post, 'title' | 'body'>) {
-  return curseWords.containsMat(title) || curseWords.containsMat(body);
+export default function hasCurseWords({ title, body }: Pick<Partial<Post>, 'title' | 'body'>) {
+  return curseWords.containsMat(title ?? '') || curseWords.containsMat(body ?? '');
 }

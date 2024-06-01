@@ -1,16 +1,15 @@
-import { Post } from '@prisma/client';
-import React, { HTMLProps } from 'react';
-import clsx from 'clsx';
-
 import Item from '@/components/Item';
+import { Post } from '@prisma/client';
+import clsx from 'clsx';
+import React, { ComponentPropsWithoutRef } from 'react';
 
-interface PostsInterface extends HTMLProps<HTMLUListElement> {
+interface PostsInterface extends ComponentPropsWithoutRef<'ul'> {
   posts: Post[];
   edit?: boolean;
   refetch?: any;
 }
 
-export default function Posts({ posts, edit = false, className = '' }: PostsInterface) {
+export default function Posts({ posts, edit = false, className }: PostsInterface) {
   return (
     <ul className={clsx('items', className)} data-testid="posts">
       {posts.map((post: Post) => (

@@ -114,7 +114,7 @@ export default function CreatePostModule({
         <Field>
           <Label>Выберите категорию</Label>
           <SelectHeadlessUi options={categories} name="categoryId" />
-          <span className="text-red">{errors.categoryId?.message}</span>
+          <span className="error">{errors.categoryId?.message}</span>
         </Field>
 
         <div>
@@ -124,19 +124,19 @@ export default function CreatePostModule({
             {...register('price')}
             className={clsx(inputStyles(), 'block w-full')}
           />
-          <span className="text-red">{errors.price?.message}</span>
+          <span className="error">{errors.price?.message}</span>
         </div>
 
         <div>
           <label htmlFor="title">Заголовок</label>
           <input {...register('title')} className={clsx(inputStyles(), 'block w-full')} />
-          <span className="text-red">{errors.title?.message}</span>
+          <span className="error">{errors.title?.message}</span>
         </div>
 
         <div>
           <label htmlFor="body">Описание</label>
           <textarea rows={5} cols={5} {...register('body')} name="body" className="w-full" />
-          <span className="text-red">{errors.body?.message}</span>
+          <span className="error">{errors.body?.message}</span>
         </div>
 
         <ImagesModuleInput
@@ -159,7 +159,7 @@ export default function CreatePostModule({
               правилами и условиями
             </a>
           </label>
-          <span className="block text-red">{errors.agreement?.message}</span>
+          <span className="error block">{errors.agreement?.message}</span>
         </div>
 
         <div className="sr-only">

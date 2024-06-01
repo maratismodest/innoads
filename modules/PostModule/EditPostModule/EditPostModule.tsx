@@ -4,7 +4,6 @@ import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
-import useTelegram from '@/hooks/useTelegram';
 import ImagesModuleInput from '@/modules/PostModule/ImagesModule/ImagesModuleInput';
 import ImagesModulePreview from '@/modules/PostModule/ImagesModule/ImagesModulePreview';
 import imageHandler from '@/modules/PostModule/ImagesModule/utils';
@@ -16,7 +15,7 @@ import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Post } from '@prisma/client';
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { defaultValues, IFormInput, schema } from '../yup';
 
@@ -31,7 +30,6 @@ export default function EditPostModule({
 }: PostModuleProps) {
   const { categories } = useApp();
   const { user } = useAuth();
-  const { tg } = useTelegram();
 
   const methods = useForm<IFormInput>({
     resolver: yupResolver(schema),
@@ -59,27 +57,6 @@ export default function EditPostModule({
 
   const images = useWatch({ name: 'images', control }) as string[];
 
-  useEffect(() => {
-    tg?.MainButton.setParams({
-      text: 'Закрыть окно',
-    });
-  }, [tg?.MainButton]);
-
-  const onSendData = useCallback(() => {
-    const data = {
-      type: 'success',
-      text: 'Объявление создано!',
-    };
-    tg?.sendData(JSON.stringify(data));
-  }, [tg]);
-
-  useEffect(() => {
-    tg?.onEvent('mainButtonClicked', onSendData);
-    return () => {
-      tg?.offEvent('mainButtonClicked', onSendData);
-    };
-  }, [onSendData, tg]);
-
   if (!user) {
     return <Spinner />;
   }
@@ -105,7 +82,6 @@ export default function EditPostModule({
       console.log('post', post);
       // }
       reset();
-      tg?.MainButton.show();
       alert('Объявление изменено!');
       await onSubmitOptional();
     } catch (e) {
@@ -123,7 +99,7 @@ export default function EditPostModule({
         <Field>
           <Label>Выберите категорию</Label>
           <SelectHeadlessUi options={categories} name="categoryId" />
-          <span className="text-red">{errors.categoryId?.message}</span>
+          <span className="error">{errors.categoryId?.message}</span>
         </Field>
 
         <div>
@@ -133,19 +109,19 @@ export default function EditPostModule({
             {...register('price')}
             className={clsx(inputStyles(), 'block w-full')}
           />
-          <span className="text-red">{errors.price?.message}</span>
+          <span className="error">{errors.price?.message}</span>
         </div>
 
         <div>
           <label htmlFor="title">Заголовок</label>
           <input {...register('title')} className={clsx(inputStyles(), 'block w-full')} />
-          <span className="text-red">{errors.title?.message}</span>
+          <span className="error">{errors.title?.message}</span>
         </div>
 
         <div>
           <label htmlFor="body">Описание</label>
           <textarea rows={5} cols={5} {...register('body')} name="body" className="w-full" />
-          <span className="text-red">{errors.body?.message}</span>
+          <span className="error">{errors.body?.message}</span>
         </div>
 
         <ImagesModuleInput
@@ -163,7 +139,7 @@ export default function EditPostModule({
               правилами и условиями
             </a>
           </label>
-          <span className="block text-red">{errors.agreement?.message}</span>
+          <span className="error block">{errors.agreement?.message}</span>
         </div>
 
         <div className="hidden">

@@ -127,6 +127,10 @@
         @apply list-disc list-inside
     }
 
+    .error {
+        @apply text-red
+    }
+
 }
 
 /*:root {*/

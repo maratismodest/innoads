@@ -1,9 +1,10 @@
 'use client';
-import Button from '@/components/ui/Button';
+import buttonStyles from '@/styles/buttonStyles';
 import type { Post } from '@prisma/client';
-import React from 'react';
+import clsx from 'clsx';
+import React, { ComponentPropsWithoutRef } from 'react';
 
-interface ShareButtonProps {
+interface ShareButtonProps extends ComponentPropsWithoutRef<'button'> {
   post: Post;
 }
 
@@ -15,7 +16,7 @@ const onClick = async (slug: string) => {
   });
 };
 
-const ShareButton = ({ post }: ShareButtonProps) => {
+export default function ShareButton({ post, className }: ShareButtonProps) {
   const { slug } = post;
 
   if (!navigator.canShare) {
@@ -23,10 +24,8 @@ const ShareButton = ({ post }: ShareButtonProps) => {
   }
 
   return (
-    <Button className="mt-4" onClick={() => onClick(slug)}>
+    <button className={clsx(buttonStyles(), className)} onClick={() => onClick(slug)}>
       Поделиться
-    </Button>
+    </button>
   );
-};
-
-export default ShareButton;
+}

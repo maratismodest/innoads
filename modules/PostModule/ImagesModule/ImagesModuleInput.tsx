@@ -49,7 +49,7 @@ const ImagesModuleInput = ({ images, imageHandler, methods }: AddImageInputProps
         multiple={false}
         accept={ACCEPTED_IMAGE_FORMAT}
       />
-      <span className="text-red">{errors.images?.message}</span>
+      <span className="error">{errors.images?.message}</span>
     </div>
   );
 };
