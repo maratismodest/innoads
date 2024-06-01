@@ -1,5 +1,6 @@
 // import { TelegramUser } from '@/types';
 
+import { messages } from '@/utils/messages';
 import { TelegramUser } from 'telegram-login-button';
 
 const userTemplate: TelegramUser = {
@@ -14,6 +15,6 @@ const userTemplate: TelegramUser = {
 };
 
 const ERROR_ALIAS_MESSAGE = 'Добавьте алиас у себя в аккаунте!';
-const ERROR_TOKEN_MESSAGE = 'Что-то пошло не так: перезагрузите страницу ';
+const ERROR_TOKEN_MESSAGE = messages.somethingWentWrong + ': перезагрузите страницу!';
 
 export { userTemplate, ERROR_ALIAS_MESSAGE, ERROR_TOKEN_MESSAGE };

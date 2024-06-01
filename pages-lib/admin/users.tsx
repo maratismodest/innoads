@@ -17,7 +17,7 @@ const AdminUsers = ({ users }: AdminUsersProps) => {
         const { id, bans } = user as UserWithBans;
         // const isBanned = Boolean(bans.find(ban => ban.userId == user.id));
         const handleClick = async (checked: boolean) => {
-          console.log('here', checked);
+          console.log('checked', checked);
           if (bans.length) {
             await deleteBanPrisma(user.id);
           } else {

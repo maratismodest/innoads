@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
-import React from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
 
-interface DropdownProps extends React.HTMLProps<HTMLDivElement> {
+interface DropdownProps extends ComponentPropsWithoutRef<'div'> {
   dropdown: boolean;
 }
 

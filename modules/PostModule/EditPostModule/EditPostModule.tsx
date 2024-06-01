@@ -11,6 +11,7 @@ import buttonStyles from '@/styles/buttonStyles';
 import inputStyles from '@/styles/inputStyles';
 import { EditPostDTO } from '@/types';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
+import { messages } from '@/utils/messages';
 import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Post } from '@prisma/client';
@@ -86,7 +87,7 @@ export default function EditPostModule({
       await onSubmitOptional();
     } catch (e) {
       console.log(e);
-      alert('Что-то пошло не так');
+      alert(messages.somethingWentWrong);
     } finally {
       setLoading(false);
     }

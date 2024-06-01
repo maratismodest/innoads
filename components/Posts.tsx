@@ -6,7 +6,6 @@ import React, { ComponentPropsWithoutRef } from 'react';
 interface PostsInterface extends ComponentPropsWithoutRef<'ul'> {
   posts: Post[];
   edit?: boolean;
-  refetch?: any;
 }
 
 export default function Posts({ posts, edit = false, className }: PostsInterface) {

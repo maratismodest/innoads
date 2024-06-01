@@ -1,4 +1,3 @@
-import Posts from '@/components/Posts';
 import buttonStyles from '@/styles/buttonStyles';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { clsx } from 'clsx';

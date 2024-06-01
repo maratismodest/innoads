@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma';
-import { Prisma, User } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 type UserWithBans = Prisma.UserGetPayload<{
   include: { bans: true };
@@ -7,10 +7,6 @@ type UserWithBans = Prisma.UserGetPayload<{
 
 export function getAllUsers(): Promise<UserWithBans[]> {
   return prisma.user.findMany({ include: { bans: true } });
-}
-
-export function loginUsers(): Promise<User[]> {
-  return prisma.user.findMany();
 }
 
 export function getUserById(id: string) {
@@ -27,11 +23,3 @@ export function getUserById(id: string) {
     console.error(JSON.stringify(e));
   }
 }
-
-// export function getArticleBySlug(slug: string) {
-//   try {
-//     return prisma.article.findUnique({ where: { slug } });
-//   } catch (e) {
-//     console.error(JSON.stringify(e));
-//   }
-// }

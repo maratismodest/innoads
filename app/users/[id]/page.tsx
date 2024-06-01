@@ -40,7 +40,7 @@ export default async function PublicProfile<NextPage>({ params: { id } }: GetIdP
   if (!user) {
     return notFound();
   }
-  const posts = await fetchPosts({ userId: id });
+  const posts = await fetchPosts({ userId: id, published: true });
 
   return (
     <>

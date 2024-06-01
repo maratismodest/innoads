@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player';
 
 const VideoPage = () => {
   return (
-    <article>
+    <div>
       <h1 className="text-center">Video Player</h1>
       <div className="mx-auto aspect-video w-full max-w-screen-sm">
         <ReactPlayer
@@ -16,7 +16,7 @@ const VideoPage = () => {
           controls
         />
       </div>
-    </article>
+    </div>
   );
 };
 

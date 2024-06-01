@@ -1,3 +1,4 @@
+import { messages } from '@/utils/messages';
 import client, { beRoutes } from '../createRequest';
 
 interface PostImageProps {
@@ -5,7 +6,7 @@ interface PostImageProps {
   value: string;
 }
 
-const ERROR_MESSAGE = 'Что-то пошло не так при отправке изображения';
+const ERROR_MESSAGE = messages.somethingWentWrong + ' при отправке изображения';
 
 export default async function postImage(formData: FormData): Promise<PostImageProps> {
   try {

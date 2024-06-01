@@ -3,6 +3,7 @@ import Popup from '@/components/ui/Popup';
 import { stateAtom } from '@/state';
 import { UserWithBans } from '@/types';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
+import { messages } from '@/utils/messages';
 import { User } from '@prisma/client';
 import * as jose from 'jose';
 import { useAtom } from 'jotai';
@@ -29,7 +30,7 @@ type Props = {
 };
 
 const MESSAGE_TOKEN_ERROR =
-  'Что-то пошло не так: попробуйте перезапустить сайт/бота и авторизоваться заново';
+  messages.somethingWentWrong + ': попробуйте перезапустить сайт/бота и авторизоваться заново';
 const MESSAGE_USER_BANNED = 'Ваш аккаунт заблокирован';
 
 const decodeToken = async (token: string) => {

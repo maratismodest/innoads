@@ -1,7 +1,7 @@
-import { ItemModalText } from './utils';
-import Button from '@/components/ui/Button';
+import buttonStyles from '@/styles/buttonStyles';
 import clsx from 'clsx';
 import React from 'react';
+import { ItemModalText } from './utils';
 
 interface ItemButtonsProps {
   showModal: (text: ItemModalText) => void;
@@ -10,16 +10,16 @@ interface ItemButtonsProps {
 const ItemButtons = ({ showModal }: ItemButtonsProps) => {
   return (
     <>
-      <Button
+      <button
         title="Снять с публикации"
-        className={clsx('absolute z-10', 'right-0 top-0')}
+        className={clsx(buttonStyles(), 'absolute z-10', 'right-0 top-0')}
         onClick={event => {
           event.preventDefault();
           showModal(ItemModalText.delete);
         }}
       >
         &#10008;
-      </Button>
+      </button>
       {/*<Button*/}
       {/*  title="Редактировать"*/}
       {/*  className={clsx('absolute z-10', 'left-0 top-0')}*/}

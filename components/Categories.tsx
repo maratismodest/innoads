@@ -1,9 +1,9 @@
-import { CategoryDTO } from '@/types';
+import { Category } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 
 interface CategoriesProp {
-  categories: Readonly<CategoryDTO>[];
+  categories: Readonly<Category>[];
 }
 
 export default function Categories({ categories }: CategoriesProp) {

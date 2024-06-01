@@ -1,6 +1,6 @@
 'use client';
-import RedHeart from '@/assets/svg/heart-red.svg';
-import TransparentHeart from '@/assets/svg/heart.svg';
+import RedHeart from '@/public/svg/heart-red.svg';
+import TransparentHeart from '@/public/svg/heart.svg';
 import ItemButtons from '@/components/Item/item-buttons';
 import Price from '@/components/Price';
 import Popup from '@/components/ui/Popup';

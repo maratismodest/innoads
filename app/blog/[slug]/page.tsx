@@ -1,7 +1,6 @@
 import Breadcrumbs, { Breadcrumb } from '@/components/Breadcrumbs';
 import { getAllArticles, getArticleBySlug } from '@/prisma/services/articles';
 import type { GetSlugPath } from '@/types';
-import { Option } from '@/types/global';
 import { routes } from '@/utils/constants';
 import { dateFormat } from '@/utils/date';
 import { getBlogPostJsonLd } from '@/utils/jsonLd';
@@ -65,13 +64,13 @@ export default async function Article<NextPage>({ params: { slug } }: GetSlugPat
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getBlogPostJsonLd(article)) }}
       />
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <article>
+      <section>
         <h1>{title}</h1>
         <time dateTime={dayjs(createdAt).format(dateFormat.time)}>
           {dayjs(createdAt).format(dateFormat.long)}
         </time>
-        <article className="wysiwyg" dangerouslySetInnerHTML={{ __html: body }} />
-      </article>
+        <div className="wysiwyg" dangerouslySetInnerHTML={{ __html: body }} />
+      </section>
     </>
   );
 }

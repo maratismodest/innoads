@@ -14,6 +14,7 @@ import { CreatePostDTO } from '@/types';
 import postMessage from '@/utils/api/prisma/postMessage';
 import postAd from '@/utils/api/prisma/postPost';
 import postTelegram, { TelegramResponseProps } from '@/utils/api/telegram/postTelegram';
+import { messages } from '@/utils/messages';
 import slug from '@/utils/slug';
 import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -30,7 +31,6 @@ interface PostModuleProps {
 export default function CreatePostModule({
   onSubmitOptional = async () => undefined,
 }: PostModuleProps) {
-  const isTelegram = useAtomValue(stateAtom);
   const { categories } = useApp();
   const { user, loading: userLoading } = useAuth();
 
@@ -101,7 +101,7 @@ export default function CreatePostModule({
       await onSubmitOptional();
     } catch (e) {
       console.log(e);
-      alert('Что-то пошло не так');
+      alert(messages.somethingWentWrong);
     } finally {
       setLoading(false);
     }
@@ -110,7 +110,7 @@ export default function CreatePostModule({
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)} className="form gap-2">
-        <h1>Новое объявление{isTelegram === 1 ? '.' : '!'}</h1>
+        <h1>Новое объявление</h1>
         <Field>
           <Label>Выберите категорию</Label>
           <SelectHeadlessUi options={categories} name="categoryId" />

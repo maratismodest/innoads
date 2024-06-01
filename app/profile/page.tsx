@@ -5,10 +5,12 @@ import Button from '@/components/ui/Button';
 import Spinner from '@/components/ui/Spinner';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useAuth from '@/hooks/useAuth';
+import Archived from '@/pages-lib/profile/Archived/Archived';
 import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
 import { stateAtom } from '@/state';
 import buttonStyles from '@/styles/buttonStyles';
 import { routes } from '@/utils/constants';
+import { messages } from '@/utils/messages';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Post } from '@prisma/client';
 import { clsx } from 'clsx';
@@ -27,6 +29,7 @@ export default function ProfilePage<NextPage>() {
     postsRefetch,
   } = usePostsQuery({ userId }, Boolean(userId));
 
+  const active: Post[] = useMemo(() => posts.filter(post => post.published === true), [posts]);
   const archived: Post[] = useMemo(() => posts.filter(post => post.published === false), [posts]);
 
   if (loading) {
@@ -40,7 +43,7 @@ export default function ProfilePage<NextPage>() {
   if (postsError) {
     return (
       <div className="flex flex-col items-center gap-8">
-        <h1>Что-то пошло не так</h1>
+        <h1>{messages.somethingWentWrong}</h1>
         <button className={buttonStyles()} onClick={() => postsRefetch()}>
           Попробовать снова
         </button>
@@ -49,56 +52,40 @@ export default function ProfilePage<NextPage>() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-8">
-      <button
-        className={clsx(buttonStyles(), 'sr-only')}
-        onClick={() => {
-          console.log('refetch posts');
-          postsRefetch();
-        }}
-        id="refetch-posts"
-      >
-        Обновить данные
-      </button>
+    <div className="flex flex-1 flex-col items-center gap-8">
       <div className="text-center">
         <h1>Профиль</h1>
         <p>Добавить объявление</p>
         <Link
           href={isTelegram === 1 ? routes.bot : routes.add}
-          className={clsx(
-            buttonStyles({ size: 'medium' }),
-            'flex h-12 w-full items-center justify-center !text-3xl'
-          )}
+          className={clsx(buttonStyles(), 'flex h-12 w-full items-center justify-center !text-3xl')}
         >
           &#43;
         </Link>
+        <button
+          className={clsx(buttonStyles(), 'sr-only')}
+          onClick={() => {
+            console.log('refetch posts');
+            postsRefetch();
+          }}
+          id="refetch-posts"
+        >
+          Обновить данные
+        </button>
       </div>
       {postsLoading && <Spinner />}
-      {!postsLoading && posts.length > 0 && (
+      {posts.length > 0 && (
         <>
-          <Posts posts={posts.filter(({ published }) => published === true)} edit={true} />
-          {archived.length > 0 && (
-            <div className="w-full">
-              <div className="text-center">
-                <h2>Архивные</h2>
-                <p>Вы отметили их как не актуальные: для пользовтелей сайта они не отображаются.</p>
-              </div>
-              <Disclosure>
-                <DisclosureButton className="w-full py-2">
-                  <p className={clsx(buttonStyles({ size: 'small' }), '!mx-auto')}>
-                    показать/скрыть
-                  </p>
-                </DisclosureButton>
-                <DisclosurePanel className="text-gray-500">
-                  <Posts posts={archived} edit={false} className="pointer-events-none bg-gray" />
-                </DisclosurePanel>
-              </Disclosure>
-            </div>
-          )}
+          <Posts posts={active} edit={true} />
+          {archived.length > 0 && <Archived posts={archived} />}
         </>
       )}
       {!postsLoading && posts.length === 0 && <h2>Нет объявлений</h2>}
-      {isTelegram !== 1 && <Button onClick={logout}>Выход</Button>}
+      {isTelegram !== 1 && (
+        <Button className="mt-auto" onClick={logout}>
+          Выход
+        </Button>
+      )}
     </div>
   );
 }
