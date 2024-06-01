@@ -69,7 +69,12 @@ export default function CreatePostModule({
   }
 
   if (user.bans.length > 0) {
-    return <div>Ваш аккаут заблокирован!</div>;
+    return (
+      <div>
+        <h1>Ваш аккаут заблокирован!</h1>
+        <p>Обратитесь к модератору канала</p>
+      </div>
+    );
   }
 
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {

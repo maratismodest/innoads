@@ -10,7 +10,7 @@ import React, { useCallback } from 'react';
 export default function AddPage<NextPage>() {
   const { user, loading: userLoading } = useAuth();
   const router = useRouter();
-  const onSubmitOptional = useCallback(async () => router.push(routes.profile), []);
+  const onSubmitOptional = useCallback(async () => router.push(routes.profile), [router]);
 
   if (userLoading) {
     return <Spinner />;

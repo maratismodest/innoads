@@ -51,9 +51,9 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (user && user.role === Role.ADMIN) {
-      onClick();
+      onClick().then(res => console.log('onClick'));
     }
-  }, [user]);
+  }, [user, onClick]);
 
   if (loading || usersLoading || postsLoading) {
     return <Spinner />;

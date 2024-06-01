@@ -1,5 +1,5 @@
 'use client';
-import { cleanObject } from '@/app/api/posts/route';
+import cleanObject from '@/utils/cleanObject';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useDebounce from '@/hooks/useDebounce';
 import inputStyles from '@/styles/inputStyles';

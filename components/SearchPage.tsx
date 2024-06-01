@@ -1,5 +1,5 @@
 'use client';
-import { cleanObject } from '@/app/api/posts/route';
+import cleanObject from '@/utils/cleanObject';
 import PostsReadOnly from '@/components/PostsReadOnly';
 import Select from '@/components/ui/Select';
 import usePostsQuery from '@/hooks/query/usePostsQuery';

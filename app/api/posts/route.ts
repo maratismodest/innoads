@@ -1,17 +1,6 @@
 import fetchPosts from '@/utils/api/prisma/fetchAds';
+import cleanObject from '@/utils/cleanObject';
 import { NextResponse } from 'next/server';
-
-export function cleanObject(obj: Record<string, any>): Record<string, any> {
-  return Object.entries(obj)
-    .filter(([_, value]) => value !== undefined && value !== null && value !== 0 && value !== '')
-    .reduce(
-      (acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
-      },
-      {} as Record<string, any>
-    );
-}
 
 export async function GET(req: Request, res: NextResponse) {
   const url = new URL(req.url);
