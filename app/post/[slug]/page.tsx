@@ -84,7 +84,7 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
     return notFound();
   }
 
-  const { categoryId, title, body, preview, user, price, createdAt, userId } = post;
+  const { categoryId, title, body, preview, user, price, createdAt, userId, published } = post;
   return (
     <>
       <script
@@ -117,6 +117,7 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
           Все объявления автора
         </Link>
         <ShareButton post={post} className="mt-4" />
+        {!published && <span className="text-yellow">Это объявление снято с публикации</span>}
       </div>
     </>
   );
