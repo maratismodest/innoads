@@ -9,7 +9,7 @@
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "generate-types": "npx swagger-typescript-api -p ./types/swagger.yaml -o ./types -n index.ts",
-    "prisma-seed": "tsx prisma/seeds.ts",
+    "prisma-seed": "tsx prisma/seed/index.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {
