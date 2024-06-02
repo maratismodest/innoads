@@ -11,7 +11,6 @@ import { stateAtom } from '@/state';
 import buttonStyles from '@/styles/buttonStyles';
 import { routes } from '@/utils/constants';
 import { messages } from '@/utils/messages';
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Post } from '@prisma/client';
 import { clsx } from 'clsx';
 import { useAtomValue } from 'jotai';

@@ -7,10 +7,16 @@ const too_long = 'Слишком длинное';
 const required_image = 'Добавить хотя бы одно фото!';
 const too_many_images = 'Не больше 4 фотографий!';
 
+const regexWithoutMarks = /^[a-zA-Z0-9\-\s\u0400-\u04FF]+$/;
+
 export const schema = object({
   categoryId: number().required(required).integer().typeError(required),
   price: number().required(required).positive(positive).integer().typeError(required),
-  title: string().required(required).min(4, too_short).max(100, too_long),
+  title: string()
+    .required(required)
+    .min(4, too_short)
+    .max(100, too_long)
+    .matches(regexWithoutMarks, 'Запрещены знаки препинания'),
   body: string().required(required).min(10, too_short).max(800, too_long),
   agreement: boolean().oneOf([true], required),
   images: array()
