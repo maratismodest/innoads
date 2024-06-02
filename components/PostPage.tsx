@@ -2,6 +2,7 @@
 import ImageInView from '@/components/ImageInView';
 import useLockedBody from '@/hooks/useLockedBody';
 import { NO_IMAGE } from '@/utils/constants';
+import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import type { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -50,30 +51,48 @@ export default function PostPage<NextPage>({ post }: Props) {
 
   return (
     <>
-      {
-        <dialog
-          open={open}
-          className="fixed top-[52px] z-40 h-[calc(100vh_-_52px)] w-screen max-w-full bg-black backdrop-grayscale"
-        >
-          <button
-            className={clsx(styles, 'absolute right-4 top-4 z-50')}
-            onClick={() => setOpen(false)}
-          >
-            &#x2715;
-          </button>
-          <Image
-            draggable={false}
-            src={images[current]}
-            alt="image"
-            title={title}
-            fill={true}
-            sizes="(max-width: 640px) 400px, (max-width: 768px) 600px, 800px"
-            style={{ objectFit: 'contain' }}
-            placeholder="blur"
-            blurDataURL={NO_IMAGE}
-          />
-        </dialog>
-      }
+      <Dialog open={open} onClose={() => setOpen(false)} className="relative z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50">
+          <DialogPanel className="relative flex h-full w-full max-w-2xl items-center justify-center bg-black md:bg-white">
+            <Image
+              src={images[current]}
+              alt=""
+              fill
+              style={{ objectFit: 'contain' }}
+              sizes="(max-width: 640px) 400px, (max-width: 768px) 600px, 800px"
+            />
+            <button
+              className={clsx(styles, 'absolute right-4 top-4 z-50')}
+              onClick={() => setOpen(false)}
+            >
+              &#x2715;
+            </button>
+            <button
+              className={clsx(
+                styles,
+                'absolute top-1/2 hidden -translate-y-1/2',
+                'left-0',
+                current !== 0 && images.length > 1 && '!block'
+              )}
+              onClick={() => handleClick('left')}
+              hidden={current === 0 || images.length < 2}
+            >
+              &larr;
+            </button>
+            <button
+              className={clsx(
+                styles,
+                'absolute top-1/2 hidden -translate-y-1/2',
+                'right-0',
+                current + 1 < images.length && images.length > 1 && '!block'
+              )}
+              onClick={() => handleClick('right')}
+            >
+              &rarr;
+            </button>
+          </DialogPanel>
+        </div>
+      </Dialog>
       <div className="relative">
         <ul
           className="relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll"
