@@ -1,16 +1,15 @@
 'use client';
 import { getCurrencySymbol } from '@/components/Price/utils';
 import SelectHeadlessUi from '@/components/SelectHeadlessUi';
+import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
-import Spinner from '@/components/ui/Spinner';
 import ImagesModuleInput from '@/modules/PostModule/ImagesModule/ImagesModuleInput';
 import ImagesModulePreview from '@/modules/PostModule/ImagesModule/ImagesModulePreview';
 import imageHandler from '@/modules/PostModule/ImagesModule/utils';
-import { stateAtom } from '@/state';
 import buttonStyles from '@/styles/buttonStyles';
 import inputStyles from '@/styles/inputStyles';
-import { CreatePostDTO } from '@/types';
+import type { CreatePostDTO } from '@/types';
 import postLog from '@/utils/api/prisma/postLog';
 import postMessage from '@/utils/api/prisma/postMessage';
 import postAd from '@/utils/api/prisma/postPost';
@@ -103,13 +102,14 @@ export default function CreatePostModule({
       const telegram = await postMessage({ id: result[0]?.message_id, postId: post.id });
       console.log('_telegram', telegram);
       reset();
-      alert('Объявление создано!');
+      alert(messages.postCreated);
       await onSubmitOptional();
     } catch (e) {
       console.error(e);
       // @ts-ignore
-      postLog(JSON.stringify(e.message ?? JSON.stringify(data)));
-      alert(messages.somethingWentWrong);
+      const error = e.message ?? JSON.stringify(data);
+      postLog(JSON.stringify(error));
+      alert(messages.somethingWentWrong + ': ' + error);
     } finally {
       setLoading(false);
     }

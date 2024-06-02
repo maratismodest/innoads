@@ -14,6 +14,12 @@ export const routes = {
   bot: '/bot',
 } as const;
 
+export const tgRoutes = {
+  sendMediaGroup: '/sendMediaGroup',
+  editMessageText: '/editMessageText',
+  sendMessage: '/sendMessage',
+};
+
 export const seo: Record<string, Seo> = {
   default: {
     title: 'Доска объявлений города Иннополис',
