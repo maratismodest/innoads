@@ -6,6 +6,7 @@ const too_short = 'Слишком короткое';
 const too_long = 'Слишком длинное';
 const required_image = 'Добавить хотя бы одно фото!';
 const too_many_images = 'Не больше 4 фотографий!';
+const text_normalized = 'Запрещены: ?, !, emoji';
 
 const regex = /^(?!.*[!?])[a-zA-Z0-9\s\u0400-\u04FF\u0020-\u007E]+$/;
 
@@ -16,7 +17,7 @@ export const schema = object({
     .required(required)
     .min(4, too_short)
     .max(100, too_long)
-    .matches(regex, 'Запрещены знаки препинания и emoji'),
+    .matches(regex, text_normalized),
   body: string().required(required).min(10, too_short).max(800, too_long),
   agreement: boolean().oneOf([true], required),
   images: array()
