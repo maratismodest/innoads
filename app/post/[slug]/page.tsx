@@ -1,4 +1,4 @@
-import PostPage from '@/components/PostPage';
+import PostPage from '@/pages-lib/post/PostPage';
 import Price from '@/components/Price';
 import ShareButton from '@/pages-lib/post/ShareButton';
 import { getAllCategories } from '@/prisma/services/categories';

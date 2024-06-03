@@ -1,8 +1,9 @@
 'use client';
 import ImageInView from '@/components/ImageInView';
 import useLockedBody from '@/hooks/useLockedBody';
-import { NO_IMAGE } from '@/utils/constants';
-import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
+import LeftRightButtons from './LeftRightButtons';
+import { postButtonStyles } from './utils';
+import { Dialog, DialogPanel } from '@headlessui/react';
 import type { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -12,16 +13,11 @@ type Props = {
   post: Post;
 };
 
-const styles =
-  'bg-[rgba(0,0,0,0.6)] text-white rounded-full w-12 h-12 flex justify-center items-center';
-
 export default function PostPage<NextPage>({ post }: Props) {
   const [current, setCurrent] = useState(0);
   const [locked, setLocked] = useLockedBody(false, 'root');
 
   const ul = useRef<HTMLUListElement>(null);
-
-  const { title } = post;
 
   const [open, setOpen] = useState(false);
 
@@ -63,34 +59,17 @@ export default function PostPage<NextPage>({ post }: Props) {
               sizes="400px"
             />
             <button
-              className={clsx(styles, 'absolute right-4 top-4 z-50')}
+              className={clsx(postButtonStyles, 'absolute right-4 top-4 z-50')}
               onClick={() => setOpen(false)}
             >
               &#x2715;
             </button>
-            <button
-              className={clsx(
-                styles,
-                'absolute top-1/2 hidden -translate-y-1/2',
-                'left-0',
-                current !== 0 && images.length > 1 && '!block'
-              )}
-              onClick={() => handleClick('left')}
-              hidden={current === 0 || images.length < 2}
-            >
-              &larr;
-            </button>
-            <button
-              className={clsx(
-                styles,
-                'absolute top-1/2 hidden -translate-y-1/2',
-                'right-0',
-                current + 1 < images.length && images.length > 1 && '!block'
-              )}
-              onClick={() => handleClick('right')}
-            >
-              &rarr;
-            </button>
+            <LeftRightButtons
+              key="fullscreen"
+              current={current}
+              images={images}
+              handleClick={handleClick}
+            />
           </DialogPanel>
         </div>
       </Dialog>
@@ -110,32 +89,15 @@ export default function PostPage<NextPage>({ post }: Props) {
             </li>
           ))}
         </ul>
-        <button
-          className={clsx(
-            styles,
-            'absolute top-1/2 hidden -translate-y-1/2',
-            'left-0',
-            current !== 0 && images.length > 1 && '!block'
-          )}
-          onClick={() => handleClick('left')}
-          hidden={current === 0 || images.length < 2}
-        >
-          &larr;
-        </button>
-        <button
-          className={clsx(
-            styles,
-            'absolute top-1/2 hidden -translate-y-1/2',
-            'right-0',
-            current + 1 < images.length && images.length > 1 && '!block'
-          )}
-          onClick={() => handleClick('right')}
-        >
-          &rarr;
-        </button>
+        <LeftRightButtons
+          key="preview"
+          current={current}
+          images={images}
+          handleClick={handleClick}
+        />
         <button
           onClick={() => setOpen(true)}
-          className={clsx(styles, 'absolute left-1/2 top-0 -translate-x-1/2')}
+          className={clsx(postButtonStyles, 'absolute left-1/2 top-0 -translate-x-1/2')}
         >
           &#x1F50D;
         </button>
