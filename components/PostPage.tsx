@@ -59,7 +59,8 @@ export default function PostPage<NextPage>({ post }: Props) {
               alt=""
               fill
               style={{ objectFit: 'contain' }}
-              sizes="(max-width: 640px) 400px, (max-width: 768px) 600px, 800px"
+              // sizes="(max-width: 640px) 400px, (max-width: 768px) 600px, 800px"
+              sizes="400px"
             />
             <button
               className={clsx(styles, 'absolute right-4 top-4 z-50')}
