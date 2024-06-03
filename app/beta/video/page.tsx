@@ -1,4 +1,5 @@
 'use client';
+import withAuth from '@/hoc/withAuth';
 import React from 'react';
 import ReactPlayer from 'react-player';
 
@@ -20,4 +21,4 @@ const VideoPage = () => {
   );
 };
 
-export default VideoPage;
+export default withAuth(VideoPage);

@@ -1,10 +1,11 @@
 'use client';
 
 import Posts from '@/components/Posts';
+import withAuth from '@/hoc/withAuth';
 import favouritesAtom from '@/state';
 import { useAtomValue } from 'jotai';
 
-export default function Favourites<NextPage>() {
+function FavouritesPage<NextPage>() {
   const favourites = useAtomValue(favouritesAtom);
 
   return (
@@ -20,3 +21,5 @@ export default function Favourites<NextPage>() {
     </section>
   );
 }
+
+export default withAuth(FavouritesPage);

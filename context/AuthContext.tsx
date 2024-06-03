@@ -48,7 +48,7 @@ export default function AuthProvider({ children }: Props) {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const [user, setUser] = useState<UserWithBans | undefined>(undefined);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const checkToken = useCallback(async () => {
     setLoading(true);
     try {
