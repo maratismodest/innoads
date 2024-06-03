@@ -1,13 +1,14 @@
 'use client';
 import ImageInView from '@/components/ImageInView';
 import useLockedBody from '@/hooks/useLockedBody';
-import LeftRightButtons from './LeftRightButtons';
-import { postButtonStyles } from './utils';
+import { NO_IMAGE } from '@/utils/constants';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import type { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Image from 'next/image';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import LeftRightButtons from './LeftRightButtons';
+import { postButtonStyles } from './utils';
 
 type Props = {
   post: Post;
@@ -53,10 +54,15 @@ export default function PostPage<NextPage>({ post }: Props) {
             <Image
               src={images[current]}
               alt=""
-              fill
+              // fill
               style={{ objectFit: 'contain' }}
               // sizes="(max-width: 640px) 400px, (max-width: 768px) 600px, 800px"
-              sizes="400px"
+              // sizes="400px"
+              width={400}
+              height={400}
+              placeholder="blur"
+              blurDataURL={NO_IMAGE}
+              className="w-full"
             />
             <button
               className={clsx(postButtonStyles, 'absolute right-4 top-4 z-50')}
