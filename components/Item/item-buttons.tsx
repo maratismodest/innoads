@@ -7,39 +7,31 @@ interface ItemButtonsProps {
   showModal: (text: ItemModalText) => void;
 }
 
+const buttons = [
+  {
+    title: 'Снять с публикации',
+    classNames: [buttonStyles(), 'absolute z-10', 'right-0 top-0'],
+    text: ItemModalText.delete,
+    icon: <>&#10008;</>,
+  },
+] as const;
+
 const ItemButtons = ({ showModal }: ItemButtonsProps) => {
   return (
     <>
-      <button
-        title="Снять с публикации"
-        className={clsx(buttonStyles(), 'absolute z-10', 'right-0 top-0')}
-        onClick={event => {
-          event.preventDefault();
-          showModal(ItemModalText.delete);
-        }}
-      >
-        &#10008;
-      </button>
-      {/*<Button*/}
-      {/*  title="Редактировать"*/}
-      {/*  className={clsx('absolute z-10', 'left-0 top-0')}*/}
-      {/*  onClick={event => {*/}
-      {/*    event.preventDefault();*/}
-      {/*    showModal(ItemModalText.edit);*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  &#10000;*/}
-      {/*</Button>*/}
-      {/*<Button*/}
-      {/*  title="Telegram"*/}
-      {/*  className={clsx('absolute z-10', 'bottom-0 right-0')}*/}
-      {/*  onClick={event => {*/}
-      {/*    event.preventDefault();*/}
-      {/*    showModal(ItemModalText.telegram);*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  &#8482;*/}
-      {/*</Button>*/}
+      {buttons.map(({ title, text, icon, classNames }) => (
+        <button
+          key={title}
+          title="Снять с публикации"
+          className={clsx(classNames)}
+          onClick={event => {
+            event.preventDefault();
+            showModal(text);
+          }}
+        >
+          {icon}
+        </button>
+      ))}
     </>
   );
 };

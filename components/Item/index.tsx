@@ -1,20 +1,17 @@
 'use client';
-import RedHeart from '@/public/svg/heart-red.svg';
-import TransparentHeart from '@/public/svg/heart.svg';
 import ItemButtons from '@/components/Item/item-buttons';
+import ItemLike from '@/components/Item/ItemLike';
 import Price from '@/components/Price';
 import Popup from '@/components/ui/Popup';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
-import favouritesAtom from '@/state';
 import fetchMessage from '@/utils/api/prisma/fetchMessage';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import commentPost from '@/utils/api/telegram/commentPost';
 import postTelegram from '@/utils/api/telegram/postTelegram';
 import { NO_IMAGE, routes } from '@/utils/constants';
 import { Post, User } from '@prisma/client';
-import { useAtom } from 'jotai';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -32,11 +29,8 @@ export default function Item({ post, edit = false }: ItemProps) {
   const router = useRouter();
   const [modalText, setModalText] = useState<ItemModalText | undefined>();
   const { toast, setToast } = useToast();
-  const [favourites, setFavourites] = useAtom(favouritesAtom);
   const { user } = useAuth();
   const { id, slug, title, preview, price, categoryId, body, images } = post;
-
-  const liked = useMemo(() => !!favourites.find(x => x.id === id), [favourites, id]);
 
   const hideModal = useCallback(() => setIsOpen(false), []);
 
@@ -85,15 +79,6 @@ export default function Item({ post, edit = false }: ItemProps) {
     }
   };
 
-  const handleFavourite = useCallback(
-    (e: React.SyntheticEvent) => {
-      e.preventDefault();
-      const currentList = liked ? favourites.filter(x => x.id !== id) : [...favourites, post];
-      setFavourites(currentList as any);
-    },
-    [id, favourites, liked, post, setFavourites]
-  );
-
   useEffect(() => {
     return () => {
       setIsOpen(false);
@@ -139,13 +124,7 @@ export default function Item({ post, edit = false }: ItemProps) {
         <div className="relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2">
           <Price price={price} />
           <h2 className="mt-auto truncate font-normal">{title}</h2>
-          <button
-            className="absolute right-0 top-0 z-10 cursor-pointer"
-            onClick={handleFavourite}
-            aria-label="Добавить в избранное"
-          >
-            {liked ? <RedHeart /> : <TransparentHeart />}
-          </button>
+          <ItemLike post={post} />
         </div>
         {user && edit && <ItemButtons showModal={showModal} />}
       </Link>
