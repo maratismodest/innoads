@@ -23,7 +23,7 @@ export default function ImageInView({ src, setCurrent, index }: ImageInViewProps
     <Image
       ref={ref}
       draggable={false}
-      src={src}
+      src={index === 0 || inView ? src : NO_IMAGE}
       alt="image"
       // fill={true}
       width={400}
