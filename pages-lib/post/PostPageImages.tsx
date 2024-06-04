@@ -1,29 +1,22 @@
 'use client';
 import ImageInView from '@/components/ImageInView';
-import useLockedBody from '@/hooks/useLockedBody';
 import { NO_IMAGE } from '@/utils/constants';
 import { Dialog, DialogPanel } from '@headlessui/react';
-import type { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Image from 'next/image';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import LeftRightButtons from './LeftRightButtons';
 import { postButtonStyles } from './utils';
 
 type Props = {
-  post: Post;
+  images: string[];
 };
 
-export default function PostPage<NextPage>({ post }: Props) {
+export default function PostPageImages<NextPage>({ images }: Props) {
+  const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState(0);
-  const [locked, setLocked] = useLockedBody(false, 'root');
 
   const ul = useRef<HTMLUListElement>(null);
-
-  const [open, setOpen] = useState(false);
-
-  const images = useMemo(() => post.images.split('||'), [post]);
-
   const refs = useRef<HTMLLIElement[]>([]);
 
   const handleClick = (direction: 'left' | 'right') => {
@@ -37,15 +30,6 @@ export default function PostPage<NextPage>({ post }: Props) {
     }
   };
 
-  useEffect(() => {
-    if (open) {
-      setLocked(true);
-    } else {
-      setLocked(false);
-    }
-    return () => setLocked(false);
-  }, [open]);
-
   return (
     <>
       <Dialog open={open} onClose={() => setOpen(false)} className="relative z-50">
@@ -54,15 +38,13 @@ export default function PostPage<NextPage>({ post }: Props) {
             <Image
               src={images[current]}
               alt=""
-              // fill
               style={{ objectFit: 'contain' }}
-              // sizes="(max-width: 640px) 400px, (max-width: 768px) 600px, 800px"
-              // sizes="400px"
               width={400}
               height={400}
               placeholder="blur"
               blurDataURL={NO_IMAGE}
               className="w-full"
+              draggable="false"
             />
             <button
               className={clsx(postButtonStyles, 'absolute right-4 top-4 z-50')}
@@ -84,7 +66,7 @@ export default function PostPage<NextPage>({ post }: Props) {
           className="relative flex aspect-square snap-x snap-mandatory flex-nowrap gap-2 overflow-x-scroll"
           ref={ul}
         >
-          {images.map((image: string, index: number) => (
+          {images.map((image, index) => (
             <li
               key={image}
               className="relative flex aspect-square h-full flex-none snap-center overflow-y-hidden"
@@ -101,6 +83,7 @@ export default function PostPage<NextPage>({ post }: Props) {
           images={images}
           handleClick={handleClick}
         />
+        {/*FullScreen*/}
         <button
           onClick={() => setOpen(true)}
           className={clsx(postButtonStyles, 'absolute left-1/2 top-0 -translate-x-1/2')}

@@ -1,5 +1,6 @@
 'use client';
 import buttonStyles from '@/styles/buttonStyles';
+import { routes } from '@/utils/constants';
 import type { Post } from '@prisma/client';
 import clsx from 'clsx';
 import React, { ComponentPropsWithoutRef } from 'react';
@@ -12,7 +13,7 @@ const onClick = async (slug: string) => {
   await navigator.share({
     title: process.env.NEXT_PUBLIC_APP_NAME,
     text: 'Поделиться ссылкой:',
-    url: process.env.NEXT_PUBLIC_APP_URL + '/post/' + slug,
+    url: process.env.NEXT_PUBLIC_APP_URL + routes.post + '/' + slug,
   });
 };
 

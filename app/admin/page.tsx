@@ -2,12 +2,13 @@
 
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
+import withAuth from '@/hoc/withAuth';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useUsersQuery from '@/hooks/query/useUsersQuery';
 import useAuth from '@/hooks/useAuth';
 import Users from '@/pages-lib/admin/users';
+import { handleDeleteAllArchived } from '@/pages-lib/admin/utils';
 import buttonStyles from '@/styles/buttonStyles';
-import deleteAd from '@/utils/api/prisma/deleteAd';
 import {
   Checkbox,
   Field,
@@ -20,43 +21,31 @@ import {
 } from '@headlessui/react';
 import { Role } from '@prisma/client';
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-export default function AdminPage() {
+function AdminPage() {
   const [enabled, setEnabled] = useState(false);
 
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const { users, usersLoading, usersError, usersRefetch } = useUsersQuery();
   const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery({
-    size: 500,
+    size: 1000,
   });
 
-  const handleDeleteAllArchived = async () => {
-    try {
-      if (posts) {
-        const _delete = posts.filter(x => !x.published);
-        for (const post of _delete) {
-          const deleted = await deleteAd(post.id);
-          console.warn('deleted', deleted);
-        }
-      }
-    } catch (e) {
-      console.error('e', e);
-    }
-  };
-
   const onClick = async () => {
-    usersRefetch();
-    postsRefetch();
+    await usersRefetch();
+    await postsRefetch();
   };
 
-  useEffect(() => {
-    if (user && user.role === Role.ADMIN) {
-      onClick().then(res => console.log('onClick'));
-    }
-  }, [user]);
+  if (user!.role !== Role.ADMIN) {
+    return (
+      <div>
+        <h1>У вас нет доступа к этой странице!</h1>
+      </div>
+    );
+  }
 
-  if (loading || usersLoading || postsLoading) {
+  if (usersLoading || postsLoading) {
     return <Spinner />;
   }
 
@@ -68,17 +57,6 @@ export default function AdminPage() {
     );
   }
 
-  if (!user || user.role !== Role.ADMIN) {
-    return (
-      <div>
-        <h1>У вас нет доступа к этой странице!</h1>
-        <button className={buttonStyles()} onClick={onClick}>
-          Обновить данные
-        </button>
-      </div>
-    );
-  }
-
   return (
     <>
       <div className="mb-2 flex justify-between">
@@ -86,7 +64,7 @@ export default function AdminPage() {
         <button className={buttonStyles()} onClick={onClick} id="refetch">
           Обновить данные
         </button>
-        <button className={buttonStyles()} onClick={handleDeleteAllArchived}>
+        <button className={buttonStyles()} onClick={() => handleDeleteAllArchived(posts)}>
           Удалить все архивные посты
         </button>
       </div>
@@ -143,3 +121,5 @@ export default function AdminPage() {
     </>
   );
 }
+
+export default withAuth(AdminPage);

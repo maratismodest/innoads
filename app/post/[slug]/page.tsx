@@ -1,4 +1,4 @@
-import PostPage from '@/pages-lib/post/PostPage';
+import PostPageImages from '@/pages-lib/post/PostPageImages';
 import Price from '@/components/Price';
 import ShareButton from '@/pages-lib/post/ShareButton';
 import { getAllCategories } from '@/prisma/services/categories';
@@ -84,7 +84,8 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
     return notFound();
   }
 
-  const { categoryId, title, body, preview, user, price, createdAt, userId, published } = post;
+  const { categoryId, title, body, preview, user, price, createdAt, userId, published, images } =
+    post;
   return (
     <>
       <script
@@ -92,7 +93,7 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getPostJsonLd(post)) }}
       />
       <div className="relative mx-auto w-full max-w-[400px]">
-        <PostPage post={post} />
+        <PostPageImages images={images.split('||')} />
         <Link
           href={{
             pathname: routes.search,
