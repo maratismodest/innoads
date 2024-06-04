@@ -1,5 +1,5 @@
 import moveImage, { MoveImage } from '@/modules/PostModule/ImagesModule/moveImage';
-import Button from '@/components/ui/Button';
+import buttonStyles from '@/styles/buttonStyles';
 import deleteImageByFilename from '@/utils/api/backend/deleteImageByFilename';
 import { NO_IMAGE } from '@/utils/constants';
 import clsx from 'clsx';
@@ -18,7 +18,7 @@ interface Props {
 }
 
 const ImagesModulePreview = ({ images, setImages }: Props) => {
-  const _deleteImage = async (current: string) => {
+  const handleDeleteImage = async (current: string) => {
     setImages(images.filter(x => x !== current));
     const filename = getNameFromUrl(current);
     if (filename) {
@@ -36,7 +36,6 @@ const ImagesModulePreview = ({ images, setImages }: Props) => {
               key={image}
               className="relative aspect-square cursor-pointer shadow hover:shadow-2xl"
             >
-              <span className={clsx('count', 'absolute bottom-0 left-0 z-10')}>{index + 1}</span>
               <Image
                 alt={image}
                 src={image}
@@ -47,30 +46,43 @@ const ImagesModulePreview = ({ images, setImages }: Props) => {
                 placeholder="blur"
                 blurDataURL={NO_IMAGE}
               />
-              <Button
-                className="absolute left-0 top-1/2 -translate-y-1/2"
-                onClick={e => {
-                  moveImage(e, images, index, MoveImage.left, setImages);
+              <button
+                type="button"
+                className={clsx(
+                  buttonStyles(),
+                  'absolute left-0 top-1/2 -translate-y-1/2',
+                  index === 0 && 'hidden'
+                )}
+                onClick={() => {
+                  const res = moveImage(images, index, MoveImage.left);
+                  setImages(res);
                 }}
               >
                 &larr;
-              </Button>
-              <Button
-                className="absolute right-0 top-1/2 -translate-y-1/2"
-                onClick={e => {
-                  moveImage(e, images, index, MoveImage.right, setImages);
+              </button>
+              <button
+                type="button"
+                className={clsx(
+                  buttonStyles(),
+                  'absolute right-0 top-1/2 -translate-y-1/2',
+                  index === images.length - 1 && 'hidden'
+                )}
+                onClick={() => {
+                  const res = moveImage(images, index, MoveImage.right);
+                  setImages(res);
                 }}
               >
                 &rarr;
-              </Button>
-              <Button
-                className="absolute right-0 top-0"
+              </button>
+              <button
+                className={clsx(buttonStyles(), 'absolute right-0 top-0')}
                 onClick={async () => {
-                  await _deleteImage(image);
+                  await handleDeleteImage(image);
                 }}
               >
                 &times;
-              </Button>
+              </button>
+              <span className={clsx('count', 'absolute bottom-0 left-0 z-10')}>{index + 1}</span>
             </li>
           );
         })}
