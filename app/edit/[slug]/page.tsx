@@ -5,6 +5,7 @@ import usePostQuery from '@/hooks/query/usePostQuery';
 import useAuth from '@/hooks/useAuth';
 import EditPostModule from '@/modules/PostModule/EditPostModule/EditPostModule';
 import { routes } from '@/utils/constants';
+import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
 
@@ -24,7 +25,12 @@ function EditPage<NextPage>() {
   }
 
   if (user?.id !== post.userId) {
-    return <h1>Вы не можете редактировать чужие посты</h1>;
+    return (
+      <div>
+        <h1>Вы не можете редактировать чужие посты</h1>
+        <Link href={routes.profile}>В личный кабинет</Link>
+      </div>
+    );
   }
 
   return <EditPostModule item={post} onSubmitOptional={onSubmitOptional} />;

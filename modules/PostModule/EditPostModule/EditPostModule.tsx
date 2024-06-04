@@ -1,9 +1,7 @@
 'use client';
 import { getCurrencySymbol } from '@/components/Price/utils';
 import SelectHeadlessUi from '@/components/SelectHeadlessUi';
-import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
-import useAuth from '@/hooks/useAuth';
 import ImagesModuleInput from '@/modules/PostModule/ImagesModule/ImagesModuleInput';
 import ImagesModulePreview from '@/modules/PostModule/ImagesModule/ImagesModulePreview';
 import imageHandler from '@/modules/PostModule/ImagesModule/utils';
@@ -30,7 +28,6 @@ export default function EditPostModule({
   item,
 }: PostModuleProps) {
   const { categories } = useApp();
-  const { user } = useAuth();
 
   const methods = useForm<IFormInput>({
     resolver: yupResolver(schema),
@@ -57,10 +54,6 @@ export default function EditPostModule({
   const [loading, setLoading] = useState(false);
 
   const images = useWatch({ name: 'images', control }) as string[];
-
-  if (!user) {
-    return <Spinner />;
-  }
 
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
     try {
