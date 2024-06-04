@@ -11,13 +11,7 @@ function FavouritesPage<NextPage>() {
   return (
     <section className="text-center">
       <h1>Избранное</h1>
-      <div className="mt-4">
-        {favourites.length > 0 ? (
-          <Posts posts={favourites} />
-        ) : (
-          <h2>Нет добавленных в избранное</h2>
-        )}
-      </div>
+      <Posts posts={favourites} className="mt-4" />
     </section>
   );
 }

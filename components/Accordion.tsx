@@ -7,6 +7,7 @@ interface AccordionProps {
   title: string;
   children: React.ReactNode;
 }
+
 const Accordion = ({ children, title }: AccordionProps) => {
   return (
     <Disclosure>

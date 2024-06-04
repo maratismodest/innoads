@@ -1,8 +1,7 @@
 import SearchPage from '@/components/SearchPage';
-import Spinner from '@/components/ui/Spinner';
 import { routes, seo } from '@/utils/constants';
 import { Metadata } from 'next';
-import React, { Suspense } from 'react';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: seo.search.title,
@@ -20,11 +19,9 @@ export const metadata: Metadata = {
 
 export default function Search() {
   return (
-    // <Suspense fallback={<Spinner />}>
     <>
       <h1>Поиск</h1>
       <SearchPage />
     </>
-    // </Suspense>
   );
 }

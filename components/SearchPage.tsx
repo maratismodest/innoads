@@ -1,6 +1,6 @@
 'use client';
+import Posts from '@/components/Posts';
 import cleanObject from '@/utils/cleanObject';
-import PostsReadOnly from '@/components/PostsReadOnly';
 import Select from '@/components/ui/Select';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useApp from '@/hooks/useApp';
@@ -65,7 +65,7 @@ const SearchPage = () => {
         onChange={e => setText(e.target.value)}
       />
       <hr />
-      <PostsReadOnly posts={posts} loading={postsLoading} error={postsError} />
+      <Posts posts={posts} loading={postsLoading} />
     </>
   );
 };
