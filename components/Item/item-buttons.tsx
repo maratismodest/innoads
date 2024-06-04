@@ -3,18 +3,24 @@ import clsx from 'clsx';
 import React from 'react';
 import { ItemModalText } from './utils';
 
-interface ItemButtonsProps {
-  showModal: (text: ItemModalText) => void;
-}
-
 const buttons = [
+  // {
+  //   title: 'Редактировать',
+  //   classNames: [buttonStyles(), 'absolute z-10', 'left-0 top-0'],
+  //   text: ItemModalText.edit,
+  //   icon: <>&#10008;</>,
+  // },
   {
     title: 'Снять с публикации',
     classNames: [buttonStyles(), 'absolute z-10', 'right-0 top-0'],
-    text: ItemModalText.delete,
+    text: ItemModalText.archive,
     icon: <>&#10008;</>,
   },
 ] as const;
+
+interface ItemButtonsProps {
+  showModal: (text: ItemModalText) => void;
+}
 
 const ItemButtons = ({ showModal }: ItemButtonsProps) => {
   return (

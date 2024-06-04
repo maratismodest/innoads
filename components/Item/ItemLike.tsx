@@ -8,6 +8,7 @@ import React, { useCallback } from 'react';
 type Props = {
   post: Post;
 };
+
 const ItemLike = ({ post }: Props) => {
   const [favourites, setFavourites] = useAtom(favouritesAtom);
   const liked = Boolean(favourites.find(x => x.id === post.id));
