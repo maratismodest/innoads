@@ -2,6 +2,7 @@ import moveImage, { MoveImage } from '@/modules/PostModule/ImagesModule/moveImag
 import Button from '@/components/ui/Button';
 import deleteImageByFilename from '@/utils/api/backend/deleteImageByFilename';
 import { NO_IMAGE } from '@/utils/constants';
+import clsx from 'clsx';
 import Image from 'next/image';
 import React from 'react';
 
@@ -29,12 +30,13 @@ const ImagesModulePreview = ({ images, setImages }: Props) => {
     <>
       <label>Предварительный просмотр</label>
       <ul className="relative grid grid-cols-2 gap-4">
-        {images.map((image: string, index: number) => {
+        {images.map((image, index) => {
           return (
             <li
               key={image}
               className="relative aspect-square cursor-pointer shadow hover:shadow-2xl"
             >
+              <span className={clsx('count', 'absolute bottom-0 left-0 z-10')}>{index + 1}</span>
               <Image
                 alt={image}
                 src={image}
@@ -54,7 +56,7 @@ const ImagesModulePreview = ({ images, setImages }: Props) => {
                 &larr;
               </Button>
               <Button
-                className="absolute right-0 top-1/2 -translate-y-1/2	"
+                className="absolute right-0 top-1/2 -translate-y-1/2"
                 onClick={e => {
                   moveImage(e, images, index, MoveImage.right, setImages);
                 }}

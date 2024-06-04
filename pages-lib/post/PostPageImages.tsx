@@ -91,10 +91,7 @@ export default function PostPageImages<NextPage>({ images }: Props) {
           &#x1F50D;
         </button>
         <div
-          className={clsx(
-            'bold rounded bg-[rgba(0,0,0,0.6)] p-1 text-sm text-white',
-            'absolute bottom-0 left-1/2 -translate-x-1/2'
-          )}
+          className={clsx('count', 'absolute bottom-0 left-1/2 -translate-x-1/2')}
         >{`${current + 1} / ${images.length}`}</div>
       </div>
     </>
