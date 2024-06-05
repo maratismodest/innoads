@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { ComponentPropsWithoutRef, useEffect, useRef } from 'react';
 
-interface ModalProps extends React.HTMLProps<HTMLDialogElement> {
+interface ModalProps extends ComponentPropsWithoutRef<'dialog'> {
   visible: boolean;
 }
 
@@ -17,9 +17,9 @@ export default function Modal({ visible, children, className = '' }: ModalProps)
     }
   }, [visible]);
 
-  return <dialog ref={ref} className={className}>
-    <div className='p-4'>
-      {children}
-    </div>
-  </dialog>;
+  return (
+    <dialog ref={ref} className={className}>
+      <div className="p-4">{children}</div>
+    </dialog>
+  );
 }

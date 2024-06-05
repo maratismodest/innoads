@@ -1,6 +1,4 @@
 import { messages } from '@/utils/messages';
-import clsx from 'clsx';
-import React from 'react';
 import FireSvg from '@/public/svg/fire.svg';
 import CloseSvg from '@/public/svg/close.svg';
 
@@ -17,9 +15,7 @@ export default function Toast({ isOpen, onClose, message }: ToastProps) {
   return (
     <div
       id="toast-default"
-      className={clsx(
-        'animate-transit fixed left-0 right-0 top-1 z-[1000] mx-auto flex w-full max-w-xs items-center rounded-lg bg-white px-2 py-1 shadow ease-in-out dark:bg-gray dark:text-white'
-      )}
+      className="animate-transit fixed left-0 right-0 top-1 z-[1000] mx-auto flex w-full max-w-xs items-center rounded-lg bg-white px-2 py-1 shadow ease-in-out dark:bg-gray dark:text-white"
       role="alert"
     >
       <div className="text-blue-500 bg-blue-100 dark:bg-blue-800 dark:text-blue-200 inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg">
