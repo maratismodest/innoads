@@ -4,6 +4,7 @@ import ItemLike from '@/components/Item/ItemLike';
 import Price from '@/components/Price';
 import Popup from '@/components/ui/Popup';
 import useAuth from '@/hooks/useAuth';
+import useDialog from '@/hooks/useDialog';
 import { NO_IMAGE } from '@/utils/constants';
 import { messages } from '@/utils/messages';
 import { Post } from '@prisma/client';
@@ -20,6 +21,7 @@ type ItemProps = {
 export default function Item({ post, edit = false }: ItemProps) {
   const router = useRouter();
   const { user } = useAuth();
+  const { dialog } = useDialog();
   const [isOpen, setIsOpen] = useState(false);
   const [modalText, setModalText] = useState<ItemModalText | undefined>();
   const { title, preview, price } = post;
@@ -43,7 +45,7 @@ export default function Item({ post, edit = false }: ItemProps) {
       }
     } catch (e) {
       console.error(modalText, e);
-      alert(messages.somethingWentWrong);
+      dialog(messages.somethingWentWrong);
     } finally {
       setIsOpen(false);
     }

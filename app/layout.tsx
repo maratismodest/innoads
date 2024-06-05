@@ -1,11 +1,10 @@
-import Footer from '@/components/Footer';
 import Header from '@/components/Header/Header';
 import AppProvider from '@/context/AppContext';
 import AuthProvider from '@/context/AuthContext';
+import DialogProvider from '@/context/DialogContext';
 import ModalProvider from '@/context/ModalContext';
 import QueryProvider from '@/context/QueryContext';
 import TelegramProvider from '@/context/TelegramContext';
-import ToastProvider from '@/context/ToastContext';
 import { seo } from '@/utils/constants';
 import dayjs from 'dayjs';
 import { Provider as FavouritesProvider } from 'jotai';
@@ -48,13 +47,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <AuthProvider>
                 <AppProvider>
                   <ModalProvider>
-                    <ToastProvider>
+                    <DialogProvider>
+                      {/*<ToastProvider>*/}
                       <FavouritesProvider>
                         <Header />
                         <main>{children}</main>
                         {/*<Footer />*/}
                       </FavouritesProvider>
-                    </ToastProvider>
+                      {/*</ToastProvider>*/}
+                    </DialogProvider>
                   </ModalProvider>
                 </AppProvider>
               </AuthProvider>

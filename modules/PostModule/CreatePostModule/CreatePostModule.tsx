@@ -4,6 +4,7 @@ import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
+import useDialog from '@/hooks/useDialog';
 import ImagesModuleInput from '@/modules/PostModule/ImagesModule/ImagesModuleInput';
 import ImagesModulePreview from '@/modules/PostModule/ImagesModule/ImagesModulePreview';
 import imageHandler from '@/modules/PostModule/ImagesModule/utils';
@@ -30,6 +31,7 @@ interface PostModuleProps {
 export default function CreatePostModule({
   onSubmitOptional = async () => undefined,
 }: PostModuleProps) {
+  const { dialog } = useDialog();
   const { categories } = useApp();
   const { user, loading: userLoading } = useAuth();
 
@@ -109,7 +111,7 @@ export default function CreatePostModule({
       // @ts-ignore
       const error = e.message ?? JSON.stringify(data);
       postLog(JSON.stringify(error));
-      alert(messages.somethingWentWrong + ': ' + error);
+      dialog(messages.somethingWentWrong + ': ' + error);
     } finally {
       setLoading(false);
     }
