@@ -1,69 +1,88 @@
 'use client';
 import Posts from '@/components/Posts';
-import cleanObject from '@/utils/cleanObject';
-import Select from '@/components/ui/Select';
+import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useApp from '@/hooks/useApp';
 import useDebounce from '@/hooks/useDebounce';
+import { defaultSearchValues, ISearchFormInput, schemaSearch } from '@/modules/PostModule/yup';
 import inputStyles from '@/styles/inputStyles';
-import { Option } from '@/types/global';
+import cleanObject from '@/utils/cleanObject';
 import { routes } from '@/utils/constants';
+import { yupResolver } from '@hookform/resolvers/yup';
 import clsx from 'clsx';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 
 const SearchPage = () => {
   const router = useRouter();
   const { categories } = useApp();
   const searchParams = useSearchParams();
-  const categoryId = searchParams.get('categoryId');
-  const [category, setCategory] = useState<Option | undefined>();
-  const [text, setText] = useState<string>('');
-  const searchText = useDebounce(text);
+  const refButton = useRef<HTMLButtonElement>(null);
 
-  const handleSelect = useCallback((active: Option) => {
-    router.push(routes.search + '?categoryId=' + active.value);
-  }, []);
+  const methods = useForm<ISearchFormInput>({
+    resolver: yupResolver(schemaSearch),
+    defaultValues: { ...defaultSearchValues, categoryId: Number(searchParams.get('categoryId')) },
+  });
 
-  const options = useMemo(
-    () =>
-      cleanObject({
-        published: true,
-        categoryId: category?.value,
-        search: searchText,
-      }),
-    [category, searchText]
-  );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    // reset,
+    // setValue,
+    // trigger,
+    // control,
+    watch,
+  } = methods;
+  const _categoryId = watch('categoryId');
+  const _title = watch('title');
+  const searchText = useDebounce(_title);
 
   const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery(
-    options,
-    Boolean(category)
+    cleanObject({ published: true, categoryId: _categoryId, search: searchText }),
+    false
   );
 
-  useEffect(() => {
-    if (category) {
-      console.log('options', options);
-      postsRefetch(options);
-    }
-  }, [category, searchText]);
+  const onSubmit = async (data: ISearchFormInput) => {
+    const { categoryId } = data;
+    const options = cleanObject({
+      published: true,
+      categoryId: categoryId,
+      search: searchText,
+    });
 
-  useEffect(() => {
-    if (categories.length > 0) {
-      const res = categories.find(category => category.value === Number(categoryId));
-      setCategory(res);
+    if (categoryId) {
+      router.push(routes.search + '?categoryId=' + categoryId);
     }
-  }, [categories, categoryId]);
 
-  console.log('options', options);
+    await postsRefetch(options);
+  };
+
+  // Call submit method in each change
+  useEffect(() => {
+    if (refButton.current) {
+      refButton.current.click();
+    }
+  }, [_categoryId, searchText]);
 
   return (
     <>
-      <Select options={categories} onChange={handleSelect} value={category} />
-      <input
-        placeholder="Поиск по заголовкам"
-        className={clsx(inputStyles(), 'mt-2')}
-        onChange={e => setText(e.target.value)}
-      />
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <SelectHeadlessUi options={categories} name="categoryId" />
+          <input
+            placeholder="Поиск по заголовкам"
+            className={clsx(inputStyles(), 'mt-2 w-full')}
+            {...register('title')}
+            name="title"
+          />
+          <button type="submit" hidden ref={refButton}>
+            Искать
+          </button>
+        </form>
+      </FormProvider>
+
       <hr />
       <Posts posts={posts} loading={postsLoading} />
     </>

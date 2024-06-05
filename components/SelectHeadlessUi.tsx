@@ -11,7 +11,17 @@ import { clsx } from 'clsx';
 import React, { Fragment } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 
-export default function SelectHeadlessUi({ name, options }: { name: string; options: Option[] }) {
+interface SelectHeadlessUiProps {
+  name: string;
+  options: Option[];
+  handleOnChange?: (value: number) => void;
+}
+
+export default function SelectHeadlessUi({
+  name,
+  options,
+  handleOnChange = undefined,
+}: SelectHeadlessUiProps) {
   const { control } = useFormContext();
   const {
     field: { value, onChange },
@@ -22,7 +32,9 @@ export default function SelectHeadlessUi({ name, options }: { name: string; opti
       <Listbox
         value={value}
         onChange={(option: Option) => {
-          onChange(Number(option.value));
+          const value = Number(option.value);
+          onChange(value);
+          handleOnChange && handleOnChange(value);
         }}
       >
         {({ open }) => (
