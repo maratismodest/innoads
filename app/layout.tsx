@@ -10,9 +10,12 @@ import { seo } from '@/utils/constants';
 import dayjs from 'dayjs';
 import { Provider as FavouritesProvider } from 'jotai';
 import type { Metadata } from 'next';
+import useTranslation from 'next-translate/useTranslation';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import React, { Suspense } from 'react';
+import i18n from '@/i18n';
+import { redirect } from 'next/navigation';
 import './globals.css';
 
 require('dayjs/locale/ru');
@@ -39,6 +42,9 @@ export const metadata: Metadata = {
 const yandexScriptUrl = `/scripts/ym_${process.env.NEXT_PUBLIC_YANDEX_COUNTER}.js`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const { lang } = useTranslation('common');
+  if (!i18n.locales.includes(lang)) redirect(`/${i18n.defaultLocale}/${lang}`);
+
   return (
     <html lang="ru">
       <body className={inter.className}>

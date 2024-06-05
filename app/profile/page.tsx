@@ -14,10 +14,12 @@ import { messages } from '@/utils/messages';
 import { Post } from '@prisma/client';
 import { clsx } from 'clsx';
 import { useAtomValue } from 'jotai';
+import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 export default function ProfilePage<NextPage>() {
+  const { t } = useTranslation('common');
   const { user, logout, loading } = useAuth();
   const userId = user?.id;
   const isTelegram = useAtomValue(stateAtom);
@@ -53,7 +55,7 @@ export default function ProfilePage<NextPage>() {
   return (
     <div className="flex flex-1 flex-col items-center gap-8">
       <div className="text-center">
-        <h1>Профиль</h1>
+        <h1>{t('profile')}</h1>
         <p>Добавить объявление</p>
         <Link
           href={isTelegram === 1 ? routes.bot : routes.add}

@@ -3,12 +3,16 @@ import SearchModule from '@/modules/SearchModule/SearchModule';
 import HomePageCategories from '@/pages-lib/homepage';
 import fetchPosts from '@/utils/api/prisma/fetchAds';
 import { getMainPageJsonLd } from '@/utils/jsonLd';
+import useTranslation from 'next-translate/useTranslation';
+import React from 'react';
 
 export const revalidate = 3600;
 
 const initOptions: InitOptions = { size: 20, published: true, page: 0 };
 
 export default async function Home<NextPage>() {
+  const { t, lang } = useTranslation('common');
+
   const initPosts = await fetchPosts(initOptions);
 
   return (
@@ -21,9 +25,8 @@ export default async function Home<NextPage>() {
         <HomePageCategories />
         <SearchModule />
       </div>
-
       <div className="flex justify-between align-baseline">
-        <h1>Последние объявления</h1>
+        <h1>{t('lastPosts')}</h1>
         {/*<span>{totalPages * 20} объявлений</span>*/}
       </div>
       <InfinitePosts
