@@ -53,11 +53,11 @@ export default function SelectHeadlessUi({
               <ListboxOptions className="absolute top-10 z-50 w-full rounded bg-white p-2 drop-shadow-md">
                 {options.map(category => (
                   <ListboxOption key={category.value} value={category} as={Fragment}>
-                    {({ active, selected }) => (
+                    {({ focus, selected }) => (
                       <li
                         className={clsx(
                           'cursor-pointer rounded p-2',
-                          active && 'bg-blue text-white'
+                          focus && 'bg-blue text-white'
                         )}
                       >
                         {category.label}
