@@ -1,5 +1,7 @@
 {
-  "lastPosts": "Last posts",
-  "profile": "Profile",
+  "Последние объявления": "Last posts",
+  "Профиль": "Profile",
+  "Попробовать снова": "Try again",
+  "Что-то пошло не так": "Something went wrong",
   "variable-example": "Using a variable {{count}}"
 }

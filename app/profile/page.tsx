@@ -44,9 +44,9 @@ export default function ProfilePage<NextPage>() {
   if (postsError) {
     return (
       <div className="flex flex-col items-center gap-8">
-        <h1>{messages.somethingWentWrong}</h1>
+        <h1>{t('Что-то пошло не так')}</h1>
         <button className={buttonStyles()} onClick={() => postsRefetch()}>
-          Попробовать снова
+          {t('Попробовать снова')}
         </button>
       </div>
     );
@@ -55,7 +55,7 @@ export default function ProfilePage<NextPage>() {
   return (
     <div className="flex flex-1 flex-col items-center gap-8">
       <div className="text-center">
-        <h1>{t('profile')}</h1>
+        <h1>{t('Профиль')}</h1>
         <p>Добавить объявление</p>
         <Link
           href={isTelegram === 1 ? routes.bot : routes.add}

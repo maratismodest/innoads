@@ -26,7 +26,7 @@ export default async function Home<NextPage>() {
         <SearchModule />
       </div>
       <div className="flex justify-between align-baseline">
-        <h1>{t('lastPosts')}</h1>
+        <h1>{t('Последние объявления')}</h1>
         {/*<span>{totalPages * 20} объявлений</span>*/}
       </div>
       <InfinitePosts
