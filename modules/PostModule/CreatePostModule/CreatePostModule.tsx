@@ -104,7 +104,7 @@ export default function CreatePostModule({
       const telegram = await postMessage({ id: result[0]?.message_id, postId: post.id });
       console.log('_telegram', telegram);
       reset();
-      dialog(messages.postCreated);
+      alert(messages.postCreated);
       await onSubmitOptional();
     } catch (e) {
       console.error(e);
