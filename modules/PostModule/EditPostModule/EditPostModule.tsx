@@ -2,7 +2,6 @@
 import { getCurrencySymbol } from '@/components/Price/utils';
 import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import useApp from '@/hooks/useApp';
-import useDialog from '@/hooks/useDialog';
 import ImagesModuleInput from '@/modules/PostModule/ImagesModule/ImagesModuleInput';
 import ImagesModulePreview from '@/modules/PostModule/ImagesModule/ImagesModulePreview';
 import imageHandler from '@/modules/PostModule/ImagesModule/utils';
@@ -29,7 +28,6 @@ export default function EditPostModule({
   item,
 }: PostModuleProps) {
   const { categories } = useApp();
-  const { dialog } = useDialog();
 
   const methods = useForm<IFormInput>({
     resolver: yupResolver(schema),
@@ -78,11 +76,11 @@ export default function EditPostModule({
       console.log('post', post);
       // }
       reset();
-      dialog('Объявление изменено!');
+      alert('Объявление изменено!');
       await onSubmitOptional();
     } catch (e) {
       console.log(e);
-      dialog(messages.somethingWentWrong);
+      alert(messages.somethingWentWrong);
     } finally {
       setLoading(false);
     }
