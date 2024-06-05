@@ -1,20 +1,13 @@
 'use client';
-import { createContext, Dispatch, ReactNode, SetStateAction, useState } from 'react';
-
 import Toast from '@/components/Toast';
+import { createContext, ReactNode, useCallback, useEffect, useState } from 'react';
 
 type toastContextType = {
-  toast: boolean;
-  setToast: Dispatch<SetStateAction<boolean>>;
-  toastValue: any;
-  setToastValue: Dispatch<SetStateAction<any>>;
+  toast: (message: string) => void;
 };
 
 const toastContextDefaultValues: toastContextType = {
-  toast: false,
-  setToast: () => {},
-  toastValue: null,
-  setToastValue: () => {},
+  toast: () => {},
 };
 export const ToastContext = createContext<toastContextType>(toastContextDefaultValues);
 
@@ -23,19 +16,30 @@ type Props = {
 };
 
 export default function ToastProvider({ children }: Props) {
-  const [toast, setToast] = useState(false);
-  const [toastValue, setToastValue] = useState(null);
+  const [isOpen, setIsOpen] = useState(true);
+  const [message, setMessage] = useState<string | undefined>();
+
+  const onClose = useCallback(() => {
+    setIsOpen(false);
+    setMessage(undefined);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => setIsOpen(false), 5000);
+    }
+  }, [isOpen]);
 
   const value = {
-    toast,
-    setToast,
-    toastValue,
-    setToastValue,
+    toast: (message: string) => {
+      setMessage(message);
+      setIsOpen(true);
+    },
   };
 
   return (
     <ToastContext.Provider value={value}>
-      <Toast toast={toast} setToast={setToast} />
+      <Toast isOpen={isOpen} onClose={onClose} message={message} />
       {children}
     </ToastContext.Provider>
   );

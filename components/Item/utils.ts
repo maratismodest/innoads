@@ -19,7 +19,7 @@ enum ItemModalText {
   archive = 'Объявление не актуально?',
 }
 
-const handleArchive = async (post: Post) => {
+const handleArchive = async (post: Post, toast: (message: string) => void) => {
   try {
     const unpublished = await updatePostPrisma({ ...post, published: false });
     console.log('unpublished', unpublished);
@@ -33,7 +33,7 @@ const handleArchive = async (post: Post) => {
       console.log('refetchButton', refetchButton);
       refetchButton.click();
     }
-    alert(success.archive);
+    toast(success.archive);
   } catch (e) {
     console.error('archive', e);
   }

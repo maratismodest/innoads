@@ -4,6 +4,7 @@ import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
+import useToast from '@/hooks/useToast';
 import ImagesModuleInput from '@/modules/PostModule/ImagesModule/ImagesModuleInput';
 import ImagesModulePreview from '@/modules/PostModule/ImagesModule/ImagesModulePreview';
 import imageHandler from '@/modules/PostModule/ImagesModule/utils';
@@ -32,6 +33,7 @@ export default function CreatePostModule({
 }: PostModuleProps) {
   const { categories } = useApp();
   const { user, loading: userLoading } = useAuth();
+  const { toast } = useToast();
 
   const methods = useForm<IFormInput>({
     resolver: yupResolver(schema),
@@ -102,14 +104,14 @@ export default function CreatePostModule({
       const telegram = await postMessage({ id: result[0]?.message_id, postId: post.id });
       console.log('_telegram', telegram);
       reset();
-      alert(messages.postCreated);
+      toast(messages.postCreated);
       await onSubmitOptional();
     } catch (e) {
       console.error(e);
       // @ts-ignore
       const error = e.message ?? JSON.stringify(data);
       postLog(JSON.stringify(error));
-      alert(messages.somethingWentWrong + ': ' + error);
+      toast(messages.somethingWentWrong + ': ' + error);
     } finally {
       setLoading(false);
     }
