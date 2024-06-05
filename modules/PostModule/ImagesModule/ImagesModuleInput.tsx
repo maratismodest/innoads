@@ -1,3 +1,4 @@
+import useDialog from '@/hooks/useDialog';
 import { ACCEPTED_IMAGE_FORMAT } from '@/modules/PostModule/utils';
 import { NO_IMAGE } from '@/utils/constants';
 import clsx from 'clsx';
@@ -15,6 +16,7 @@ interface AddImageInputProps {
 }
 
 const ImagesModuleInput = ({ images, imageHandler, methods }: AddImageInputProps) => {
+  const { dialog } = useDialog();
   const ref = useRef<HTMLInputElement>(null);
   const { register, formState, setValue } = methods;
   const { errors } = formState;
@@ -23,7 +25,7 @@ const ImagesModuleInput = ({ images, imageHandler, methods }: AddImageInputProps
     if (images.length < imagesCount) {
       ref.current && ref.current.click();
     } else {
-      alert(tooManyImages);
+      dialog(tooManyImages);
     }
   };
 

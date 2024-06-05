@@ -1,5 +1,6 @@
 import Button from '@/components/ui/Button';
 import useAuth from '@/hooks/useAuth';
+import useDialog from '@/hooks/useDialog';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 import { ERROR_ALIAS_MESSAGE, userTemplate, ERROR_TOKEN_MESSAGE } from './utils';
 import * as jose from 'jose';
@@ -8,10 +9,11 @@ import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
 
 export default function ProfileNoUser() {
   const { login } = useAuth();
+  const { dialog } = useDialog();
 
   const handleTelegram = async (user: TelegramUser) => {
     if (!user.username) {
-      return alert({ ERROR_ALIAS_MESSAGE });
+      return dialog(ERROR_ALIAS_MESSAGE);
     }
     try {
       const response = await loginTelegram(user);
@@ -22,7 +24,7 @@ export default function ProfileNoUser() {
         if (decoded) {
           login(response.upsertUser, response.token);
         } else {
-          return alert({ ERROR_TOKEN_MESSAGE });
+          return dialog(ERROR_TOKEN_MESSAGE);
         }
       }
     } catch (e) {

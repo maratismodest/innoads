@@ -40,7 +40,7 @@ export default function Item({ post, edit = false }: ItemProps) {
         return;
       }
       if (modalText === ItemModalText.archive) {
-        await handleArchive(post);
+        await handleArchive(post, dialog);
         return;
       }
     } catch (e) {
