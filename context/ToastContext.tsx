@@ -16,7 +16,7 @@ type Props = {
 };
 
 export default function ToastProvider({ children }: Props) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState<string | undefined>();
 
   const onClose = useCallback(() => {
