@@ -5,6 +5,7 @@
 @layer base {
     :root {
         --header-height: 52px;
+
         @media (display-mode: standalone) {
             --header-height: 80px;
         }
@@ -16,12 +17,14 @@
 
     html {
         @apply scroll-smooth;
+
         scrollbar-gutter: stable;
     }
 
     html,
     body {
         font-family: Roboto, sans-serif;
+
         @apply text-black;
     }
 
@@ -89,9 +92,11 @@
         @apply my-2 border-gray
     }
 
-    /*img {*/
-    /*    height: inherit;*/
-    /*}*/
+    /* img { */
+
+    /*    height: inherit; */
+
+    /* } */
     li {
         list-style: none;
     }
@@ -136,27 +141,3 @@
     }
 
 }
-
-/*:root {*/
-/*  --foreground-rgb: 0, 0, 0;*/
-/*  --background-start-rgb: 214, 219, 220;*/
-/*  --background-end-rgb: 255, 255, 255;*/
-/*}*/
-
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --foreground-rgb: 255, 255, 255;*/
-/*    --background-start-rgb: 0, 0, 0;*/
-/*    --background-end-rgb: 0, 0, 0;*/
-/*  }*/
-/*}*/
-
-/*body {*/
-/*  color: rgb(var(--foreground-rgb));*/
-/*  background: linear-gradient(*/
-/*      to bottom,*/
-/*      transparent,*/
-/*      rgb(var(--background-end-rgb))*/
-/*    )*/
-/*    rgb(var(--background-start-rgb));*/
-/*}*/
