@@ -46,7 +46,7 @@ export async function generateMetadata({
 }
 
 export default async function Article<NextPage>({ params: { slug } }: GetSlugPath) {
-  const { t } = useTranslation('blog');
+  const { t } = useTranslation('common');
   const article = await getArticleBySlug(slug);
   if (!article) {
     return notFound();

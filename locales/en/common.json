@@ -1,7 +1,10 @@
 {
+  "variable-example": "Using a variable {{count}}",
   "Последние объявления": "Last posts",
   "Профиль": "Profile",
   "Попробовать снова": "Try again",
   "Что-то пошло не так": "Something went wrong",
-  "variable-example": "Using a variable {{count}}"
+  "_Блог": "_Blog",
+  "Блог": "Blog",
+  "Главная": "Home"
 }

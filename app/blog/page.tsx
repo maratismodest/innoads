@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ArticlesPage<NextPage>() {
-  const { t } = useTranslation('blog');
+  const { t } = useTranslation('common');
   const articles = await getAllArticles();
 
   const breadcrumbs: Breadcrumb[] = [
