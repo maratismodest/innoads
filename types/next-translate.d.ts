@@ -13,6 +13,7 @@ type TranslationNamespace = keyof TranslationsKeys;
 
 export interface TranslateFunction<Namespace extends TranslationNamespace> {
   (key: TranslationsKeys[Namespace], ...rest: Tail<Parameters<Translate>>): string;
+
   <T extends string>(template: TemplateStringsArray): string;
 }
 
