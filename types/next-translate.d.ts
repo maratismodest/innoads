@@ -5,7 +5,7 @@ type Tail<T> = T extends [unknown, ...infer Rest] ? Rest : never;
 export interface TranslationsKeys {
   // Example with "common" and "home" namespaces in "en" (the default language):
   common: Paths<typeof import('./../locales/ru/common.json')>;
-  home: Paths<typeof import('./../locales/ru/home.json')>;
+  blog: Paths<typeof import('./../locales/ru/blog.json')>;
   // Specify here all the namespaces you have...
 }
 

@@ -6,6 +6,7 @@ import { dateFormat } from '@/utils/date';
 import { getBlogPostJsonLd } from '@/utils/jsonLd';
 import dayjs from 'dayjs';
 import type { Metadata } from 'next';
+import useTranslation from 'next-translate/useTranslation';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
@@ -45,6 +46,7 @@ export async function generateMetadata({
 }
 
 export default async function Article<NextPage>({ params: { slug } }: GetSlugPath) {
+  const { t } = useTranslation('blog');
   const article = await getArticleBySlug(slug);
   if (!article) {
     return notFound();
@@ -52,8 +54,8 @@ export default async function Article<NextPage>({ params: { slug } }: GetSlugPat
   const { title, body, createdAt } = article;
 
   const breadcrumbs: Breadcrumb[] = [
-    { value: routes.main, label: 'Главная' },
-    { value: routes.blog, label: 'Блог' },
+    { value: routes.main, label: t('Главная') },
+    { value: routes.blog, label: t('Блог') },
     { value: routes.blog + '/' + slug, label: title },
   ];
 
