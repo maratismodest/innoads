@@ -7,14 +7,16 @@ import cleanObject from '@/utils/cleanObject';
 import { routes } from '@/utils/constants';
 import clsx from 'clsx';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { ComponentPropsWithoutRef, useEffect, useState } from 'react';
 
 const initialOptions: Partial<GetPostsParams> = {
   published: true,
   search: undefined,
 };
 
-export default function SearchModule() {
+interface SearchModuleProps extends ComponentPropsWithoutRef<'section'> {}
+
+export default function SearchModule({ className }: SearchModuleProps) {
   const [text, setText] = useState('');
   const searchText = useDebounce(text);
 
@@ -46,7 +48,7 @@ export default function SearchModule() {
   };
 
   return (
-    <section className="relative mt-1">
+    <section className={clsx('relative', className)}>
       <form
         onSubmit={e => {
           e.preventDefault();

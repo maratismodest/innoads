@@ -1,6 +1,6 @@
 import ArrowSvg from '@/public/svg/arrow.svg';
 import { Option } from '@/types/global';
-import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react';
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
 import { clsx } from 'clsx';
 import React, { Fragment } from 'react';
 
@@ -25,15 +25,15 @@ export default function Select({ options, onChange, value, name }: SelectProps) 
             </ListboxButton>
             <ListboxOptions className="absolute top-10 z-50 w-full rounded bg-white p-2 drop-shadow-md">
               {options.map(category => (
-                <Listbox.Option key={category.value} value={category} as={Fragment}>
-                  {({ active, selected }) => (
+                <ListboxOption key={category.value} value={category} as={Fragment}>
+                  {({ focus, selected }) => (
                     <li
-                      className={clsx('cursor-pointer rounded p-2', active && 'bg-blue text-white')}
+                      className={clsx('cursor-pointer rounded p-2', focus && 'bg-blue text-white')}
                     >
                       {category.label}
                     </li>
                   )}
-                </Listbox.Option>
+                </ListboxOption>
               ))}
             </ListboxOptions>
           </>

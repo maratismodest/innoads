@@ -21,7 +21,7 @@ export default async function Home<NextPage>() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getMainPageJsonLd()) }}
       />
-      <div>
+      <div className="grid grid-cols-1 items-center gap-2 md:grid-cols-[auto_1fr]">
         <HomePageCategories />
         <SearchModule />
       </div>

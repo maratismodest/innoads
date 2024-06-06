@@ -21,9 +21,11 @@ import {
 } from '@headlessui/react';
 import { Role } from '@prisma/client';
 import clsx from 'clsx';
+import useTranslation from 'next-translate/useTranslation';
 import React, { useState } from 'react';
 
 function AdminPage() {
+  const { t } = useTranslation('common');
   const [enabled, setEnabled] = useState(false);
 
   const { user } = useAuth();
@@ -60,12 +62,12 @@ function AdminPage() {
   return (
     <>
       <div className="mb-2 flex justify-between">
-        <h1>Панель администрирования</h1>
+        <h1>{t('Панель администрирования')}</h1>
         <button className={buttonStyles()} onClick={onClick} id="refetch">
-          Обновить данные
+          {t('Обновить данные')}
         </button>
         <button className={buttonStyles()} onClick={() => handleDeleteAllArchived(posts)}>
-          Удалить все архивные посты
+          {t('Удалить все архивные посты')}
         </button>
       </div>
       <TabGroup>
@@ -76,7 +78,7 @@ function AdminPage() {
               '!rounded-full data-[selected]:underline'
             )}
           >
-            Пользователи
+            {t('Пользователи')}
           </Tab>
           <Tab
             className={clsx(
@@ -84,7 +86,7 @@ function AdminPage() {
               '!rounded-full data-[selected]:underline'
             )}
           >
-            Объявления
+            {t('Объявления')}
           </Tab>
         </TabList>
         <TabPanels className="mt-3">
@@ -112,9 +114,9 @@ function AdminPage() {
                   />
                 </svg>
               </Checkbox>
-              <Label>показать только активные</Label>
+              <Label>{t('показать только активные')}</Label>
             </Field>
-            <Posts posts={enabled ? posts.filter(x => x.published === true) : posts} edit={true} />
+            <Posts posts={enabled ? posts.filter(x => x.published === true) : posts} />
           </TabPanel>
         </TabPanels>
       </TabGroup>

@@ -9,6 +9,7 @@ import fetchAds from '@/utils/api/prisma/fetchAds';
 import { routes, tgLink } from '@/utils/constants';
 import { getPostJsonLd } from '@/utils/jsonLd';
 import mapCategories from '@/utils/mapCategories';
+import { seoDescriptionLength, seoTitleLength, substringByLettersCount } from '@/utils/seo';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { Metadata } from 'next';
@@ -46,11 +47,11 @@ export async function generateMetadata({
 
   const { categoryId, title, body, preview, user } = post;
   const category = categories.find(option => option.value === categoryId) || categories[0];
-  const metaTitle = `${category.label} ${title.slice(0, 50)} ${process.env.NEXT_PUBLIC_META_ADDITIONAL}`;
+  const metaTitle = `${category.label} ${substringByLettersCount(title, seoTitleLength)} ${process.env.NEXT_PUBLIC_META_ADDITIONAL}`;
 
   return {
     title: metaTitle,
-    description: body.slice(0, 320),
+    description: substringByLettersCount(body, seoDescriptionLength),
     authors: [{ name: user.username, url: `${tgLink}/${user.username}` }],
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`,
@@ -70,7 +71,7 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const posts = await fetchAds({ size: 1000, published: true });
 
-  return posts.map(({ slug }) => ({ slug, published: true }));
+  return posts.map(({ slug }) => ({ slug }));
 }
 
 export const revalidate = 3600;
@@ -92,7 +93,8 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getPostJsonLd(post)) }}
       />
-      <div className="relative mx-auto w-full max-w-[400px]">
+      {/*<div className="relative mx-auto w-full max-w-[400px]">*/}
+      <div className="relative mx-auto grid max-w-[400px] grid-cols-1">
         <PostPageImages images={images.split('||')} />
         <Link
           href={{
@@ -106,15 +108,15 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
         <Price price={price} />
         <hr />
         <p className="break-words">{body}</p>
-        <time className="mt-5">Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</time>
+        <time className="mt-4">Опубликовано: {dayjs(createdAt).format('DD.MM.YYYY')}</time>
         <a
           href={tgLink + '/' + user.username}
           target="_blank"
-          className={clsx(buttonStyles(), 'mt-4 !block')}
+          className={clsx(buttonStyles(), 'mt-4')}
         >
           Написать автору
         </a>
-        <Link href={routes.users + '/' + userId} className={clsx(buttonStyles(), 'mt-4 !block')}>
+        <Link href={routes.users + '/' + userId} className={clsx(buttonStyles(), 'mt-4')}>
           Все объявления автора
         </Link>
         <ShareButton post={post} className="mt-4" />
