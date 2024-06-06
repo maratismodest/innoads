@@ -116,7 +116,7 @@ function AdminPage() {
               </Checkbox>
               <Label>{t('показать только активные')}</Label>
             </Field>
-            <Posts posts={enabled ? posts.filter(x => x.published === true) : posts} />
+            <Posts posts={enabled ? posts.filter(x => x.published === true) : posts} edit={true} />
           </TabPanel>
         </TabPanels>
       </TabGroup>

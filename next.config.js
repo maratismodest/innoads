@@ -57,26 +57,6 @@ const nextConfig = {
   //     },
   //   ];
   // },
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    // ignoreBuildErrors: true,
-  },
 };
-
-// const withPWA = require('@ducanh2912/next-pwa').default({
-//   dest: 'public',
-//   cacheOnFrontEndNav: true,
-//   aggressiveFrontEndNavCaching: true,
-//   reloadOnOnline: true,
-//   swcMinify: true,
-//   // disable: false,
-//   disable: process.env.NEXT_PUBLIC_NODE_ENV === 'development',
-//   workboxOptions: {
-//     disableDevLogs: true,
-//   },
-// });
 
 module.exports = nextTranslate(nextConfig);

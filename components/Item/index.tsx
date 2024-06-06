@@ -80,7 +80,7 @@ export default function Item({ post, edit = false }: ItemProps) {
           <h2 className="mt-auto truncate font-normal">{title}</h2>
           <ItemLike post={post} />
         </div>
-        {user && (user.role === Role.ADMIN || (user.id === post.userId && edit)) && (
+        {user && (user.role === Role.ADMIN || user.id === post.userId) && edit && (
           <>
             <Popup
               isOpen={isOpen}
