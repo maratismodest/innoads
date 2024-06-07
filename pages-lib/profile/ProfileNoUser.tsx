@@ -22,6 +22,10 @@ export default function ProfileNoUser() {
         const decoded = jose.decodeJwt(response.token);
         console.log('decoded', decoded);
         if (decoded) {
+          if (response.upsertUser.bans.length) {
+            toast('Ваш аккаунт заблокирован');
+            return;
+          }
           login(response.upsertUser, response.token);
         } else {
           return toast(ERROR_TOKEN_MESSAGE);

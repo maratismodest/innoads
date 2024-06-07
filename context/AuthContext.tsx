@@ -74,6 +74,8 @@ export default function AuthProvider({ children }: Props) {
               // если да, то сообщаем ему об этом
               setIsOpen(true);
               setMessage(MESSAGE_USER_BANNED);
+              logout();
+              return;
             }
           } else {
             logout();
@@ -95,6 +97,8 @@ export default function AuthProvider({ children }: Props) {
     }
   }, []);
   const [telegram, setTelegram] = useAtom(stateAtom);
+
+  console.log('user', user);
 
   // @ts-ignore
   useEffect(() => {
