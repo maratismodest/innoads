@@ -4,21 +4,22 @@ import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headless
 import { clsx } from 'clsx';
 import React, { Fragment } from 'react';
 
-interface SelectProps {
+interface CustomSelectProps {
   options: Option[];
-  onChange: (active: Option) => void;
-  value?: Option;
-  name?: string;
+  onChange: (active: number) => void;
+  value?: number;
 }
 
-export default function Select({ options, onChange, value, name }: SelectProps) {
+function CustomSelect({ options, value, onChange }: CustomSelectProps) {
   return (
     <div className="relative">
       <Listbox value={value} onChange={onChange}>
         {({ open }) => (
           <>
             <ListboxButton className="flex h-9 w-full items-center justify-between rounded border border-inputBorder px-4 text-start">
-              {value?.label ?? <span className="text-gray-dark">Выберите категорию</span>}
+              {options.find(x => x.value === value)?.label ?? (
+                <span className="text-gray-dark">Выберите категорию</span>
+              )}
               <div className={clsx('ml-auto', open && 'rotate-180 transition ease-in-out')}>
                 <ArrowSvg className="size-6" />
               </div>
@@ -42,3 +43,5 @@ export default function Select({ options, onChange, value, name }: SelectProps) 
     </div>
   );
 }
+
+export default CustomSelect;

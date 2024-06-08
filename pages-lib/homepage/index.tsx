@@ -1,5 +1,5 @@
 'use client';
-import Select from '@/components/ui/Select';
+import CustomSelect from '@/components/CustomSelect';
 import useApp from '@/hooks/useApp';
 import { Option } from '@/types/global';
 import { routes } from '@/utils/constants';
@@ -13,5 +13,15 @@ export default function HomePageCategories() {
   const handleSelect = (category: Option) => {
     router.push(routes.search + `?categoryId=${category.value}`);
   };
-  return <Select options={categories} onChange={handleSelect} value={category} />;
+  return (
+    <CustomSelect
+      options={categories}
+      onChange={(category: any) => {
+        console.log('category', category);
+        setCategory(category);
+        handleSelect(category);
+      }}
+      value={category}
+    />
+  );
 }

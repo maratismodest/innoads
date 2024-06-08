@@ -1,4 +1,5 @@
 'use client';
+import CustomSelect from '@/components/CustomSelect';
 import { getCurrencySymbol } from '@/components/Price/utils';
 import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import useApp from '@/hooks/useApp';
@@ -16,7 +17,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Post } from '@prisma/client';
 import clsx from 'clsx';
 import React, { useState } from 'react';
-import { FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
+import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { defaultValues, IFormInput, schema } from '../yup';
 
 interface PostModuleProps {
@@ -57,6 +58,8 @@ export default function EditPostModule({
   const images = useWatch({ name: 'images', control }) as string[];
 
   const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+    console.log('data', data);
+    // return;
     try {
       setLoading(true);
       const editPostDto: EditPostDTO = {
@@ -93,7 +96,19 @@ export default function EditPostModule({
         <h1>Новое объявление</h1>
         <Field>
           <Label>Выберите категорию</Label>
-          <SelectHeadlessUi options={categories} name="categoryId" />
+          <Controller
+            control={control}
+            name="categoryId"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <CustomSelect
+                options={categories}
+                value={value}
+                // It should be Option
+                onChange={(active: any) => onChange(Number(active.value))}
+              />
+            )}
+          />
+          {/*<SelectHeadlessUi options={categories} name="categoryId" />*/}
           <span className="error">{errors.categoryId?.message}</span>
         </Field>
 
