@@ -1,4 +1,3 @@
-import Footer from '@/components/Footer';
 import Header from '@/components/Header/Header';
 import AppProvider from '@/context/AppContext';
 import AuthProvider from '@/context/AuthContext';
@@ -10,12 +9,11 @@ import { seo } from '@/utils/constants';
 import dayjs from 'dayjs';
 import { Provider as FavouritesProvider } from 'jotai';
 import type { Metadata } from 'next';
-import useTranslation from 'next-translate/useTranslation';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import React, { Suspense } from 'react';
-import i18n from '@/i18n';
-import { redirect } from 'next/navigation';
 import './globals.css';
 
 require('dayjs/locale/ru');
@@ -41,34 +39,39 @@ export const metadata: Metadata = {
 
 const yandexScriptUrl = `/scripts/ym_${process.env.NEXT_PUBLIC_YANDEX_COUNTER}.js`;
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const { lang } = useTranslation('common');
-  if (!i18n.locales.includes(lang)) redirect(`/${i18n.defaultLocale}/${lang}`);
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const locale = await getLocale();
+
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
 
   return (
-    <html lang="ru">
+    <html lang={locale}>
       <body className={inter.className}>
-        <Suspense>
-          <QueryProvider>
-            <TelegramProvider>
-              <AuthProvider>
-                <AppProvider>
-                  <ModalProvider>
-                    <ToastProvider>
-                      <FavouritesProvider>
-                        <Header />
-                        <main>{children}</main>
-                        {/*<Footer />*/}
-                      </FavouritesProvider>
-                    </ToastProvider>
-                  </ModalProvider>
-                </AppProvider>
-              </AuthProvider>
-            </TelegramProvider>
-          </QueryProvider>
-        </Suspense>
-        <Script src={yandexScriptUrl} strategy="afterInteractive" />
-        <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
+        <NextIntlClientProvider messages={messages}>
+          <Suspense>
+            <QueryProvider>
+              <TelegramProvider>
+                <AuthProvider>
+                  <AppProvider>
+                    <ModalProvider>
+                      <ToastProvider>
+                        <FavouritesProvider>
+                          <Header />
+                          <main>{children}</main>
+                          {/*<Footer />*/}
+                        </FavouritesProvider>
+                      </ToastProvider>
+                    </ModalProvider>
+                  </AppProvider>
+                </AuthProvider>
+              </TelegramProvider>
+            </QueryProvider>
+          </Suspense>
+          <Script src={yandexScriptUrl} strategy="afterInteractive" />
+          <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

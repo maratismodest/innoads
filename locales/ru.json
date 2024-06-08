@@ -1,4 +1,8 @@
 {
+  "Index": {
+    "title": "Hello world!"
+  },
+  "title": "Hello world!",
   "variable-example": "Using a variable {{count}}",
   "Последние объявления": "Последние объявления",
   "Профиль": "Профиль",
