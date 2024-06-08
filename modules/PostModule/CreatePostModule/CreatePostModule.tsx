@@ -1,6 +1,6 @@
 'use client';
+import CustomSelect from '@/components/CustomSelect';
 import { getCurrencySymbol } from '@/components/Price/utils';
-import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
@@ -21,7 +21,7 @@ import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import clsx from 'clsx';
 import React, { useState } from 'react';
-import { FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
+import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { defaultValues, IFormInput, schema } from '../yup';
 
 interface PostModuleProps {
@@ -123,7 +123,18 @@ export default function CreatePostModule({
         <h1>Новое объявление</h1>
         <Field>
           <Label>Выберите категорию</Label>
-          <SelectHeadlessUi options={categories} name="categoryId" />
+          <Controller
+            control={control}
+            name="categoryId"
+            render={({ field: { onChange, value } }) => (
+              <CustomSelect
+                options={categories}
+                value={value}
+                // It should be Option
+                onChange={(active: any) => onChange(Number(active.value))}
+              />
+            )}
+          />
           <span className="error">{errors.categoryId?.message}</span>
         </Field>
 

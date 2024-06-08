@@ -1,6 +1,6 @@
 'use client';
+import CustomSelect from '@/components/CustomSelect';
 import Posts from '@/components/Posts';
-import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useApp from '@/hooks/useApp';
 import useDebounce from '@/hooks/useDebounce';
@@ -12,7 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import clsx from 'clsx';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 
 const SearchPage = () => {
   const router = useRouter();
@@ -34,6 +34,7 @@ const SearchPage = () => {
     // trigger,
     // control,
     watch,
+    control,
   } = methods;
   const _categoryId = watch('categoryId');
   const _title = watch('title');
@@ -70,7 +71,18 @@ const SearchPage = () => {
     <>
       <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <SelectHeadlessUi options={categories} name="categoryId" />
+          <Controller
+            control={control}
+            name="categoryId"
+            render={({ field: { onChange, onBlur, value, ref } }) => (
+              <CustomSelect
+                options={categories}
+                value={value}
+                // It should be Option
+                onChange={(active: any) => onChange(Number(active.value))}
+              />
+            )}
+          />
           <input
             placeholder="Поиск по заголовкам"
             className={clsx(inputStyles(), 'mt-2 w-full')}

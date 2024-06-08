@@ -1,7 +1,6 @@
 'use client';
 import CustomSelect from '@/components/CustomSelect';
 import { getCurrencySymbol } from '@/components/Price/utils';
-import SelectHeadlessUi from '@/components/SelectHeadlessUi';
 import useApp from '@/hooks/useApp';
 import useToast from '@/hooks/useToast';
 import ImagesModuleInput from '@/modules/PostModule/ImagesModule/ImagesModuleInput';

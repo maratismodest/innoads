@@ -6,7 +6,7 @@ import React, { Fragment } from 'react';
 
 interface CustomSelectProps {
   options: Option[];
-  onChange: (active: number) => void;
+  onChange?: (active: number) => void;
   value?: number;
 }
 
