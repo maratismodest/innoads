@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import Header from '@/components/Header/Header';
 import AppProvider from '@/context/AppContext';
 import AuthProvider from '@/context/AuthContext';
@@ -60,7 +61,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                         <FavouritesProvider>
                           <Header />
                           <main>{children}</main>
-                          {/*<Footer />*/}
+                          <Footer />
                         </FavouritesProvider>
                       </ToastProvider>
                     </ModalProvider>
