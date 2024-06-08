@@ -4,10 +4,10 @@ import Posts from '@/components/Posts';
 import withAuth from '@/hoc/withAuth';
 import favouritesAtom from '@/state';
 import { useAtomValue } from 'jotai';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslations } from 'next-intl';
 
 function FavouritesPage<NextPage>() {
-  const { t } = useTranslation('common');
+  const t = useTranslations();
   const favourites = useAtomValue(favouritesAtom);
 
   return (

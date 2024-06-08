@@ -13,12 +13,12 @@ import { routes } from '@/utils/constants';
 import { Post } from '@prisma/client';
 import { clsx } from 'clsx';
 import { useAtomValue } from 'jotai';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 
 export default function ProfilePage<NextPage>() {
-  const { t } = useTranslation('common');
+  const t = useTranslations();
   const { user, logout, loading } = useAuth();
   const userId = user?.id;
   const isTelegram = useAtomValue(stateAtom);

@@ -4,7 +4,6 @@ import { routes, seo } from '@/utils/constants';
 import { getBlogJsonLd } from '@/utils/jsonLd';
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
 
 export const metadata: Metadata = {

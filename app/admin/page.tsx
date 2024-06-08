@@ -21,11 +21,11 @@ import {
 } from '@headlessui/react';
 import { Role } from '@prisma/client';
 import clsx from 'clsx';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
-function AdminPage() {
-  const { t } = useTranslation('common');
+async function AdminPage() {
+  const t = useTranslations();
   const [enabled, setEnabled] = useState(false);
 
   const { user } = useAuth();
