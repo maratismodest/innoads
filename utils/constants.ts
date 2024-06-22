@@ -18,6 +18,7 @@ export const tgRoutes = {
   sendMediaGroup: '/sendMediaGroup',
   editMessageText: '/editMessageText',
   sendMessage: '/sendMessage',
+  deleteMessage: '/deleteMessage',
 };
 
 export const seo: Record<string, Seo> = {
