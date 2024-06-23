@@ -1,4 +1,4 @@
-import SearchPage from '@/components/SearchPage';
+import SearchPage from '@/pages-lib/search/SearchPage';
 import { routes, seo } from '@/utils/constants';
 import { Metadata } from 'next';
 import React from 'react';

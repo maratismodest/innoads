@@ -66,7 +66,7 @@ export default function Item({ post, edit = false }: ItemProps) {
           <Image
             fill
             style={{ objectFit: 'cover' }}
-            sizes="(max-width: 768px) 45vw, (max-width: 1024px) 25vw, 200px"
+            sizes="(max-width: 768px) 45vw, (max-width: 1024px) 25vw, 128px"
             alt={title}
             src={preview}
             placeholder="blur"

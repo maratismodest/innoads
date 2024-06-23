@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /_next
+Disallow: /user/
+
+Sitemap: https://innoads.ru/sitemap.xml

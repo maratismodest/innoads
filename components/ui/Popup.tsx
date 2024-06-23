@@ -1,4 +1,4 @@
-import Button from '@/components/ui/Button';
+import buttonStyles from '@/styles/buttonStyles';
 import { DialogPanel, DialogTitle, Dialog } from '@headlessui/react';
 import React from 'react';
 
@@ -27,10 +27,10 @@ const Popup = ({ isOpen, setIsOpen, text, buttons }: PopupProps) => {
             <DialogTitle>{text}</DialogTitle>
             <hr />
             <div className="mt-12 flex justify-around">
-              {buttons.map(x => (
-                <Button onClick={x.onClick} key={x.text}>
-                  {x.text}
-                </Button>
+              {buttons.map(({ text, onClick }) => (
+                <button key={text} className={buttonStyles()} onClick={onClick}>
+                  {text}
+                </button>
               ))}
             </div>
           </DialogPanel>

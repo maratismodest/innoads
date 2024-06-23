@@ -1,7 +1,7 @@
 'use client';
 import Dropdown from '@/components/Dropdown';
-import Button from '@/components/ui/Button';
 import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef';
+import buttonStyles from '@/styles/buttonStyles';
 import React, { ComponentPropsWithoutRef, useCallback, useState } from 'react';
 import HeaderDesktopButtons from './HeaderDesktopButtons';
 
@@ -14,7 +14,9 @@ const HeaderTabletButtons = ({ className }: ComponentPropsWithoutRef<'div'>) => 
   const ref = useOnClickOutsideRef(closeDropdown);
   return (
     <div className={className} ref={ref}>
-      <Button onClick={openDropdown}>&#8801;</Button>
+      <button className={buttonStyles()} onClick={openDropdown}>
+        &#8801;
+      </button>
       <Dropdown dropdown={dropdown}>
         <HeaderDesktopButtons className="mb-8 flex-col" onClick={closeDropdown} />
       </Dropdown>

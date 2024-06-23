@@ -1,11 +1,11 @@
-import Button from '@/components/ui/Button';
 import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
+import buttonStyles from '@/styles/buttonStyles';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
-import { ERROR_ALIAS_MESSAGE, userTemplate, ERROR_TOKEN_MESSAGE } from './utils';
 import * as jose from 'jose';
 import React from 'react';
 import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
+import { ERROR_ALIAS_MESSAGE, ERROR_TOKEN_MESSAGE, userTemplate } from './utils';
 
 export default function ProfileNoUser() {
   const { login } = useAuth();
@@ -41,7 +41,9 @@ export default function ProfileNoUser() {
       <h1>Авторизация</h1>
       <TelegramLoginButton botName={process.env.NEXT_PUBLIC_BOT_NAME} dataOnauth={handleTelegram} />
       {process.env.NEXT_PUBLIC_NODE_ENV === 'development' && (
-        <Button onClick={async () => await handleTelegram(userTemplate)}>Imitate</Button>
+        <button className={buttonStyles()} onClick={async () => await handleTelegram(userTemplate)}>
+          Imitate
+        </button>
       )}
     </section>
   );

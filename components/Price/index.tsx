@@ -1,12 +1,17 @@
+'use client';
+import { useTranslations } from 'next-intl';
 import { getFormattedPrice } from './utils';
-import React from 'react';
+import React, { memo } from 'react';
 
 type Props = {
   price: number;
 };
 
-export default function Price({ price }: Props) {
+function Price({ price }: Props) {
+  const t = useTranslations();
   return (
-    <span className="text-xl">{price !== 0 ? getFormattedPrice(price) : 'Цена не указана'}</span>
+    <span className="text-xl">{price > 0 ? getFormattedPrice(price) : t('Цена не указана')}</span>
   );
 }
+
+export default memo(Price);

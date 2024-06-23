@@ -1,7 +1,6 @@
 'use client';
 
 import Posts from '@/components/Posts';
-import Button from '@/components/ui/Button';
 import Spinner from '@/components/ui/Spinner';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useAuth from '@/hooks/useAuth';
@@ -82,9 +81,9 @@ export default function ProfilePage<NextPage>() {
       )}
       {!postsLoading && posts.length === 0 && <h2>Нет объявлений</h2>}
       {isTelegram !== 1 && (
-        <Button className="mt-auto" onClick={logout}>
+        <button className={clsx(buttonStyles(), 'mt-auto')} onClick={logout}>
           Выход
-        </Button>
+        </button>
       )}
     </div>
   );
