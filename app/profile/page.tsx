@@ -54,7 +54,7 @@ export default function ProfilePage<NextPage>() {
     <div className="flex flex-1 flex-col items-center gap-8">
       <div className="text-center">
         <h1>{t('Профиль')}</h1>
-        <p>Добавить объявление</p>
+        <p>Добавить объявление{isTelegram === 1 ? '.' : ''}</p>
         <Link
           href={isTelegram === 1 ? routes.bot : routes.add}
           className={clsx(buttonStyles(), 'flex h-12 w-full items-center justify-center !text-3xl')}
