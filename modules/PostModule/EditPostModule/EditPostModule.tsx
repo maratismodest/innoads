@@ -10,11 +10,11 @@ import buttonStyles from '@/styles/buttonStyles';
 import inputStyles from '@/styles/inputStyles';
 import { EditPostDTO } from '@/types';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
-import { messages } from '@/utils/messages';
 import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Post } from '@prisma/client';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { defaultValues, IFormInput, schema } from '../yup';
@@ -28,6 +28,7 @@ export default function EditPostModule({
   onSubmitOptional = async () => undefined,
   item,
 }: PostModuleProps) {
+  const t = useTranslations();
   const { categories } = useApp();
   const { toast } = useToast();
   const methods = useForm<IFormInput>({
@@ -83,7 +84,7 @@ export default function EditPostModule({
       await onSubmitOptional();
     } catch (e) {
       console.log(e);
-      toast(messages.somethingWentWrong);
+      toast(t('Что-то пошло не так'));
     } finally {
       setLoading(false);
     }

@@ -20,6 +20,7 @@ import slug from '@/utils/slug';
 import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import { defaultValues, IFormInput, schema } from '../yup';
@@ -31,6 +32,7 @@ interface PostModuleProps {
 export default function CreatePostModule({
   onSubmitOptional = async () => undefined,
 }: PostModuleProps) {
+  const t = useTranslations();
   const { categories } = useApp();
   const { user, loading: userLoading } = useAuth();
   const { toast } = useToast();
@@ -104,14 +106,14 @@ export default function CreatePostModule({
       const telegram = await postMessage({ id: result[0]?.message_id, postId: post.id });
       console.log('_telegram', telegram);
       reset();
-      toast(messages.postCreated);
+      toast(t('Объявление создано'));
       await onSubmitOptional();
     } catch (e) {
       console.error(e);
       // @ts-ignore
       const error = e.message ?? JSON.stringify(data);
       postLog(JSON.stringify(error));
-      toast(messages.somethingWentWrong + ': ' + error);
+      toast(t('Что-то пошло не так') + ': ' + error);
     } finally {
       setLoading(false);
     }

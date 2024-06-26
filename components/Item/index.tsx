@@ -6,8 +6,8 @@ import Popup from '@/components/ui/Popup';
 import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
 import { NO_IMAGE } from '@/utils/constants';
-import { messages } from '@/utils/messages';
 import { Post, Role } from '@prisma/client';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -19,6 +19,7 @@ type ItemProps = {
 };
 
 export default function Item({ post, edit = false }: ItemProps) {
+  const t = useTranslations();
   const router = useRouter();
   const { user } = useAuth();
   const { toast } = useToast();
@@ -45,7 +46,7 @@ export default function Item({ post, edit = false }: ItemProps) {
       }
     } catch (e) {
       console.error(modalText, e);
-      toast(messages.somethingWentWrong);
+      toast(t('Что-то пошло не так'));
     } finally {
       setIsOpen(false);
     }
