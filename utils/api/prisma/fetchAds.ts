@@ -28,9 +28,6 @@ export default async function fetchPosts(params: Partial<GetPostsParams>): Promi
     orderBy: {
       createdAt: 'desc',
     },
-    include: {
-      messages: true,
-    },
   });
   return posts;
 }
