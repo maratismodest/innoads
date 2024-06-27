@@ -15,7 +15,6 @@ import postLog from '@/utils/api/prisma/postLog';
 import postMessage from '@/utils/api/prisma/postMessage';
 import postAd from '@/utils/api/prisma/postPost';
 import postTelegram, { TelegramResponseProps } from '@/utils/api/telegram/postTelegram';
-import { messages } from '@/utils/messages';
 import slug from '@/utils/slug';
 import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -50,6 +49,7 @@ export default function CreatePostModule({
     setValue,
     trigger,
     control,
+    getValues,
   } = methods;
 
   console.log('errors', errors);
@@ -121,7 +121,17 @@ export default function CreatePostModule({
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="form gap-2">
+      <form
+        onSubmit={event => {
+          event.preventDefault();
+          const values = getValues();
+          // Trim the value of the 'title' and 'body' field
+          setValue('title', values.title.trim());
+          setValue('body', values.body.trim());
+          handleSubmit(onSubmit)();
+        }}
+        className="form gap-2"
+      >
         <h1>Новое объявление</h1>
         <Field>
           <Label>Выберите категорию</Label>
