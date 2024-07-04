@@ -1,32 +1,22 @@
 'use client';
 
-import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
 import withAuth from '@/hoc/withAuth';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useUsersQuery from '@/hooks/query/useUsersQuery';
 import useAuth from '@/hooks/useAuth';
-import Users from '@/pages-lib/admin/users';
+import AdminPosts from '@/pages-lib/admin/admin-posts';
+import UserSearch from '@/pages-lib/admin/user-search';
 import { handleDeleteAllArchived } from '@/pages-lib/admin/utils';
 import buttonStyles from '@/styles/buttonStyles';
-import {
-  Checkbox,
-  Field,
-  Label,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-} from '@headlessui/react';
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import { Role } from '@prisma/client';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
+import React from 'react';
 
 async function AdminPage() {
   const t = useTranslations();
-  const [enabled, setEnabled] = useState(false);
 
   const { user } = useAuth();
   const { users, usersLoading, usersError, usersRefetch } = useUsersQuery();
@@ -91,32 +81,10 @@ async function AdminPage() {
         </TabList>
         <TabPanels className="mt-3">
           <TabPanel>
-            <Users users={users} />
+            <UserSearch users={users} />
           </TabPanel>
           <TabPanel>
-            <Field className="mb-2 flex items-center gap-1 hover:cursor-pointer">
-              <Checkbox
-                checked={enabled}
-                onChange={setEnabled}
-                className="group block size-4 rounded border bg-gray data-[checked]:bg-white"
-              >
-                {/* Checkmark icon */}
-                <svg
-                  className="stroke-black opacity-0 group-data-[checked]:opacity-100"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                >
-                  <path
-                    d="M3 8L6 11L11 3.5"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </Checkbox>
-              <Label>{t('показать только активные')}</Label>
-            </Field>
-            <Posts posts={enabled ? posts.filter(x => x.published === true) : posts} edit={true} />
+            <AdminPosts posts={posts} />
           </TabPanel>
         </TabPanels>
       </TabGroup>
