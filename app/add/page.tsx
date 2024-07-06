@@ -7,7 +7,7 @@ import React, { useCallback } from 'react';
 
 const AddPage = () => {
   const router = useRouter();
-  const onSubmitOptional = useCallback(async () => router.push(routes.profile), []);
+  const onSubmitOptional = useCallback(async () => router.push(routes.profile), [router]);
 
   return <CreatePostModule onSubmitOptional={onSubmitOptional} />;
 };

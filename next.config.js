@@ -60,6 +60,11 @@ const nextConfig = {
   //     },
   //   ];
   // },
+  experimental: {
+    serverActions: {
+      allowedOrigins: [process.env.NEXT_PUBLIC_APP_DOMAIN, 'localhost:3000'],
+    },
+  },
 };
 
 module.exports = withNextIntl(nextConfig);

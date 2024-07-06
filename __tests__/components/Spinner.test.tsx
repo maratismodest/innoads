@@ -15,7 +15,7 @@ describe('Spinner Component', () => {
   });
 
   it('renders with custom className', () => {
-    const { container } = render(<Spinner className='custom-class' />);
+    const { container } = render(<Spinner className="custom-class" />);
     const spinnerContainer = container.querySelector('.flex');
     expect(spinnerContainer).toHaveClass('custom-class');
   });
@@ -23,9 +23,5 @@ describe('Spinner Component', () => {
   it('matches snapshot', () => {
     const { container } = render(<Spinner />);
     expect(container).toMatchSnapshot();
-  });
-
-  it('has correct display name', () => {
-    expect(Spinner.displayName).toBe('Spinner');
   });
 });

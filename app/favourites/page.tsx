@@ -1,7 +1,6 @@
 'use client';
 
 import Posts from '@/components/Posts';
-import withAuth from '@/hoc/withAuth';
 import favouritesAtom from '@/state';
 import { useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
@@ -18,4 +17,4 @@ function FavouritesPage<NextPage>() {
   );
 }
 
-export default withAuth(FavouritesPage);
+export default FavouritesPage;

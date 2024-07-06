@@ -57,7 +57,7 @@ export default function Item({ post, edit = false }: ItemProps) {
       { text: 'Да', onClick: handleFunction },
       { text: 'Нет', onClick: hideModal },
     ],
-    [handleFunction]
+    [handleFunction, hideModal]
   );
 
   return (

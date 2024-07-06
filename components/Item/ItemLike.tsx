@@ -19,7 +19,7 @@ const ItemLike = ({ post }: Props) => {
       const currentList = liked ? favourites.filter(x => x.id !== post.id) : [...favourites, post];
       setFavourites(currentList);
     },
-    [post.id, favourites, liked, post, setFavourites]
+    [favourites, liked, post.id, setFavourites]
   );
   return (
     <button
