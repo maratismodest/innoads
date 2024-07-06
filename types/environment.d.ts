@@ -12,9 +12,11 @@ declare global {
       NEXT_PUBLIC_META_ADDITIONAL: string;
       NEXT_PUBLIC_CITY_NAME: string;
       NEXT_PUBLIC_API_URL: string;
+      NEXT_PUBLIC_LANGUAGE: string;
       NEXT_PUBLIC_CURRENCY: string;
       NEXT_PUBLIC_LOCALE: string;
       NEXT_PUBLIC_APP_DOMAIN: string;
+      NEXT_PUBLIC_TELEGRAM_USER: string;
     }
   }
 }

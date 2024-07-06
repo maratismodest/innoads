@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     images: ['/images/og-image.png'],
     title: seo.default.title,
     description: seo.default.description,
-    locale: 'ru',
+    locale: process.env.NEXT_PUBLIC_LANGUAGE,
   },
 };
 

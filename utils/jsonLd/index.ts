@@ -51,7 +51,7 @@ const getBlogPostJsonLd = (article: Article): WithContext<BlogPosting> => ({
   },
   datePublished: dayjs(article.createdAt).format(dateFormat.time),
   dateModified: dayjs(article.updatedAt).format(dateFormat.time),
-  inLanguage: 'ru',
+  inLanguage: process.env.NEXT_PUBLIC_LANGUAGE,
 });
 
 const getBlogJsonLd = (articles: Article[]): WithContext<Blog> => ({
