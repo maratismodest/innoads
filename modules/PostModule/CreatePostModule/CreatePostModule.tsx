@@ -168,7 +168,13 @@ export default function CreatePostModule({
 
         <div>
           <label htmlFor="body">Описание</label>
-          <textarea rows={5} cols={5} {...register('body')} name="body" className="w-full" />
+          <textarea
+            rows={5}
+            cols={5}
+            {...register('body')}
+            name="body"
+            className="w-full dark:text-black"
+          />
           <span className="error">{errors.body?.message}</span>
         </div>
 
