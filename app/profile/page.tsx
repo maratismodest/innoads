@@ -9,6 +9,7 @@ import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
 import { stateAtom } from '@/state';
 import buttonStyles from '@/styles/buttonStyles';
 import { routes } from '@/utils/constants';
+import { setTheme } from '@/utils/spaghetti';
 import { Post } from '@prisma/client';
 import { clsx } from 'clsx';
 import { useAtomValue } from 'jotai';
@@ -30,7 +31,11 @@ export default function ProfilePage<NextPage>() {
 
   const active: Post[] = useMemo(() => posts.filter(post => post.published === true), [posts]);
   const archived: Post[] = useMemo(() => posts.filter(post => post.published === false), [posts]);
-
+  const onThemeChange = (theme: 'dark' | 'light') => {
+    console.log('theme change', theme);
+    localStorage.setItem('theme', theme);
+    setTheme();
+  };
   if (loading) {
     return <Spinner />;
   }
@@ -81,9 +86,19 @@ export default function ProfilePage<NextPage>() {
       )}
       {!postsLoading && posts.length === 0 && <h2>Нет объявлений</h2>}
       {isTelegram !== 1 && (
-        <button className={clsx(buttonStyles(), 'mt-auto')} onClick={logout}>
-          Выход
-        </button>
+        <div className="mt-auto w-full">
+          <div className="mb-4 flex items-center justify-center gap-2">
+            <button className={buttonStyles()} onClick={() => onThemeChange('light')}>
+              light
+            </button>
+            <button className={buttonStyles()} onClick={() => onThemeChange('dark')}>
+              dark
+            </button>
+          </div>
+          <button className={clsx(buttonStyles(), 'mx-auto !block')} onClick={logout}>
+            Выход
+          </button>
+        </div>
       )}
     </div>
   );

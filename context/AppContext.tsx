@@ -2,7 +2,8 @@
 import useCategoriesQuery from '@/hooks/query/useCategoriesQuery';
 import { Option } from '@/types/global';
 import mapCategories from '@/utils/mapCategories';
-import { createContext, ReactNode } from 'react';
+import { setTheme } from '@/utils/spaghetti';
+import { createContext, ReactNode, useEffect } from 'react';
 
 type appContextType = {
   categories: Option[];
@@ -23,6 +24,10 @@ export default function AppProvider({ children }: Props) {
   const value = {
     categories: mapCategories(categories),
   };
+
+  useEffect(() => {
+    setTheme();
+  }, []);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

@@ -25,6 +25,7 @@ const config: Config = {
       black: '#151617',
       red: '#f00',
       inputBorder: 'hsl(0deg 0% 80%)',
+      darkBackground: '#1E293B',
     },
     extend: {
       backgroundImage: {
@@ -43,5 +44,6 @@ const config: Config = {
     },
   },
   plugins: [require('tailwindcss-displaymodes')],
+  darkMode: 'selector',
 };
 export default config;

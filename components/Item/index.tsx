@@ -61,38 +61,36 @@ export default function Item({ post, edit = false }: ItemProps) {
   );
 
   return (
-    <>
-      <div className="relative flex flex-col overflow-hidden rounded-2xl shadow">
-        <div className="relative block aspect-square transition-all hover:scale-105">
-          <Image
-            fill
-            style={{ objectFit: 'cover' }}
-            sizes="(max-width: 768px) 45vw, (max-width: 1024px) 25vw, 128px"
-            alt={title}
-            src={preview}
-            placeholder="blur"
-            blurDataURL={NO_IMAGE}
-            title={title}
-          />
-        </div>
-
-        <div className="relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2">
-          <Price price={price} />
-          <h2 className="mt-auto truncate font-normal">{title}</h2>
-          <ItemLike post={post} />
-        </div>
-        {user && (user.role === Role.ADMIN || user.id === post.userId) && edit && (
-          <>
-            <Popup
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              text={modalText ?? 'InnoAds'}
-              buttons={buttons}
-            />
-            <ItemButtons showModal={showModal} />
-          </>
-        )}
+    <div className="relative flex flex-col overflow-hidden rounded-2xl shadow dark:border">
+      <div className="relative block aspect-square transition-all hover:scale-105">
+        <Image
+          fill
+          style={{ objectFit: 'cover' }}
+          sizes="(max-width: 768px) 45vw, (max-width: 1024px) 25vw, 128px"
+          alt={title}
+          src={preview}
+          placeholder="blur"
+          blurDataURL={NO_IMAGE}
+          title={title}
+        />
       </div>
-    </>
+
+      <div className="relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2">
+        <Price price={price} />
+        <h2 className="mt-auto truncate font-normal">{title}</h2>
+        <ItemLike post={post} />
+      </div>
+      {user && (user.role === Role.ADMIN || user.id === post.userId) && edit && (
+        <>
+          <Popup
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            text={modalText ?? 'InnoAds'}
+            buttons={buttons}
+          />
+          <ItemButtons showModal={showModal} />
+        </>
+      )}
+    </div>
   );
 }

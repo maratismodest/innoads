@@ -31,7 +31,10 @@ export default function CustomSelect({ options, value, onChange }: CustomSelectP
                 <ListboxOption key={category.value} value={category} as={Fragment}>
                   {({ focus, selected }) => (
                     <li
-                      className={clsx('cursor-pointer rounded p-2', focus && 'bg-blue text-white')}
+                      className={clsx(
+                        'cursor-pointer rounded p-2 dark:text-black',
+                        focus && 'bg-blue text-white'
+                      )}
                     >
                       {category.label}
                     </li>

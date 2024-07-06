@@ -10,8 +10,8 @@ function FavouritesPage<NextPage>() {
   const favourites = useAtomValue(favouritesAtom);
 
   return (
-    <section className="text-center">
-      <h1>{t('Избранное')}</h1>
+    <section>
+      <h1 className="text-center">{t('Избранное')}</h1>
       <Posts posts={favourites} className="mt-4" />
     </section>
   );
