@@ -9,7 +9,7 @@ import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
 import { stateAtom } from '@/state';
 import buttonStyles from '@/styles/buttonStyles';
 import { routes } from '@/utils/constants';
-import { setTheme } from '@/utils/spaghetti';
+import { setTheme } from '@/utils/setTheme';
 import { Post } from '@prisma/client';
 import { clsx } from 'clsx';
 import { useAtomValue } from 'jotai';

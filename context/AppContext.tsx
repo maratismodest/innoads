@@ -2,7 +2,7 @@
 import useCategoriesQuery from '@/hooks/query/useCategoriesQuery';
 import { Option } from '@/types/global';
 import mapCategories from '@/utils/mapCategories';
-import { setTheme } from '@/utils/spaghetti';
+import { setTheme } from '@/utils/setTheme';
 import { createContext, ReactNode, useEffect } from 'react';
 
 type appContextType = {

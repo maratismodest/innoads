@@ -19,7 +19,7 @@ describe('sortByCreatedAt function', () => {
   });
 
   it('should handle empty array', () => {
-    const items: any[] = [];
+    const items: never[] = [];
     const sortedItems = sortByCreatedAt(items);
 
     expect(sortedItems).toEqual([]);
