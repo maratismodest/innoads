@@ -17,6 +17,7 @@ declare global {
       NEXT_PUBLIC_LOCALE: string;
       NEXT_PUBLIC_APP_DOMAIN: string;
       NEXT_PUBLIC_TELEGRAM_USER: string;
+      NEXT_PUBLIC_VDS: boolean;
     }
   }
 }
