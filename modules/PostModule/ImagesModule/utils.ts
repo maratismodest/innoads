@@ -1,5 +1,4 @@
-import { compressionOptions, handlePostImage } from '@/modules/PostModule/utils';
-import imageCompression from 'browser-image-compression';
+import { handleImageResize, handlePostImage } from '@/modules/PostModule/utils';
 import { UseFormReturn } from 'react-hook-form';
 
 export type Methods = UseFormReturn<{
@@ -13,7 +12,7 @@ export type Methods = UseFormReturn<{
 }>;
 
 const imageHandler = async (
-  files: FileList | null,
+  file: File,
   images: string[],
   methods: Methods,
   setLoading: (a: boolean) => void
@@ -21,18 +20,17 @@ const imageHandler = async (
   const { setValue, trigger } = methods;
   try {
     setLoading(true);
-    if (files && files.length > 0) {
-      const image = files[0];
-      const resizedImage = await imageCompression(image, compressionOptions);
-      if (resizedImage) {
-        const formData = new FormData();
-        formData.append('image', resizedImage, `${Date.now()}.jpg`);
-        const link: any = await handlePostImage(formData);
-        const res: string[] = images ? [...images, link] : [link];
-        setValue('images', res);
-      }
-      await trigger(['images']);
+    const resizedImage = await handleImageResize(file);
+    if (resizedImage) {
+      const formData = new FormData();
+      const fileName = `${Date.now()}_${resizedImage.name.replace(/ /g, '_')}`;
+      formData.append('image', resizedImage, fileName);
+      const isVds = Boolean(process.env.NEXT_PUBLIC_IS_VDS);
+      const link: string = await handlePostImage(formData);
+      const res: string[] = images ? [...images, link] : [link];
+      setValue('images', res);
     }
+    await trigger(['images']);
   } catch (e) {
     console.log('e', e);
   } finally {

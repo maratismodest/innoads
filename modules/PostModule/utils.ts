@@ -11,19 +11,25 @@ const compressionOptions = {
   useWebWorker: true,
 };
 
-const handleImageResize = async (imageFile: File) => {
-  return await imageCompression(imageFile, compressionOptions);
-};
+const handleImageResize = async (imageFile: File) =>
+  await imageCompression(imageFile, compressionOptions);
+
+const localUploadApi = '/api/uploads';
+const externalUploadApi = `${process.env.NEXT_PUBLIC_API_URL}/uploads`;
 
 const handlePostImage = async (formData: FormData) => {
+  const isVds = Boolean(process.env.NEXT_PUBLIC_IS_VDS);
+  console.log('isVds', isVds);
   try {
-    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/uploads`, formData, {
+    const { data } = await axios.post(isVds ? localUploadApi : externalUploadApi, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         // secret: `${process.env.REACT_APP_SECRET}`,
       },
     });
-    return data.link;
+    if (data.hasOwnProperty('link')) {
+      return data.link;
+    }
   } catch (e) {
     console.log(e);
   }

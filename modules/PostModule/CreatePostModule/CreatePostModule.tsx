@@ -180,9 +180,10 @@ export default function CreatePostModule({
 
         <ImagesModuleInput
           images={images}
-          imageHandler={files => imageHandler(files, images, methods, setLoading)}
+          imageHandler={file => imageHandler(file, images, methods, setLoading)}
           methods={methods}
         />
+
         <ImagesModulePreview images={images} setImages={images => setValue('images', images)} />
 
         <div>

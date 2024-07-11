@@ -9,7 +9,7 @@ export default function Home() {
     event.preventDefault();
     if (file) {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('image', file);
 
       const response = await fetch('/api/uploads', {
         method: 'POST',

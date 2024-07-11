@@ -1,4 +1,5 @@
 import useToast from '@/hooks/useToast';
+import { imagesCount, tooManyImages } from './ImagesModule.constans';
 import { ACCEPTED_IMAGE_FORMAT } from '@/modules/PostModule/utils';
 import { NO_IMAGE } from '@/utils/constants';
 import clsx from 'clsx';
@@ -6,16 +7,13 @@ import Image from 'next/image';
 import React, { useRef } from 'react';
 import { Methods } from './utils';
 
-const imagesCount = 4;
-const tooManyImages = `Не более ${imagesCount} фото!`;
-
-interface AddImageInputProps {
+type Props = {
   images: string[];
-  imageHandler: (files: FileList | null) => void;
+  imageHandler: (file: File) => Promise<void>;
   methods: Methods;
-}
+};
 
-const ImagesModuleInput = ({ images, imageHandler, methods }: AddImageInputProps) => {
+const ImagesModuleInput = ({ images, imageHandler, methods }: Props) => {
   const { toast } = useToast();
   const ref = useRef<HTMLInputElement>(null);
   const { register, formState, setValue } = methods;
@@ -37,7 +35,11 @@ const ImagesModuleInput = ({ images, imageHandler, methods }: AddImageInputProps
         type="file"
         {...register('images')}
         name="images"
-        onChange={async event => await imageHandler(event.target.files)}
+        onChange={async event => {
+          if (event.target.files?.length) {
+            await imageHandler(event.target.files[0]);
+          }
+        }}
         hidden
         ref={ref}
         multiple={false}
