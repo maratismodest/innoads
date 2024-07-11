@@ -18,7 +18,7 @@ const localUploadApi = '/api/uploads';
 const externalUploadApi = `${process.env.NEXT_PUBLIC_API_URL}/uploads`;
 
 const handlePostImage = async (formData: FormData) => {
-  const isVds = Boolean(process.env.NEXT_PUBLIC_IS_VDS);
+  const isVds = false;
   console.log('isVds', isVds);
   try {
     const { data } = await axios.post(isVds ? localUploadApi : externalUploadApi, formData, {

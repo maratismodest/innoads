@@ -25,7 +25,6 @@ const imageHandler = async (
       const formData = new FormData();
       const fileName = `${Date.now()}_${resizedImage.name.replace(/ /g, '_')}`;
       formData.append('image', resizedImage, fileName);
-      const isVds = Boolean(process.env.NEXT_PUBLIC_IS_VDS);
       const link: string = await handlePostImage(formData);
       const res: string[] = images ? [...images, link] : [link];
       setValue('images', res);
