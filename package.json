@@ -12,7 +12,8 @@
     "prisma-seed": "tsx prisma/seeds.ts",
     "postinstall": "prisma generate",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "patch-version": "npm version patch"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
