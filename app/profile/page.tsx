@@ -1,21 +1,21 @@
 'use client';
 
-import Posts from '@/components/Posts';
-import Spinner from '@/components/ui/Spinner';
-import usePostsQuery from '@/hooks/query/usePostsQuery';
-import useAuth from '@/hooks/useAuth';
-import Archived from '@/pages-lib/profile/Archived/Archived';
-import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
-import { stateAtom } from '@/state';
-import buttonStyles from '@/styles/buttonStyles';
-import { routes } from '@/utils/constants';
-import { setTheme } from '@/utils/setTheme';
-import { Post } from '@prisma/client';
+import { useMemo } from 'react';
 import { clsx } from 'clsx';
 import { useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import React, { useMemo } from 'react';
+import type { Post } from '@prisma/client';
+import usePostsQuery from '@/hooks/query/usePostsQuery';
+import useAuth from '@/hooks/useAuth';
+import Posts from '@/components/Posts';
+import Spinner from '@/components/ui/Spinner';
+import { stateAtom } from '@/state';
+import Archived from '@/pages-lib/profile/Archived/Archived';
+import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
+import buttonStyles from '@/styles/buttonStyles';
+import { routes } from '@/utils/constants';
+import { setTheme } from '@/utils/setTheme';
 
 export default function ProfilePage<NextPage>() {
   const t = useTranslations();
@@ -36,6 +36,7 @@ export default function ProfilePage<NextPage>() {
     localStorage.setItem('theme', theme);
     setTheme();
   };
+
   if (loading) {
     return <Spinner />;
   }

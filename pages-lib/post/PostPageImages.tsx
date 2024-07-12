@@ -1,18 +1,21 @@
 'use client';
 import ImageInView from '@/components/ImageInView';
+import ItemLike from '@/components/Item/ItemLike';
 import { NO_IMAGE } from '@/utils/constants';
 import { Dialog, DialogPanel } from '@headlessui/react';
+import { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Image from 'next/image';
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import LeftRightButtons from './LeftRightButtons';
 import { postButtonStyles } from './utils';
 
 type Props = {
-  images: string[];
+  post: Post;
 };
 
-export default function PostPageImages<NextPage>({ images }: Props) {
+export default function PostPageImages<NextPage>({ post }: Props) {
+  const images = useMemo(() => post.images.split('||'), [post]);
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState(0);
 
@@ -77,6 +80,7 @@ export default function PostPageImages<NextPage>({ images }: Props) {
             </li>
           ))}
         </ul>
+        <ItemLike post={post} className="absolute right-2 top-2" />
         <LeftRightButtons
           key="preview"
           current={current}

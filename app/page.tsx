@@ -4,7 +4,6 @@ import HomePageCategories from '@/pages-lib/homepage';
 import fetchPosts from '@/utils/api/prisma/fetchAds';
 import { getMainPageJsonLd } from '@/utils/jsonLd';
 import { getTranslations } from 'next-intl/server';
-import React from 'react';
 
 export const revalidate = 3600;
 

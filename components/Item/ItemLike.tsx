@@ -2,14 +2,17 @@ import RedHeart from '@/public/svg/heart-red.svg';
 import TransparentHeart from '@/public/svg/heart.svg';
 import favouritesAtom from '@/state';
 import { Post } from '@prisma/client';
+import clsx from 'clsx';
 import { useAtom } from 'jotai';
-import React, { useCallback } from 'react';
+import { useTranslations } from 'next-intl';
+import React, { ComponentPropsWithoutRef, useCallback } from 'react';
 
-type Props = {
+type Props = ComponentPropsWithoutRef<'button'> & {
   post: Post;
 };
 
-const ItemLike = ({ post }: Props) => {
+const ItemLike = ({ post, className }: Props) => {
+  const t = useTranslations();
   const [favourites, setFavourites] = useAtom(favouritesAtom);
   const liked = Boolean(favourites.find(x => x.id === post.id));
 
@@ -23,9 +26,9 @@ const ItemLike = ({ post }: Props) => {
   );
   return (
     <button
-      className="absolute right-0 top-0 z-10 cursor-pointer"
+      className={clsx('z-10 cursor-pointer', className)}
+      aria-label={t('Добавить в избранное')}
       onClick={handleFavourite}
-      aria-label="Добавить в избранное"
     >
       {liked ? <RedHeart /> : <TransparentHeart />}
     </button>

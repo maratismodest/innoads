@@ -1,8 +1,13 @@
-import PostPageImages from '@/pages-lib/post/PostPageImages';
+import { Metadata } from 'next';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import clsx from 'clsx';
+import dayjs from 'dayjs';
+import Posts from '@/components/Posts';
 import Price from '@/components/Price';
+import PostPageImages from '@/pages-lib/post/PostPageImages';
 import ShareButton from '@/pages-lib/post/ShareButton';
 import { getAllCategories } from '@/prisma/services/categories';
-import buttonStyles from '@/styles/buttonStyles';
 import type { GetSlugPath } from '@/types';
 import fetchAd from '@/utils/api/prisma/fetchAd';
 import fetchAds from '@/utils/api/prisma/fetchAds';
@@ -10,11 +15,7 @@ import { routes, tgLink } from '@/utils/constants';
 import { getPostJsonLd } from '@/utils/jsonLd';
 import mapCategories from '@/utils/mapCategories';
 import { seoDescriptionLength, seoTitleLength, substringByLettersCount } from '@/utils/seo';
-import clsx from 'clsx';
-import dayjs from 'dayjs';
-import { Metadata } from 'next';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import buttonStyles from '@/styles/buttonStyles';
 
 interface AdPageProps {
   params: {
@@ -63,7 +64,7 @@ export async function generateMetadata({
       url: `${process.env.NEXT_PUBLIC_APP_URL}/post/${slug}`,
       siteName: process.env.NEXT_PUBLIC_APP_NAME,
       images: preview,
-      locale: 'ru',
+      locale: process.env.NEXT_PUBLIC_LANGUAGE,
     },
   };
 }
@@ -85,6 +86,8 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
     return notFound();
   }
 
+  const related = await fetchAds({ search: post.title.split(' ')[0] });
+
   const { categoryId, title, body, preview, user, price, createdAt, userId, published, images } =
     post;
   return (
@@ -95,7 +98,7 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
       />
       {/*<div className="relative mx-auto w-full max-w-[400px]">*/}
       <div className="relative mx-auto grid max-w-[400px] grid-cols-1">
-        <PostPageImages images={images.split('||')} />
+        <PostPageImages post={post} />
         <Link
           href={{
             pathname: routes.search,
@@ -121,6 +124,15 @@ export default async function Post<NextPage>({ params: { slug } }: GetSlugPath) 
         </Link>
         <ShareButton post={post} className="mt-4" />
         {!published && <span className="text-yellow">Это объявление снято с публикации</span>}
+        {related.length > 1 && (
+          <div className="mt-8">
+            <h3>Похожие объявления</h3>
+            <Posts
+              posts={related.filter(item => item.id !== post.id).slice(0, 6)}
+              className="grid-cols-2"
+            />
+          </div>
+        )}
       </div>
     </>
   );

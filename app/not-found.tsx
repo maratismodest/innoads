@@ -1,7 +1,19 @@
-import buttonStyles from '@/styles/buttonStyles';
-import { routes } from '@/utils/constants';
 import Image from 'next/image';
 import Link from 'next/link';
+import { routes } from '@/utils/constants';
+import buttonStyles from '@/styles/buttonStyles';
+
+const metaTitle = 'Ошибка 404. Страница не найдена';
+export async function generateMetadata() {
+  return {
+    title: metaTitle,
+    openGraph: {
+      title: metaTitle,
+      siteName: process.env.NEXT_PUBLIC_APP_NAME,
+      locale: process.env.NEXT_PUBLIC_LANGUAGE,
+    },
+  };
+}
 
 export default function NotFoundPage() {
   return (

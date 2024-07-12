@@ -11,7 +11,7 @@ import { routes } from '@/utils/constants';
 import { yupResolver } from '@hookform/resolvers/yup';
 import clsx from 'clsx';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 
 const SearchPage = () => {

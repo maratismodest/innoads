@@ -78,7 +78,7 @@ export default function Item({ post, edit = false }: ItemProps) {
       <div className="relative mx-3 my-1 overflow-hidden whitespace-nowrap font-bold lg:mx-4 lg:my-2">
         <Price price={price} />
         <h2 className="mt-auto truncate font-normal">{title}</h2>
-        <ItemLike post={post} />
+        <ItemLike post={post} className="absolute right-0 top-0" />
       </div>
       {user && (user.role === Role.ADMIN || user.id === post.userId) && edit && (
         <>
