@@ -9,7 +9,7 @@ export default function Footer() {
       {/*<a className={clsx(buttonStyles({ variant: 'secondary' }), 'w-full')} href="#">*/}
       {/*  Наверх*/}
       {/*</a>*/}
-      <div className="mx-auto max-w-[1100px] gap-2">
+      <div className="mx-auto max-w-[1100px] gap-4">
         <ul>
           <li className="hover:underline">
             <Link href={routes.blog + '/rules'}>Правила InnoAds</Link>
