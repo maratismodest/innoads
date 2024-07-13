@@ -11,6 +11,12 @@ const buttons = [
   //   icon: <>&#10008;</>,
   // },
   {
+    title: 'Опубликать заново',
+    classNames: [buttonStyles(), 'absolute z-10', 'left-0 top-0'],
+    text: ItemModalText.republish,
+    icon: <>Tg</>,
+  },
+  {
     title: 'Снять с публикации',
     classNames: [buttonStyles(), 'absolute z-10', 'right-0 top-0'],
     text: ItemModalText.archive,
@@ -28,7 +34,7 @@ const ItemButtons = ({ showModal }: ItemButtonsProps) => {
       {buttons.map(({ title, text, icon, classNames }) => (
         <button
           key={title}
-          title="Снять с публикации"
+          title={title}
           className={clsx(classNames)}
           onClick={event => {
             event.preventDefault();

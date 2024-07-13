@@ -3,10 +3,13 @@ import ItemButtons from '@/components/Item/item-buttons';
 import ItemLike from '@/components/Item/ItemLike';
 import Price from '@/components/Price';
 import Popup from '@/components/ui/Popup';
+import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
+import postTelegram from '@/utils/api/telegram/postTelegram';
 import { NO_IMAGE } from '@/utils/constants';
-import { Post, Role } from '@prisma/client';
+import { Post, Role, User } from '@prisma/client';
+import dayjs from 'dayjs';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -23,6 +26,7 @@ export default function Item({ post, edit = false }: ItemProps) {
   const router = useRouter();
   const { user } = useAuth();
   const { toast } = useToast();
+  const { categories } = useApp();
   const [isOpen, setIsOpen] = useState(false);
   const [modalText, setModalText] = useState<ItemModalText | undefined>();
   const { title, preview, price } = post;
@@ -38,6 +42,30 @@ export default function Item({ post, edit = false }: ItemProps) {
     try {
       if (modalText === ItemModalText.edit) {
         await handleEdit(post, router);
+        return;
+      }
+      if (modalText === ItemModalText.republish) {
+        if (user) {
+          const compareDates = async (postDate: Date) => {
+            const today = new Date().getDate();
+            const current = postDate.getDate();
+            if (today < current) {
+              console.log(`${today} is less than ${current}`);
+              alert('Вы можете подавать объявление повторно позже');
+              return;
+            } else if (today > current) {
+              console.log(`${today} is greater than ${current}`);
+              await postTelegram(post, user, categories);
+              alert('Объявление подано в канал повторно!');
+              return;
+            } else {
+              console.log('Both dates are equal');
+              alert('Вы можете подавать объявление завтра');
+              return;
+            }
+          };
+          await compareDates(dayjs(post.updatedAt).add(1, 'day').toDate());
+        }
         return;
       }
       if (modalText === ItemModalText.archive) {

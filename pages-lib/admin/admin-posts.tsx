@@ -35,7 +35,14 @@ const AdminPosts = ({ posts }: Props) => {
         </Checkbox>
         <Label>{t('показать только активные')}</Label>
       </Field>
-      <Posts posts={enabled ? posts.filter(x => x.published === true) : posts} edit={true} />
+      <Posts
+        posts={
+          enabled
+            ? posts.filter(x => x.published === true && x.categoryId === 1 && x.id < 1000)
+            : posts
+        }
+        edit={true}
+      />
     </>
   );
 };

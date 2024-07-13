@@ -17,6 +17,7 @@ const errors = {
 enum ItemModalText {
   edit = 'Редактировать объявление?',
   archive = 'Объявление не актуально?',
+  republish = 'Опубликовать заново?',
 }
 
 const handleArchive = async (post: Post, toast: (message: string) => void) => {
