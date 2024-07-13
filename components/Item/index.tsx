@@ -6,15 +6,17 @@ import Popup from '@/components/ui/Popup';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
+import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import postTelegram from '@/utils/api/telegram/postTelegram';
 import { NO_IMAGE } from '@/utils/constants';
-import { Post, Role, User } from '@prisma/client';
-import dayjs from 'dayjs';
+import { Post, Role } from '@prisma/client';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
-import { handleArchive, handleEdit, ItemModalText } from './utils';
+import { checkIsOld, handleArchive, handleEdit, ItemModalText } from './utils';
+
+const DAYS = 1;
 
 type ItemProps = {
   post: Post;
@@ -46,25 +48,16 @@ export default function Item({ post, edit = false }: ItemProps) {
       }
       if (modalText === ItemModalText.republish) {
         if (user) {
-          const compareDates = async (postDate: Date) => {
-            const today = new Date().getDate();
-            const current = postDate.getDate();
-            if (today < current) {
-              console.log(`${today} is less than ${current}`);
-              alert('Вы можете подавать объявление повторно позже');
-              return;
-            } else if (today > current) {
-              console.log(`${today} is greater than ${current}`);
-              await postTelegram(post, user, categories);
-              alert('Объявление подано в канал повторно!');
-              return;
-            } else {
-              console.log('Both dates are equal');
-              alert('Вы можете подавать объявление завтра');
-              return;
-            }
-          };
-          await compareDates(dayjs(post.updatedAt).add(1, 'day').toDate());
+          const isOldEnough = checkIsOld(post.updatedAt, DAYS);
+          if (isOldEnough) {
+            await updatePostPrisma({ ...post, updatedAt: new Date() });
+            await postTelegram(post, user, categories);
+            alert('Объявление подано в канал повторно!');
+          } else {
+            alert(`Объявление подано меньше чем ${DAYS} день назад!`);
+          }
+        } else {
+          alert('Кажется, вы не авторизованы!');
         }
         return;
       }

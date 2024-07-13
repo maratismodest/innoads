@@ -36,6 +36,7 @@ export interface EditPostDTO {
   readonly slug: string;
   categoryId: number;
   published?: boolean;
+  updatedAt?: Date;
 }
 
 export type UserWithBans = Prisma.UserGetPayload<{

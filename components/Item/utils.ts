@@ -3,6 +3,7 @@ import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import commentPost from '@/utils/api/telegram/commentPost';
 import { routes } from '@/utils/constants';
 import { Post } from '@prisma/client';
+import dayjs from 'dayjs';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 const success = {
@@ -48,4 +49,10 @@ const handleEdit = async (post: Post, router: AppRouterInstance) => {
   }
 };
 
-export { success, errors, ItemModalText, handleArchive, handleEdit };
+const checkIsOld = (updatedAt: Date, days = 0) => {
+  const today = new Date().getTime();
+  const current = dayjs(updatedAt).add(days, 'day').toDate().getTime();
+  return today > current;
+};
+
+export { success, errors, ItemModalText, handleArchive, handleEdit, checkIsOld };

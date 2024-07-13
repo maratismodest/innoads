@@ -1,13 +1,26 @@
+import { routes, tgLink } from '@/utils/constants';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 import React from 'react';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray p-2">
+    <footer className="сontainer bg-gray p-4">
       {/*<a className={clsx(buttonStyles({ variant: 'secondary' }), 'w-full')} href="#">*/}
       {/*  Наверх*/}
       {/*</a>*/}
-      <p className="text-center">&copy;{dayjs().get('year')} InnoAds.ru</p>
+      <div className="mx-auto max-w-[1100px] gap-2">
+        <ul>
+          <li className="hover:underline">
+            <Link href={routes.blog + '/rules'}>Правила InnoAds</Link>
+          </li>
+          <li className="hover:underline">
+            <Link href={tgLink + '/innoads'}>Канал InnoAds</Link>
+          </li>
+        </ul>
+        <hr className="border-white" />
+        <p>&copy;{dayjs().get('year')} InnoAds.ru</p>
+      </div>
     </footer>
   );
 }
