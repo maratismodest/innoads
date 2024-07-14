@@ -73,6 +73,8 @@
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "prisma": "^5.16.2",
+    "quill": "^2.0.2",
+    "react-quill": "^2.0.0",
     "storybook": "^8.1.10",
     "stylelint": "^16.7.0",
     "stylelint-config-standard": "^36.0.1",
