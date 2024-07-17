@@ -1,24 +1,39 @@
 import Link from 'next/link';
-import { Fragment } from 'react';
+import React from 'react';
 
-const separator = <span>&nbsp;&#124;&nbsp;</span>;
 export type Breadcrumb = { value: string; label: string };
 
 interface BreadcrumbsProps {
   breadcrumbs: Breadcrumb[];
+  separator?: React.ReactNode;
 }
 
-export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
+const defaultSeparator = <span aria-hidden="true">&#124;</span>;
+
+export default function Breadcrumbs({
+  breadcrumbs,
+  separator = defaultSeparator,
+}: BreadcrumbsProps) {
   return (
-    <ul className="flex truncate">
-      {breadcrumbs.map(({ value, label }, index) => (
-        <Fragment key={value}>
-          {index > 0 && separator}
-          <li className="hover:underline">
-            <Link href={value}>{label}</Link>
-          </li>
-        </Fragment>
-      ))}
-    </ul>
+    <nav aria-label="Breadcrumb">
+      <ol className="flex flex-wrap items-center gap-2">
+        {breadcrumbs.map(({ value, label }, index) => {
+          return (
+            <li key={value} className="flex items-center gap-2">
+              {index > 0 && separator}
+              {index === breadcrumbs.length - 1 ? (
+                <span className="font-semibold" aria-current="page">
+                  {label}
+                </span>
+              ) : (
+                <Link href={value} className="hover:underline" aria-disabled={true}>
+                  {label}
+                </Link>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
   );
 }
