@@ -2,7 +2,7 @@ import fetchPosts from '@/utils/api/prisma/fetchAds';
 import cleanObject from '@/utils/cleanObject';
 import { NextResponse } from 'next/server';
 
-export async function GET(req: Request, res: NextResponse) {
+export async function GET(req: Request) {
   const url = new URL(req.url);
   const searchParams = new URLSearchParams(url.searchParams);
   const size = Number(searchParams.get('size'));

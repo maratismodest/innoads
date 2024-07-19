@@ -90,7 +90,7 @@
     "typescript": "^5.5.3"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix",
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix",
     "*.css": "stylelint --fix",
     "*.{js,css,md}": "prettier --write"
   }

@@ -9,6 +9,7 @@ export const beRoutes = {
   categories: '/categories',
   bans: '/bans',
   posts: '/posts',
+  messages: '/messages',
 } as const;
 
 // https://chamala.tatar - теперь только для crud images
