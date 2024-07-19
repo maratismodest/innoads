@@ -13,7 +13,8 @@
     "postinstall": "prisma generate",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "patch-version": "npm version patch"
+    "patch-version": "npm version patch",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
@@ -68,8 +69,10 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsdoc": "^48.2.15",
     "eslint-plugin-storybook": "^0.8.0",
+    "husky": "^9.1.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
+    "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "prisma": "^5.16.2",
@@ -85,5 +88,10 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.css": "stylelint --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }
