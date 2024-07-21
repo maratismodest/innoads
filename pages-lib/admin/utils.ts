@@ -6,7 +6,6 @@ import deleteTelegramPost from '@/utils/api/telegram/deleteTelegramPost';
 import type { Post } from '@prisma/client';
 
 export const handleDeleteAllArchived = async (posts: Post[]) => {
-  console.log('handleDeleteAllArchived');
   try {
     const _delete = posts.filter(x => !x.published);
     const messages = await fetchMessages();

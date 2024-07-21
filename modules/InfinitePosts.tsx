@@ -25,9 +25,6 @@ export default function InfinitePosts({
   const [posts, setPosts] = useState<Post[]>(initPosts);
   const [options, setOptions] = useState<InitOptions>(initOptions);
 
-  console.log('options', options);
-  // const [page, setPage] = useState<number>(initPage);
-
   const [hasMore, setHasMore] = useState(true);
   const [fetching, setFetching] = useState(false);
 
@@ -44,7 +41,6 @@ export default function InfinitePosts({
       setOptions(prev => ({ ...prev, page: prev.page + 1 }));
       // setHasMore(page + 1 < totalPages);
       setHasMore(content.length > 0);
-      console.log('page', options.page);
     } catch (e) {
       console.log(e);
     } finally {

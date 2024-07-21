@@ -44,7 +44,6 @@ export default async function postTelegram(
       { media },
       { params: { chat_id: process.env.NEXT_PUBLIC_CHAT_NAME } }
     );
-    console.log('data', data);
     return data;
   } catch (e) {
     console.log(e);

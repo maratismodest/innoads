@@ -74,11 +74,7 @@ export default function EditPostModule({
         images: images.join('||'),
         published: item.published,
       };
-      // await postTelegramNew(editPostDto, user, categories);
-      // if (data.post) {
-      const post = await updatePostPrisma(editPostDto);
-      console.log('post', post);
-      // }
+      await updatePostPrisma(editPostDto);
       reset();
       toast('Объявление изменено!');
       await onSubmitOptional();

@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import type { Post } from '@prisma/client';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
-import useAuth from '@/hooks/useAuth';
+
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
 import { stateAtom } from '@/state';
@@ -17,6 +17,8 @@ import buttonStyles from '@/styles/buttonStyles';
 import { routes } from '@/utils/constants';
 import { setTheme } from '@/utils/setTheme';
 
+import useAuth from '@/hooks/useAuth';
+import LogoutSvg from '@/public/svg/out.svg';
 export default function ProfilePage<NextPage>() {
   const t = useTranslations();
   const { user, logout, loading } = useAuth();
@@ -70,7 +72,6 @@ export default function ProfilePage<NextPage>() {
         <button
           className={clsx(buttonStyles(), 'sr-only')}
           onClick={() => {
-            console.log('refetch posts');
             postsRefetch();
           }}
           id="refetch-posts"
@@ -96,9 +97,12 @@ export default function ProfilePage<NextPage>() {
               dark
             </button>
           </div>
-          <button className={clsx(buttonStyles(), 'mx-auto !block')} onClick={logout}>
-            Выход
-          </button>
+          <div className="flex justify-center">
+            <button className={clsx(buttonStyles({ size: 'medium' }))} onClick={logout}>
+              <LogoutSvg className="size-4" />
+              <span>Выход</span>
+            </button>
+          </div>
         </div>
       )}
     </div>

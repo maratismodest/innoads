@@ -37,7 +37,6 @@ const quillFormats = [
 
 export default function Home() {
   const [content, setContent] = useState('');
-  console.log('content', content);
   const ref = React.useRef<HTMLDivElement>(null);
 
   const handleEditorChange = (newContent: string) => {
@@ -70,7 +69,6 @@ export default function Home() {
         <button
           className={buttonStyles()}
           onClick={() => {
-            console.log('content', content);
             if (ref && ref.current) {
               setContent(ref.current.innerText);
             }

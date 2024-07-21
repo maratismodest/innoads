@@ -7,7 +7,6 @@ import { TelegramUser } from 'telegram-login-button';
 const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
 
 export default async function loginTelegram(user: TelegramUser | User) {
-  console.log('USER', user);
   try {
     const { id, username } = user;
     const upsertUser = await prisma.user.upsert({

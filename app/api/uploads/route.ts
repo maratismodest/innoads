@@ -20,8 +20,6 @@ export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const file = formData.get('image');
 
-  console.log('file', file);
-
   if (!file) {
     return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
   }

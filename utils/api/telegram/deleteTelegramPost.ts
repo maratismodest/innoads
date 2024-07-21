@@ -8,7 +8,6 @@ export default async function deleteTelegramPost(messageId: number) {
       chat_id: process.env.NEXT_PUBLIC_CHAT_NAME,
       message_id: messageId,
     });
-    console.log('data', data);
     return data;
   } catch (e) {
     console.log('e', e);

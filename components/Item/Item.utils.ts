@@ -24,8 +24,7 @@ enum ItemModalText {
 
 const handleArchive = async (post: Post, toast: (message: string) => void) => {
   try {
-    const unpublished = await updatePostPrisma({ ...post, published: false });
-    console.log('unpublished', unpublished);
+    await updatePostPrisma({ ...post, published: false });
     const message = await fetchMessage(post.id);
     if (message) {
       const comment = await commentPost(message.id);

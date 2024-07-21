@@ -98,8 +98,6 @@ export default function AuthProvider({ children }: Props) {
   }, []);
   const [telegram, setTelegram] = useAtom(stateAtom);
 
-  console.log('user', user);
-
   // @ts-ignore
   useEffect(() => {
     console.log('token', token);

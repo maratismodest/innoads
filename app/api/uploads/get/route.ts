@@ -1,4 +1,3 @@
-// app/api/images/[filename]/route.js
 import fs from 'fs/promises';
 import { NextResponse } from 'next/server';
 import path from 'path';
@@ -10,7 +9,6 @@ export async function GET(request: Request) {
 
   if (filename) {
     const res = filename?.split('/');
-    console.log('res', res[0]);
     const filePath = path.join(process.cwd(), 'public', 'uploads', res[res.length - 1]);
 
     try {

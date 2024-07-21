@@ -17,7 +17,6 @@ export default function HomePageCategories() {
     <CustomSelect
       options={categories}
       onChange={(category: any) => {
-        console.log('category', category);
         setCategory(category);
         handleSelect(category);
       }}
