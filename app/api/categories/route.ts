@@ -12,7 +12,7 @@ import { NextResponse } from 'next/server';
  *         content: {
  *               "application/json": {
  *                 schema: {
- *                   type: "array",
+ *                   type: "object",
  *                   items: {
  *                     $ref: "#/components/schemas/Category",
  *                   }

@@ -8,7 +8,7 @@ import { NextResponse } from 'next/server';
  *     description: Returns articles list
  *     responses:
  *       200:
- *         description: []
+ *         description: Success
  *         content: {
  *               "application/json": {
  *                 schema: {
@@ -22,7 +22,6 @@ import { NextResponse } from 'next/server';
  *
  *
  */
-
 export async function GET() {
   const res = await getAllArticles();
   return NextResponse.json(res);

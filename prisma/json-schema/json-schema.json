@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "schemas": {
+  "definitions": {
     "Post": {
       "type": "object",
       "properties": {
@@ -8,7 +8,7 @@
           "type": "integer"
         },
         "category": {
-          "$ref": "#/schemas/Category"
+          "$ref": "#/definitions/Category"
         },
         "price": {
           "type": "integer"
@@ -41,12 +41,12 @@
           "default": false
         },
         "user": {
-          "$ref": "#/schemas/User"
+          "$ref": "#/definitions/User"
         },
         "messages": {
           "type": "array",
           "items": {
-            "$ref": "#/schemas/Message"
+            "$ref": "#/definitions/Message"
           }
         }
       }
@@ -58,7 +58,7 @@
           "type": "integer"
         },
         "post": {
-          "$ref": "#/schemas/Post"
+          "$ref": "#/definitions/Post"
         }
       }
     },
@@ -74,7 +74,7 @@
         "posts": {
           "type": "array",
           "items": {
-            "$ref": "#/schemas/Post"
+            "$ref": "#/definitions/Post"
           }
         },
         "createdAt": {
@@ -88,7 +88,7 @@
         "bans": {
           "type": "array",
           "items": {
-            "$ref": "#/schemas/Ban"
+            "$ref": "#/definitions/Ban"
           }
         },
         "role": {
@@ -108,7 +108,7 @@
           "type": "integer"
         },
         "user": {
-          "$ref": "#/schemas/User"
+          "$ref": "#/definitions/User"
         },
         "reason": {
           "type": [
@@ -170,7 +170,7 @@
         "posts": {
           "type": "array",
           "items": {
-            "$ref": "#/schemas/Post"
+            "$ref": "#/definitions/Post"
           }
         }
       }
@@ -198,25 +198,25 @@
   "type": "object",
   "properties": {
     "post": {
-      "$ref": "#/schemas/Post"
+      "$ref": "#/definitions/Post"
     },
     "message": {
-      "$ref": "#/schemas/Message"
+      "$ref": "#/definitions/Message"
     },
     "user": {
-      "$ref": "#/schemas/User"
+      "$ref": "#/definitions/User"
     },
     "ban": {
-      "$ref": "#/schemas/Ban"
+      "$ref": "#/definitions/Ban"
     },
     "article": {
-      "$ref": "#/schemas/Article"
+      "$ref": "#/definitions/Article"
     },
     "category": {
-      "$ref": "#/schemas/Category"
+      "$ref": "#/definitions/Category"
     },
     "log": {
-      "$ref": "#/schemas/Log"
+      "$ref": "#/definitions/Log"
     }
   }
 }
