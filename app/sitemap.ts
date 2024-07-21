@@ -1,10 +1,11 @@
 // app/sitemap.js
+import dayjs from 'dayjs';
+
 import prisma from '@/lib/prisma';
 // import fetchAds from '@/utils/api/backend/fetchAds';
 // import fetchArticles from '@/utils/api/prisma/fetchArticles';
 import { routes } from '@/utils/constants';
 import { dateFormat } from '@/utils/date';
-import dayjs from 'dayjs';
 
 const URL = process.env.NEXT_PUBLIC_APP_URL;
 

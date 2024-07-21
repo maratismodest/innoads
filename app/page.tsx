@@ -1,9 +1,10 @@
+import { getTranslations } from 'next-intl/server';
+
 import InfinitePosts, { InitOptions } from '@/modules/InfinitePosts';
-import SearchModule from '@/modules/SearchModule/SearchModule';
+import SearchModule from '@/modules/SearchModule';
 import HomePageCategories from '@/pages-lib/homepage';
 import fetchPosts from '@/utils/api/prisma/fetchAds';
 import { getMainPageJsonLd } from '@/utils/jsonLd';
-import { getTranslations } from 'next-intl/server';
 
 export const revalidate = 3600;
 

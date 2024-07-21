@@ -1,24 +1,24 @@
 'use client';
 
-import { useMemo } from 'react';
+import type { Post } from '@prisma/client';
 import { clsx } from 'clsx';
 import { useAtomValue } from 'jotai';
-import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import type { Post } from '@prisma/client';
-import usePostsQuery from '@/hooks/query/usePostsQuery';
+import { useTranslations } from 'next-intl';
+import { useMemo } from 'react';
 
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
-import { stateAtom } from '@/state';
+import usePostsQuery from '@/hooks/query/usePostsQuery';
+import useAuth from '@/hooks/useAuth';
 import Archived from '@/pages-lib/profile/Archived/Archived';
 import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
+import LogoutSvg from '@/public/svg/out.svg';
+import { stateAtom } from '@/state';
 import buttonStyles from '@/styles/buttonStyles';
 import { routes } from '@/utils/constants';
 import { setTheme } from '@/utils/setTheme';
 
-import useAuth from '@/hooks/useAuth';
-import LogoutSvg from '@/public/svg/out.svg';
 export default function ProfilePage<NextPage>() {
   const t = useTranslations();
   const { user, logout, loading } = useAuth();

@@ -1,8 +1,10 @@
 'use client';
+import React, { ComponentPropsWithoutRef, useCallback, useState } from 'react';
+
 import Dropdown from '@/components/Dropdown';
 import useOnClickOutsideRef from '@/hooks/useOnClickOutsideRef';
 import buttonStyles from '@/styles/buttonStyles';
-import React, { ComponentPropsWithoutRef, useCallback, useState } from 'react';
+
 import HeaderDesktopButtons from './HeaderDesktopButtons';
 
 const HeaderTabletButtons = ({ className }: ComponentPropsWithoutRef<'div'>) => {

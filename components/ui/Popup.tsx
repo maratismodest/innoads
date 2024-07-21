@@ -1,6 +1,7 @@
-import buttonStyles from '@/styles/buttonStyles';
-import { DialogPanel, DialogTitle, Dialog } from '@headlessui/react';
+import { Dialog,DialogPanel, DialogTitle } from '@headlessui/react';
 import React from 'react';
+
+import buttonStyles from '@/styles/buttonStyles';
 
 interface PopupProps {
   isOpen: boolean;

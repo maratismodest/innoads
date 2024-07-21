@@ -1,14 +1,15 @@
+import dayjs from 'dayjs';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
+import React from 'react';
+
 import Breadcrumbs, { Breadcrumb } from '@/components/Breadcrumbs';
 import { getAllArticles, getArticleBySlug } from '@/prisma/services/articles';
 import type { GetSlugPath } from '@/types';
 import { routes } from '@/utils/constants';
 import { dateFormat } from '@/utils/date';
 import { getBlogPostJsonLd } from '@/utils/jsonLd';
-import dayjs from 'dayjs';
-import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
-import { notFound } from 'next/navigation';
-import React from 'react';
 
 export async function generateStaticParams() {
   const articles = await getAllArticles();

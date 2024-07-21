@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "generate-types": "npx swagger-typescript-api -p ./types/swagger.yaml -o ./types -n index.ts",

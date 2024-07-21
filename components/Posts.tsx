@@ -1,11 +1,12 @@
-import Item from '@/components/Item';
-import Spinner from '@/components/ui/Spinner';
-import { routes } from '@/utils/constants';
-import { messages } from '@/utils/messages';
 import { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Link from 'next/link';
 import React, { ComponentPropsWithoutRef } from 'react';
+
+import Item from '@/components/Item';
+import Spinner from '@/components/ui/Spinner';
+import { routes } from '@/utils/constants';
+import { messages } from '@/utils/messages';
 
 interface PostsInterface extends ComponentPropsWithoutRef<'ul'> {
   posts?: Post[];

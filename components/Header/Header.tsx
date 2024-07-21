@@ -1,10 +1,12 @@
-import { routes } from '@/utils/constants';
 import clsx from 'clsx';
 import Link from 'next/link';
 import React from 'react';
+
+import { routes } from '@/utils/constants';
+
 import HeaderDesktopButtons from './HeaderDesktopButtons';
-import HeaderTabletButtons from './HeaderTabletButtons';
 import HeaderMobileButtons from './HeaderMobileButtons';
+import HeaderTabletButtons from './HeaderTabletButtons';
 
 export default function Header() {
   // const matches = useMediaQuery('(min-width: 768px)');

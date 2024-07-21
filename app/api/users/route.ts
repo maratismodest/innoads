@@ -1,5 +1,6 @@
-import { getAllUsers } from '@/prisma/services/users';
 import { NextResponse } from 'next/server';
+
+import { getAllUsers } from '@/prisma/services/users';
 
 /**
  * @swagger

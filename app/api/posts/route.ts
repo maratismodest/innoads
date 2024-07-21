@@ -1,6 +1,7 @@
+import { NextResponse } from 'next/server';
+
 import fetchPosts from '@/utils/api/prisma/fetchAds';
 import cleanObject from '@/utils/cleanObject';
-import { NextResponse } from 'next/server';
 
 /**
  * @swagger

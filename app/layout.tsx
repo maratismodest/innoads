@@ -1,3 +1,14 @@
+import './globals.css';
+
+import dayjs from 'dayjs';
+import { Provider as FavouritesProvider } from 'jotai';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import Script from 'next/script';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
+import React, { Suspense } from 'react';
+
 import Footer from '@/components/Footer';
 import Header from '@/components/Header/Header';
 import AppProvider from '@/context/AppContext';
@@ -7,17 +18,9 @@ import QueryProvider from '@/context/QueryContext';
 import TelegramProvider from '@/context/TelegramContext';
 import ToastProvider from '@/context/ToastContext';
 import { seo } from '@/utils/constants';
-import dayjs from 'dayjs';
-import { Provider as FavouritesProvider } from 'jotai';
-import type { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
-import { getLocale, getMessages } from 'next-intl/server';
-import { Inter } from 'next/font/google';
-import Script from 'next/script';
-import React, { Suspense } from 'react';
-import './globals.css';
 
 require('dayjs/locale/ru');
+
 dayjs.locale('ru');
 const inter = Inter({ subsets: ['latin'] });
 

@@ -1,5 +1,6 @@
-import fetchAd from '@/utils/api/prisma/fetchAd';
 import { NextResponse } from 'next/server';
+
+import fetchAd from '@/utils/api/prisma/fetchAd';
 
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
   const slug = params.slug;

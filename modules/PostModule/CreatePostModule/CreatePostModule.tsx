@@ -1,4 +1,11 @@
 'use client';
+import { Field, Label } from '@headlessui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
+import React, { useState } from 'react';
+import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
+
 import CustomSelect from '@/components/CustomSelect';
 import { getCurrencySymbol } from '@/components/Price/utils';
 import Spinner from '@/components/ui/Spinner';
@@ -11,27 +18,19 @@ import imageHandler from '@/modules/PostModule/ImagesModule/utils';
 import buttonStyles from '@/styles/buttonStyles';
 import inputStyles from '@/styles/inputStyles';
 import type { CreatePostDTO } from '@/types';
-import deleteAd from '@/utils/api/prisma/deleteAd';
 import postLog from '@/utils/api/prisma/postLog';
 import postMessage from '@/utils/api/prisma/postMessage';
 import postAd from '@/utils/api/prisma/postPost';
 import postTelegram, { TelegramResponseProps } from '@/utils/api/telegram/postTelegram';
 import slug from '@/utils/slug';
-import { Field, Label } from '@headlessui/react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import clsx from 'clsx';
-import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
-import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
+
 import { defaultValues, IFormInput, schema } from '../yup';
 
 interface PostModuleProps {
   onSubmitOptional?: () => Promise<void> | void;
 }
 
-export default function CreatePostModule({
-  onSubmitOptional = async () => undefined,
-}: PostModuleProps) {
+export function CreatePostModule({ onSubmitOptional = async () => undefined }: PostModuleProps) {
   const t = useTranslations();
   const { categories } = useApp();
   const { user, loading: userLoading } = useAuth();

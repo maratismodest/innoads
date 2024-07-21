@@ -1,7 +1,8 @@
 'use client';
 import { useTranslations } from 'next-intl';
-import { getFormattedPrice } from './utils';
 import React, { memo } from 'react';
+
+import { getFormattedPrice } from './utils';
 
 type Props = {
   price: number;

@@ -1,5 +1,6 @@
-import { getArticleBySlug } from '@/prisma/services/articles';
 import { NextResponse } from 'next/server';
+
+import { getArticleBySlug } from '@/prisma/services/articles';
 
 /**
  * @swagger

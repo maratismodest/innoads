@@ -1,5 +1,6 @@
-import { getAllLogs } from '@/prisma/services/logs';
 import { NextResponse } from 'next/server';
+
+import { getAllLogs } from '@/prisma/services/logs';
 
 /**
  * @swagger

@@ -1,14 +1,15 @@
 'use client';
+import { RefetchOptions } from '@tanstack/react-query';
+import clsx from 'clsx';
+import Link from 'next/link';
+import React, { ComponentPropsWithoutRef, useEffect, useMemo, useRef, useState } from 'react';
+
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useDebounce from '@/hooks/useDebounce';
 import inputStyles from '@/styles/inputStyles';
 import { GetPostsParams } from '@/utils/api/prisma/fetchAds';
 import cleanObject from '@/utils/cleanObject';
 import { routes } from '@/utils/constants';
-import { RefetchOptions } from '@tanstack/react-query';
-import clsx from 'clsx';
-import Link from 'next/link';
-import React, { ComponentPropsWithoutRef, useEffect, useMemo, useRef, useState } from 'react';
 
 const initialOptions: Partial<GetPostsParams> = {
   published: true,
@@ -17,7 +18,7 @@ const initialOptions: Partial<GetPostsParams> = {
 
 interface SearchModuleProps extends ComponentPropsWithoutRef<'section'> {}
 
-export default function SearchModule({ className }: SearchModuleProps) {
+export function SearchModule({ className }: SearchModuleProps) {
   const [text, setText] = useState('');
   const searchText = useDebounce(text);
   const ref = useRef<HTMLButtonElement>(null);

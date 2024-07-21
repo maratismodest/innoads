@@ -1,8 +1,10 @@
 'use client';
-import buttonStyles from '@/styles/buttonStyles';
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
-import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+
+import buttonStyles from '@/styles/buttonStyles';
 
 const QuillEditor = dynamic(() => import('react-quill'), { ssr: false });
 

@@ -1,4 +1,12 @@
 'use client';
+import { Field, Label } from '@headlessui/react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Post } from '@prisma/client';
+import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
+import React, { useState } from 'react';
+import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
+
 import CustomSelect from '@/components/CustomSelect';
 import { getCurrencySymbol } from '@/components/Price/utils';
 import useApp from '@/hooks/useApp';
@@ -10,13 +18,7 @@ import buttonStyles from '@/styles/buttonStyles';
 import inputStyles from '@/styles/inputStyles';
 import { EditPostDTO } from '@/types';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
-import { Field, Label } from '@headlessui/react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Post } from '@prisma/client';
-import clsx from 'clsx';
-import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
-import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
+
 import { defaultValues, IFormInput, schema } from '../yup';
 
 interface PostModuleProps {
@@ -24,7 +26,7 @@ interface PostModuleProps {
   item: Post;
 }
 
-export default function EditPostModule({
+export function EditPostModule({
   onSubmitOptional = async () => undefined,
   item,
 }: PostModuleProps) {

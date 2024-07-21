@@ -1,10 +1,11 @@
+import React, { ReactElement } from 'react';
+
 import BlogIcon from '@/public/svg/blog.svg';
 import FavouriteIcon from '@/public/svg/favourite.svg';
 import HomeIcon from '@/public/svg/home.svg';
 import PlusIcon from '@/public/svg/plus.svg';
 import ProfileIcon from '@/public/svg/profile.svg';
 import { routes } from '@/utils/constants';
-import React, { ReactElement } from 'react';
 
 type MenuProps = {
   href: string;

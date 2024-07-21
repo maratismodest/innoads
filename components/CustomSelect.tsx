@@ -1,8 +1,9 @@
-import ArrowSvg from '@/public/svg/arrow.svg';
-import { Option } from '@/types/global';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
 import { clsx } from 'clsx';
 import React, { Fragment } from 'react';
+
+import ArrowSvg from '@/public/svg/arrow.svg';
+import { Option } from '@/types/global';
 
 interface CustomSelectProps {
   options: Option[];

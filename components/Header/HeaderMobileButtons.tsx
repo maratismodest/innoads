@@ -1,7 +1,8 @@
 import clsx from 'clsx';
-import { menu, menuHome } from './HeaderButtons';
 import Link from 'next/link';
 import React, { ComponentPropsWithoutRef } from 'react';
+
+import { menu, menuHome } from './HeaderButtons';
 
 const mobileMenu = [menuHome].concat(menu);
 

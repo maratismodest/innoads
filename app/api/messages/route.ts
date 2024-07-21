@@ -1,6 +1,7 @@
-import { getAllMessage } from '@/prisma/services/messages';
 import { Message } from '@prisma/client';
 import { NextResponse } from 'next/server';
+
+import { getAllMessage } from '@/prisma/services/messages';
 
 /**
  * @swagger

@@ -1,5 +1,11 @@
 'use client';
 
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
+import { Role } from '@prisma/client';
+import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
+import React from 'react';
+
 import Spinner from '@/components/ui/Spinner';
 import withAuth from '@/hoc/withAuth';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
@@ -9,11 +15,6 @@ import AdminPosts from '@/pages-lib/admin/admin-posts';
 import UserSearch from '@/pages-lib/admin/user-search';
 import { handleDeleteAllArchived } from '@/pages-lib/admin/utils';
 import buttonStyles from '@/styles/buttonStyles';
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
-import { Role } from '@prisma/client';
-import clsx from 'clsx';
-import { useTranslations } from 'next-intl';
-import React from 'react';
 
 async function AdminPage() {
   const t = useTranslations();

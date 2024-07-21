@@ -1,7 +1,8 @@
-import useOnScreen from '@/hooks/useOnScreen';
-import { NO_IMAGE } from '@/utils/constants';
 import Image from 'next/image';
 import React, { useEffect, useRef } from 'react';
+
+import useOnScreen from '@/hooks/useOnScreen';
+import { NO_IMAGE } from '@/utils/constants';
 
 interface ImageInViewProps {
   src: string;

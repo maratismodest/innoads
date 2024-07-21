@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
-import multer from 'multer';
-import { promisify } from 'util';
 import fs from 'fs';
+import multer from 'multer';
+import { NextRequest, NextResponse } from 'next/server';
+import { promisify } from 'util';
 
 // Configure Multer storage
 const upload = multer({

@@ -1,7 +1,8 @@
 'use client';
-import withAuth from '@/hoc/withAuth';
 import React from 'react';
 import ReactPlayer from 'react-player';
+
+import withAuth from '@/hoc/withAuth';
 
 const VideoPage = () => {
   return (

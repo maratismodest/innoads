@@ -1,8 +1,8 @@
-import buttonStyles from '@/styles/buttonStyles';
-import { routes } from '@/utils/constants';
-
 import Link from 'next/link';
 import React, { memo } from 'react';
+
+import buttonStyles from '@/styles/buttonStyles';
+import { routes } from '@/utils/constants';
 
 const GoToProfile = () => {
   return (

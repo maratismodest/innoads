@@ -1,9 +1,10 @@
 'use client';
 
-import Posts from '@/components/Posts';
-import favouritesAtom from '@/state';
 import { useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
+
+import Posts from '@/components/Posts';
+import favouritesAtom from '@/state';
 
 function FavouritesPage<NextPage>() {
   const t = useTranslations();

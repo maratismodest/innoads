@@ -1,13 +1,15 @@
+import clsx from 'clsx';
+import dayjs from 'dayjs';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import clsx from 'clsx';
-import dayjs from 'dayjs';
+
 import Posts from '@/components/Posts';
 import Price from '@/components/Price';
 import PostPageImages from '@/pages-lib/post/PostPageImages';
 import ShareButton from '@/pages-lib/post/ShareButton';
 import { getAllCategories } from '@/prisma/services/categories';
+import buttonStyles from '@/styles/buttonStyles';
 import type { GetSlugPath } from '@/types';
 import fetchAd from '@/utils/api/prisma/fetchAd';
 import fetchAds from '@/utils/api/prisma/fetchAds';
@@ -15,7 +17,6 @@ import { routes, tgLink } from '@/utils/constants';
 import { getPostJsonLd } from '@/utils/jsonLd';
 import mapCategories from '@/utils/mapCategories';
 import { seoDescriptionLength, seoTitleLength, substringByLettersCount } from '@/utils/seo';
-import buttonStyles from '@/styles/buttonStyles';
 
 interface AdPageProps {
   params: {

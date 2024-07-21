@@ -1,5 +1,6 @@
-import { getAllCategories } from '@/prisma/services/categories';
 import { NextResponse } from 'next/server';
+
+import { getAllCategories } from '@/prisma/services/categories';
 
 /**
  * @swagger

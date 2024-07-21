@@ -1,10 +1,11 @@
+import { Metadata } from 'next';
+import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
+
 import Breadcrumbs, { Breadcrumb } from '@/components/Breadcrumbs';
 import { getAllArticles } from '@/prisma/services/articles';
 import { routes, seo } from '@/utils/constants';
 import { getBlogJsonLd } from '@/utils/jsonLd';
-import { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
-import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: seo.blog.title,

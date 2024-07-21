@@ -1,7 +1,8 @@
-import buttonStyles from '@/styles/buttonStyles';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { clsx } from 'clsx';
 import React from 'react';
+
+import buttonStyles from '@/styles/buttonStyles';
 
 interface AccordionProps {
   title: string;

@@ -1,7 +1,8 @@
-import { routes, tgLink } from '@/utils/constants';
 import dayjs from 'dayjs';
 import Link from 'next/link';
 import React from 'react';
+
+import { routes, tgLink } from '@/utils/constants';
 
 export default function Footer() {
   return (

@@ -1,3 +1,7 @@
+import clsx from 'clsx';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+
 import Posts from '@/components/Posts';
 import { getUserById } from '@/prisma/services/users';
 import buttonStyles from '@/styles/buttonStyles';
@@ -6,9 +10,6 @@ import fetchPosts from '@/utils/api/prisma/fetchAds';
 import fetchUsers from '@/utils/api/prisma/fetchUsers';
 import { tgLink } from '@/utils/constants';
 import { getPersonJsonLd } from '@/utils/jsonLd';
-import clsx from 'clsx';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
 
 export async function generateStaticParams() {
   const users = await fetchUsers();

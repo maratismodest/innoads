@@ -1,6 +1,6 @@
-import { messages } from '@/utils/messages';
-import FireSvg from '@/public/svg/fire.svg';
 import CloseSvg from '@/public/svg/close.svg';
+import FireSvg from '@/public/svg/fire.svg';
+import { messages } from '@/utils/messages';
 
 interface ToastProps {
   isOpen: boolean;

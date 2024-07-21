@@ -1,7 +1,8 @@
-import buttonStyles from '@/styles/buttonStyles';
 import { VariantProps } from 'class-variance-authority';
-import React from 'react';
 import clsx from 'clsx';
+import React from 'react';
+
+import buttonStyles from '@/styles/buttonStyles';
 
 interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,

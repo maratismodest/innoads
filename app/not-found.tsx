@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { routes } from '@/utils/constants';
+
 import buttonStyles from '@/styles/buttonStyles';
+import { routes } from '@/utils/constants';
 
 const metaTitle = 'Ошибка 404. Страница не найдена';
 export async function generateMetadata() {

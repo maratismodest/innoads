@@ -1,7 +1,9 @@
-import { menu } from './HeaderButtons';
-import buttonStyles from '@/styles/buttonStyles';
 import Link from 'next/link';
 import { ComponentPropsWithoutRef } from 'react';
+
+import buttonStyles from '@/styles/buttonStyles';
+
+import { menu } from './HeaderButtons';
 
 interface HeaderButtonsProps extends ComponentPropsWithoutRef<'li'> {}
 

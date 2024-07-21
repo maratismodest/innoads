@@ -1,5 +1,6 @@
-import { getAllBans } from '@/prisma/services/bans';
 import { NextResponse } from 'next/server';
+
+import { getAllBans } from '@/prisma/services/bans';
 
 /**
  * @swagger

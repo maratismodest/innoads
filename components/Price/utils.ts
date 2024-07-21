@@ -7,4 +7,4 @@ const getFormattedPrice = (price: number) =>
 
 const getCurrencySymbol = () => getFormattedPrice(0).replace(/\d/g, '').trim();
 
-export { getFormattedPrice, getCurrencySymbol };
+export { getCurrencySymbol,getFormattedPrice };

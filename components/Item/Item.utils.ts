@@ -1,11 +1,12 @@
+import { Post } from '@prisma/client';
+import dayjs from 'dayjs';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+
 import fetchMessage from '@/utils/api/prisma/fetchMessage';
 import postMessage from '@/utils/api/prisma/postMessage';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import commentPost from '@/utils/api/telegram/commentPost';
 import { routes } from '@/utils/constants';
-import { Post } from '@prisma/client';
-import dayjs from 'dayjs';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 const success = {
   edit: 'Объявление отредактировано!',
@@ -59,4 +60,4 @@ const checkIsOld = (updatedAt: Date, days = 0) => {
   return today > current;
 };
 
-export { success, errors, ItemModalText, handleArchive, handleEdit, checkIsOld };
+export { checkIsOld,errors, handleArchive, handleEdit, ItemModalText, success };

@@ -1,7 +1,8 @@
-import SearchPage from '@/pages-lib/search/SearchPage';
-import { routes, seo } from '@/utils/constants';
 import { Metadata } from 'next';
 import React from 'react';
+
+import SearchPage from '@/pages-lib/search/SearchPage';
+import { routes, seo } from '@/utils/constants';
 
 export const metadata: Metadata = {
   title: seo.search.title,

@@ -1,13 +1,13 @@
 'use client';
 import { Post } from '@prisma/client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import useOnScreen from '@/hooks/useOnScreen';
-import fetchPosts, { GetPostsParams } from '@/utils/api/prisma/fetchAds';
 
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
+import useOnScreen from '@/hooks/useOnScreen';
+import fetchPosts from '@/utils/api/prisma/fetchAds';
 
-export type InitOptions = Partial<GetPostsParams> & Required<{ page: number }>;
+import { InitOptions } from './InfinitePosts.types';
 
 type Props = {
   initOptions: InitOptions;
@@ -15,7 +15,7 @@ type Props = {
   // initPage: number;
 };
 
-export default function InfinitePosts({
+export function InfinitePosts({
   initOptions,
   initPosts,
   // initPage
@@ -68,7 +68,7 @@ export default function InfinitePosts({
     <>
       <Posts posts={posts} />
       {fetching && <Spinner />}
-      {/*{!fetching && posts.length === 0 && !hasMore && <h2 className="text-center">Пусто</h2>}*/}
+      {!fetching && posts.length === 0 && !hasMore && <h2 className="text-center">Пусто</h2>}
       <div ref={elementRef} data-testid="scroll" />
     </>
   );

@@ -1,6 +1,6 @@
-import SwaggerUI from 'swagger-ui-react';
-
 import 'swagger-ui-react/swagger-ui.css';
+
+import SwaggerUI from 'swagger-ui-react';
 
 type Props = {
   spec: Record<string, any>;
