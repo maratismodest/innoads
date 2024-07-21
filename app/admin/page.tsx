@@ -21,7 +21,7 @@ async function AdminPage() {
   const { user } = useAuth();
   const { users, usersLoading, usersError, usersRefetch } = useUsersQuery();
   const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery({
-    size: 1000,
+    size: 2000,
   });
 
   const onClick = async () => {

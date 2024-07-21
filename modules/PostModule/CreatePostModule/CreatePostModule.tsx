@@ -11,6 +11,7 @@ import imageHandler from '@/modules/PostModule/ImagesModule/utils';
 import buttonStyles from '@/styles/buttonStyles';
 import inputStyles from '@/styles/inputStyles';
 import type { CreatePostDTO } from '@/types';
+import deleteAd from '@/utils/api/prisma/deleteAd';
 import postLog from '@/utils/api/prisma/postLog';
 import postMessage from '@/utils/api/prisma/postMessage';
 import postAd from '@/utils/api/prisma/postPost';
@@ -103,8 +104,10 @@ export default function CreatePostModule({
         user,
         categories
       )) as TelegramResponseProps;
-      const telegram = await postMessage({ id: result[0]?.message_id, postId: post.id });
-      console.log('_telegram', telegram);
+      for (const result_item of result) {
+        const message = await postMessage({ id: result_item.message_id, postId: post.id });
+        console.warn('message', message);
+      }
       reset();
       toast(t('Объявление создано'));
       await onSubmitOptional();

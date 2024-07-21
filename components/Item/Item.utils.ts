@@ -1,4 +1,5 @@
 import fetchMessage from '@/utils/api/prisma/fetchMessage';
+import postMessage from '@/utils/api/prisma/postMessage';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import commentPost from '@/utils/api/telegram/commentPost';
 import { routes } from '@/utils/constants';
@@ -29,6 +30,10 @@ const handleArchive = async (post: Post, toast: (message: string) => void) => {
     if (message) {
       const comment = await commentPost(message.id);
       console.log('comment', comment);
+      if (comment) {
+        const _message = await postMessage({ id: comment.result.message_id, postId: post.id });
+        console.log('_message', _message);
+      }
     }
     const refetchButton = document.getElementById('refetch-posts');
     if (refetchButton) {
