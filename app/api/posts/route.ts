@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import fetchPosts from '@/utils/api/prisma/fetchAds';
 import cleanObject from '@/utils/cleanObject';
+import convertToBoolean from '@/utils/stringToBoolean';
 
 /**
  * @swagger
@@ -33,7 +34,7 @@ export async function GET(req: Request) {
   const userId = searchParams.get('userId');
   const categoryId = Number(searchParams.get('categoryId'));
   const _published = searchParams.get('published');
-  const published = _published ? Boolean(_published) : null;
+  const published = convertToBoolean(_published);
   const search = searchParams.get('search');
   const response = await fetchPosts(
     cleanObject({ size, page, categoryId, userId, published, search })

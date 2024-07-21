@@ -57,7 +57,7 @@ async function AdminPage() {
         <button className={buttonStyles()} onClick={onClick} id="refetch">
           {t('Обновить данные')}
         </button>
-        <button className={buttonStyles()} onClick={() => handleDeleteAllArchived(posts)}>
+        <button className={buttonStyles()} onClick={() => handleDeleteAllArchived()}>
           {t('Удалить все архивные посты')}
         </button>
       </div>

@@ -1,16 +1,15 @@
-// import fetchMessages from '@/utils/api/client/fetchMessages';
+import fetchApiPosts from '@/utils/api/client/fetchApiPosts';
 import fetchMessages from '@/utils/api/client/fetchMessages';
 import deleteAd from '@/utils/api/prisma/deleteAd';
 import deleteTelegramPost from '@/utils/api/telegram/deleteTelegramPost';
-// import deleteTelegramPost from '@/utils/api/telegram/deleteTelegramPost';
-import type { Post } from '@prisma/client';
 
-export const handleDeleteAllArchived = async (posts: Post[]) => {
+export const handleDeleteAllArchived = async () => {
   try {
-    const _delete = posts.filter(x => !x.published);
+    const unpublished = await fetchApiPosts({ size: 1000, published: false });
+    console.log('unpublished', unpublished);
     const messages = await fetchMessages();
     console.log('messages', messages);
-    for (const post of _delete) {
+    for (const post of unpublished) {
       const _messages = messages.filter(x => x.postId === post.id);
       for (const _message of _messages) {
         await deleteTelegramPost(_message.id);
