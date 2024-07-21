@@ -76,6 +76,7 @@
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "prisma": "^5.16.2",
+    "prisma-json-schema-generator": "^5.1.5",
     "quill": "^2.0.2",
     "react-quill": "^2.0.0",
     "storybook": "^8.1.10",

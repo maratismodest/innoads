@@ -2,6 +2,28 @@ import fetchPosts from '@/utils/api/prisma/fetchAds';
 import cleanObject from '@/utils/cleanObject';
 import { NextResponse } from 'next/server';
 
+/**
+ * @swagger
+ * /api/posts:
+ *   get:
+ *     description: Returns posts list
+ *     responses:
+ *       200:
+ *         description: []
+ *         content: {
+ *               "application/json": {
+ *                 schema: {
+ *                   type: "array",
+ *                   items: {
+ *                     $ref: "#/components/schemas/Post",
+ *                   }
+ *                 }
+ *               }
+ *             }
+ *
+ *
+ */
+
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const searchParams = new URLSearchParams(url.searchParams);

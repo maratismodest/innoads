@@ -1,7 +1,7 @@
 import buttonStyles from '@/styles/buttonStyles';
 import clsx from 'clsx';
 import React from 'react';
-import { ItemModalText } from './utils';
+import { ItemModalText } from './Item.utils';
 
 const buttons = [
   // {

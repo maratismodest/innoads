@@ -1,5 +1,5 @@
 'use client';
-import ItemButtons from '@/components/Item/item-buttons';
+import ItemButtons from '@/components/Item/ItemButtons';
 import ItemLike from '@/components/Item/ItemLike';
 import Price from '@/components/Price';
 import Popup from '@/components/ui/Popup';
@@ -14,16 +14,16 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
-import { checkIsOld, handleArchive, handleEdit, ItemModalText } from './utils';
+import { checkIsOld, handleArchive, handleEdit, ItemModalText } from './Item.utils';
 
-const DAYS = 1;
+const DAYS = 7;
 
 type ItemProps = {
   post: Post;
   edit?: boolean;
 };
 
-export default function Item({ post, edit = false }: ItemProps) {
+export function Item({ post, edit = false }: ItemProps) {
   const t = useTranslations();
   const router = useRouter();
   const { user } = useAuth();
@@ -54,7 +54,7 @@ export default function Item({ post, edit = false }: ItemProps) {
             await postTelegram(post, user, categories);
             alert('Объявление подано в канал повторно!');
           } else {
-            alert(`Объявление подано меньше чем ${DAYS} день назад!`);
+            alert(`Объявление подано меньше чем ${DAYS} дней назад!`);
           }
         } else {
           alert('Кажется, вы не авторизованы!');

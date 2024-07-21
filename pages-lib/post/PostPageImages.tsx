@@ -14,10 +14,11 @@ type Props = {
   post: Post;
 };
 
-export default function PostPageImages<NextPage>({ post }: Props) {
+export default function PostPageImages({ post }: Props) {
   const images = useMemo(() => post.images.split('||'), [post]);
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState(0);
+  const handleClose = () => setOpen(false);
 
   const ul = useRef<HTMLUListElement>(null);
   const refs = useRef<HTMLLIElement[]>([]);
@@ -35,7 +36,7 @@ export default function PostPageImages<NextPage>({ post }: Props) {
 
   return (
     <>
-      <Dialog open={open} onClose={() => setOpen(false)} className="relative z-50">
+      <Dialog open={open} onClose={handleClose} className="relative z-50">
         <div className="fixed inset-0 flex items-center justify-center bg-black/50">
           <DialogPanel className="relative flex h-full w-full max-w-2xl items-center justify-center bg-black md:bg-white">
             <Image
@@ -51,7 +52,7 @@ export default function PostPageImages<NextPage>({ post }: Props) {
             />
             <button
               className={clsx(postButtonStyles, 'absolute right-4 top-4 z-50')}
-              onClick={() => setOpen(false)}
+              onClick={handleClose}
             >
               &#x2715;
             </button>
