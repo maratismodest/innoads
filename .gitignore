@@ -46,3 +46,5 @@ next-env.d.ts
 .storybook
 
 public/uploads
+
+.eslintcache
