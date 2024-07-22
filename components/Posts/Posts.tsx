@@ -15,7 +15,7 @@ interface PostsInterface extends ComponentPropsWithoutRef<'ul'> {
   error?: Error | null;
 }
 
-export default function Posts({
+export function Posts({
   posts,
   edit = false,
   loading = false,

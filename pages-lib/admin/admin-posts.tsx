@@ -1,8 +1,9 @@
-import Posts from '@/components/Posts';
 import { Checkbox, Field, Label } from '@headlessui/react';
 import { Post } from '@prisma/client';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
+
+import Posts from '@/components/Posts';
 
 type Props = {
   posts: Post[];

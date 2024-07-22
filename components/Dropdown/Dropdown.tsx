@@ -5,7 +5,7 @@ interface DropdownProps extends ComponentPropsWithoutRef<'div'> {
   dropdown: boolean;
 }
 
-export default function Dropdown({ dropdown, children }: DropdownProps) {
+export function Dropdown({ dropdown, children }: DropdownProps) {
   return (
     <div
       className={clsx(

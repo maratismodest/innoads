@@ -11,11 +11,11 @@ const meta = {
   },
   tags: ['autodocs'],
   args: {
-    isOpen: true,
+    isOpen: false,
     setIsOpen: action('setIsOpen'),
     text: 'Popup enough long text',
     buttons: [
-      { text: 'OK', onClick: action('OK clicked') },
+      { text: 'Submit', onClick: action('OK clicked') },
       { text: 'Cancel', onClick: action('Cancel clicked') },
     ],
   },
@@ -24,31 +24,10 @@ const meta = {
       options: [true, false],
       control: { type: 'radio' },
     },
-    // size: {
-    //   options: ['medium', 'small'],
-    //   control: { type: 'radio' },
-    // },
   },
 } satisfies Meta<typeof Popup>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    isOpen: false,
-  },
-};
-
-export const Closed: Story = {
-  args: {
-    isOpen: false,
-  },
-};
-//
-// export const Secondary: Story = {
-//   args: {
-//     variant: 'secondary',
-//     size: 'small',
-//   },
-// };
+export const Default: Story = {};

@@ -1,9 +1,10 @@
-import Posts from '@/components/Posts';
-import buttonStyles from '@/styles/buttonStyles';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Post } from '@prisma/client';
 import { clsx } from 'clsx';
 import React from 'react';
+
+import Posts from '@/components/Posts';
+import buttonStyles from '@/styles/buttonStyles';
 
 interface ArchivedProps {
   posts: Post[];

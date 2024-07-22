@@ -1,4 +1,10 @@
 'use client';
+import { yupResolver } from '@hookform/resolvers/yup';
+import clsx from 'clsx';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useRef } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
+
 import CustomSelect from '@/components/CustomSelect';
 import Posts from '@/components/Posts';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
@@ -8,11 +14,6 @@ import { defaultSearchValues, ISearchFormInput, schemaSearch } from '@/modules/P
 import inputStyles from '@/styles/inputStyles';
 import cleanObject from '@/utils/cleanObject';
 import { routes } from '@/utils/constants';
-import { yupResolver } from '@hookform/resolvers/yup';
-import clsx from 'clsx';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useRef } from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
 
 const SearchPage = () => {
   const router = useRouter();
