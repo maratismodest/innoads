@@ -210,7 +210,7 @@ export function CreatePostModule({ onSubmitOptional = async () => undefined }: P
         </div>
 
         <button
-          className={clsx(buttonStyles({ size: 'medium' }), 'mt-6 w-full')}
+          className={clsx(buttonStyles({ size: 'medium' }), 'mt-6')}
           type="submit"
           disabled={loading || categories.length === 0}
           // disabled={true}
