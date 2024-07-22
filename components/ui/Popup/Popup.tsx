@@ -1,4 +1,4 @@
-import { Dialog,DialogPanel, DialogTitle } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import React from 'react';
 
 import buttonStyles from '@/styles/buttonStyles';
@@ -13,7 +13,7 @@ interface PopupProps {
   }[];
 }
 
-const Popup = ({ isOpen, setIsOpen, text, buttons }: PopupProps) => {
+export const Popup = ({ isOpen, setIsOpen, text, buttons }: PopupProps) => {
   return (
     <Dialog open={isOpen} onClose={() => setIsOpen(false)} className="relative z-50">
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
@@ -40,5 +40,3 @@ const Popup = ({ isOpen, setIsOpen, text, buttons }: PopupProps) => {
     </Dialog>
   );
 };
-
-export default Popup;

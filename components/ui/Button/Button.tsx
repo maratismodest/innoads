@@ -8,14 +8,7 @@ interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonStyles> {}
 
-export default function Button({
-  className,
-  type,
-  children,
-  variant,
-  onClick,
-  ...props
-}: ButtonProps) {
+export function Button({ className, type, children, variant, onClick, ...props }: ButtonProps) {
   return (
     <button onClick={onClick} className={clsx(buttonStyles({ variant }), className)} {...props}>
       {children}

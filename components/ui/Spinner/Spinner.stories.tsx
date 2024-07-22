@@ -9,9 +9,9 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  args: {
-    children: 'Click me',
-  },
+  // args: {
+  //   children: 'Click me',
+  // },
   argTypes: {
     // variant: {
     //   options: ['primary', 'secondary'],

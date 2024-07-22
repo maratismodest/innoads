@@ -1,14 +1,15 @@
 'use client';
-import Popup from '@/components/ui/Popup';
-import { stateAtom } from '@/state';
-import { UserWithBans } from '@/types';
-import loginTelegram from '@/utils/api/prisma/loginTelegram';
-import { messages } from '@/utils/messages';
 import { User } from '@prisma/client';
 import * as jose from 'jose';
 import { useAtom } from 'jotai';
 import { useSearchParams } from 'next/navigation';
 import { createContext, ReactNode, useCallback, useEffect, useState } from 'react';
+
+import Popup from '@/components/ui/Popup';
+import { stateAtom } from '@/state';
+import { UserWithBans } from '@/types';
+import loginTelegram from '@/utils/api/prisma/loginTelegram';
+import { messages } from '@/utils/messages';
 
 type authContextType = {
   user: UserWithBans | undefined;
