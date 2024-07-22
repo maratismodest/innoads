@@ -2,7 +2,7 @@ import { cva } from 'class-variance-authority';
 
 const buttonStyles = cva(
   [
-    'inline-flex text-center rounded-lg px-4 py-2 cursor-pointer shadow transition-all hover:shadow-lg ease-in-out duration-300',
+    'inline-flex w-fit text-center rounded-lg px-4 py-2 cursor-pointer shadow transition-all hover:shadow-lg ease-in-out duration-300',
     'disabled:cursor-not-allowed disabled:opacity-60',
     'items-center gap-1',
   ],

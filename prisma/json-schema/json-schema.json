@@ -1,0 +1,222 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Post": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "category": {
+          "$ref": "#/definitions/Category"
+        },
+        "price": {
+          "type": "integer"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "preview": {
+          "type": "string"
+        },
+        "images": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "published": {
+          "type": "boolean",
+          "default": false
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Message"
+          }
+        }
+      }
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "post": {
+          "$ref": "#/definitions/Post"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "posts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Post"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "bans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Ban"
+          }
+        },
+        "role": {
+          "type": "string",
+          "default": "USER",
+          "enum": [
+            "USER",
+            "ADMIN"
+          ]
+        }
+      }
+    },
+    "Ban": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": "Нарушение правил"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Article": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "posts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Post"
+          }
+        }
+      }
+    },
+    "Log": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "post": {
+      "$ref": "#/definitions/Post"
+    },
+    "message": {
+      "$ref": "#/definitions/Message"
+    },
+    "user": {
+      "$ref": "#/definitions/User"
+    },
+    "ban": {
+      "$ref": "#/definitions/Ban"
+    },
+    "article": {
+      "$ref": "#/definitions/Article"
+    },
+    "category": {
+      "$ref": "#/definitions/Category"
+    },
+    "log": {
+      "$ref": "#/definitions/Log"
+    }
+  }
+}
