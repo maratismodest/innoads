@@ -1,6 +1,7 @@
-import { Option } from '@/types/global';
-import { Category } from '@prisma/client';
+import type { Category } from '@prisma/client';
+
+import type { Option } from '@/types/global';
 
 export default function mapCategories(categories: Category[]): Option[] {
-  return categories.map(category => ({ value: category.id, label: category.label }));
+  return categories.map(({ id, label }) => ({ value: id, label: label }));
 }

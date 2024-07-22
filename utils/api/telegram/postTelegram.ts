@@ -1,10 +1,11 @@
-import { clientTelegram } from '@/utils/api/createRequest';
+import type { Post, User } from '@prisma/client';
+
 import { getFormattedPrice } from '@/components/Price/utils';
 import { CreatePostDTO, EditPostDTO } from '@/types';
 import { Option } from '@/types/global';
+import { clientTelegram } from '@/utils/api/createRequest';
 import { routes, tgRoutes } from '@/utils/constants';
 import { convertLinksToMedia } from '@/utils/convertLinksToMedia';
-import type { Post, User } from '@prisma/client';
 
 export interface TelegramResponseProps {
   ok: boolean;
@@ -34,7 +35,7 @@ export default async function postTelegram(
   const bodyText = body.length > 800 ? body.substring(0, 800) + '...' : body;
 
   try {
-    const text = `#${categoryLabel} \n<a href='${url}'>${title}</a> \nЦена: <b>${getFormattedPrice(price)}</b> \n\n💬 ${bodyText} \n\n👤 @${user.username}`;
+    const text = `${categoryLabel} \n<a href='${url}'>${title}</a> \nЦена: <b>${getFormattedPrice(price)}</b> \n\n💬 ${bodyText} \n\n👤 @${user.username}`;
 
     const sendPhoto = `${tgRoutes.sendMediaGroup}`;
     const media = convertLinksToMedia(images.split('||'), text);

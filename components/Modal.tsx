@@ -1,6 +1,6 @@
 import React, { ComponentPropsWithoutRef, useEffect, useRef } from 'react';
 
-interface ModalProps extends ComponentPropsWithoutRef<'dialog'> {
+export interface ModalProps extends ComponentPropsWithoutRef<'dialog'> {
   visible: boolean;
 }
 

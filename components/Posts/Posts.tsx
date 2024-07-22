@@ -1,12 +1,12 @@
 import { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import React, { ComponentPropsWithoutRef } from 'react';
 
 import Item from '@/components/Item';
 import Spinner from '@/components/ui/Spinner';
 import { routes } from '@/utils/constants';
-import { messages } from '@/utils/messages';
 
 interface PostsInterface extends ComponentPropsWithoutRef<'ul'> {
   posts?: Post[];
@@ -22,6 +22,7 @@ export function Posts({
   error = null,
   className,
 }: PostsInterface) {
+  const t = useTranslations();
   if (loading) {
     return <Spinner />;
   }
@@ -29,7 +30,7 @@ export function Posts({
   if (error) {
     return (
       <h2 className="text-center">
-        {messages.somethingWentWrong}: {error.message}
+        {t('Что-то пошло не так')}: {error.message}
       </h2>
     );
   }
