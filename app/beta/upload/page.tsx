@@ -1,23 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import Image from 'next/image';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
-export default function Home() {
+import { uploadFile } from '@/utils/api/client/uploadFile';
+
+export default function FileUploadForm() {
   const [file, setFile] = useState<File | null>(null);
+  const [url, setUrl] = useState<string | undefined>();
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0] || null;
+    setFile(selectedFile);
+  };
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (file) {
-      const formData = new FormData();
-      formData.append('image', file);
-
-      const response = await fetch('/api/uploads', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
+    if (!file) return;
+    try {
+      const result = await uploadFile(file);
       console.log(result);
+      setUrl(result.link);
+      // Handle successful upload (e.g., show success message, reset form)
+    } catch (error) {
+      console.error('Upload failed:', error);
+      // Handle error (e.g., show error message to user)
     }
   };
 
@@ -25,16 +31,12 @@ export default function Home() {
     <div>
       <h1>Upload File</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="file"
-          onChange={event => {
-            if (event.target.files) {
-              setFile(event.target.files[0]);
-            }
-          }}
-        />
-        <button type="submit">Upload</button>
+        <input type="file" onChange={handleFileChange} />
+        <button type="submit" disabled={!file}>
+          Upload
+        </button>
       </form>
+      {url && <Image width={300} height={300} alt="" src={url} />}
     </div>
   );
 }

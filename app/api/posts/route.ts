@@ -26,6 +26,10 @@ import convertToBoolean from '@/utils/stringToBoolean';
  *
  */
 
+const headers = {
+  'Cache-Control': 's-maxage=600, stale-while-revalidate=300',
+};
+
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const searchParams = new URLSearchParams(url.searchParams);
@@ -39,5 +43,5 @@ export async function GET(req: Request) {
   const response = await fetchPosts(
     cleanObject({ size, page, categoryId, userId, published, search })
   );
-  return NextResponse.json(response);
+  return NextResponse.json(response, { headers: headers });
 }

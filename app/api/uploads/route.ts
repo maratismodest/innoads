@@ -19,13 +19,13 @@ const uploadMiddleware = promisify(upload.single('file'));
 export async function POST(request: NextRequest) {
   const formData = await request.formData();
   const file = formData.get('image');
-
   if (!file) {
     return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
   }
   if (file instanceof File) {
     try {
-      const tempFilePath = `./public/uploads/${file.name}`;
+      const fileName = file.name.replace(/ /g, '_');
+      const tempFilePath = `./public/uploads/${fileName}`;
       const fileStream = fs.createWriteStream(tempFilePath);
       const fileBuffer = Buffer.from(await file.arrayBuffer());
       fileStream.write(fileBuffer);
@@ -35,11 +35,13 @@ export async function POST(request: NextRequest) {
         process.env.NEXT_PUBLIC_NODE_ENV === 'development'
           ? 'http://localhost:3000'
           : process.env.NEXT_PUBLIC_APP_URL;
-
+      const link = `${fileUploadApi}/uploads/${fileName}`;
+      // const link = `/uploads/${fileName}`;
+      console.log('link', link);
       return NextResponse.json(
         {
           data: 'File uploaded successfully',
-          link: `${fileUploadApi}/uploads/${file.name.replace(/ /g, '_')}`,
+          link: link,
         },
         { status: 200 }
       );
