@@ -1,5 +1,6 @@
+import type { Prisma } from '@prisma/client';
+
 import prisma from '@/lib/prisma';
-import { Prisma } from '@prisma/client';
 
 type UserWithBans = Prisma.UserGetPayload<{
   include: { bans: true };

@@ -26,9 +26,7 @@ import convertToBoolean from '@/utils/stringToBoolean';
  *
  */
 
-const headers = {
-  'Cache-Control': 's-maxage=600, stale-while-revalidate=300',
-};
+export const dynamic = 'force-dynamic';
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -43,5 +41,5 @@ export async function GET(req: Request) {
   const response = await fetchPosts(
     cleanObject({ size, page, categoryId, userId, published, search })
   );
-  return NextResponse.json(response, { headers: headers });
+  return NextResponse.json(response);
 }

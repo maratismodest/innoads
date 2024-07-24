@@ -1,5 +1,6 @@
+import type { Ban } from '@prisma/client';
+
 import prisma from '@/lib/prisma';
-import { Ban } from '@prisma/client';
 
 export function getAllBans(): Promise<Ban[]> {
   return prisma.ban.findMany();

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 import buttonStyles from '@/styles/buttonStyles';
 import { routes } from '@/utils/constants';
@@ -17,12 +18,13 @@ export async function generateMetadata() {
 }
 
 export default function NotFoundPage() {
+  const t = useTranslations();
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-2">
       <Image src="/images/error-404.png" alt="404" width={128} height={128} />
-      <h1>Страница не найдена</h1>
+      <h1>{t('Страница не найдена')}</h1>
       <Link className={buttonStyles()} href={routes.main}>
-        На главную
+        {t('На главную')}
       </Link>
     </div>
   );

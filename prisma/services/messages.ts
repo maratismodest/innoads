@@ -1,5 +1,6 @@
+import type { Message } from '@prisma/client';
+
 import prisma from '@/lib/prisma';
-import { Message } from '@prisma/client';
 
 export function getAllMessage() {
   return prisma.message.findMany();

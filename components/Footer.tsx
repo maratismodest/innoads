@@ -16,7 +16,7 @@ export default function Footer() {
             <Link href={routes.blog + '/rules'}>Правила InnoAds</Link>
           </li>
           <li className="hover:underline">
-            <Link href={tgLink + '/innoads'}>Канал InnoAds</Link>
+            <Link href={tgLink + '/' + process.env.NEXT_PUBLIC_APP_NAME}>Канал InnoAds</Link>
           </li>
         </ul>
         <hr className="border-white" />

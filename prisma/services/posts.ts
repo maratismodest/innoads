@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma';
-import { CreatePostDTO, EditPostDTO } from '@/types';
+import type { CreatePostDTO, EditPostDTO } from '@/types';
 
 export function getAllPosts() {
   return prisma.post.findMany();

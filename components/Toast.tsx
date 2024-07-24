@@ -33,7 +33,7 @@ export default function Toast({ isOpen, onClose, message }: ToastProps) {
         onClick={onClose}
       >
         <CloseSvg className="size-4" />
-        <span className="sr-only">Закрыть</span>
+        <span className="sr-only">{t('Закрыть')}</span>
       </button>
     </div>
   );

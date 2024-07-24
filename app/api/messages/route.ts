@@ -25,13 +25,13 @@ import { getAllMessage } from '@/prisma/services/messages';
  *
  */
 
-const headers = {
-  'Cache-Control': 's-maxage=600, stale-while-revalidate=300',
-};
+// const headers = {
+//   'Cache-Control': 's-maxage=600, stale-while-revalidate=300',
+// };
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const res: Message[] = await getAllMessage();
-  return NextResponse.json(res, {
-    headers: headers,
-  });
+  const res = await getAllMessage();
+  return NextResponse.json(res);
 }

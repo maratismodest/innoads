@@ -1,5 +1,6 @@
+import type { Log } from '@prisma/client';
+
 import prisma from '@/lib/prisma';
-import { Ban, Log } from '@prisma/client';
 
 export function getAllLogs(): Promise<Log[]> {
   return prisma.log.findMany();

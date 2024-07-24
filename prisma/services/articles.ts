@@ -1,5 +1,6 @@
+import type { Article } from '@prisma/client';
+
 import prisma from '@/lib/prisma';
-import { Article } from '@prisma/client';
 
 export function getAllArticles(): Promise<Article[]> {
   return prisma.article.findMany();

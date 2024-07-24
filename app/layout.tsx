@@ -13,7 +13,6 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header/Header';
 import AppProvider from '@/context/AppContext';
 import AuthProvider from '@/context/AuthContext';
-import ModalProvider from '@/context/ModalContext';
 import QueryProvider from '@/context/QueryContext';
 import TelegramProvider from '@/context/TelegramContext';
 import ToastProvider from '@/context/ToastContext';
@@ -59,15 +58,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <TelegramProvider>
                 <AuthProvider>
                   <AppProvider>
-                    <ModalProvider>
-                      <ToastProvider>
-                        <FavouritesProvider>
-                          <Header />
-                          <main>{children}</main>
-                          <Footer />
-                        </FavouritesProvider>
-                      </ToastProvider>
-                    </ModalProvider>
+                    <ToastProvider>
+                      <FavouritesProvider>
+                        <Header />
+                        <main>{children}</main>
+                        <Footer />
+                      </FavouritesProvider>
+                    </ToastProvider>
                   </AppProvider>
                 </AuthProvider>
               </TelegramProvider>

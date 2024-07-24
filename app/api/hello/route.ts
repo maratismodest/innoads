@@ -1,3 +1,5 @@
+import { NextResponse } from 'next/server';
+
 /**
  * @swagger
  * /api/hello:
@@ -5,11 +7,8 @@
  *     description: Returns the hello world
  *     responses:
  *       200:
- *         description: Hello World!
+ *         description: Hello InnoAds!
  */
 export async function GET(_request: Request) {
-  // Do whatever you want
-  return new Response('Hello World!', {
-    status: 200,
-  });
+  return NextResponse.json('Hello InnoAds!', { status: 200 });
 }

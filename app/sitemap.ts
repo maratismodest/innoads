@@ -1,15 +1,12 @@
-// app/sitemap.js
 import dayjs from 'dayjs';
 
 import prisma from '@/lib/prisma';
-// import fetchAds from '@/utils/api/backend/fetchAds';
-// import fetchArticles from '@/utils/api/prisma/fetchArticles';
 import { routes } from '@/utils/constants';
 import { dateFormat } from '@/utils/date';
 
 const URL = process.env.NEXT_PUBLIC_APP_URL;
 
-const mainRoutes = [
+const _mainRoutes = [
   routes.main,
   routes.blog,
   routes.favourites,
@@ -21,31 +18,29 @@ const mainRoutes = [
 const formatDate = (date: string) => dayjs(date).format(dateFormat.time);
 
 export default async function sitemap() {
-  const routes = mainRoutes.map(route => ({
+  const mainRoutes = _mainRoutes.map(route => ({
     url: `${URL}${route}`,
     lastModified: formatDate(new Date().toISOString()),
   }));
 
   const _posts = await prisma.post.findMany({
-    take: 1000,
+    take: 2000,
     where: {
       published: true,
     },
   });
 
   const posts = _posts.map(({ slug, updatedAt }) => ({
-    url: `${URL}/post/${slug}`,
+    url: `${URL}${routes.post}/${slug}`,
     lastModified: formatDate(updatedAt.toISOString()),
   }));
 
   const articles = await prisma.article.findMany();
 
   const articleRoutes = articles.map(({ slug, updatedAt }) => ({
-    url: `${URL}/blog/${slug}`,
+    url: `${URL}${routes.blog}/${slug}`,
     lastModified: formatDate(updatedAt.toISOString()),
   }));
-  //
-  return [...routes, ...posts, ...articleRoutes];
 
-  // return [];
+  return [...mainRoutes, ...posts, ...articleRoutes];
 }
