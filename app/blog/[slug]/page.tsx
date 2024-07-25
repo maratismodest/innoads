@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
-import Breadcrumbs, { Breadcrumb } from '@/components/Breadcrumbs';
+import type { Breadcrumb } from '@/components/ui/Breadcrumbs';
+import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { getAllArticles, getArticleBySlug } from '@/prisma/services/articles';
 import type { GetSlugPath } from '@/types';
 import { routes } from '@/utils/constants';
@@ -20,8 +21,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({
-  params: { slug },
-}: GetSlugPath): Promise<Metadata | null> {
+                                         params: { slug },
+                                       }: GetSlugPath): Promise<Metadata | null> {
   const article = await getArticleBySlug(slug);
   if (!article) {
     return null;

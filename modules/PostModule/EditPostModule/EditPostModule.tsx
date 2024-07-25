@@ -7,8 +7,8 @@ import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 
-import CustomSelect from '@/components/CustomSelect';
 import { getCurrencySymbol } from '@/components/Price/utils';
+import Select from '@/components/ui/Select';
 import useApp from '@/hooks/useApp';
 import useToast from '@/hooks/useToast';
 import ImagesModuleInput from '@/modules/PostModule/ImagesModule/ImagesModuleInput';
@@ -98,7 +98,7 @@ export function EditPostModule({
             control={control}
             name="categoryId"
             render={({ field: { onChange, onBlur, value, ref } }) => (
-              <CustomSelect
+              <Select
                 options={categories}
                 value={value}
                 // It should be Option

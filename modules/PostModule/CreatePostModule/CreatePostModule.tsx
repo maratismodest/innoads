@@ -6,8 +6,8 @@ import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 import { Controller, FormProvider, SubmitHandler, useForm, useWatch } from 'react-hook-form';
 
-import CustomSelect from '@/components/CustomSelect';
 import { getCurrencySymbol } from '@/components/Price/utils';
+import Select from '@/components/ui/Select';
 import Spinner from '@/components/ui/Spinner';
 import useApp from '@/hooks/useApp';
 import useAuth from '@/hooks/useAuth';
@@ -101,7 +101,7 @@ export function CreatePostModule({ onSubmitOptional = async () => undefined }: P
       const { result }: TelegramResponseProps = (await postTelegram(
         createPostDto,
         user,
-        categories
+        categories,
       )) as TelegramResponseProps;
       for (const result_item of result) {
         const message = await postMessage({ id: result_item.message_id, postId: post.id });
@@ -141,7 +141,7 @@ export function CreatePostModule({ onSubmitOptional = async () => undefined }: P
             control={control}
             name="categoryId"
             render={({ field: { onChange, value } }) => (
-              <CustomSelect
+              <Select
                 options={categories}
                 value={value}
                 // It should be Option

@@ -1,10 +1,11 @@
 'use client';
-import CustomSelect from '@/components/CustomSelect';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+
+import Select from '@/components/ui/Select';
 import useApp from '@/hooks/useApp';
 import { Option } from '@/types/global';
 import { routes } from '@/utils/constants';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
 
 export default function HomePageCategories() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function HomePageCategories() {
     router.push(routes.search + `?categoryId=${category.value}`);
   };
   return (
-    <CustomSelect
+    <Select
       options={categories}
       onChange={(category: any) => {
         setCategory(category);

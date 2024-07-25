@@ -1,10 +1,12 @@
+import * as jose from 'jose';
+import React from 'react';
+import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
+
 import useAuth from '@/hooks/useAuth';
 import useToast from '@/hooks/useToast';
 import buttonStyles from '@/styles/buttonStyles';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
-import * as jose from 'jose';
-import React from 'react';
-import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
+
 import { ERROR_ALIAS_MESSAGE, ERROR_TOKEN_MESSAGE, userTemplate } from './utils';
 
 export default function ProfileNoUser() {

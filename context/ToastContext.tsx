@@ -1,6 +1,7 @@
 'use client';
-import Toast from '@/components/Toast';
 import { createContext, ReactNode, useCallback, useEffect, useState } from 'react';
+
+import Toast from '../components/ui/Toast';
 
 type toastContextType = {
   toast: (message: string) => void;

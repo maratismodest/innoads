@@ -10,10 +10,10 @@ interface BreadcrumbsProps {
 
 const defaultSeparator = <span aria-hidden="true">&#124;</span>;
 
-export default function Breadcrumbs({
-  breadcrumbs,
-  separator = defaultSeparator,
-}: BreadcrumbsProps) {
+export function Breadcrumbs({
+                              breadcrumbs,
+                              separator = defaultSeparator,
+                            }: BreadcrumbsProps) {
   return (
     <nav aria-label="Breadcrumb">
       <ol className="flex flex-wrap items-center gap-2">

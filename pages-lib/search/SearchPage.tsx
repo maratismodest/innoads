@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 
-import CustomSelect from '@/components/CustomSelect';
 import Posts from '@/components/Posts';
+import Select from '@/components/ui/Select';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useApp from '@/hooks/useApp';
 import useDebounce from '@/hooks/useDebounce';
@@ -43,7 +43,7 @@ const SearchPage = () => {
 
   const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery(
     cleanObject({ published: true, categoryId: _categoryId, search: searchText }),
-    false
+    false,
   );
 
   const onSubmit = async (data: ISearchFormInput) => {
@@ -76,7 +76,7 @@ const SearchPage = () => {
             control={control}
             name="categoryId"
             render={({ field: { onChange, onBlur, value, ref } }) => (
-              <CustomSelect
+              <Select
                 options={categories}
                 value={value}
                 // It should be Option

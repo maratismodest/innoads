@@ -43,8 +43,6 @@ next-env.d.ts
 
 *storybook.log
 
-.storybook
-
 public/uploads
 
 .eslintcache

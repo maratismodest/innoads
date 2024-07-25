@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
-import Breadcrumbs, { Breadcrumb } from '@/components/Breadcrumbs';
+import Breadcrumbs, { Breadcrumb } from '@/components/ui/Breadcrumbs';
 import { getAllArticles } from '@/prisma/services/articles';
 import { routes, seo } from '@/utils/constants';
 import { getBlogJsonLd } from '@/utils/jsonLd';
