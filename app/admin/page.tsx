@@ -8,9 +8,9 @@ import React from 'react';
 
 import Spinner from '@/components/ui/Spinner';
 import withAuth from '@/hoc/withAuth';
+import useAuth from '@/hooks/provider/useAuth';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 import useUsersQuery from '@/hooks/query/useUsersQuery';
-import useAuth from '@/hooks/useAuth';
 import AdminPosts from '@/pages-lib/admin/admin-posts';
 import UserSearch from '@/pages-lib/admin/user-search';
 import { handleDeleteAllArchived } from '@/pages-lib/admin/utils';
@@ -66,7 +66,7 @@ async function AdminPage() {
           <Tab
             className={clsx(
               buttonStyles({ size: 'small' }),
-              '!rounded-full data-[selected]:underline'
+              '!rounded-full data-[selected]:underline',
             )}
           >
             {t('Пользователи')}
@@ -74,7 +74,7 @@ async function AdminPage() {
           <Tab
             className={clsx(
               buttonStyles({ size: 'small' }),
-              '!rounded-full data-[selected]:underline'
+              '!rounded-full data-[selected]:underline',
             )}
           >
             {t('Объявления')}

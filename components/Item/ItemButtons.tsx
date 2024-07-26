@@ -5,7 +5,7 @@ import RepublishSvg from '@/public/svg/republish.svg';
 import TrashSvg from '@/public/svg/trash.svg';
 import buttonStyles from '@/styles/buttonStyles';
 
-import { ItemModalText } from './Item.utils';
+import { ItemModalText } from './Item.helpers';
 
 const buttons = [
   // {

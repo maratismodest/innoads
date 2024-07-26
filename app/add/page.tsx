@@ -2,8 +2,8 @@
 import { useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
 
+import CreatePostModule from '@/components/PostModule/CreatePostModule';
 import withAuth from '@/hoc/withAuth';
-import CreatePostModule from '@/modules/PostModule/CreatePostModule';
 import { routes } from '@/utils/constants';
 
 const AddPage = () => {

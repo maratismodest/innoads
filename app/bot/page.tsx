@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
 
+import CreatePostModule from '@/components/PostModule/CreatePostModule';
 import Spinner from '@/components/ui/Spinner';
-import useAuth from '@/hooks/useAuth';
-import useTelegram from '@/hooks/useTelegram';
+import useAuth from '@/hooks/provider/useAuth';
+import useTelegram from '@/hooks/provider/useTelegram';
 import { useTelegramEffects } from '@/hooks/useTelegramEffects';
-import CreatePostModule from '@/modules/PostModule/CreatePostModule';
 
 export default function AddPostPage() {
   const { user, loading: userLoading } = useAuth();

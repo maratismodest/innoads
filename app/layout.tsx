@@ -11,11 +11,11 @@ import React, { Suspense } from 'react';
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header/Header';
-import AppProvider from '@/context/AppContext';
-import AuthProvider from '@/context/AuthContext';
-import QueryProvider from '@/context/QueryContext';
-import TelegramProvider from '@/context/TelegramContext';
-import ToastProvider from '@/context/ToastContext';
+import AppProvider from '@/providers/AppProvider';
+import AuthProvider from '@/providers/AuthProvider';
+import QueryProvider from '@/providers/QueryProvider';
+import TelegramProvider from '@/providers/TelegramProvider';
+import ToastProvider from '@/providers/ToastProvider';
 import { seo } from '@/utils/constants';
 
 require('dayjs/locale/ru');
@@ -51,29 +51,29 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
-        <NextIntlClientProvider messages={messages}>
-          <Suspense>
-            <QueryProvider>
-              <TelegramProvider>
-                <AuthProvider>
-                  <AppProvider>
-                    <ToastProvider>
-                      <FavouritesProvider>
-                        <Header />
-                        <main>{children}</main>
-                        <Footer />
-                      </FavouritesProvider>
-                    </ToastProvider>
-                  </AppProvider>
-                </AuthProvider>
-              </TelegramProvider>
-            </QueryProvider>
-          </Suspense>
-          <Script src={yandexScriptUrl} strategy="afterInteractive" />
-          <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
-        </NextIntlClientProvider>
-      </body>
+    <body className={inter.className}>
+    <NextIntlClientProvider messages={messages}>
+      <Suspense>
+        <QueryProvider>
+          <TelegramProvider>
+            <AuthProvider>
+              <AppProvider>
+                <ToastProvider>
+                  <FavouritesProvider>
+                    <Header />
+                    <main>{children}</main>
+                    <Footer />
+                  </FavouritesProvider>
+                </ToastProvider>
+              </AppProvider>
+            </AuthProvider>
+          </TelegramProvider>
+        </QueryProvider>
+      </Suspense>
+      <Script src={yandexScriptUrl} strategy="afterInteractive" />
+      <Script src="https://telegram.org/js/telegram-web-app.js" strategy="beforeInteractive" />
+    </NextIntlClientProvider>
+    </body>
     </html>
   );
 }

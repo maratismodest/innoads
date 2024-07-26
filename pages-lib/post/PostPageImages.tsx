@@ -1,12 +1,14 @@
 'use client';
-import ImageInView from '@/components/ImageInView';
-import ItemLike from '@/components/Item/ItemLike';
-import { NO_IMAGE } from '@/utils/constants';
 import { Dialog, DialogPanel } from '@headlessui/react';
 import { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Image from 'next/image';
 import React, { useMemo, useRef, useState } from 'react';
+
+import ImageInView from '@/components/ImageInView';
+import ItemLike from '@/components/Item/ItemLike';
+import { NO_IMAGE } from '@/utils/constants';
+
 import LeftRightButtons from './LeftRightButtons';
 import { postButtonStyles } from './utils';
 
@@ -38,7 +40,8 @@ export default function PostPageImages({ post }: Props) {
     <>
       <Dialog open={open} onClose={handleClose} className="relative z-50">
         <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-          <DialogPanel className="relative flex h-full w-full max-w-2xl items-center justify-center bg-black md:bg-white">
+          <DialogPanel
+            className="relative flex h-full w-full max-w-2xl items-center justify-center bg-black md:bg-white">
             <Image
               src={images[current]}
               alt=""

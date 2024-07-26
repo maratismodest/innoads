@@ -1,5 +1,5 @@
 import Spinner from '@/components/ui/Spinner';
-import useAuth from '@/hooks/useAuth';
+import useAuth from '@/hooks/provider/useAuth';
 import { routes } from '@/utils/constants';
 import React, { ComponentType, useEffect } from 'react';
 import { useRouter } from 'next/navigation';

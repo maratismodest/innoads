@@ -3,11 +3,11 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
 
+import EditPostModule from '@/components/PostModule/EditPostModule';
 import Spinner from '@/components/ui/Spinner';
 import withAuth from '@/hoc/withAuth';
+import useAuth from '@/hooks/provider/useAuth';
 import usePostQuery from '@/hooks/query/usePostQuery';
-import useAuth from '@/hooks/useAuth';
-import EditPostModule from '@/modules/PostModule/EditPostModule';
 import { routes } from '@/utils/constants';
 
 function EditPage<NextPage>() {

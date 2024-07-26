@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 import Select from '@/components/ui/Select';
-import useApp from '@/hooks/useApp';
+import useApp from '@/hooks/provider/useApp';
 import { Option } from '@/types/global';
 import { routes } from '@/utils/constants';
 

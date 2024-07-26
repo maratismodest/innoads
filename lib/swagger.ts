@@ -244,6 +244,5 @@ const options = {
 };
 
 export const getApiDocs = async () => {
-  const swaggerSpec = swaggerJsdoc(options);
-  return swaggerSpec;
+  return swaggerJsdoc(options);
 };

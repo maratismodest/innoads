@@ -5,12 +5,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 
+import { defaultSearchValues, ISearchFormInput, schemaSearch } from '@/components/PostModule/yup';
 import Posts from '@/components/Posts';
 import Select from '@/components/ui/Select';
+import useApp from '@/hooks/provider/useApp';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
-import useApp from '@/hooks/useApp';
 import useDebounce from '@/hooks/useDebounce';
-import { defaultSearchValues, ISearchFormInput, schemaSearch } from '@/modules/PostModule/yup';
 import inputStyles from '@/styles/inputStyles';
 import cleanObject from '@/utils/cleanObject';
 import { routes } from '@/utils/constants';

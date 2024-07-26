@@ -9,8 +9,8 @@ import { useMemo } from 'react';
 
 import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
+import useAuth from '@/hooks/provider/useAuth';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
-import useAuth from '@/hooks/useAuth';
 import Archived from '@/pages-lib/profile/Archived/Archived';
 import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
 import LogoutSvg from '@/public/svg/out.svg';

@@ -9,16 +9,15 @@ import ItemButtons from '@/components/Item/ItemButtons';
 import ItemLike from '@/components/Item/ItemLike';
 import Price from '@/components/Price';
 import Popup from '@/components/ui/Popup';
-import useApp from '@/hooks/useApp';
-import useAuth from '@/hooks/useAuth';
-import useToast from '@/hooks/useToast';
+import useApp from '@/hooks/provider/useApp';
+import useAuth from '@/hooks/provider/useAuth';
+import useToast from '@/hooks/provider/useToast';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import postTelegram from '@/utils/api/telegram/postTelegram';
 import { NO_IMAGE } from '@/utils/constants';
 
-import { checkIsOld, handleArchive, handleEdit, ItemModalText } from './Item.utils';
-
-const DAYS = 7;
+import { DAYS } from './Item.constants';
+import { checkIsOld, handleArchive, handleEdit, ItemModalText } from './Item.helpers';
 
 type ItemProps = {
   post: Post;
@@ -42,7 +41,7 @@ export function Item({ post, edit = false }: ItemProps) {
 
   const hideModal = useCallback(() => setIsOpen(false), []);
 
-  const handleFunction = async () => {
+  const handleFunction = useCallback(async () => {
     try {
       if (modalText === ItemModalText.edit) {
         await handleEdit(post, router);
@@ -73,14 +72,14 @@ export function Item({ post, edit = false }: ItemProps) {
     } finally {
       setIsOpen(false);
     }
-  };
+  },[categories, modalText, post, router, t, toast, user]);
 
   const buttons = useMemo(
     () => [
       { text: 'Да', onClick: handleFunction },
       { text: 'Нет', onClick: hideModal },
     ],
-    [handleFunction, hideModal]
+    [handleFunction, hideModal],
   );
 
   return (

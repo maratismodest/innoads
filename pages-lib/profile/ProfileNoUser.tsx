@@ -2,8 +2,8 @@ import * as jose from 'jose';
 import React from 'react';
 import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
 
-import useAuth from '@/hooks/useAuth';
-import useToast from '@/hooks/useToast';
+import useAuth from '@/hooks/provider/useAuth';
+import useToast from '@/hooks/provider/useToast';
 import buttonStyles from '@/styles/buttonStyles';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 
