@@ -1,4 +1,4 @@
-import React, { useEffect,useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface Item {
   id: number;
@@ -17,7 +17,7 @@ function VirtualList<T extends Item>({
                                        itemHeight,
                                        windowHeight,
                                        gapSize,
-                                       renderItem
+                                       renderItem,
                                      }: VirtualListProps<T>) {
   const [scrollTop, setScrollTop] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -49,9 +49,9 @@ function VirtualList<T extends Item>({
       className="overflow-auto"
       style={{ height: `${windowHeight}px` }}
     >
-      <div style={{ height: `${items.length * itemHeightWithGap - gapSize}px`, position: 'relative' }}>
+      <ul style={{ height: `${items.length * itemHeightWithGap - gapSize}px`, position: 'relative' }}>
         {visibleItems.map((item, index) => (
-          <div
+          <li
             key={item.id}
             className="absolute w-full"
             style={{
@@ -60,9 +60,9 @@ function VirtualList<T extends Item>({
             }}
           >
             {renderItem(item)}
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

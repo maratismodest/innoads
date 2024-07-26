@@ -22,11 +22,6 @@ const AdminUsers = ({ users }: AdminUsersProps) => {
           } else {
             await createBanPrisma(user.id);
           }
-          const refetchButton = document.getElementById('refetch');
-          if (refetchButton) {
-            console.log('refetchButton', refetchButton);
-            refetchButton.click();
-          }
         };
         return (
           <li

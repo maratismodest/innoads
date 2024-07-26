@@ -15,7 +15,7 @@ const AdminPosts = ({}: Props) => {
   const [enabled, setEnabled] = useState(false);
 
   const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery({
-    size: 100,
+    size: 2000,
     published: enabled ? true : undefined,
   });
 
