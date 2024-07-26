@@ -8,7 +8,7 @@ import React from 'react';
 import withAdminCheck from '@/hoc/withAdminCheck';
 import withAuth from '@/hoc/withAuth';
 import AdminPosts from '@/pages-lib/admin/admin-posts';
-import UserSearch from '@/pages-lib/admin/user-search';
+import AdminUsers from '@/pages-lib/admin/admin-users';
 import { handleDeleteAllArchived } from '@/pages-lib/admin/utils';
 import buttonStyles from '@/styles/buttonStyles';
 
@@ -44,7 +44,7 @@ async function AdminPage() {
         </TabList>
         <TabPanels className="mt-3">
           <TabPanel>
-            <UserSearch />
+            <AdminUsers />
           </TabPanel>
           <TabPanel>
             <AdminPosts />

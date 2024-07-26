@@ -12,7 +12,7 @@ import inputStyles from '@/styles/inputStyles';
 type Props = {
   // users: User[];
 };
-const UserSearch = ({}: Props) => {
+const AdminUsers = ({}: Props) => {
   const { users = [], usersLoading, usersRefetch, usersError } = useUsersQuery();
   const [username, setUsername] = useState('');
   const debounced = useDebounce(username);
@@ -49,4 +49,4 @@ const UserSearch = ({}: Props) => {
   );
 };
 
-export default UserSearch;
+export default AdminUsers;
