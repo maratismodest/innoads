@@ -5,7 +5,7 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.share
 import fetchMessage from '@/utils/api/prisma/fetchMessage';
 import postMessage from '@/utils/api/prisma/postMessage';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
-import commentPost from '@/utils/api/telegram/commentPost';
+import commentTelegramPost from '@/utils/api/telegram/commentTelegramPost';
 import { routes } from '@/utils/constants';
 
 const success = {
@@ -28,7 +28,7 @@ const handleArchive = async (post: Post, toast: (message: string) => void) => {
     await updatePostPrisma({ ...post, published: false });
     const message = await fetchMessage(post.id);
     if (message) {
-      const comment = await commentPost(message.id);
+      const comment = await commentTelegramPost(message.id);
       console.log('comment', comment);
       if (comment) {
         const _message = await postMessage({ id: comment.result.message_id, postId: post.id });

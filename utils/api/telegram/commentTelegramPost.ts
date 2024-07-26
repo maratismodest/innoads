@@ -2,7 +2,7 @@
 import { clientTelegram } from '@/utils/api/createRequest';
 import { tgRoutes } from '@/utils/constants';
 
-export default async function commentPost(
+export default async function commentTelegramPost(
   messageId: number,
   text: string = '<u>Это объявление снято с публикации</u>'
 ) {

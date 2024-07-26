@@ -1,8 +1,9 @@
+import { useRouter } from 'next/navigation';
+import React, { ComponentType, useEffect } from 'react';
+
 import Spinner from '@/components/ui/Spinner';
 import useAuth from '@/hooks/provider/useAuth';
 import { routes } from '@/utils/constants';
-import React, { ComponentType, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 const withAuth = <P extends object>(WrappedComponent: ComponentType<P>) => {
   const Wrapper: React.FC<P> = props => {

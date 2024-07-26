@@ -1,10 +1,10 @@
 'use server';
-import prisma from '@/lib/prisma';
 import { User } from '@prisma/client';
 import * as jose from 'jose';
 import { TelegramUser } from 'telegram-login-button';
 
-const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
+import prisma from '@/lib/prisma';
+import { expirationTime, getTokenAlg, secret } from '@/utils/constants';
 
 export default async function loginTelegram(user: TelegramUser | User) {
   try {
@@ -31,8 +31,8 @@ export default async function loginTelegram(user: TelegramUser | User) {
       id,
       username,
     })
-      .setProtectedHeader({ alg: 'HS256' })
-      .setExpirationTime(60 * 60 * 24 * 365 * 1000)
+      .setProtectedHeader({ alg: getTokenAlg })
+      .setExpirationTime(expirationTime)
       .sign(secret);
     return { token, upsertUser };
   } catch (e) {

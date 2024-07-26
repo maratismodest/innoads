@@ -2,7 +2,7 @@
 import { User } from '@prisma/client';
 import * as jose from 'jose';
 
-const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
+import { expirationTime, getTokenAlg, secret } from '@/utils/constants';
 
 export default async function getToken(user: Pick<User, 'id' | 'username'>) {
   try {
@@ -12,8 +12,8 @@ export default async function getToken(user: Pick<User, 'id' | 'username'>) {
       id,
       username,
     })
-      .setProtectedHeader({ alg: 'HS256' })
-      .setExpirationTime(60 * 60 * 24 * 365 * 1000)
+      .setProtectedHeader({ alg: getTokenAlg })
+      .setExpirationTime(expirationTime)
       .sign(secret);
     return token;
   } catch (e) {

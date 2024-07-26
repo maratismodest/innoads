@@ -13,7 +13,7 @@ import useApp from '@/hooks/provider/useApp';
 import useAuth from '@/hooks/provider/useAuth';
 import useToast from '@/hooks/provider/useToast';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
-import postTelegram from '@/utils/api/telegram/postTelegram';
+import postTelegramPost from '@/utils/api/telegram/postTelegramPost';
 import { NO_IMAGE } from '@/utils/constants';
 
 import { DAYS } from './Item.constants';
@@ -52,7 +52,7 @@ export function Item({ post, edit = false }: ItemProps) {
           const isOldEnough = checkIsOld(post.updatedAt, DAYS);
           if (isOldEnough) {
             await updatePostPrisma({ ...post, updatedAt: new Date() });
-            await postTelegram(post, user, categories);
+            await postTelegramPost(post, user, categories);
             alert('Объявление подано в канал повторно!');
           } else {
             alert(`Объявление подано меньше чем ${DAYS} дней назад!`);

@@ -1,17 +1,37 @@
 import { Checkbox, Field, Label } from '@headlessui/react';
-import { Post } from '@prisma/client';
 import { useTranslations } from 'next-intl';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Posts from '@/components/Posts';
+import Spinner from '@/components/ui/Spinner';
+import usePostsQuery from '@/hooks/query/usePostsQuery';
 
 type Props = {
-  posts: Post[];
+  // posts: Post[];
 };
 
-const AdminPosts = ({ posts }: Props) => {
+const AdminPosts = ({}: Props) => {
   const t = useTranslations();
   const [enabled, setEnabled] = useState(false);
+
+  const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery({
+    size: 100,
+    published: enabled ? true : undefined,
+  });
+
+  useEffect(() => {
+    postsRefetch().then(() => {
+      console.log('refetched');
+    });
+  }, [enabled]);
+
+  if (postsLoading) {
+    return <Spinner />;
+  }
+
+  if (postsError) {
+    return <h1>Что пошло не так при получении объявлений</h1>;
+  }
   return (
     <>
       <Field className="mb-2 flex items-center gap-1 hover:cursor-pointer">
@@ -37,11 +57,7 @@ const AdminPosts = ({ posts }: Props) => {
         <Label>{t('показать только активные')}</Label>
       </Field>
       <Posts
-        posts={
-          enabled
-            ? posts.filter(x => x.published === true && x.categoryId === 1 && x.id < 1000)
-            : posts
-        }
+        posts={posts}
         edit={true}
       />
     </>

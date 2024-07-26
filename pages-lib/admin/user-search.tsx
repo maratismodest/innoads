@@ -1,15 +1,28 @@
-import useDebounce from '@/hooks/useDebounce';
-import { User } from '@prisma/client';
-import Users from './users';
-import inputStyles from '@/styles/inputStyles';
 import React, { useState } from 'react';
 
+import Spinner from '@/components/ui/Spinner';
+import useUsersQuery from '@/hooks/query/useUsersQuery';
+import useDebounce from '@/hooks/useDebounce';
+import inputStyles from '@/styles/inputStyles';
+
+// import { User } from '@prisma/client';
+import Users from './users';
+
 type Props = {
-  users: User[];
+  // users: User[];
 };
-const UserSearch = ({ users }: Props) => {
+const UserSearch = ({}: Props) => {
+  const { users = [], usersLoading, usersRefetch, usersError } = useUsersQuery();
   const [username, setUsername] = useState('');
   const debounced = useDebounce(username);
+
+  if (usersLoading) {
+    return (<Spinner />);
+  }
+
+  if (usersError) {
+    return <h1>Ошибка при получении данных о пользователях</h1>;
+  }
 
   return (
     <div className="grid grid-cols-1 gap-2">

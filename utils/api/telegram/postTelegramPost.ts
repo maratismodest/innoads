@@ -24,7 +24,7 @@ export interface TelegramResponseProps {
   }[];
 }
 
-export default async function postTelegram(
+export default async function postTelegramPost(
   post: Post | CreatePostDTO | EditPostDTO,
   user: User,
   categories: Option[]

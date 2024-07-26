@@ -21,7 +21,7 @@ import type { CreatePostDTO } from '@/types';
 import postLog from '@/utils/api/prisma/postLog';
 import postMessage from '@/utils/api/prisma/postMessage';
 import postAd from '@/utils/api/prisma/postPost';
-import postTelegram, { TelegramResponseProps } from '@/utils/api/telegram/postTelegram';
+import postTelegramPost, { TelegramResponseProps } from '@/utils/api/telegram/postTelegramPost';
 import slug from '@/utils/slug';
 
 import { defaultValues, IFormInput, schema } from '../yup';
@@ -98,7 +98,7 @@ export function CreatePostModule({ onSubmitOptional = async () => undefined }: P
 
       const post = await postAd(createPostDto);
 
-      const { result }: TelegramResponseProps = (await postTelegram(
+      const { result }: TelegramResponseProps = (await postTelegramPost(
         createPostDto,
         user,
         categories,
