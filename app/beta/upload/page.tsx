@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-import { uploadFile } from '@/utils/api/client/uploadFile';
+import { uploadClientFile } from '@/utils/api/client/uploadClientFile';
 
 export default function FileUploadForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -17,7 +17,7 @@ export default function FileUploadForm() {
     event.preventDefault();
     if (!file) return;
     try {
-      const result = await uploadFile(file);
+      const result = await uploadClientFile(file);
       console.log(result);
       setUrl(result.link);
       // Handle successful upload (e.g., show success message, reset form)

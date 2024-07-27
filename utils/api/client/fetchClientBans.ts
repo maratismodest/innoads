@@ -1,7 +1,8 @@
-import { beRoutes, clientPrisma } from '@/utils/api/createRequest';
-import { Ban } from '@prisma/client';
+import type { Ban } from '@prisma/client';
 
-export default async function fetchBansApi(): Promise<Ban[]> {
+import { beRoutes, clientPrisma } from '@/utils/api/createRequest';
+
+export default async function fetchClientBans(): Promise<Ban[]> {
   const { data } = await clientPrisma.get<Ban[]>(beRoutes.bans);
   return data;
 }

@@ -1,8 +1,20 @@
 'use server';
-import prisma from '@/lib/prisma';
 import { User } from '@prisma/client';
 
-export default async function fetchUsers(): Promise<User[]> {
-  const users = await prisma.user.findMany();
+import prisma from '@/lib/prisma';
+
+export interface GetUsersParams {
+  search?: string;
+}
+
+export default async function fetchUsers(params: Partial<GetUsersParams>): Promise<User[]> {
+  const { search } = params;
+  const users = await prisma.user.findMany({
+    where: {
+      username: {
+        search: search && search + ':*',
+      },
+    },
+  });
   return users;
 }

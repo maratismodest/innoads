@@ -1,5 +1,6 @@
+import type { Post } from '@prisma/client';
+
 import { beRoutes, clientPrisma } from '@/utils/api/createRequest';
-import { Post } from '@prisma/client';
 
 export interface GetPostsParams {
   size: number;
@@ -10,7 +11,7 @@ export interface GetPostsParams {
   search?: string;
 }
 
-export default async function fetchApiPosts(params: Partial<GetPostsParams>) {
+export default async function fetchClientPosts(params: Partial<GetPostsParams>) {
   const { data } = await clientPrisma.get<Post[]>(beRoutes.posts, { params });
   return data;
 }

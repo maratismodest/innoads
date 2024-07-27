@@ -1,15 +1,17 @@
-import fetchUsers from '@/utils/api/client/fetchUsers';
 import { useQuery } from '@tanstack/react-query';
 
-export default function useUsersQuery() {
-  const { data, isLoading, error, refetch } = useQuery({
+import fetchClientUsers from '@/utils/api/client/fetchClientUsers';
+import { GetPostsParams } from '@/utils/api/prisma/fetchAds';
+
+export default function useUsersQuery(params: Partial<GetPostsParams>) {
+  const { data, isRefetching, isFetching, error, refetch } = useQuery({
     queryKey: ['users'],
-    queryFn: fetchUsers,
+    queryFn: () => fetchClientUsers(params),
   });
 
   return {
     users: data,
-    usersLoading: isLoading,
+    usersLoading: isFetching || isRefetching,
     usersError: error,
     usersRefetch: refetch,
   };

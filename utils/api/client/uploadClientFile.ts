@@ -7,7 +7,7 @@ interface UploadResponse {
   // Add other properties as needed
 }
 
-export async function uploadFile(file: File): Promise<UploadResponse> {
+export async function uploadClientFile(file: File): Promise<UploadResponse> {
   const formData = new FormData();
   formData.append('image', file);
 

@@ -1,13 +1,13 @@
-import fetchApiPosts from '@/utils/api/client/fetchApiPosts';
-import fetchMessages from '@/utils/api/client/fetchMessages';
+import fetchClientMessages from '@/utils/api/client/fetchClientMessages';
+import fetchClientPosts from '@/utils/api/client/fetchClientPosts';
 import deleteAd from '@/utils/api/prisma/deleteAd';
 import deleteTelegramPost from '@/utils/api/telegram/deleteTelegramPost';
 
 export const handleDeleteAllArchived = async () => {
   try {
-    const unpublished = await fetchApiPosts({ size: 1000, published: false });
+    const unpublished = await fetchClientPosts({ size: 1000, published: false });
     console.log('unpublished', unpublished);
-    const messages = await fetchMessages();
+    const messages = await fetchClientMessages();
     console.log('messages', messages);
     for (const post of unpublished) {
       const _messages = messages.filter(x => x.postId === post.id);

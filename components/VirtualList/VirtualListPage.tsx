@@ -13,7 +13,7 @@ export interface VirtualListItem {
 }
 
 const App: React.FC = () => {
-  const { users = [] } = useUsersQuery();
+  const { users = [] } = useUsersQuery({});
   if (!users.length) {
     return <Spinner />;
   }

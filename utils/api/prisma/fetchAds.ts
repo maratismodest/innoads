@@ -1,6 +1,7 @@
 'use server';
-import prisma from '@/lib/prisma';
 import { Post } from '@prisma/client';
+
+import prisma from '@/lib/prisma';
 
 export interface GetPostsParams {
   size: number;

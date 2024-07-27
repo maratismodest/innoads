@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
-import fetchApiPosts from '@/utils/api/client/fetchApiPosts';
+import fetchClientPosts from '@/utils/api/client/fetchClientPosts';
 import { GetPostsParams } from '@/utils/api/prisma/fetchAds';
 
 export default function usePostsQuery(params: Partial<GetPostsParams>, enabled = true) {
   const { data, isLoading, error, refetch, isPending, isRefetching, isFetching } = useQuery({
     queryKey: ['posts'],
-    queryFn: () => fetchApiPosts(params),
+    queryFn: () => fetchClientPosts(params),
     enabled: enabled,
   });
   return {

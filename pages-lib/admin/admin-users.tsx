@@ -1,50 +1,57 @@
-import React, { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import React, { FC, useMemo } from 'react';
+import { useForm } from 'react-hook-form';
 
 import Spinner from '@/components/ui/Spinner';
 import ItemRenderer from '@/components/VirtualList/ItemRenderer';
-// import { User } from '@prisma/client';
 import VirtualList from '@/components/VirtualList/VirtualList';
 import { VirtualListItem } from '@/components/VirtualList/VirtualListPage';
 import useUsersQuery from '@/hooks/query/useUsersQuery';
-import useDebounce from '@/hooks/useDebounce';
+import buttonStyles from '@/styles/buttonStyles';
 import inputStyles from '@/styles/inputStyles';
 
-type Props = {
-  // users: User[];
-};
-const AdminUsers = ({}: Props) => {
-  const { users = [], usersLoading, usersRefetch, usersError } = useUsersQuery();
-  const [username, setUsername] = useState('');
-  const debounced = useDebounce(username);
+import { defaultValues, IUserSearchForm, schema } from './yup';
 
-  if (usersLoading) {
-    return (<Spinner />);
-  }
+type Props = {};
 
-  if (usersError) {
-    return <h1>Ошибка при получении данных о пользователях</h1>;
-  }
+const AdminUsers: FC<Props> = ({}) => {
+  const { handleSubmit, register, watch } = useForm<IUserSearchForm>({
+    defaultValues: defaultValues,
+    resolver: yupResolver(schema),
+  });
+  const username = watch('username');
+  const { users = [], usersLoading, usersRefetch, usersError } = useUsersQuery({ search: username });
 
-  const items: VirtualListItem[] = users.map((user, i) => ({
-    id: i,
-    content: user,
-  }));
+  const onSubmit = async () => {
+    await usersRefetch();
+  };
+
+  const items: VirtualListItem[] = useMemo(() =>
+    users.map((user, i) => ({
+      id: i,
+      content: user,
+    })), [users]);
 
 
   return (
     <div className="grid grid-cols-1 gap-2">
-      <input
-        className={inputStyles()}
-        placeholder="@username"
-        onChange={event => setUsername(event.target.value)}
-      />
-      <VirtualList
-        items={items.filter(({content}) => content.username.toLowerCase().includes(debounced.toLowerCase()))}
+      <form className="flex items-center gap-4" onSubmit={handleSubmit(onSubmit)}>
+        <input
+          {...register('username')}
+          className={inputStyles()}
+          placeholder="@username"
+        />
+        <button className={buttonStyles({ size: 'medium' })} type="submit">Поиск</button>
+      </form>
+      {usersLoading && <Spinner />}
+      {usersError && <h1>Ошибка при получении данных о пользователях</h1>}
+      {!usersLoading && !usersError && items.length > 0 && <VirtualList
+        items={items}
         itemHeight={38}
         windowHeight={800}
         gapSize={4}
         renderItem={(item) => <ItemRenderer content={item.content} />}
-      />
+      />}
     </div>
   );
 };

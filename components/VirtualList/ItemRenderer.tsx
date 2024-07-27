@@ -12,7 +12,7 @@ interface ItemProps {
 
 const ItemRenderer: React.FC<ItemProps> = ({ content: user }) => {
   const { bans, username, id } = user as UserWithBans;
-  const [isBanned, setIsBanned] = useState(bans.length > 0);
+  const [isBanned, setIsBanned] = useState(bans ? bans.length > 0 : false);
 
   const handleClick = async (checked: boolean) => {
     if (isBanned) {

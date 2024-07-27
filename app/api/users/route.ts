@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 
-import { getAllUsers } from '@/prisma/services/users';
+import fetchUsers from '@/utils/api/prisma/fetchUsers';
+import cleanObject from '@/utils/cleanObject';
+import getSearchParams from '@/utils/getSearchParams';
 
 /**
  * @swagger
@@ -25,8 +27,11 @@ import { getAllUsers } from '@/prisma/services/users';
  */
 
 export const dynamic = 'force-dynamic';
-export async function GET() {
-  const res = await getAllUsers();
 
-  return NextResponse.json(res);
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const searchParams = new URLSearchParams(url.searchParams);
+  const res = getSearchParams(searchParams, ['search']);
+  const response = await fetchUsers(cleanObject({ search: res?.search }));
+  return NextResponse.json(response);
 }

@@ -12,6 +12,11 @@ export const beRoutes = {
   messages: '/messages',
 } as const;
 
+
+export const clientPrisma = axios.create({
+  baseURL: '/api',
+});
+
 // https://chamala.tatar - теперь только для crud images
 const clientBackend = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -31,12 +36,8 @@ clientBackend.interceptors.request.use(
   error => {
     // Do something with request error
     return Promise.reject(error);
-  }
+  },
 );
-
-export const clientPrisma = axios.create({
-  baseURL: '/api',
-});
 
 export const clientTelegram = axios.create({
   baseURL: `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_BOT_TOKEN}`,

@@ -13,7 +13,7 @@ import { tgLink } from '@/utils/constants';
 import { getPersonJsonLd } from '@/utils/jsonLd';
 
 export const generateStaticParams = async () => {
-  const users = await fetchUsers();
+  const users = await fetchUsers({});
   return users.map(user => ({ id: user.id }));
 };
 
