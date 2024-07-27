@@ -14,7 +14,10 @@ import { getPersonJsonLd } from '@/utils/jsonLd';
 
 export const generateStaticParams = async () => {
   const users = await fetchUsers({});
-  return users.map(user => ({ id: user.id }));
+  const posts = await fetchPosts({ size: 2000 });
+  return users
+    .filter(user => posts.some(post => post.userId === user.id))
+    .map(user => ({ id: user.id }));
 };
 
 export const generateMetadata = async ({ params: { id } }: GetIdPath): Promise<Metadata | null> => {
