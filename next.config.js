@@ -1,46 +1,28 @@
-// const nextTranslate = require('next-translate-plugin');
-
 const createNextIntlPlugin = require('next-intl/plugin');
 
 const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // domains: [process.env.NEXT_PUBLIC_IMAGES_DOMAIN],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_IMAGES_DOMAIN,
-        // port: '',
-        // pathname: '*',
-      },
-      {
-        protocol: 'https',
-        hostname: '*',
-        // port: '',
-        // pathname: '*',
-      },
-      {
-        protocol: 'http',
-        hostname: '*',
-        // port: '',
-        // pathname: '*',
+        port: '',
+        pathname: '*',
       },
     ],
     formats: ['image/avif', 'image/webp'],
   },
   webpack(config) {
-    // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find(rule => rule.test?.test?.('.svg'));
 
     config.module.rules.push(
-      // Reapply the existing rule, but only for svg imports ending in ?url
       {
         ...fileLoaderRule,
         test: /\.svg$/i,
         resourceQuery: /url/, // *.svg?url
       },
-      // Convert all other *.svg imports to React components
       {
         test: /\.svg$/i,
         issuer: fileLoaderRule.issuer,
@@ -49,7 +31,6 @@ const nextConfig = {
       }
     );
 
-    // Modify the file loader rule to ignore *.svg, since we have it handled now.
     fileLoaderRule.exclude = /\.svg$/i;
 
     return config;
@@ -68,7 +49,7 @@ const nextConfig = {
   // },
   experimental: {
     serverActions: {
-      allowedOrigins: [process.env.NEXT_PUBLIC_APP_DOMAIN, 'localhost:3000'],
+      allowedOrigins: [process.env.NEXT_PUBLIC_APP_DOMAIN],
     },
   },
 };
