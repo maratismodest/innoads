@@ -14,7 +14,7 @@ import { getPersonJsonLd } from '@/utils/jsonLd';
 
 export const generateStaticParams = async () => {
   const users = await fetchUsers({});
-  const posts = await fetchPosts({ size: 2000 });
+  const posts = await fetchPosts({ size: 2000, published: true });
   return users
     .filter(user => posts.some(post => post.userId === user.id))
     .map(user => ({ id: user.id }));
@@ -44,7 +44,7 @@ const PublicProfile = async ({ params: { id } }: GetIdPath) => {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(getPersonJsonLd(user)) }}
       />
-      <h1>Профиль пользователя</h1>
+      <h1>Профиль пользователя @{user.username}</h1>
       <p>
         Количество объявлений: <span>{posts.length}</span>
       </p>

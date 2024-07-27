@@ -4,13 +4,13 @@ import React from 'react';
 
 import { routes, tgLink } from '@/utils/constants';
 
-export  function Footer() {
+export function Footer() {
   return (
     <footer className="сontainer bg-gray p-4">
       {/*<a className={clsx(buttonStyles({ variant: 'secondary' }), 'w-full')} href="#">*/}
       {/*  Наверх*/}
       {/*</a>*/}
-      <div className="mx-auto max-w-[1100px] gap-4">
+      <div className="mx-auto max-w-[1100px] gap-4 px-4">
         <ul>
           <li className="hover:underline">
             <Link href={routes.blog + '/rules'}>Правила InnoAds</Link>
