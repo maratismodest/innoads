@@ -1,7 +1,9 @@
+'use client';
 import clsx from 'clsx';
 import Link from 'next/link';
 import React from 'react';
 
+import useDeviceType from '@/hooks/useDeviceType';
 import { routes } from '@/utils/constants';
 
 import HeaderDesktopButtons from './HeaderDesktopButtons';
@@ -9,8 +11,7 @@ import HeaderMobileButtons from './HeaderMobileButtons';
 import HeaderTabletButtons from './HeaderTabletButtons';
 
 export default function Header() {
-  // const matches = useMediaQuery('(min-width: 768px)');
-
+  const device = useDeviceType();
   return (
     <header
       className={clsx(
@@ -18,7 +19,7 @@ export default function Header() {
         'standalone:bottom-0 standalone:top-auto standalone:h-[80px]'
       )}
     >
-      {/*Desktop*/}
+      {/*Common*/}
       <nav className={clsx('mx-auto flex w-full max-w-[1100px] justify-between px-3 py-2')}>
         <Link href={routes.main} className="hidden items-center md:flex">
           <span className="text-2xl uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span>
@@ -29,13 +30,13 @@ export default function Header() {
         </Link>
 
         {/*Desktop*/}
-        <HeaderDesktopButtons className="hidden lg:flex" />
+        {device === 'desktop' && <HeaderDesktopButtons />}
 
         {/*Tablet*/}
-        <HeaderTabletButtons className="hidden md:block lg:hidden" />
+        {device === 'tablet' && <HeaderTabletButtons />}
 
         {/*Mobile*/}
-        <HeaderMobileButtons className="md:hidden" />
+        {device === 'mobile' && <HeaderMobileButtons />}
       </nav>
     </header>
   );

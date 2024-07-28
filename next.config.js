@@ -9,7 +9,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: process.env.NEXT_PUBLIC_IMAGES_DOMAIN,
         port: '',
-        pathname: '*',
+        pathname: '**',
       },
     ],
     formats: ['image/avif', 'image/webp'],
