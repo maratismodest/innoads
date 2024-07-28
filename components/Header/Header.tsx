@@ -15,8 +15,9 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        'fixed inset-x-0 top-0 z-50 h-[52px] bg-gray text-black',
-        'standalone:bottom-0 standalone:top-auto standalone:h-[80px]'
+        'h-header fixed inset-x-0 top-0 z-50 bg-gray text-black',
+        'standalone:bottom-0 standalone:top-auto'
+        // 'standalone:h-[80px]'
       )}
     >
       {/*Common*/}
