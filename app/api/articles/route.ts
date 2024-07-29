@@ -23,6 +23,9 @@ import { getAllArticles } from '@/prisma/services/articles';
  *
  *
  */
+
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const res = await getAllArticles();
   return NextResponse.json(res);
