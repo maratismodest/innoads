@@ -261,4 +261,4 @@ const seed = async () => {
   }
 };
 
-seed();
+seed().then(() => console.log('Seeded'));
