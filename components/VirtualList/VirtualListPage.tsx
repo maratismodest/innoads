@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import React from 'react';
 
 import Spinner from '@/components/ui/Spinner';
@@ -25,14 +25,13 @@ const App: React.FC = () => {
   // const { id, bans } = user as UserWithBans;
   // const isBanned = Boolean(bans.find(ban => ban.userId == user.id));
 
-
   return (
     <VirtualList
       items={items}
       itemHeight={38}
       windowHeight={800}
       gapSize={4}
-      renderItem={(item) => <ItemRenderer content={item.content} />}
+      renderItem={item => <ItemRenderer content={item.content} />}
     />
   );
 };

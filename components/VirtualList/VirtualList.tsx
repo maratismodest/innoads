@@ -13,12 +13,12 @@ interface VirtualListProps<T extends Item> {
 }
 
 function VirtualList<T extends Item>({
-                                       items,
-                                       itemHeight,
-                                       windowHeight,
-                                       gapSize,
-                                       renderItem,
-                                     }: VirtualListProps<T>) {
+  items,
+  itemHeight,
+  windowHeight,
+  gapSize,
+  renderItem,
+}: VirtualListProps<T>) {
   const [scrollTop, setScrollTop] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -44,12 +44,10 @@ function VirtualList<T extends Item>({
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="overflow-auto"
-      style={{ height: `${windowHeight}px` }}
-    >
-      <ul style={{ height: `${items.length * itemHeightWithGap - gapSize}px`, position: 'relative' }}>
+    <div ref={containerRef} className="overflow-auto" style={{ height: `${windowHeight}px` }}>
+      <ul
+        style={{ height: `${items.length * itemHeightWithGap - gapSize}px`, position: 'relative' }}
+      >
         {visibleItems.map((item, index) => (
           <li
             key={item.id}

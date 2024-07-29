@@ -1,3 +1,4 @@
+'use client';
 import VirtualListPage from '@/components/VirtualList/VirtualListPage';
 
 const VirtualPage = () => {
