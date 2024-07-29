@@ -21,8 +21,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({
-                                         params: { slug },
-                                       }: GetSlugPath): Promise<Metadata | null> {
+  params: { slug },
+}: GetSlugPath): Promise<Metadata | null> {
   const article = await getArticleBySlug(slug);
   if (!article) {
     return null;

@@ -1,9 +1,6 @@
-'use client';
-import React from 'react';
-
 import VirtualListPage from '@/components/VirtualList/VirtualListPage';
 
-const Page = () => {
+const VirtualPage = () => {
   return (
     <>
       <h1>Virtual List Users</h1>
@@ -12,4 +9,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default VirtualPage;

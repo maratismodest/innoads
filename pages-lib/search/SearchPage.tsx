@@ -43,7 +43,7 @@ const SearchPage = () => {
 
   const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery(
     cleanObject({ published: true, categoryId: _categoryId, search: searchText }),
-    false,
+    false
   );
 
   const onSubmit = async (data: ISearchFormInput) => {
@@ -63,7 +63,7 @@ const SearchPage = () => {
 
   // Call submit method in each change
   useEffect(() => {
-    if (refButton.current) {
+    if (refButton.current && _categoryId) {
       refButton.current.click();
     }
   }, [_categoryId, searchText]);

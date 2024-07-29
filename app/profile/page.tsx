@@ -31,8 +31,8 @@ export default function ProfilePage<NextPage>() {
     postsRefetch,
   } = usePostsQuery({ userId }, Boolean(userId));
 
-  const active: Post[] = useMemo(() => posts.filter(post => post.published === true), [posts]);
-  const archived: Post[] = useMemo(() => posts.filter(post => post.published === false), [posts]);
+  const active: Post[] = useMemo(() => posts.filter(post => post.published), [posts]);
+  const archived: Post[] = useMemo(() => posts.filter(post => !post.published), [posts]);
   const onThemeChange = (theme: 'dark' | 'light') => {
     console.log('theme change', theme);
     localStorage.setItem('theme', theme);
