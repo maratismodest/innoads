@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 
-import { defaultSearchValues, ISearchFormInput, schemaSearch } from '@/components/PostModule/yup';
 import Posts from '@/components/Posts';
 import Select from '@/components/ui/Select';
 import useApp from '@/hooks/provider/useApp';
@@ -15,58 +14,57 @@ import inputStyles from '@/styles/inputStyles';
 import cleanObject from '@/utils/cleanObject';
 import { routes } from '@/utils/constants';
 
+import { defaultSearchValues, ISearchFormInput, schemaSearch } from './yup';
+
 const SearchPage = () => {
   const router = useRouter();
   const { categories } = useApp();
   const searchParams = useSearchParams();
+  const routerCategoryId = searchParams.get('categoryId');
   const refButton = useRef<HTMLButtonElement>(null);
 
   const methods = useForm<ISearchFormInput>({
     resolver: yupResolver(schemaSearch),
-    defaultValues: { ...defaultSearchValues, categoryId: Number(searchParams.get('categoryId')) },
+    defaultValues: defaultSearchValues,
   });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    // reset,
-    // setValue,
-    // trigger,
-    // control,
+    setValue,
     watch,
     control,
   } = methods;
-  const _categoryId = watch('categoryId');
-  const _title = watch('title');
-  const searchText = useDebounce(_title);
+  const categoryId = watch('categoryId');
+  const title = watch('title');
+  const searchText = useDebounce(title);
 
   const { posts, postsLoading, postsError, postsRefetch } = usePostsQuery(
-    cleanObject({ published: true, categoryId: _categoryId, search: searchText }),
-    false
+    cleanObject({ categoryId, search: searchText, published: true }),
+    Boolean(categoryId)
   );
 
   const onSubmit = async (data: ISearchFormInput) => {
     const { categoryId } = data;
-    const options = cleanObject({
-      published: true,
-      categoryId: categoryId,
-      search: searchText,
-    });
-
+    await postsRefetch();
     if (categoryId) {
       router.push(routes.search + '?categoryId=' + categoryId);
     }
-
-    await postsRefetch(options);
   };
+
+  useEffect(() => {
+    if (routerCategoryId) {
+      setValue('categoryId', Number(routerCategoryId));
+    }
+  }, []);
 
   // Call submit method in each change
   useEffect(() => {
-    if (refButton.current && _categoryId) {
+    if (refButton.current && categoryId) {
       refButton.current.click();
     }
-  }, [_categoryId, searchText]);
+  }, [categoryId, searchText]);
 
   return (
     <>
@@ -88,7 +86,6 @@ const SearchPage = () => {
             placeholder="Поиск по заголовкам"
             className={clsx(inputStyles(), 'mt-2 w-full')}
             {...register('title')}
-            name="title"
           />
           <button type="submit" hidden ref={refButton}>
             Искать

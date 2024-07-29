@@ -28,16 +28,6 @@ export const schema = object({
   post: boolean(),
 });
 
-export const schemaSearch = object({
-  title: string(),
-  categoryId: number(),
-});
-
-export const defaultSearchValues = {
-  title: undefined,
-  categoryId: undefined,
-};
-
 export const defaultValues = {
   categoryId: undefined,
   price: undefined,
@@ -49,5 +39,3 @@ export const defaultValues = {
 };
 
 export type IFormInput = InferType<typeof schema>;
-
-export type ISearchFormInput = InferType<typeof schemaSearch>;
