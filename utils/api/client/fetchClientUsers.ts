@@ -2,7 +2,7 @@ import type { User } from '@prisma/client';
 
 import { beRoutes, clientPrisma } from '@/utils/api/createRequest';
 
-export interface GetUsersParams {
+interface GetUsersParams {
   search?: string;
 }
 
@@ -10,4 +10,3 @@ export default async function fetchClientUsers(params: Partial<GetUsersParams>):
   const { data } = await clientPrisma.get<User[]>(beRoutes.users, { params });
   return data;
 }
-

@@ -2,7 +2,7 @@ import type { Post } from '@prisma/client';
 
 import { beRoutes, clientPrisma } from '@/utils/api/createRequest';
 
-export interface GetPostsParams {
+interface GetPostsParams {
   size: number;
   page: number;
   userId: string;

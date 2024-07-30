@@ -13,10 +13,6 @@ const success = {
   archive: 'Объявление в архиве!',
 };
 
-const errors = {
-  noCase: 'Нет таких значений',
-};
-
 enum ItemModalText {
   edit = 'Редактировать объявление?',
   archive = 'Объявление не актуально?',
@@ -60,4 +56,4 @@ const checkIsOld = (updatedAt: Date, days = 0) => {
   return today > current;
 };
 
-export { checkIsOld,errors, handleArchive, handleEdit, ItemModalText, success };
+export { checkIsOld, handleArchive, handleEdit, ItemModalText };

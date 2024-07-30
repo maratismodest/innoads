@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 
 import prisma from '@/lib/prisma';
 
-export interface GetUsersParams {
+interface GetUsersParams {
   search?: string;
 }
 

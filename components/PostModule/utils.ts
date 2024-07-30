@@ -35,4 +35,4 @@ const handlePostImage = async (formData: FormData) => {
   }
 };
 
-export { ACCEPTED_IMAGE_FORMAT, compressionOptions, handleImageResize,handlePostImage };
+export { ACCEPTED_IMAGE_FORMAT, handleImageResize, handlePostImage };
