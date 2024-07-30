@@ -1,5 +1,6 @@
-import fetchCategories from '@/utils/api/prisma/fetchCategories';
 import { useQuery } from '@tanstack/react-query';
+
+import fetchCategories from '@/utils/api/prisma/fetchCategories';
 
 export default function useCategoriesQuery() {
   const { data, isLoading, error, refetch } = useQuery({

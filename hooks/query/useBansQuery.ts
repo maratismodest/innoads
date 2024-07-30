@@ -1,5 +1,6 @@
-import fetchClientBans from '@/utils/api/client/fetchClientBans';
 import { useQuery } from '@tanstack/react-query';
+
+import fetchClientBans from '@/utils/api/client/fetchClientBans';
 
 export default function useBansQuery() {
   const { data, isLoading, error, refetch } = useQuery({

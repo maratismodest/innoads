@@ -1,5 +1,6 @@
-import fetchClientPost from '@/utils/api/client/fetchClientPost';
 import { useQuery } from '@tanstack/react-query';
+
+import fetchClientPost from '@/utils/api/client/fetchClientPost';
 
 export default function usePostQuery(slug: string, enabled = true) {
   const { data, isLoading, error, refetch, isPending, isRefetching, isFetching } = useQuery({
