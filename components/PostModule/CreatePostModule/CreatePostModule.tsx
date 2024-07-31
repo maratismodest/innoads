@@ -101,14 +101,14 @@ export function CreatePostModule({ onSubmitOptional = async () => undefined }: P
       const { result }: TelegramResponseProps = (await postTelegramPost(
         createPostDto,
         user,
-        categories,
+        categories
       )) as TelegramResponseProps;
       for (const result_item of result) {
         const message = await postMessage({ id: result_item.message_id, postId: post.id });
         console.warn('message', message);
       }
       reset();
-      toast(t('Объявление создано'));
+      alert(t('Объявление создано') + '. Можете закрыть приложение');
       await onSubmitOptional();
     } catch (e) {
       console.error(e);
