@@ -59,7 +59,7 @@ export default function ProfilePage<NextPage>() {
   }
 
   return (
-    <div className="flex flex-1 flex-col items-center gap-8">
+    <div className="flex flex-col items-center gap-8">
       <div className="text-center">
         <h1>{t('Профиль')}</h1>
         <p>Добавить объявление{isTelegram === 1 ? '.' : ''}</p>

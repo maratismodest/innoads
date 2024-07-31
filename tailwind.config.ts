@@ -35,7 +35,7 @@ const config: Config = {
       height: {
         header: 'var(--header-height)',
       },
-      width: {
+      maxWidth: {
         app: 'var(--app-width)',
       },
       animation: {
