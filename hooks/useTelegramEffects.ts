@@ -1,13 +1,5 @@
 import WebApp from '@twa-dev/sdk';
-import { useCallback, useEffect } from 'react';
-
-const onSendData = () => {
-  const data = {
-    type: 'success',
-    text: 'Объявление создано!',
-  };
-  WebApp.sendData(JSON.stringify(data));
-};
+import { useEffect } from 'react';
 
 export function useTelegramEffects() {
   useEffect(() => {
@@ -28,10 +20,18 @@ export function useTelegramEffects() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      const onSendData = () => {
+        const data = {
+          type: 'success',
+          text: 'Объявление создано!',
+        };
+        WebApp.sendData(JSON.stringify(data));
+      };
+
       WebApp.onEvent('mainButtonClicked', onSendData);
       return () => {
         WebApp.offEvent('mainButtonClicked', onSendData);
       };
     }
-  }, [onSendData, WebApp, window]);
+  }, [WebApp, window]);
 }

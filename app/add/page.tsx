@@ -1,5 +1,4 @@
 'use client';
-import WebApp from '@twa-dev/sdk';
 import { useRouter } from 'next/navigation';
 import React, { useCallback } from 'react';
 
@@ -11,10 +10,7 @@ import { routes } from '@/utils/constants';
 const AddPage = () => {
   const router = useRouter();
   useTelegramEffects();
-  const onSubmitOptional = useCallback(async () => {
-    typeof window !== 'undefined' ? WebApp.MainButton.show() : undefined;
-    router.push(routes.profile);
-  }, [router]);
+  const onSubmitOptional = useCallback(async () => router.push(routes.profile), [router]);
 
   return <CreatePostModule onSubmitOptional={onSubmitOptional} />;
 };
