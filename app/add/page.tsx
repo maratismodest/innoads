@@ -4,10 +4,12 @@ import React, { useCallback } from 'react';
 
 import CreatePostModule from '@/components/PostModule/CreatePostModule';
 import withAuth from '@/hoc/withAuth';
+import { useTelegramEffects } from '@/hooks/useTelegramEffects';
 import { routes } from '@/utils/constants';
 
 const AddPage = () => {
   const router = useRouter();
+  useTelegramEffects();
   const onSubmitOptional = useCallback(async () => router.push(routes.profile), [router]);
 
   return <CreatePostModule onSubmitOptional={onSubmitOptional} />;
