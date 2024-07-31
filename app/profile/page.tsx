@@ -97,14 +97,14 @@ export default function ProfilePage<NextPage>() {
               dark
             </button>
           </div>
+          <div className="flex justify-center">
+            <button className={clsx(buttonStyles({ size: 'medium' }))} onClick={logout}>
+              <LogoutSvg className="size-4" />
+              <span>Выход</span>
+            </button>
+          </div>
         </div>
       )}
-      <div className="flex justify-center">
-        <button className={clsx(buttonStyles({ size: 'medium' }))} onClick={logout}>
-          <LogoutSvg className="size-4" />
-          <span>Выход</span>
-        </button>
-      </div>
     </div>
   );
 }
