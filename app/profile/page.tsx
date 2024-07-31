@@ -2,7 +2,7 @@
 
 import type { Post } from '@prisma/client';
 import { clsx } from 'clsx';
-import { useAtomValue } from 'jotai';
+// import { useAtomValue } from 'jotai';
 // import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
@@ -23,7 +23,7 @@ export default function ProfilePage<NextPage>() {
   const t = useTranslations();
   const { user, logout, loading } = useAuth();
   const userId = user?.id;
-  const isTelegram = useAtomValue(stateAtom);
+  // const isTelegram = useAtomValue(stateAtom);
   const {
     posts = [],
     postsLoading,
@@ -70,11 +70,10 @@ export default function ProfilePage<NextPage>() {
         {/*  &#43;*/}
         {/*</Link>*/}
         <button
-          className={clsx(buttonStyles())}
+          className={clsx(buttonStyles(), 'hidden')}
           onClick={() => {
             postsRefetch();
           }}
-          hidden
           id="refetch-posts"
         >
           Обновить данные
