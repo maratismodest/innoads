@@ -2,13 +2,11 @@ import WebApp from '@twa-dev/sdk';
 import { useCallback, useEffect } from 'react';
 
 const onSendData = () => {
-  if (typeof window !== 'undefined') {
-    const data = {
-      type: 'success',
-      text: 'Объявление создано!',
-    };
-    WebApp.sendData(JSON.stringify(data));
-  }
+  const data = {
+    type: 'success',
+    text: 'Объявление создано!',
+  };
+  WebApp.sendData(JSON.stringify(data));
 };
 
 export function useTelegramEffects() {

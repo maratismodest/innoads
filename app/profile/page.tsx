@@ -14,7 +14,7 @@ import usePostsQuery from '@/hooks/query/usePostsQuery';
 // import Archived from '@/pages-lib/profile/Archived/Archived';
 import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
 // import LogoutSvg from '@/public/svg/out.svg';
-import { stateAtom } from '@/state';
+// import { stateAtom } from '@/state';
 import buttonStyles from '@/styles/buttonStyles';
 // import { routes } from '@/utils/constants';
 // import { setTheme } from '@/utils/setTheme';
