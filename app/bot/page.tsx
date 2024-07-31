@@ -9,7 +9,8 @@ import { useTelegramEffects } from '@/hooks/useTelegramEffects';
 
 export default function AddPostPage() {
   const { user, loading: userLoading } = useAuth();
-  const onSubmitOptional = () => WebApp.MainButton.show();
+  const onSubmitOptional = () =>
+    typeof window !== 'undefined' ? WebApp.MainButton.show() : undefined;
 
   useTelegramEffects();
 

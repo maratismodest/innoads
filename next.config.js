@@ -52,6 +52,8 @@ const nextConfig = {
       allowedOrigins: [process.env.NEXT_PUBLIC_APP_DOMAIN],
     },
   },
+  reactStrictMode: true,
+  swcMinify: true,
 };
 
 module.exports = withNextIntl(nextConfig);
