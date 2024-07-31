@@ -3,22 +3,14 @@
 import WebApp from '@twa-dev/sdk';
 import { useEffect, useState } from 'react';
 
-// Define the interface for user data
-interface UserData {
-  id: number;
-  first_name: string;
-  last_name?: string;
-  username?: string;
-  language_code: string;
-  is_premium?: boolean;
-}
+import { TgUserData } from '@/types/global';
 
 export default function Home() {
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const [userData, setUserData] = useState<TgUserData | null>(null);
 
   useEffect(() => {
     if (WebApp.initDataUnsafe.user) {
-      setUserData(WebApp.initDataUnsafe.user as UserData);
+      setUserData(WebApp.initDataUnsafe.user as TgUserData);
     }
   }, []);
 

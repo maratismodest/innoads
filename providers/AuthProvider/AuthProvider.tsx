@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 
 import Popup from '@/components/ui/Popup';
+import useTelegram from '@/hooks/provider/useTelegram';
 import { stateAtom } from '@/state';
 import { UserWithBans } from '@/types';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
@@ -17,13 +18,14 @@ type Props = {
   children: ReactNode;
 };
 
-export  function AuthProvider({ children }: Props) {
+export function AuthProvider({ children }: Props) {
   const [message, setMessage] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const [user, setUser] = useState<UserWithBans | undefined>(undefined);
   const [loading, setLoading] = useState(true);
+  const { tgUserData } = useTelegram();
   const checkToken = useCallback(async () => {
     setLoading(true);
     try {
@@ -71,7 +73,7 @@ export  function AuthProvider({ children }: Props) {
       setLoading(false);
     }
   }, []);
-  const [telegram, setTelegram] = useAtom(stateAtom);
+  const [_, setTelegram] = useAtom(stateAtom);
 
   // @ts-ignore
   useEffect(() => {

@@ -14,6 +14,7 @@ import Header from '@/components/Header/Header';
 import AppProvider from '@/providers/AppProvider';
 import AuthProvider from '@/providers/AuthProvider';
 import QueryProvider from '@/providers/QueryProvider';
+import TelegramProvider from '@/providers/TelegramProvider';
 import ToastProvider from '@/providers/ToastProvider';
 import { seo } from '@/utils/constants';
 
@@ -54,19 +55,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <NextIntlClientProvider messages={messages}>
           <Suspense>
             <QueryProvider>
-              {/*<TelegramProvider>*/}
               <AuthProvider>
-                <AppProvider>
-                  <ToastProvider>
-                    <FavouritesProvider>
-                      <Header />
-                      <main>{children}</main>
-                      <Footer />
-                    </FavouritesProvider>
-                  </ToastProvider>
-                </AppProvider>
+                <TelegramProvider>
+                  <AppProvider>
+                    <ToastProvider>
+                      <FavouritesProvider>
+                        <Header />
+                        <main>{children}</main>
+                        <Footer />
+                      </FavouritesProvider>
+                    </ToastProvider>
+                  </AppProvider>
+                </TelegramProvider>
               </AuthProvider>
-              {/*</TelegramProvider>*/}
             </QueryProvider>
           </Suspense>
           <Script src={yandexScriptUrl} strategy="afterInteractive" />

@@ -4,11 +4,16 @@ import * as jose from 'jose';
 import { TelegramUser } from 'telegram-login-button';
 
 import prisma from '@/lib/prisma';
+import { TgUserData } from '@/types/global';
 import { expirationTime, getTokenAlg, secret } from '@/utils/constants';
 
-export default async function loginTelegram(user: TelegramUser | User) {
+export default async function loginTelegram(user: TelegramUser | User | TgUserData) {
   try {
     const { id, username } = user;
+    if (!username) {
+      alert('У вашего профиля нужно заполнить @username!');
+      return;
+    }
     const upsertUser = await prisma.user.upsert({
       where: {
         id: String(id),

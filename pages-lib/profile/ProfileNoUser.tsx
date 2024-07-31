@@ -1,10 +1,12 @@
 import * as jose from 'jose';
-import React from 'react';
+import React, { useEffect } from 'react';
 import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
 
 import useAuth from '@/hooks/provider/useAuth';
+import useTelegram from '@/hooks/provider/useTelegram';
 import useToast from '@/hooks/provider/useToast';
 import buttonStyles from '@/styles/buttonStyles';
+import type { TgUserData } from '@/types/global';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 
 import { ERROR_ALIAS_MESSAGE, ERROR_TOKEN_MESSAGE, userTemplate } from './utils';
@@ -12,8 +14,17 @@ import { ERROR_ALIAS_MESSAGE, ERROR_TOKEN_MESSAGE, userTemplate } from './utils'
 export default function ProfileNoUser() {
   const { login } = useAuth();
   const { toast } = useToast();
+  const { tgUserData } = useTelegram();
 
-  const handleTelegram = async (user: TelegramUser) => {
+  useEffect(() => {
+    if (tgUserData) {
+      handleTelegram(tgUserData).then(res => {
+        console.log('tgUserData', tgUserData);
+      });
+    }
+  }, [tgUserData]);
+
+  const handleTelegram = async (user: TelegramUser | TgUserData) => {
     if (!user.username) {
       return toast(ERROR_ALIAS_MESSAGE);
     }
