@@ -3,7 +3,7 @@
 import type { Post } from '@prisma/client';
 import { clsx } from 'clsx';
 import { useAtomValue } from 'jotai';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useMemo } from 'react';
 
@@ -16,7 +16,7 @@ import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
 // import LogoutSvg from '@/public/svg/out.svg';
 import { stateAtom } from '@/state';
 import buttonStyles from '@/styles/buttonStyles';
-import { routes } from '@/utils/constants';
+// import { routes } from '@/utils/constants';
 // import { setTheme } from '@/utils/setTheme';
 
 export default function ProfilePage<NextPage>() {
@@ -59,21 +59,22 @@ export default function ProfilePage<NextPage>() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div>
       <div className="text-center">
         <h1>{t('Профиль')}</h1>
-        <p>Добавить объявление{isTelegram === 1 ? '.' : ''}</p>
-        <Link
-          href={isTelegram === 1 ? routes.bot : routes.add}
-          className={clsx(buttonStyles(), 'flex h-12 w-full items-center justify-center !text-3xl')}
-        >
-          &#43;
-        </Link>
+        {/*<p>Добавить объявление{isTelegram === 1 ? '.' : ''}</p>*/}
+        {/*<Link*/}
+        {/*  href={isTelegram === 1 ? routes.bot : routes.add}*/}
+        {/*  className={clsx(buttonStyles(), 'flex h-12 w-full items-center justify-center !text-3xl')}*/}
+        {/*>*/}
+        {/*  &#43;*/}
+        {/*</Link>*/}
         <button
-          className={clsx(buttonStyles(), 'sr-only')}
+          className={clsx(buttonStyles())}
           onClick={() => {
             postsRefetch();
           }}
+          hidden
           id="refetch-posts"
         >
           Обновить данные
