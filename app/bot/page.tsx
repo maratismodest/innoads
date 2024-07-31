@@ -1,18 +1,17 @@
 'use client';
+import WebApp from '@twa-dev/sdk';
 import React from 'react';
 
 import CreatePostModule from '@/components/PostModule/CreatePostModule';
 import Spinner from '@/components/ui/Spinner';
 import useAuth from '@/hooks/provider/useAuth';
-import useTelegram from '@/hooks/provider/useTelegram';
 import { useTelegramEffects } from '@/hooks/useTelegramEffects';
 
 export default function AddPostPage() {
   const { user, loading: userLoading } = useAuth();
-  const { tg } = useTelegram();
-  const onSubmitOptional = () => tg?.MainButton.show();
+  const onSubmitOptional = () => WebApp.MainButton.show();
 
-  useTelegramEffects(tg);
+  useTelegramEffects();
 
   if (userLoading) return <Spinner />;
 

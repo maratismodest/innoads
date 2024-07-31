@@ -1,31 +1,31 @@
-// hooks/useTelegramEffects.ts
+import WebApp from '@twa-dev/sdk';
 import { useCallback, useEffect } from 'react';
 
-export function useTelegramEffects(tg: any) {
+export function useTelegramEffects() {
   useEffect(() => {
-    if (tg?.colorScheme) {
-      localStorage.setItem('colorScheme', tg.colorScheme);
+    if (WebApp.colorScheme) {
+      localStorage.setItem('colorScheme', WebApp.colorScheme);
     }
-  }, [tg?.colorScheme]);
+  }, [WebApp.colorScheme]);
 
   useEffect(() => {
-    tg?.MainButton.setParams({
+    WebApp.MainButton.setParams({
       text: 'Закрыть окно',
     });
-  }, [tg?.MainButton]);
+  }, [WebApp.MainButton]);
 
   const onSendData = useCallback(() => {
     const data = {
       type: 'success',
       text: 'Объявление создано!',
     };
-    tg?.sendData(JSON.stringify(data));
-  }, [tg]);
+    WebApp.sendData(JSON.stringify(data));
+  }, [WebApp]);
 
   useEffect(() => {
-    tg?.onEvent('mainButtonClicked', onSendData);
+    WebApp.onEvent('mainButtonClicked', onSendData);
     return () => {
-      tg?.offEvent('mainButtonClicked', onSendData);
+      WebApp.offEvent('mainButtonClicked', onSendData);
     };
-  }, [onSendData, tg]);
+  }, [onSendData, WebApp]);
 }
