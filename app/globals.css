@@ -3,151 +3,147 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --header-height: 52px;
+  :root {
+    --header-height: 52px;
+    --app-width: 1100px;
 
-        @media (display-mode: standalone) {
-            --header-height: 80px;
-        }
+    @media (display-mode: standalone) {
+      --header-height: 80px;
     }
+  }
 
-    ul::-webkit-scrollbar {
-        display: none;
+  ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  html {
+    @apply scroll-smooth;
+
+    scrollbar-gutter: stable;
+  }
+
+  html,
+  body {
+    font-family: Roboto, sans-serif;
+
+    @apply text-black dark:bg-darkBackground dark:text-white;
+  }
+
+  pre {
+    font-family: Roboto, sans-serif;
+  }
+
+  main {
+    margin: var(--header-height) auto 0;
+    padding: 12px;
+    max-width: var(--app-width);
+    position: relative;
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    flex-direction: column;
+
+    @media (display-mode: standalone) {
+      margin: 0 auto var(--header-height);
     }
+  }
 
-    html {
-        @apply scroll-smooth;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply mb-1;
+  }
 
-        scrollbar-gutter: stable;
-    }
+  h1 {
+    @apply text-2xl;
+  }
 
-    html,
-    body {
-        font-family: Roboto, sans-serif;
+  h2 {
+    @apply text-xl;
+  }
 
-        @apply text-black dark:text-white dark:bg-darkBackground;
-    }
+  h3 {
+    @apply text-lg;
+  }
 
-    pre {
-        font-family: Roboto, sans-serif;
-    }
+  h4 {
+    @apply text-base;
+  }
 
-    main {
-        margin: var(--header-height) auto 0;
-        padding: 12px;
-        max-width: 1100px;
-        position: relative;
-        min-height: calc(100vh - var(--header-height));
-        display: flex;
-        flex-direction: column;
+  h5 {
+    @apply text-sm;
+  }
 
-        @media (display-mode: standalone) {
-            margin: 0 auto var(--header-height);
-        }
-    }
+  h6 {
+    @apply text-xs;
+  }
 
+  dialog {
+    @apply relative w-full max-w-md rounded border-none shadow;
+  }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        @apply mb-1;
-    }
+  textarea {
+    @apply m-0 rounded border border-inputBorder px-4 py-2;
+  }
 
-    h1 {
-        @apply text-2xl;
-    }
+  hr {
+    @apply my-2 border-gray;
+  }
 
-    h2 {
-        @apply text-xl;
-    }
-
-    h3 {
-        @apply text-lg;
-    }
-
-    h4 {
-        @apply text-base;
-    }
-
-    h5 {
-        @apply text-sm;
-    }
-
-    h6 {
-        @apply text-xs
-    }
-
-    dialog {
-        @apply relative w-full max-w-md border-none rounded shadow
-    }
-
-    textarea {
-        @apply m-0 border border-inputBorder rounded px-4 py-2;
-    }
-
-    hr {
-        @apply my-2 border-gray
-    }
-
-    /* img { */
-
-    /*    height: inherit; */
-
-    /* } */
-    li {
-        list-style: none;
-    }
-
+  /* img { */
+  /*    height: inherit; */
+  /* } */
+  li {
+    list-style: none;
+  }
 }
 
 @layer components {
-    .center {
-        @apply m-0 absolute top-1/2 left-1/2 text-center;
+  .center {
+    @apply absolute left-1/2 top-1/2 m-0 text-center;
+  }
+
+  .block-center {
+    @apply mx-auto block;
+  }
+
+  .items {
+    @apply grid w-full grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-5;
+  }
+
+  .form {
+    @apply relative mx-auto flex w-full max-w-[400px] flex-col gap-4;
+  }
+
+  .wysiwyg > ul {
+    @apply mt-2;
+  }
+
+  .wysiwyg > p {
+    @apply mt-2;
+  }
+
+  .wysiwyg ul {
+    @apply list-inside list-disc;
+  }
+
+  .error {
+    @apply text-red;
+  }
+
+  .count {
+    @apply rounded bg-[rgba(0,0,0,0.6)] p-1 text-sm text-white;
+  }
+
+  @keyframes bouncer {
+    0% {
+      transform: translateY(-25%);
     }
 
-    .block-center {
-        @apply block mx-auto;
+    100% {
+      transform: translateY(0);
     }
-
-    .items {
-        @apply grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2 w-full;
-    }
-
-    .form {
-        @apply relative flex flex-col mx-auto max-w-[400px] gap-4 w-full
-    }
-
-    .wysiwyg > ul {
-        @apply mt-2
-    }
-
-    .wysiwyg > p {
-        @apply mt-2
-    }
-
-    .wysiwyg ul {
-        @apply list-disc list-inside
-    }
-
-    .error {
-        @apply text-red
-    }
-
-    .count {
-        @apply rounded bg-[rgba(0,0,0,0.6)] p-1 text-sm text-white;
-    }
-
-    @keyframes bouncer {
-        0% {
-            transform: translateY(-25%);
-        }
-
-        100% {
-            transform: translateY(0);
-        }
-    }
-
+  }
 }

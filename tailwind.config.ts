@@ -35,6 +35,9 @@ const config: Config = {
       height: {
         header: 'var(--header-height)',
       },
+      width: {
+        app: 'var(--app-width)',
+      },
       animation: {
         transit: 'bouncer 0.2s ease-in-out',
       },
