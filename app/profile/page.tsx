@@ -11,13 +11,13 @@ import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
 import useAuth from '@/hooks/provider/useAuth';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
-import Archived from '@/pages-lib/profile/Archived/Archived';
+// import Archived from '@/pages-lib/profile/Archived/Archived';
 import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
-import LogoutSvg from '@/public/svg/out.svg';
+// import LogoutSvg from '@/public/svg/out.svg';
 import { stateAtom } from '@/state';
 import buttonStyles from '@/styles/buttonStyles';
 import { routes } from '@/utils/constants';
-import { setTheme } from '@/utils/setTheme';
+// import { setTheme } from '@/utils/setTheme';
 
 export default function ProfilePage<NextPage>() {
   const t = useTranslations();
@@ -32,12 +32,12 @@ export default function ProfilePage<NextPage>() {
   } = usePostsQuery({ userId }, Boolean(userId));
 
   const active: Post[] = useMemo(() => posts.filter(post => post.published), [posts]);
-  const archived: Post[] = useMemo(() => posts.filter(post => !post.published), [posts]);
-  const onThemeChange = (theme: 'dark' | 'light') => {
-    console.log('theme change', theme);
-    localStorage.setItem('theme', theme);
-    setTheme();
-  };
+  // const archived: Post[] = useMemo(() => posts.filter(post => !post.published), [posts]);
+  // const onThemeChange = (theme: 'dark' | 'light') => {
+  //   console.log('theme change', theme);
+  //   localStorage.setItem('theme', theme);
+  //   setTheme();
+  // };
 
   if (loading) {
     return <Spinner />;
@@ -83,28 +83,28 @@ export default function ProfilePage<NextPage>() {
       {posts.length > 0 && (
         <>
           <Posts posts={active} edit={true} />
-          {archived.length > 0 && <Archived posts={archived} />}
+          {/*{archived.length > 0 && <Archived posts={archived} />}*/}
         </>
       )}
       {!postsLoading && posts.length === 0 && <h2>Нет объявлений</h2>}
-      {isTelegram !== 1 && (
-        <div className="mt-auto w-full">
-          <div className="mb-4 flex items-center justify-center gap-2">
-            <button className={buttonStyles()} onClick={() => onThemeChange('light')}>
-              light
-            </button>
-            <button className={buttonStyles()} onClick={() => onThemeChange('dark')}>
-              dark
-            </button>
-          </div>
-          <div className="flex justify-center">
-            <button className={clsx(buttonStyles({ size: 'medium' }))} onClick={logout}>
-              <LogoutSvg className="size-4" />
-              <span>Выход</span>
-            </button>
-          </div>
-        </div>
-      )}
+      {/*{isTelegram !== 1 && (*/}
+      {/*  <div className="mt-auto w-full">*/}
+      {/*    <div className="mb-4 flex items-center justify-center gap-2">*/}
+      {/*      <button className={buttonStyles()} onClick={() => onThemeChange('light')}>*/}
+      {/*        light*/}
+      {/*      </button>*/}
+      {/*      <button className={buttonStyles()} onClick={() => onThemeChange('dark')}>*/}
+      {/*        dark*/}
+      {/*      </button>*/}
+      {/*    </div>*/}
+      {/*    <div className="flex justify-center">*/}
+      {/*      <button className={clsx(buttonStyles({ size: 'medium' }))} onClick={logout}>*/}
+      {/*        <LogoutSvg className="size-4" />*/}
+      {/*        <span>Выход</span>*/}
+      {/*      </button>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </div>
   );
 }
