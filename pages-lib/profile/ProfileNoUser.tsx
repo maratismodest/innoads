@@ -12,17 +12,17 @@ import loginTelegram from '@/utils/api/prisma/loginTelegram';
 import { ERROR_ALIAS_MESSAGE, ERROR_TOKEN_MESSAGE, userTemplate } from './utils';
 
 export default function ProfileNoUser() {
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const { toast } = useToast();
   const { tgUserData } = useTelegram();
 
   useEffect(() => {
-    if (tgUserData) {
+    if (tgUserData && !user) {
       handleTelegram(tgUserData).then(res => {
         console.log('tgUserData', tgUserData);
       });
     }
-  }, [tgUserData]);
+  }, [tgUserData, user]);
 
   const handleTelegram = async (user: TelegramUser | TgUserData) => {
     if (!user.username) {
