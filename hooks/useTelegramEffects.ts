@@ -1,16 +1,15 @@
 'use client';
 import WebApp from '@twa-dev/sdk';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 
 // const isWindow = typeof window !== 'undefined';
 const onSendData = () => {
-  if (typeof window !== 'undefined' && WebApp) {
-    const data = {
-      type: 'success',
-      text: 'Объявление создано!',
-    };
-    WebApp.sendData(data);
-  }
+  const data = {
+    type: 'success',
+    text: 'Объявление создано!',
+  };
+  WebApp.sendData(data);
+  WebApp.close();
 };
 
 export function useTelegramEffects() {
@@ -22,9 +21,7 @@ export function useTelegramEffects() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      WebApp?.MainButton.setParams({
-        text: 'Закрыть окно',
-      });
+      WebApp.MainButton.setText('Закрыть окно');
     }
   }, [WebApp?.MainButton, window]);
 

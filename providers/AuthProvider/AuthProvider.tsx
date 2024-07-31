@@ -1,12 +1,10 @@
 'use client';
 import { User } from '@prisma/client';
-import { useAtom } from 'jotai';
 import { useSearchParams } from 'next/navigation';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 
 import Popup from '@/components/ui/Popup';
 import useTelegram from '@/hooks/provider/useTelegram';
-import { stateAtom } from '@/state';
 import { UserWithBans } from '@/types';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 
@@ -73,14 +71,12 @@ export function AuthProvider({ children }: Props) {
       setLoading(false);
     }
   }, []);
-  const [_, setTelegram] = useAtom(stateAtom);
 
   // @ts-ignore
   useEffect(() => {
     console.log('token', token);
     if (token) {
       localStorage.setItem('token', token);
-      setTelegram(1);
     }
     checkToken();
     return () => checkToken();

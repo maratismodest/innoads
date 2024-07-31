@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import CreatePostModule from '@/components/PostModule/CreatePostModule';
 import withAuth from '@/hoc/withAuth';
