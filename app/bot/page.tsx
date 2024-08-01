@@ -4,11 +4,10 @@ import React from 'react';
 import CreatePostModule from '@/components/PostModule/CreatePostModule';
 import Spinner from '@/components/ui/Spinner';
 import useAuth from '@/hooks/provider/useAuth';
-import { useTelegramEffects } from '@/hooks/useTelegramEffects';
+import useTelegramEffects from '@/hooks/useTelegramEffects';
 
 export default function AddPostPage() {
   const { user, loading: userLoading } = useAuth();
-  const onSubmitOptional = () => undefined;
 
   useTelegramEffects();
 
@@ -23,8 +22,5 @@ export default function AddPostPage() {
     );
   }
 
-  return <CreatePostModule onSubmitOptional={onSubmitOptional} />;
+  return <CreatePostModule />;
 }
-
-// const onSubmitOptional = () =>
-//   typeof window !== 'undefined' ? WebApp.MainButton.show() : undefined;

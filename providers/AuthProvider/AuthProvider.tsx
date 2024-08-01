@@ -1,11 +1,9 @@
 'use client';
-import { User } from '@prisma/client';
-import { useSearchParams } from 'next/navigation';
+import type { User } from '@prisma/client';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 
 import Popup from '@/components/ui/Popup';
-import useTelegram from '@/hooks/provider/useTelegram';
-import { UserWithBans } from '@/types';
+import type { UserWithBans } from '@/types';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 
 import { AuthContext } from './AuthContext';
@@ -19,11 +17,8 @@ type Props = {
 export function AuthProvider({ children }: Props) {
   const [message, setMessage] = useState<string>('');
   const [isOpen, setIsOpen] = useState(false);
-  const searchParams = useSearchParams();
-  const token = searchParams.get('token');
   const [user, setUser] = useState<UserWithBans | undefined>(undefined);
   const [loading, setLoading] = useState(true);
-  const { tgUserData } = useTelegram();
   const checkToken = useCallback(async () => {
     setLoading(true);
     try {
@@ -74,13 +69,9 @@ export function AuthProvider({ children }: Props) {
 
   // @ts-ignore
   useEffect(() => {
-    console.log('token', token);
-    if (token) {
-      localStorage.setItem('token', token);
-    }
     checkToken();
     return () => checkToken();
-  }, []);
+  }, [checkToken]);
 
   const login = (user: UserWithBans, token: string) => {
     localStorage.setItem('token', token);

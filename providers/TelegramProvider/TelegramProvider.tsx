@@ -16,15 +16,17 @@ export function TelegramProvider({ children }: Props) {
   const [tgLoading, setTgLoading] = useState(false);
   const [tgUserData, setTgUserData] = useState<TgUserData | null>(null);
   const handleApp = async () => {
-    setTgLoading(true);
-    try {
-      if (WebApp.initDataUnsafe.user) {
-        setTgUserData(WebApp.initDataUnsafe.user as TgUserData);
+    if (typeof window !== 'undefined') {
+      setTgLoading(true);
+      try {
+        if (WebApp.initDataUnsafe.user) {
+          setTgUserData(WebApp.initDataUnsafe.user as TgUserData);
+        }
+      } catch (err) {
+        console.error('TelegramProvider error:', err);
+      } finally {
+        setTgLoading(false);
       }
-    } catch (err) {
-      console.error('TelegramProvider error:', err);
-    } finally {
-      setTgLoading(false);
     }
   };
 
@@ -41,9 +43,11 @@ export function TelegramProvider({ children }: Props) {
   }, [tgUserData]);
 
   useEffect(() => {
-    handleApp().then(() => {
-      console.warn('App Login Success');
-    });
+    if (typeof window !== 'undefined') {
+      handleApp().then(() => {
+        console.warn('App Login Success');
+      });
+    }
   }, []);
 
   return (
