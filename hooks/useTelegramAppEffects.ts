@@ -2,9 +2,9 @@
 import WebApp from '@twa-dev/sdk';
 import { useEffect } from 'react';
 
-const onSendData = () => {
-  WebApp.close();
-};
+// const onSendData = () => {
+//   WebApp.close();
+// };
 
 export function useTelegramAppEffects() {
   useEffect(() => {
@@ -13,18 +13,18 @@ export function useTelegramAppEffects() {
     }
   }, [WebApp?.colorScheme, window]);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      WebApp.MainButton.setText('Закрыть окно');
-    }
-  }, [WebApp?.MainButton, window]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      WebApp.onEvent('mainButtonClicked', onSendData);
-      return () => {
-        WebApp.offEvent('mainButtonClicked', onSendData);
-      };
-    }
-  }, [onSendData, WebApp, window]);
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     WebApp.MainButton.setText('Закрыть окно');
+  //   }
+  // }, [WebApp?.MainButton, window]);
+  //
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     WebApp.onEvent('mainButtonClicked', onSendData);
+  //     return () => {
+  //       WebApp.offEvent('mainButtonClicked', onSendData);
+  //     };
+  //   }
+  // }, [onSendData, WebApp, window]);
 }
