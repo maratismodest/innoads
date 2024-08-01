@@ -2,7 +2,7 @@
 import WebApp from '@twa-dev/sdk';
 import { ReactNode, useEffect, useState } from 'react';
 
-import useAuth from '@/hooks/provider/useAuth';
+import useAuthActions from '@/hooks/provider/useAuthActions';
 import { TelegramContext } from '@/providers/TelegramProvider/TelegramContext';
 import { TgUserData } from '@/types';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export function TelegramProvider({ children }: Props) {
-  const { login } = useAuth();
+  const { login } = useAuthActions();
   const [tgLoading, setTgLoading] = useState(false);
   const [tgUserData, setTgUserData] = useState<TgUserData | null>(null);
   const handleApp = async () => {

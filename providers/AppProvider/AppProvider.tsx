@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useMemo } from 'react';
 
 import useCategoriesQuery from '@/hooks/query/useCategoriesQuery';
 import mapCategories from '@/utils/mapCategories';
@@ -14,9 +14,12 @@ type Props = {
 export function AppProvider({ children }: Props) {
   const { categories = [] } = useCategoriesQuery();
 
-  const value = {
-    categories: mapCategories(categories),
-  };
+  const value = useMemo(
+    () => ({
+      categories: mapCategories(categories),
+    }),
+    [categories]
+  );
 
   useEffect(() => {
     setTheme();

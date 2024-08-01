@@ -1,5 +1,5 @@
 'use client';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 
 import Toast from '@/components/ui/Toast';
 
@@ -18,18 +18,23 @@ export function ToastProvider({ children }: Props) {
     setMessage(undefined);
   }, []);
 
+  const toast = useCallback((message: string) => {
+    setMessage(message);
+    setIsOpen(true);
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => setIsOpen(false), 5000);
     }
   }, [isOpen]);
 
-  const value = {
-    toast: (message: string) => {
-      setMessage(message);
-      setIsOpen(true);
-    },
-  };
+  const value = useMemo(
+    () => ({
+      toast,
+    }),
+    [toast]
+  );
 
   return (
     <ToastContext.Provider value={value}>

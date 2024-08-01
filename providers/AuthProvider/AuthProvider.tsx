@@ -1,8 +1,9 @@
 'use client';
 import type { User } from '@prisma/client';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 
 import Popup from '@/components/ui/Popup';
+import { AuthActionsContext } from '@/providers/AuthProvider/AuthActionsContext';
 import type { UserWithBans } from '@/types';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 
@@ -73,31 +74,34 @@ export function AuthProvider({ children }: Props) {
     return () => checkToken();
   }, [checkToken]);
 
-  const login = (user: UserWithBans, token: string) => {
+  const login = useCallback((user: UserWithBans, token: string) => {
     localStorage.setItem('token', token);
     setUser(user);
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem('token');
     setUser(undefined);
-  };
+  }, []);
+
+  const actions = useMemo(() => ({ login, logout }), [login, logout]);
 
   const value = {
     user,
-    login,
-    logout,
     loading,
   };
+
   return (
     <AuthContext.Provider value={value}>
-      <Popup
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        text={message}
-        buttons={[{ text: 'ОК', onClick: () => setIsOpen(false) }]}
-      />
-      {children}
+      <AuthActionsContext.Provider value={actions}>
+        <Popup
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          text={message}
+          buttons={[{ text: 'ОК', onClick: () => setIsOpen(false) }]}
+        />
+        {children}
+      </AuthActionsContext.Provider>
     </AuthContext.Provider>
   );
 }

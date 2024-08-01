@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import TelegramLoginButton, { TelegramUser } from 'telegram-login-button';
 
 import useAuth from '@/hooks/provider/useAuth';
+import useAuthActions from '@/hooks/provider/useAuthActions';
 import useTelegram from '@/hooks/provider/useTelegram';
 import useToast from '@/hooks/provider/useToast';
 import buttonStyles from '@/styles/buttonStyles';
@@ -12,7 +13,8 @@ import loginTelegram from '@/utils/api/prisma/loginTelegram';
 import { ERROR_ALIAS_MESSAGE, ERROR_TOKEN_MESSAGE, userTemplate } from './utils';
 
 export default function ProfileNoUser() {
-  const { login, user, loading } = useAuth();
+  const { user, loading } = useAuth();
+  const { login } = useAuthActions();
   const { toast } = useToast();
   const { tgUserData } = useTelegram();
 
