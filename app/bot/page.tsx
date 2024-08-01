@@ -1,5 +1,4 @@
 'use client';
-import WebApp from '@twa-dev/sdk';
 import React from 'react';
 
 import CreatePostModule from '@/components/PostModule/CreatePostModule';
@@ -9,8 +8,7 @@ import { useTelegramEffects } from '@/hooks/useTelegramEffects';
 
 export default function AddPostPage() {
   const { user, loading: userLoading } = useAuth();
-  const onSubmitOptional = () =>
-    typeof window !== 'undefined' ? WebApp.MainButton.show() : undefined;
+  const onSubmitOptional = () => undefined;
 
   useTelegramEffects();
 
@@ -27,3 +25,6 @@ export default function AddPostPage() {
 
   return <CreatePostModule onSubmitOptional={onSubmitOptional} />;
 }
+
+// const onSubmitOptional = () =>
+//   typeof window !== 'undefined' ? WebApp.MainButton.show() : undefined;
