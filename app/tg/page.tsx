@@ -11,9 +11,9 @@ import { useTelegramAppEffects } from '@/hooks/useTelegramAppEffects';
 export default function AddAppPostPage() {
   const { user, loading: userLoading } = useAuth();
   const { tgUserData, tgLoading } = useTelegram();
-  const onSubmitOptional = () =>
-    typeof window !== 'undefined' ? WebApp.MainButton.show() : undefined;
-
+  // const onSubmitOptional = () =>
+  //   typeof window !== 'undefined' ? WebApp.MainButton.show() : undefined;
+  const onSubmitOptional = () => undefined;
   useTelegramAppEffects();
 
   if (userLoading || tgLoading) return <Spinner />;
