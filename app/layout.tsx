@@ -14,7 +14,6 @@ import Header from '@/components/Header/Header';
 import AppProvider from '@/providers/AppProvider';
 import AuthProvider from '@/providers/AuthProvider';
 import QueryProvider from '@/providers/QueryProvider';
-import TelegramProvider from '@/providers/TelegramProvider';
 import ToastProvider from '@/providers/ToastProvider';
 import { seo } from '@/utils/constants';
 
@@ -56,17 +55,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Suspense>
             <QueryProvider>
               <AuthProvider>
-                <TelegramProvider>
-                  <AppProvider>
-                    <ToastProvider>
-                      <FavouritesProvider>
-                        <Header />
-                        <main>{children}</main>
-                        <Footer />
-                      </FavouritesProvider>
-                    </ToastProvider>
-                  </AppProvider>
-                </TelegramProvider>
+                <AppProvider>
+                  <ToastProvider>
+                    <FavouritesProvider>
+                      <Header />
+                      <main>{children}</main>
+                      <Footer />
+                    </FavouritesProvider>
+                  </ToastProvider>
+                </AppProvider>
               </AuthProvider>
             </QueryProvider>
           </Suspense>

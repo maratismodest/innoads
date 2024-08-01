@@ -9,7 +9,6 @@ import Posts from '@/components/Posts';
 import Spinner from '@/components/ui/Spinner';
 import useAuth from '@/hooks/provider/useAuth';
 import useAuthActions from '@/hooks/provider/useAuthActions';
-import useTelegram from '@/hooks/provider/useTelegram';
 import usePostsQuery from '@/hooks/query/usePostsQuery';
 // import Archived from '@/pages-lib/profile/Archived/Archived';
 import ProfileNoUser from '@/pages-lib/profile/ProfileNoUser';
@@ -19,10 +18,10 @@ import { setTheme } from '@/utils/setTheme';
 
 export default function ProfilePage<NextPage>() {
   const t = useTranslations();
-  const { user, loading } = useAuth();
+  const { user, loading, tgUserData } = useAuth();
   const { logout } = useAuthActions();
   const userId = user?.id;
-  const { tgUserData } = useTelegram();
+
   const {
     posts = [],
     postsLoading,

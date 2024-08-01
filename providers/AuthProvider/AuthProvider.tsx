@@ -1,10 +1,12 @@
 'use client';
 import type { User } from '@prisma/client';
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import WebApp from '@twa-dev/sdk';
+import { ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
 import Popup from '@/components/ui/Popup';
+import { useIsomorphicLayoutEffect } from '@/hooks/useIsomorphicLayoutEffect';
 import { AuthActionsContext } from '@/providers/AuthProvider/AuthActionsContext';
-import type { UserWithBans } from '@/types';
+import { TgUserData, UserWithBans } from '@/types';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 
 import { AuthContext } from './AuthContext';
@@ -20,6 +22,8 @@ export function AuthProvider({ children }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<UserWithBans | undefined>(undefined);
   const [loading, setLoading] = useState(true);
+  const [tgUserData, setTgUserData] = useState<TgUserData | null>(null);
+
   const checkToken = useCallback(async () => {
     setLoading(true);
     try {
@@ -68,6 +72,34 @@ export function AuthProvider({ children }: Props) {
     }
   }, []);
 
+  useIsomorphicLayoutEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (WebApp.initDataUnsafe.user) {
+        setTgUserData(WebApp.initDataUnsafe.user as TgUserData);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (tgUserData && !user && !loading) {
+      loginTelegram(tgUserData).then(res => {
+        if (res) {
+          const { token, upsertUser } = res;
+          // токен - в localStorage, пользователя в state
+          login(upsertUser, token);
+          // дополнительно проверяем, забанен ли пользователь
+          if (upsertUser.bans.length > 0) {
+            // если да, то сообщаем ему об этом
+            setIsOpen(true);
+            setMessage(MESSAGE_USER_BANNED);
+            logout();
+            return;
+          }
+        }
+      });
+    }
+  }, [tgUserData, user, loading]);
+
   // @ts-ignore
   useEffect(() => {
     checkToken();
@@ -89,6 +121,7 @@ export function AuthProvider({ children }: Props) {
   const value = {
     user,
     loading,
+    tgUserData,
   };
 
   return (

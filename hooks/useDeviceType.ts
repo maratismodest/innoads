@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 type DeviceType = 'desktop' | 'tablet' | 'mobile';
 
 function useDeviceType(): DeviceType {
-  const [deviceType, setDeviceType] = useState<DeviceType>('mobile');
+  const [deviceType, setDeviceType] = useState<DeviceType>('desktop');
 
   useEffect(() => {
     const handleResize = () => {

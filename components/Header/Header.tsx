@@ -3,14 +3,12 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import React from 'react';
 
-import useDeviceType from '@/hooks/useDeviceType';
 import { routes } from '@/utils/constants';
 
 import HeaderDesktopButtons from './HeaderDesktopButtons';
 import HeaderMobileButtons from './HeaderMobileButtons';
 
 export default function Header() {
-  const device = useDeviceType();
   return (
     <header
       className={clsx(
@@ -18,9 +16,8 @@ export default function Header() {
         'standalone:bottom-0 standalone:top-auto'
       )}
     >
-      {/*Common*/}
       <nav className={clsx('mx-auto flex w-full max-w-app justify-between px-3 py-2')}>
-        <Link href={routes.main} className="hidden items-center md:flex">
+        <Link href={routes.main} className="hidden items-center lg:flex">
           <span className="text-2xl uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span>
           <span className="hidden lg:inline">&nbsp;|&nbsp;</span>
           <span className="hidden lg:inline">
@@ -28,11 +25,8 @@ export default function Header() {
           </span>
         </Link>
 
-        {/*Desktop*/}
-        {device === 'desktop' && <HeaderDesktopButtons />}
-
-        {/*Tablet / Mobile*/}
-        {(device === 'mobile' || device === 'tablet') && <HeaderMobileButtons />}
+        <HeaderDesktopButtons className="hidden lg:flex" />
+        <HeaderMobileButtons className="lg:hidden" />
       </nav>
     </header>
   );
