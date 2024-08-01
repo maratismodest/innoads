@@ -1,7 +1,7 @@
 'use client';
 import { createContext } from 'react';
 
-import { TgUserData } from '@/types/global';
+import { TgUserData } from '@/types';
 
 type telegramContextType = {
   tgUserData: TgUserData | null;

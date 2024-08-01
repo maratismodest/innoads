@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import type { Option } from '@/types/global';
+import type { Option } from '@/types';
 
 type appContextType = {
   categories: Option[];

@@ -1,10 +1,10 @@
 'use server';
-import { User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import * as jose from 'jose';
 import { TelegramUser } from 'telegram-login-button';
 
 import prisma from '@/lib/prisma';
-import { TgUserData } from '@/types/global';
+import type { TgUserData } from '@/types';
 import { expirationTime, getTokenAlg, secret } from '@/utils/constants';
 
 export default async function loginTelegram(user: TelegramUser | User | TgUserData) {

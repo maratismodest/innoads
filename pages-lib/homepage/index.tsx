@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import Select from '@/components/ui/Select';
 import useApp from '@/hooks/provider/useApp';
-import { Option } from '@/types/global';
+import type { Option } from '@/types';
 import { routes } from '@/utils/constants';
 
 export default function HomePageCategories() {

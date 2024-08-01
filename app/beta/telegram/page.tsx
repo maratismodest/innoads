@@ -3,7 +3,7 @@
 import WebApp from '@twa-dev/sdk';
 import { useEffect, useState } from 'react';
 
-import { TgUserData } from '@/types/global';
+import { TgUserData } from '@/types';
 
 export default function Home() {
   const [userData, setUserData] = useState<TgUserData | null>(null);

@@ -1,7 +1,7 @@
 'use server';
+import { getNameFromUrl } from '@/components/PostModule/ImagesModule/ImagesModulePreview';
 import prisma from '@/lib/prisma';
 import deleteImageByFilename from '@/utils/api/backend/deleteImageByFilename';
-import { getNameFromUrl } from '@/components/PostModule/ImagesModule/ImagesModulePreview';
 
 export default async function deleteAd(id: number) {
   const messages = await prisma.message.deleteMany({

@@ -1,4 +1,5 @@
 import { messages } from '@/utils/messages';
+
 import client, { beRoutes } from '../createRequest';
 
 interface PostImageProps {

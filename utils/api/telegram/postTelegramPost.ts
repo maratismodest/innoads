@@ -1,8 +1,7 @@
 import type { Post, User } from '@prisma/client';
 
 import { getFormattedPrice } from '@/components/Price/utils';
-import { CreatePostDTO, EditPostDTO } from '@/types';
-import { Option } from '@/types/global';
+import type { CreatePostDTO, EditPostDTO, Option } from '@/types';
 import { clientTelegram } from '@/utils/api/createRequest';
 import { routes, tgRoutes } from '@/utils/constants';
 import { convertLinksToMedia } from '@/utils/convertLinksToMedia';

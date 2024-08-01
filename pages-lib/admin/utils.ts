@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 
 import fetchClientMessages from '@/utils/api/client/fetchClientMessages';
 import fetchClientPosts from '@/utils/api/client/fetchClientPosts';

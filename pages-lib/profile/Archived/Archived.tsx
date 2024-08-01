@@ -1,5 +1,5 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import { clsx } from 'clsx';
 import React from 'react';
 

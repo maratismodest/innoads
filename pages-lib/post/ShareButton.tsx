@@ -1,10 +1,11 @@
 'use client';
-import buttonStyles from '@/styles/buttonStyles';
-import { routes } from '@/utils/constants';
 import type { Post } from '@prisma/client';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
-import React, { ComponentPropsWithoutRef, useMemo } from 'react';
+import React, { ComponentPropsWithoutRef } from 'react';
+
+import buttonStyles from '@/styles/buttonStyles';
+import { routes } from '@/utils/constants';
 
 const onClick = async (slug: string) => {
   try {

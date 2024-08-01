@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import React, { Fragment } from 'react';
 
 import ArrowSvg from '@/public/svg/arrow.svg';
-import type { Option } from '@/types/global';
+import type { Option } from '@/types';
 
 interface SelectProps {
   options: Option[];
@@ -19,8 +19,7 @@ export function Select({ options, value, onChange }: SelectProps) {
       <Listbox value={value} onChange={onChange}>
         {({ open }) => (
           <>
-            <ListboxButton
-              className="flex h-9 w-full items-center justify-between gap-1 rounded border border-inputBorder px-4 text-start">
+            <ListboxButton className="flex h-9 w-full items-center justify-between gap-1 rounded border border-inputBorder px-4 text-start">
               {options.find(x => x.value === value)?.label ?? (
                 <span className="text-gray-dark">{t('Выберите категорию')}</span>
               )}
@@ -35,7 +34,7 @@ export function Select({ options, value, onChange }: SelectProps) {
                     <li
                       className={clsx(
                         'cursor-pointer rounded p-2 dark:text-black',
-                        focus && 'bg-blue text-white',
+                        focus && 'bg-blue text-white'
                       )}
                     >
                       {category.label}

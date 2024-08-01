@@ -4,7 +4,7 @@ import { ReactNode, useEffect, useState } from 'react';
 
 import useAuth from '@/hooks/provider/useAuth';
 import { TelegramContext } from '@/providers/TelegramProvider/TelegramContext';
-import { TgUserData } from '@/types/global';
+import { TgUserData } from '@/types';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 
 type Props = {

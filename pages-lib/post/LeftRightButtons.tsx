@@ -1,6 +1,7 @@
-import { postButtonStyles } from './utils';
 import clsx from 'clsx';
 import React from 'react';
+
+import { postButtonStyles } from './utils';
 
 interface LeftRightButtonsProps {
   current: number;

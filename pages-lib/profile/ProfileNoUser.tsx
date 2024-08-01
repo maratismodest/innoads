@@ -6,7 +6,7 @@ import useAuth from '@/hooks/provider/useAuth';
 import useTelegram from '@/hooks/provider/useTelegram';
 import useToast from '@/hooks/provider/useToast';
 import buttonStyles from '@/styles/buttonStyles';
-import type { TgUserData } from '@/types/global';
+import type { TgUserData } from '@/types';
 import loginTelegram from '@/utils/api/prisma/loginTelegram';
 
 import { ERROR_ALIAS_MESSAGE, ERROR_TOKEN_MESSAGE, userTemplate } from './utils';

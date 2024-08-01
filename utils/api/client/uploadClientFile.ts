@@ -1,10 +1,8 @@
 import { beRoutes, clientPrisma } from '@/utils/api/createRequest';
 
 interface UploadResponse {
-  // Define the structure of your upload response here
   message: string;
-  link: string; // Add the property for the uploaded file's link'
-  // Add other properties as needed
+  link: string;
 }
 
 export async function uploadClientFile(file: File): Promise<UploadResponse> {

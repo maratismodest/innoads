@@ -42,3 +42,17 @@ export interface EditPostDTO {
 export type UserWithBans = Prisma.UserGetPayload<{
   include: { bans: true };
 }>;
+
+export interface Option {
+  value: number;
+  label: string;
+}
+
+export interface TgUserData {
+  id: number;
+  first_name: string;
+  last_name?: string;
+  username?: string;
+  language_code: string;
+  is_premium?: boolean;
+}
