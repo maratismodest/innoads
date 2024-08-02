@@ -1,4 +1,4 @@
-const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
+import isBrowser from './isBrowser';
 
 export default function scrollToTop() {
   if (!isBrowser()) return;

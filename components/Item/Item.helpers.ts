@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import dayjs from 'dayjs';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
@@ -7,17 +7,6 @@ import postMessage from '@/utils/api/prisma/postMessage';
 import updatePostPrisma from '@/utils/api/prisma/updatePost';
 import commentTelegramPost from '@/utils/api/telegram/commentTelegramPost';
 import { routes } from '@/utils/constants';
-
-const success = {
-  edit: 'Объявление отредактировано!',
-  archive: 'Объявление в архиве!',
-};
-
-enum ItemModalText {
-  edit = 'Редактировать объявление?',
-  archive = 'Объявление не актуально?',
-  republish = 'Опубликовать заново?',
-}
 
 const handleArchive = async (post: Post, toast: (message: string) => void) => {
   try {
@@ -36,7 +25,7 @@ const handleArchive = async (post: Post, toast: (message: string) => void) => {
       console.log('refetchButton', refetchButton);
       refetchButton.click();
     }
-    toast(success.archive);
+    toast('Объявление в архиве');
   } catch (e) {
     console.error('archive', e);
   }
@@ -56,4 +45,4 @@ const checkIsOld = (updatedAt: Date, days = 0) => {
   return today > current;
 };
 
-export { checkIsOld, handleArchive, handleEdit, ItemModalText };
+export { checkIsOld, handleArchive, handleEdit };

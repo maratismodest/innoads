@@ -5,8 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useCallback, useMemo, useState } from 'react';
 
-import ItemButtons from '@/components/Item/ItemButtons';
-import ItemLike from '@/components/Item/ItemLike';
 import Price from '@/components/Price';
 import Popup from '@/components/ui/Popup';
 import useApp from '@/hooks/provider/useApp';
@@ -17,7 +15,10 @@ import postTelegramPost from '@/utils/api/telegram/postTelegramPost';
 import { NO_IMAGE } from '@/utils/constants';
 
 import { DAYS } from './Item.constants';
-import { checkIsOld, handleArchive, handleEdit, ItemModalText } from './Item.helpers';
+import { checkIsOld, handleArchive, handleEdit } from './Item.helpers';
+import { ItemButtons } from './ItemButtons';
+import { ItemLike } from './ItemLike';
+import { ItemModalText } from './types';
 
 type ItemProps = {
   post: Post;
@@ -72,14 +73,14 @@ export function Item({ post, edit = false }: ItemProps) {
     } finally {
       setIsOpen(false);
     }
-  },[categories, modalText, post, router, t, toast, user]);
+  }, [categories, modalText, post, router, t, toast, user]);
 
   const buttons = useMemo(
     () => [
       { text: 'Да', onClick: handleFunction },
       { text: 'Нет', onClick: hideModal },
     ],
-    [handleFunction, hideModal],
+    [handleFunction, hideModal]
   );
 
   return (

@@ -1,7 +1,7 @@
 'use client';
 import { Field, Label } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';

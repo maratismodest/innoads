@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';

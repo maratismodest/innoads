@@ -1,4 +1,4 @@
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import { atomWithStorage } from 'jotai/utils';
 
 const favourites = atomWithStorage<Post[]>('favourites', []);

@@ -6,4 +6,4 @@ const substringByLettersCount = (text: string, count = seoTitleLength): string =
   return words.slice(0, words.length).join(' ');
 };
 
-export { substringByLettersCount, seoTitleLength, seoDescriptionLength };
+export { seoDescriptionLength, seoTitleLength, substringByLettersCount };

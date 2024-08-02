@@ -1,5 +1,5 @@
 'use server';
-import { User } from '@prisma/client';
+import type { User } from '@prisma/client';
 import * as jose from 'jose';
 
 import { expirationTime, getTokenAlg, secret } from '@/utils/constants';

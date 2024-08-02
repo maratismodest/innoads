@@ -4,7 +4,7 @@ import { getFormattedPrice } from '@/components/Price/utils';
 import type { CreatePostDTO, EditPostDTO, Option } from '@/types';
 import { clientTelegram } from '@/utils/api/createRequest';
 import { routes, tgRoutes } from '@/utils/constants';
-import { convertLinksToMedia } from '@/utils/convertLinksToMedia';
+import { convertLinksToMedia } from '@/utils/telegram/convertLinksToMedia';
 
 export interface TelegramResponseProps {
   ok: boolean;

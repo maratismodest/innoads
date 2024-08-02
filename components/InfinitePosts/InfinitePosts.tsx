@@ -1,5 +1,5 @@
 'use client';
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import Posts from '@/components/Posts';

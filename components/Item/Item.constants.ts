@@ -1,3 +1,3 @@
 const DAYS = 7;
 
-export {DAYS}
+export { DAYS };

@@ -3,11 +3,10 @@ import React, { ComponentType } from 'react';
 
 import useAuth from '@/hooks/provider/useAuth';
 
-interface AdminProps {
-}
+interface AdminProps {}
 
 function withAdminCheck<P extends object>(
-  WrappedComponent: ComponentType<P>,
+  WrappedComponent: ComponentType<P>
 ): React.FC<P & AdminProps> {
   return function WithAdminCheck(props) {
     const { user, loading } = useAuth();

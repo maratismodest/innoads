@@ -1,11 +1,11 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { FC } from 'react';
 
 import RepublishSvg from '@/public/svg/republish.svg';
 import TrashSvg from '@/public/svg/trash.svg';
 import buttonStyles from '@/styles/buttonStyles';
 
-import { ItemModalText } from './Item.helpers';
+import { ItemModalText } from './types';
 
 const buttons = [
   // {
@@ -32,7 +32,7 @@ interface ItemButtonsProps {
   showModal: (text: ItemModalText) => void;
 }
 
-const ItemButtons = ({ showModal }: ItemButtonsProps) => {
+export const ItemButtons: FC<ItemButtonsProps> = ({ showModal }) => {
   return (
     <>
       {buttons.map(({ title, text, icon, classNames }) => (
@@ -51,5 +51,3 @@ const ItemButtons = ({ showModal }: ItemButtonsProps) => {
     </>
   );
 };
-
-export default ItemButtons;

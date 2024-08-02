@@ -1,5 +1,5 @@
 'use server';
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 
 import prisma from '@/lib/prisma';
 

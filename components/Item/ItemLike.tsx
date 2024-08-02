@@ -1,8 +1,8 @@
-import { Post } from '@prisma/client';
+import type { Post } from '@prisma/client';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
-import React, { ComponentPropsWithoutRef, useCallback } from 'react';
+import React, { ComponentPropsWithoutRef, FC, useCallback } from 'react';
 
 import TransparentHeart from '@/public/svg/heart.svg';
 import RedHeart from '@/public/svg/heart-red.svg';
@@ -12,7 +12,7 @@ type Props = ComponentPropsWithoutRef<'button'> & {
   post: Post;
 };
 
-const ItemLike = ({ post, className }: Props) => {
+export const ItemLike: FC<Props> = ({ post, className }: Props) => {
   const t = useTranslations();
   const [favourites, setFavourites] = useAtom(favouritesAtom);
   const liked = Boolean(favourites.find(x => x.id === post.id));
@@ -35,5 +35,3 @@ const ItemLike = ({ post, className }: Props) => {
     </button>
   );
 };
-
-export default ItemLike;
