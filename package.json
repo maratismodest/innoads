@@ -1,5 +1,5 @@
 {
-  "name": "innoads-frontend",
+  "name": "innoads",
   "version": "1.2.1",
   "scripts": {
     "dev": "next dev",
