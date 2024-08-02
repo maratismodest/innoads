@@ -12,6 +12,11 @@
     }
   }
 
+  ul {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
   ul::-webkit-scrollbar {
     display: none;
   }
@@ -93,7 +98,9 @@
   }
 
   /* img { */
+
   /*    height: inherit; */
+
   /* } */
   li {
     list-style: none;
