@@ -56,3 +56,5 @@ export interface TgUserData {
   language_code: string;
   is_premium?: boolean;
 }
+
+export type Theme = 'light' | 'dark';
