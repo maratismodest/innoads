@@ -25,6 +25,7 @@
     @apply scroll-smooth;
 
     scrollbar-gutter: stable;
+    scroll-padding-top: var(--header-height);
   }
 
   html,
