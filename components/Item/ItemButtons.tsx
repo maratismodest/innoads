@@ -38,7 +38,6 @@ export const ItemButtons: FC<ItemButtonsProps> = ({ showModal }) => {
       {buttons.map(({ title, text, icon, classNames }) => (
         <button
           key={title}
-          title={title}
           className={clsx(classNames)}
           onClick={event => {
             event.preventDefault();

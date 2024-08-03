@@ -43,7 +43,7 @@ export function Posts({
     <ul className={clsx('items', className)} data-testid="posts">
       {posts.map((post: Post) => (
         <li key={post.id}>
-          <Link href={`${routes.post}/${post.slug}`} title={post.title}>
+          <Link href={`${routes.post}/${post.slug}`}>
             <Item post={post} edit={edit} />
           </Link>
         </li>

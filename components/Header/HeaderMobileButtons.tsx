@@ -11,7 +11,7 @@ export default function HeaderMobileButtons({ className }: ComponentPropsWithout
     <ul className={clsx('grid w-full grid-cols-5 items-center', className)}>
       {mobileMenu.map(({ text, href, logo }) => (
         <li key={href} className="flex flex-col justify-center">
-          <Link href={href} title={text}>
+          <Link href={href}>
             <div className="mx-auto w-fit">{logo}</div>
             <span className="block text-center text-xs">{text.substring(0, 9)}</span>
           </Link>

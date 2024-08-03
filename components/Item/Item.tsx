@@ -94,7 +94,6 @@ export function Item({ post, edit = false }: ItemProps) {
           src={preview}
           placeholder="blur"
           blurDataURL={NO_IMAGE}
-          title={title}
         />
       </div>
 
