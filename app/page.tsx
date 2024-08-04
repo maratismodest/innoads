@@ -1,11 +1,32 @@
+import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import InfinitePosts, { InitOptions } from '@/components/InfinitePosts';
 import HomePageCategories from '@/pages-lib/homepage';
+import SearchModule from '@/pages-lib/homepage/SearchModule';
 import fetchPosts from '@/utils/api/prisma/fetchAds';
+import { seo } from '@/utils/constants';
 import { getMainPageJsonLd } from '@/utils/jsonLd';
 
-import SearchModule from '../pages-lib/homepage/SearchModule';
+export const metadata: Metadata = {
+  title: seo.default.title,
+  description: seo.default.description,
+  authors: [{ name: process.env.NEXT_PUBLIC_APP_NAME }],
+  publisher: process.env.NEXT_PUBLIC_APP_NAME,
+  manifest: '/manifest.json',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
+  openGraph: {
+    type: 'website',
+    url: process.env.NEXT_PUBLIC_APP_URL,
+    images: ['/images/og-image.png'],
+    title: seo.default.title,
+    description: seo.default.description,
+    locale: process.env.NEXT_PUBLIC_LANGUAGE,
+  },
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_APP_URL,
+  },
+};
 
 export const revalidate = 3600;
 
