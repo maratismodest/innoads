@@ -18,6 +18,7 @@ declare global {
       NEXT_PUBLIC_APP_DOMAIN: string;
       NEXT_PUBLIC_TELEGRAM_USER: string;
       NEXT_PUBLIC_IS_VDS: boolean;
+      RESEND_API_KEY: string;
     }
   }
 }
