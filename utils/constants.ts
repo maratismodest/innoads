@@ -63,6 +63,10 @@ export const seo: Record<string, Seo> = {
     title: 'Страница не найдена',
     description: 'Перейдите на главную страницу или в личный кабинет',
   },
+  tapper: {
+    title: 'Inno Tapper',
+    description: 'Если до 50 прокликать - то персонаж прокачается',
+  },
 } as const;
 
 export const tgLink = 'https://t.me';
