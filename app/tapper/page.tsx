@@ -1,42 +1,39 @@
 'use client';
+import { useAtom } from 'jotai/index';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
+import { scoreAtom } from '@/state';
+
+const DEG = 40;
+
+const getImageByScore = (value: number) => {
+  if (value > 50) {
+    return '/assets/lizard.png';
+  }
+  return '/assets/frog.png';
+};
+
 export default function Home() {
+  const [score, setScore] = useAtom(scoreAtom);
   const circle = useRef<HTMLButtonElement>(null);
-  const score = useRef<HTMLHeadingElement>(null);
   const [image, setImage] = useState<string>('');
 
-  const handleImage = () => {
-    setImage(getScore() < 50 ? '/assets/frog.png' : '/assets/lizard.png');
-  };
+  const handleImage = () => setImage(getImageByScore(score));
 
   useEffect(() => {
-    setScore(getScore());
     handleImage();
   }, []);
 
-  function setScore(value: number) {
-    if (score.current) {
-      localStorage.setItem('score', value.toString());
-      score.current.textContent = value.toString();
-    }
-  }
-
-  function getScore() {
-    return Number(localStorage.getItem('score')) ?? 0;
-  }
-
-  function addOne() {
-    setScore(getScore() + 1);
+  const addOne = () => {
+    setScore(prev => prev + 1);
     handleImage();
-  }
+  };
 
   const onClick = (event: any) => {
     const rect = circle.current?.getBoundingClientRect() as DOMRect;
     const offfsetX = event.clientX - rect.left - rect.width / 2;
     const offfsetY = event.clientY - rect.top - rect.height / 2;
-    const DEG = 40;
 
     const tiltX = (offfsetY / rect.height) * DEG;
     const tiltY = (offfsetX / rect.width) * -DEG;
@@ -66,19 +63,17 @@ export default function Home() {
   };
 
   return (
-    <div className="relative flex h-full flex-1 items-center justify-center gap-4 bg-[#1c1f24]">
+    <section className="relative flex h-full flex-1 items-center justify-center gap-4 bg-[#1c1f24]">
       <div className="relative">
         <div className="mb-4 flex items-center justify-center gap-2">
           <Image src="/assets/coin.png" alt="coin" width={50} height={50} />
-          <h2 className="score" id="score" ref={score}>
-            0
-          </h2>
+          <h2 className="score">{score}</h2>
         </div>
 
         <button className="circle" onClick={onClick} ref={circle}>
           <Image id="circle" src={image} alt="frog" width={200} height={200} draggable={false} />
         </button>
       </div>
-    </div>
+    </section>
   );
 }
