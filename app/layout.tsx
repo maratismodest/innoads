@@ -9,7 +9,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import React, { Suspense } from 'react';
 
-import Footer from '@/components/Footer';
+// import Footer from '@/components/Footer';
 import Header from '@/components/Header/Header';
 import AppProvider from '@/providers/AppProvider';
 import AuthProvider from '@/providers/AuthProvider';
@@ -60,7 +60,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     <FavouritesProvider>
                       <Header />
                       <main>{children}</main>
-                      <Footer />
+                      {/*<Footer />*/}
                     </FavouritesProvider>
                   </ToastProvider>
                 </AppProvider>
