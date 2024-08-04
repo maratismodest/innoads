@@ -1,7 +1,7 @@
 'use client';
 import { useAtom } from 'jotai/index';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { scoreAtom } from '@/state';
 
@@ -9,14 +9,10 @@ import { DEG, getImageByScore } from './Tapper.helper';
 
 export default function Tapper() {
   const [score, setScore] = useAtom(scoreAtom);
-  const circle = useRef<HTMLButtonElement>(null);
-  const [image, setImage] = useState<string>('');
+  const circle = useRef<HTMLImageElement>(null);
+  const [image, setImage] = useState<string>(getImageByScore(score));
 
   const handleImage = () => setImage(getImageByScore(score));
-
-  useEffect(() => {
-    handleImage();
-  }, []);
 
   const addOne = () => {
     setScore(prev => prev + 1);
@@ -31,12 +27,12 @@ export default function Tapper() {
     const tiltX = (offfsetY / rect.height) * DEG;
     const tiltY = (offfsetX / rect.width) * -DEG;
 
-    circle.current?.style.setProperty('--tiltX', `${tiltX}deg`);
-    circle.current?.style.setProperty('--tiltY', `${tiltY}deg`);
+    circle.current?.style.setProperty('--tilt-x', `${tiltX}deg`);
+    circle.current?.style.setProperty('--tilt-y', `${tiltY}deg`);
 
     setTimeout(() => {
-      circle.current?.style.setProperty('--tiltX', '0deg');
-      circle.current?.style.setProperty('--tiltY', '0deg');
+      circle.current?.style.setProperty('--tilt-x', '0deg');
+      circle.current?.style.setProperty('--tilt-y', '0deg');
     }, 300);
 
     const plusOne = document.createElement('div');
@@ -59,11 +55,19 @@ export default function Tapper() {
     <div className="relative">
       <div className="mb-4 flex items-center justify-center gap-2">
         <Image src="/assets/coin.png" alt="coin" width={50} height={50} />
-        <h2 className="score">{score}</h2>
+        <h2 className="score text-4xl font-bold text-white">{score}</h2>
       </div>
-
-      <button className="circle" onClick={onClick} ref={circle}>
-        <Image id="circle" src={image} alt="frog" width={200} height={200} draggable={false} />
+      <button className="relative" onClick={onClick}>
+        <Image
+          id="circle"
+          className="tapper"
+          src={image}
+          alt="frog"
+          width={200}
+          height={200}
+          draggable={false}
+          ref={circle}
+        />
       </button>
     </div>
   );

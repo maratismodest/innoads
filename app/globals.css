@@ -159,21 +159,7 @@
 
   /* tapper */
 
-  .score {
-    color: #fff;
-    text-align: center;
-    font-size: 36px;
-    font-weight: 800;
-    user-select: none;
-  }
-
-  .circle {
-    position: relative;
-  }
-
-  .circle img {
-    width: 200px;
-    height: 200px;
+  .tapper {
     border-radius: 50%;
     box-shadow: 0 0 16px 0 rgb(138 143 254 / 5%);
     transition: transform 0.2s ease;
