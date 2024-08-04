@@ -13,10 +13,10 @@ export default function Tapper() {
   const [image, setImage] = useState<string>('');
 
   useEffect(() => {
-    if (!image) {
+    if (!image && score) {
       setImage(getImageByScore(score));
     }
-  }, [image]);
+  }, [image, score]);
 
   const handleImage = () => setImage(getImageByScore(score));
 
