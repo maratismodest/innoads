@@ -9,20 +9,6 @@ import { seo } from '@/utils/constants';
 import { getMainPageJsonLd } from '@/utils/jsonLd';
 
 export const metadata: Metadata = {
-  title: seo.default.title,
-  description: seo.default.description,
-  authors: [{ name: process.env.NEXT_PUBLIC_APP_NAME }],
-  publisher: process.env.NEXT_PUBLIC_APP_NAME,
-  manifest: '/manifest.json',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
-  openGraph: {
-    type: 'website',
-    url: process.env.NEXT_PUBLIC_APP_URL,
-    images: ['/images/og-image.png'],
-    title: seo.default.title,
-    description: seo.default.description,
-    locale: process.env.NEXT_PUBLIC_LANGUAGE,
-  },
   alternates: {
     canonical: process.env.NEXT_PUBLIC_APP_URL,
   },
