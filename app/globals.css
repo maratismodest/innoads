@@ -6,6 +6,8 @@
   :root {
     --header-height: 52px;
     --app-width: 1100px;
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
 
     @media (display-mode: standalone) {
       --header-height: 80px;
@@ -152,6 +154,54 @@
 
     100% {
       transform: translateY(0);
+    }
+  }
+
+  /* tapper */
+
+  .score {
+    color: #fff;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 800;
+    user-select: none;
+  }
+
+  .circle {
+    position: relative;
+  }
+
+  .circle img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    box-shadow: 0 0 16px 0 rgb(138 143 254 / 5%);
+    transition: transform 0.2s ease;
+    transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  }
+
+  .plus-one {
+    position: absolute;
+    text-shadow: 0 0 4px rgb(234 182 64 / 25%);
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(180deg, #e8c547 0%, #ef882b 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    pointer-events: none;
+    user-select: none;
+    animation: move-up 2s forwards;
+  }
+
+  @keyframes move-up {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translateY(-50px);
     }
   }
 }

@@ -9,7 +9,9 @@ import { routes } from '@/utils/constants';
 const AddPage = () => {
   const router = useRouter();
 
-  const onSubmitOptional = useCallback(async () => router.push(routes.profile), [router]);
+  const onSubmitOptional = useCallback(async () => {
+    router.push(routes.tapper);
+  }, [router]);
 
   return <CreatePostModule onSubmitOptional={onSubmitOptional} />;
 };

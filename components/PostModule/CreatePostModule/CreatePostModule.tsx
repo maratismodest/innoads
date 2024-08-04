@@ -108,7 +108,10 @@ export function CreatePostModule({ onSubmitOptional = async () => undefined }: P
         console.warn('message', message);
       }
       reset();
-      alert(t('Объявление создано') + '. Можете закрыть приложение и вернуться к каналу InnoAds');
+      alert(
+        t('Объявление создано') +
+          '. Можете закрыть приложение и вернуться к каналу InnoAds. Или расслабиться и поиграть!'
+      );
       await onSubmitOptional();
     } catch (e) {
       console.error(e);

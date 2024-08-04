@@ -1,12 +1,19 @@
 'use client';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useCallback } from 'react';
 
 import CreatePostModule from '@/components/PostModule/CreatePostModule';
 import Spinner from '@/components/ui/Spinner';
 import useAuth from '@/hooks/provider/useAuth';
 import useTelegramEffects from '@/hooks/useTelegramEffects';
+import { routes } from '@/utils/constants';
 
 export default function AddPostPage() {
+  const router = useRouter();
+
+  const onSubmitOptional = useCallback(async () => {
+    router.push(routes.tapper);
+  }, [router]);
   const { user, loading: userLoading } = useAuth();
 
   useTelegramEffects();
@@ -22,5 +29,5 @@ export default function AddPostPage() {
     );
   }
 
-  return <CreatePostModule />;
+  return <CreatePostModule onSubmitOptional={onSubmitOptional} />;
 }
