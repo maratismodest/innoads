@@ -1,7 +1,7 @@
 'use client';
 import { useAtom } from 'jotai/index';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { scoreAtom } from '@/state';
 
@@ -10,7 +10,13 @@ import { DEG, getImageByScore } from './Tapper.helper';
 export default function Tapper() {
   const [score, setScore] = useAtom(scoreAtom);
   const circle = useRef<HTMLImageElement>(null);
-  const [image, setImage] = useState<string>(getImageByScore(score));
+  const [image, setImage] = useState<string>('');
+
+  useEffect(() => {
+    if (!image) {
+      setImage(getImageByScore(score));
+    }
+  }, [image]);
 
   const handleImage = () => setImage(getImageByScore(score));
 
