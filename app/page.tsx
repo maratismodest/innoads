@@ -5,7 +5,6 @@ import InfinitePosts, { InitOptions } from '@/components/InfinitePosts';
 import HomePageCategories from '@/pages-lib/homepage';
 import SearchModule from '@/pages-lib/homepage/SearchModule';
 import fetchPosts from '@/utils/api/prisma/fetchAds';
-import { seo } from '@/utils/constants';
 import { getMainPageJsonLd } from '@/utils/jsonLd';
 
 export const metadata: Metadata = {
