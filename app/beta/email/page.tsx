@@ -18,6 +18,9 @@ async function sendEmail(to: string, subject: string, text: string) {
 }
 
 const Page = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return <div>This page is not available in production.</div>;
+  }
   return (
     <div>
       <h1>Send Email</h1>

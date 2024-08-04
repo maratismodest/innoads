@@ -45,6 +45,10 @@ export default function Home() {
     setContent(newContent);
   };
 
+  if (process.env.NODE_ENV === 'production') {
+    return <div>This page is not available in production.</div>;
+  }
+
   return (
     <div className="flex flex-col items-center">
       <div className="h-96 w-full">

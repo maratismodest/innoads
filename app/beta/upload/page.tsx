@@ -27,6 +27,10 @@ export default function FileUploadForm() {
     }
   };
 
+  if (process.env.NODE_ENV === 'production') {
+    return <div>This page is not available in production.</div>;
+  }
+
   return (
     <div>
       <h1>Upload File</h1>

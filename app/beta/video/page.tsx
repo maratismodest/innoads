@@ -5,6 +5,9 @@ import ReactPlayer from 'react-player';
 import withAuth from '@/hoc/withAuth';
 
 const VideoPage = () => {
+  if (process.env.NODE_ENV === 'production') {
+    return <div>This page is not available in production.</div>;
+  }
   return (
     <div>
       <h1 className="text-center">Video Player</h1>
