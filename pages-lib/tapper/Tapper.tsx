@@ -1,5 +1,4 @@
 'use client';
-import { Tap } from '@prisma/client';
 import { useAtom } from 'jotai/index';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
@@ -47,11 +46,11 @@ export default function Tapper({}: Props) {
 
   const onClick = (event: any) => {
     const rect = circle.current?.getBoundingClientRect() as DOMRect;
-    const offfsetX = event.clientX - rect.left - rect.width / 2;
-    const offfsetY = event.clientY - rect.top - rect.height / 2;
+    const offSetX = event.clientX - rect.left - rect.width / 2;
+    const offSetY = event.clientY - rect.top - rect.height / 2;
 
-    const tiltX = (offfsetY / rect.height) * DEG;
-    const tiltY = (offfsetX / rect.width) * -DEG;
+    const tiltX = (offSetY / rect.height) * DEG;
+    const tiltY = (offSetX / rect.width) * -DEG;
 
     circle.current?.style.setProperty('--tilt-x', `${tiltX}deg`);
     circle.current?.style.setProperty('--tilt-y', `${tiltY}deg`);
