@@ -1,6 +1,7 @@
 import type { Tap } from '@prisma/client';
 
 import prisma from '@/lib/prisma';
+import { CreateTap } from '@/types';
 
 export function getAllTaps() {
   return prisma.tap.findMany();
@@ -16,7 +17,7 @@ export function createTap(formData: Tap) {
   });
 }
 
-export function createUpdateTap(formData: Tap) {
+export function createUpdateTap(formData: Tap | CreateTap) {
   return prisma.tap.upsert({
     where: {
       userId: formData.userId,

@@ -1,4 +1,4 @@
-import type { Prisma } from '@prisma/client';
+import type { Prisma, Tap } from '@prisma/client';
 
 export interface Seo {
   title: string;
@@ -58,3 +58,5 @@ export interface TgUserData {
 }
 
 export type Theme = 'light' | 'dark';
+
+export type CreateTap = Omit<Tap, 'id'> & {};

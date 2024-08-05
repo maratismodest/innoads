@@ -1,4 +1,5 @@
 'use client';
+import type { Tap } from '@prisma/client';
 import { useAtom } from 'jotai/index';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
@@ -7,6 +8,7 @@ import useAuth from '@/hooks/provider/useAuth';
 import useTapQuery from '@/hooks/query/useTapQuery';
 import useDebounce from '@/hooks/useDebounce';
 import { scoreAtom } from '@/state';
+import { CreateTap } from '@/types';
 import upsertTapPrisma from '@/utils/api/prisma/upsertTapPrisma';
 
 import { DEG, getImageByScore } from './Tapper.helper';
@@ -26,8 +28,14 @@ export default function Tapper({}: Props) {
   }, [user, tap]);
 
   useEffect(() => {
-    if (user && tap && debounced > tap.count) {
-      upsertTapPrisma({ ...tap, count: debounced }).then(res => console.log('res', res));
+    if (user) {
+      const formData: Tap | CreateTap = tap
+        ? { ...tap, count: debounced }
+        : {
+            userId: user.id,
+            count: debounced,
+          };
+      upsertTapPrisma(formData).then(res => console.log('res', res));
     }
   }, [debounced]);
 
