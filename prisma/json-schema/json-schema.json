@@ -98,6 +98,12 @@
             "USER",
             "ADMIN"
           ]
+        },
+        "Tap": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tap"
+          }
         }
       }
     },
@@ -193,6 +199,21 @@
           "type": "string"
         }
       }
+    },
+    "Tap": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "count": {
+          "type": "integer",
+          "default": 0
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        }
+      }
     }
   },
   "type": "object",
@@ -217,6 +238,9 @@
     },
     "log": {
       "$ref": "#/definitions/Log"
+    },
+    "tap": {
+      "$ref": "#/definitions/Tap"
     }
   }
 }

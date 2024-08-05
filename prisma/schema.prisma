@@ -61,6 +61,7 @@ model User {
   updatedAt DateTime @updatedAt
   bans      Ban[]
   role      Role     @default(USER)
+  Tap       Tap[]
 }
 
 model Ban {
@@ -99,4 +100,11 @@ model Log {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   message   String
+}
+
+model Tap {
+  id     Int    @id @default(autoincrement())
+  count  Int    @default(0)
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
 }

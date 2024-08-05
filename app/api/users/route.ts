@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+import { EmailTemplate } from '@/components/email-template';
+import prisma from '@/lib/prisma';
 import fetchUsers from '@/utils/api/prisma/fetchUsers';
 import cleanObject from '@/utils/cleanObject';
 import getSearchParams from '@/utils/getSearchParams';

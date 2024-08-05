@@ -1,14 +1,39 @@
 'use client';
+import { Tap } from '@prisma/client';
 import { useAtom } from 'jotai/index';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
+import useAuth from '@/hooks/provider/useAuth';
+import useTapQuery from '@/hooks/query/useTapQuery';
+import useDebounce from '@/hooks/useDebounce';
 import { scoreAtom } from '@/state';
+import upsertTapPrisma from '@/utils/api/prisma/upsertTapPrisma';
 
 import { DEG, getImageByScore } from './Tapper.helper';
 
-export default function Tapper() {
+type Props = {};
+
+export default function Tapper({}: Props) {
+  const { user } = useAuth();
   const [score, setScore] = useAtom(scoreAtom);
+  const debounced = useDebounce(score, 1000);
+  const { tap } = useTapQuery(user?.id ?? '', Boolean(user));
+
+  useEffect(() => {
+    if (user && tap) {
+      setScore(tap.count);
+    }
+  }, [user, tap]);
+
+  useEffect(() => {
+    if (user && tap && debounced > tap.count) {
+      upsertTapPrisma({ ...tap, count: debounced }).then(res => {
+        console.log('res');
+      });
+    }
+  }, [debounced]);
+
   const circle = useRef<HTMLImageElement>(null);
   const [image, setImage] = useState<string>('');
 

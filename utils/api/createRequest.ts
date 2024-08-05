@@ -10,8 +10,8 @@ export const beRoutes = {
   bans: '/bans',
   posts: '/posts',
   messages: '/messages',
+  taps: '/taps',
 } as const;
-
 
 export const clientPrisma = axios.create({
   baseURL: '/api',
@@ -36,7 +36,7 @@ clientBackend.interceptors.request.use(
   error => {
     // Do something with request error
     return Promise.reject(error);
-  },
+  }
 );
 
 export const clientTelegram = axios.create({
