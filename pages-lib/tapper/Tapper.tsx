@@ -27,9 +27,7 @@ export default function Tapper({}: Props) {
 
   useEffect(() => {
     if (user && tap && debounced > tap.count) {
-      upsertTapPrisma({ ...tap, count: debounced }).then(res => {
-        console.log('res');
-      });
+      upsertTapPrisma({ ...tap, count: debounced }).then(res => console.log('res', res));
     }
   }, [debounced]);
 

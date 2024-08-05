@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 
 import Tapper from '@/pages-lib/tapper/Tapper';
-import { getAllTaps } from '@/prisma/services/taps';
 import { routes, seo } from '@/utils/constants';
 
 export const metadata: Metadata = {
