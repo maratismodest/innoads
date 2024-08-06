@@ -16,7 +16,11 @@ export default function Header() {
         'standalone:bottom-0 standalone:top-auto'
       )}
     >
-      <nav className={clsx('mx-auto flex w-full max-w-app justify-between px-3 py-2')}>
+      <nav
+        className="mx-auto flex w-full max-w-app justify-between px-3 py-2"
+        itemScope
+        itemType="https://schema.org/SiteNavigationElement"
+      >
         <Link href={routes.main} className="hidden items-center lg:flex">
           <span className="text-2xl uppercase">{process.env.NEXT_PUBLIC_APP_NAME}</span>
           <span className="hidden lg:inline">&nbsp;|&nbsp;</span>
