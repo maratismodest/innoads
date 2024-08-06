@@ -68,7 +68,7 @@ export function InfinitePosts({
     <>
       <Posts posts={posts} />
       {fetching && <Spinner />}
-      {!fetching && posts.length === 0 && !hasMore && <h2 className="text-center">Пусто</h2>}
+      {/*{!fetching && posts.length === 0 && !hasMore && <h2 className="text-center">Пусто</h2>}*/}
       <div ref={elementRef} data-testid="scroll" />
     </>
   );
