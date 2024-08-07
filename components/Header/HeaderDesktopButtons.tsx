@@ -12,15 +12,12 @@ export default function HeaderDesktopButtons({ className, onClick }: HeaderButto
   return (
     <ul className={clsx('flex', className)}>
       {menu.map(({ href, text, variant }) => (
-        <li key={href} data-testid={href} onClick={onClick} itemProp="url">
-          <Link href={href} className={buttonStyles({ variant: variant })} itemProp="name">
-            {text}
+        <li key={href} data-testid={href} onClick={onClick}>
+          <Link href={href} className={buttonStyles({ variant: variant })} itemProp="url">
+            <span itemProp="name">{text}</span>
           </Link>
         </li>
       ))}
     </ul>
   );
 }
-
-// itemProp="url"
-// itemProp="name"
