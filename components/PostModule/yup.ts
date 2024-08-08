@@ -15,10 +15,10 @@ export const schema = object({
   price: number().required(required).positive(positive).integer().typeError(required),
   title: string()
     .required(required)
-    .min(4, too_short)
+    .min(8, too_short)
     .max(100, too_long)
     .matches(regex, text_normalized),
-  body: string().required(required).min(10, too_short).max(800, too_long),
+  body: string().required(required).min(16, too_short).max(800, too_long),
   agreement: boolean().oneOf([true], required),
   images: array()
     .of(string())
