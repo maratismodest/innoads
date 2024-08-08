@@ -7,8 +7,8 @@ import React from 'react';
 
 import withAdminCheck from '@/hoc/withAdminCheck';
 import withAuth from '@/hoc/withAuth';
-import AdminPosts from '@/pages-lib/admin/admin-posts';
-import AdminUsers from '@/pages-lib/admin/admin-users';
+import AdminPosts from '@/pages-lib/admin/AdminPosts/admin-posts';
+import AdminUsers from '@/pages-lib/admin/AdminUsers/admin-users';
 import { handleDeleteAllArchived } from '@/pages-lib/admin/utils';
 import buttonStyles from '@/styles/buttonStyles';
 
@@ -28,7 +28,7 @@ async function AdminPage() {
           <Tab
             className={clsx(
               buttonStyles({ size: 'small' }),
-              '!rounded-full data-[selected]:underline',
+              '!rounded-full data-[selected]:underline'
             )}
           >
             {t('Пользователи')}
@@ -36,7 +36,7 @@ async function AdminPage() {
           <Tab
             className={clsx(
               buttonStyles({ size: 'small' }),
-              '!rounded-full data-[selected]:underline',
+              '!rounded-full data-[selected]:underline'
             )}
           >
             {t('Объявления')}
