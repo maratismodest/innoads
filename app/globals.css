@@ -139,6 +139,10 @@
     @apply list-inside list-disc;
   }
 
+  .wysiwyg a {
+    @apply underline;
+  }
+
   .error {
     @apply text-red;
   }
